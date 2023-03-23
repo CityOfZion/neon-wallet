@@ -27,7 +27,6 @@ import NftGallery from '../../containers/NftGallery'
 import EncryptQR from '../Settings/EncryptQR'
 import { ROUTES } from '../../core/constants'
 import OfflineSigningPrompt from '../../containers/OfflineSigningPrompt'
-import NetworkConfiguration from '../../containers/NetworkConfiguration'
 import Mobile from '../../containers/Mobile'
 import Migration from '../../containers/Migration'
 import ConnectDapp from '../../containers/ConnectDapp'
@@ -84,11 +83,7 @@ export default ({ store }: { store: any }) => (
         render={props => <EncryptQR {...props} />}
       />
       <Route exact path={ROUTES.SETTINGS} component={Settings} />
-      <Route
-        exact
-        path={ROUTES.NETWORK_CONFIGURATION}
-        component={NetworkConfiguration}
-      />
+
       <PrivateRoute
         exact
         path={ROUTES.WALLET_MANAGER}

@@ -32,6 +32,13 @@ export const getNetworks = (chain?: string) =>
           deprecatedLabel: TEST_NETWORK_DEPRECATED_LABEL,
           network: TEST_NETWORK_DEPRECATED_LABEL,
         },
+        {
+          id: 'Custom',
+          value: 'Custom',
+          label: 'Custom',
+          deprecatedLabel: 'Custom',
+          network: 'Custom',
+        },
       ]
     : [
         {
@@ -47,6 +54,13 @@ export const getNetworks = (chain?: string) =>
           label: TEST_NETWORK_LABEL,
           deprecatedLabel: TEST_NETWORK_DEPRECATED_LABEL,
           network: TEST_NETWORK_DEPRECATED_LABEL,
+        },
+        {
+          id: 'Custom',
+          value: 'Custom',
+          label: 'Custom',
+          deprecatedLabel: 'Custom',
+          network: 'Custom',
         },
       ]
 

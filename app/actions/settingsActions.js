@@ -14,7 +14,7 @@ import {
 } from '../core/constants'
 import { version } from '../../package.json'
 
-type Settings = {
+export type Settings = {
   currency: string,
   blockExplorer: string,
   tokens: Array<TokenItemType>,
@@ -22,6 +22,8 @@ type Settings = {
   theme: string,
   soundEnabled: boolean,
   chain: string,
+  language: string,
+  customNetworks: Array<{ rpc: string, api: string, label: string }>,
 }
 
 const STORAGE_KEY = 'settings'
@@ -36,6 +38,7 @@ const DEFAULT_SETTINGS: () => Promise<Settings> = async () => ({
   language: DEFAULT_LANGUAGE,
   // TODO: create constant like the other defaults
   chain: 'neo2',
+  customNetworks: [],
 })
 
 export const getSettings = async (): Promise<Settings> => {
@@ -58,37 +61,38 @@ export const getSettings = async (): Promise<Settings> => {
   return { ...defaults, ...settings, tokens }
 }
 
+export const updateSettings = async (values: Settings = {}) => {
+  const settings = await getSettings()
+  const { chain } = values
+  const newSettings = {
+    ...settings,
+    ...values,
+  }
+  const parsedForLocalStorage = cloneDeep(newSettings)
+  if (chain === 'neo2') {
+    const tokensForStorage = [
+      ...newSettings.tokens.filter(token => token.isUserGenerated),
+    ]
+    parsedForLocalStorage.tokens = tokensForStorage
+  } else {
+    const tokens = await getDefaultTokens('neo3')
+    newSettings.tokens = tokens
+  }
+  // NOTE: we only save user generated tokens to local storage to avoid
+  // conflicts in managing the "master" nep5 list
+  await setStorage(STORAGE_KEY, parsedForLocalStorage)
+  return newSettings
+}
+
 export const ID = 'settings'
 
 export const updateSettingsActions = createActions(
   ID,
   // $FlowFixMe
-  (values: Settings = {}) => async (): Promise<Settings> => {
-    const settings = await getSettings()
-    const { chain } = values
-    const newSettings = {
-      ...settings,
-      ...values,
-    }
-    const parsedForLocalStorage = cloneDeep(newSettings)
-    if (chain === 'neo2') {
-      const tokensForStorage = [
-        ...newSettings.tokens.filter(token => token.isUserGenerated),
-      ]
-      parsedForLocalStorage.tokens = tokensForStorage
-    } else {
-      const tokens = await getDefaultTokens('neo3')
-      newSettings.tokens = tokens
-    }
-    // NOTE: we only save user generated tokens to local storage to avoid
-    // conflicts in managing the "master" nep5 list
-
-    await setStorage(STORAGE_KEY, parsedForLocalStorage)
-    return newSettings
-  },
+  (values: Settings = {}) => (): Promise<Settings> => updateSettings(values),
 )
 
-export default createActions(ID, ({ store }) => async (): Promise<Settings> => {
+export default createActions(ID, () => async (): Promise<Settings> => {
   const settings = await getSettings()
   const { chain } = settings
 

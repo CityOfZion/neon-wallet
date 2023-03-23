@@ -156,6 +156,7 @@ module.exports = {
           loader: 'url-loader',
         },
       },
+      { test: /\.mjs$/, include: /node_modules/, type: 'javascript/auto' },
     ],
   },
   performance: {

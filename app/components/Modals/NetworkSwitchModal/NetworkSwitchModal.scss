@@ -23,7 +23,7 @@ label {
   text-transform: uppercase;
   opacity: var(--input-label-opacity);
   color: var(--input-label);
-  margin-bottom: 10px;
+  margin-bottom: 0px !important;
 }
 
 .buttonContainer {

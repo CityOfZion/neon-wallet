@@ -3,11 +3,10 @@ import { compose } from 'recompose'
 
 import Address from './Address'
 import withNetworkData from '../../../hocs/withNetworkData'
-import withExplorerData from '../../../hocs/withExplorerData'
-import withChainData from '../../../hocs/withChainData'
+// import withExplorerData from '../../../hocs/withExplorerData'
+import withSettingsContext from '../../../hocs/withSettingsContext'
 
 export default compose(
   withNetworkData(),
-  withExplorerData(),
-  withChainData(),
-)(Address)
+  // withExplorerData(),
+)(withSettingsContext(Address))

@@ -33,6 +33,7 @@ const ApproveConnection = ({
   address: string,
   showNetworkSwitchModal: ({
     dAppName: string,
+    proposedNetwork: string,
     approveSession: (network?: string) => void,
     rejectSession: () => void,
   }) => void,
@@ -50,7 +51,9 @@ const ApproveConnection = ({
         [
           {
             address,
-            chain: `neo3:${network || net.toLowerCase()}`,
+            chain: `neo3:${
+              network || net === 'Custom' ? 'private' : net.toLowerCase()
+            }`,
           },
         ],
         DEFAULT_NAMESPACES,
@@ -84,15 +87,37 @@ const ApproveConnection = ({
   const handleApproveSessionClick = () => {
     // 'neo3:testnet' or 'neo3:mainnet'
     const proposedNetwork = proposal.params.requiredNamespaces.neo3.chains[0]
-    const currentNetwork = `neo3:${net.toLowerCase()}`
 
-    if (proposedNetwork !== currentNetwork) {
+    if (net === 'Custom' && proposedNetwork === 'neo3:private') {
+      return approveSession()
+    }
+
+    const currentNetwork = `neo3:${
+      net === 'Custom' ? 'private' : net.toLowerCase()
+    }`
+
+    if (
+      proposedNetwork !== currentNetwork &&
+      proposedNetwork !== 'neo3:private'
+    ) {
       return showNetworkSwitchModal({
         dAppName: metadata.name,
         approveSession,
         rejectSession,
+        proposedNetwork: proposal.params.requiredNamespaces.neo3.chains[0],
       })
     }
+
+    if (
+      proposedNetwork === 'neo3:private' &&
+      proposedNetwork !== currentNetwork
+    ) {
+      return showErrorNotification({
+        message: `${metadata.name ||
+          'unknown dApp'} is attempting to connect to a private network but you are currently on ${net}.`,
+      })
+    }
+
     approveSession()
   }
 

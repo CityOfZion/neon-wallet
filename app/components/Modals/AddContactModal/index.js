@@ -8,7 +8,7 @@ import { showSuccessNotification } from '../../../modules/notifications'
 
 import AddContactModal from './AddContactModal'
 import { addContactActions } from '../../../actions/contactsActions'
-import withChainData from '../../../hocs/withChainData'
+import withSettingsContext from '../../../hocs/withSettingsContext'
 
 const mapContactActionsToProps = (actions: Object) => ({
   onSave: (name: string, address: string, chain: string) =>
@@ -26,6 +26,5 @@ export default compose(
     null,
     mapDispatchToProps,
   ),
-  withChainData(),
   withActions(addContactActions, mapContactActionsToProps),
-)(AddContactModal)
+)(withSettingsContext(AddContactModal))

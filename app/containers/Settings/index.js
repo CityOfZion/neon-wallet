@@ -2,26 +2,11 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
-import {
-  withData,
-  withActions,
-  type Actions,
-  withCall,
-  withRecall,
-  withReset,
-} from 'spunky'
+import { withActions, type Actions, withRecall } from 'spunky'
 
-import Settings from './Settings'
-import withExplorerData from '../../hocs/withExplorerData'
-import withCurrencyData from '../../hocs/withCurrencyData'
-import withThemeData from '../../hocs/withThemeData'
-import withLanguageData from '../../hocs/withLanguageData'
-import withSoundEnabledData from '../../hocs/withSoundEnabledData'
-import accountsActions, {
-  updateAccountsActions,
-} from '../../actions/accountsActions'
-import pricesActions from '../../actions/pricesActions'
-import { updateSettingsActions } from '../../actions/settingsActions'
+import Settings from './NewSettings'
+import { updateAccountsActions } from '../../actions/accountsActions'
+
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -30,9 +15,10 @@ import { showModal } from '../../modules/modal'
 import networkActions from '../../actions/networkActions'
 import withNetworkData from '../../hocs/withNetworkData'
 import nodeStorageActions from '../../actions/nodeStorageActions'
-import dashboardActions from '../../actions/dashboardActions'
-import withChainData from '../../hocs/withChainData'
 import { updateAccountsActions as updateN3AccountsActions } from '../../actions/n3AccountsActions'
+import accountActions from '../../actions/accountActions'
+import { getNetworks } from '../../core/networks'
+import withAuthData from '../../hocs/withAuthData'
 
 const actionCreators = {
   showModal,
@@ -43,10 +29,6 @@ const actionCreators = {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(actionCreators, dispatch)
 
-const mapAccountsDataToProps = accounts => ({
-  accounts,
-})
-
 const mapAccountsActionsToProps = actions => ({
   setAccounts: accounts => actions.call(accounts),
 })
@@ -55,54 +37,40 @@ const mapN3AccountsActionsToProps = actions => ({
   setN3Accounts: accounts => actions.call(accounts),
 })
 
-const mapSettingsActionsToProps = actions => ({
-  setCurrency: currency =>
+const mapAccountActionsToProps = (actions, props) => ({
+  loadWalletData: (net: string, chain: string) =>
     actions.call({
-      currency,
+      net,
+      address: props.address,
+      tokens: props.tokens,
+      chain,
     }),
-  setBlockExplorer: blockExplorer =>
-    actions.call({
-      blockExplorer,
-    }),
-  setTheme: theme =>
-    actions.call({
-      theme,
-    }),
-  setSoundSetting: soundEnabled => actions.call({ soundEnabled }),
-  setLanguageSetting: language => actions.call({ language }),
 })
 
-const mapActionsToProps = (actions: Actions): Object => ({
+const mapNetworkActionsToProps = (actions: Actions): Object => ({
   handleNetworkChange: networkId => actions.call({ networkId }),
 })
 
-const mapSelectedNodeDataToProps = url => ({
-  selectedNode: url,
+const mapStateToProps = () => ({
+  networks: getNetworks(),
+})
+
+const mapSaveNodeActionsToProps = actions => ({
+  saveSelectedNode: ({ url, net, label }) => actions.call({ url, net, label }),
 })
 
 export default compose(
   connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps,
   ),
-  withChainData(),
   withNetworkData(),
-  withCall(nodeStorageActions),
-  withData(accountsActions, mapAccountsDataToProps),
-  withData(nodeStorageActions, mapSelectedNodeDataToProps),
-  withExplorerData(),
-  withCurrencyData(),
-  withThemeData(),
-  withSoundEnabledData(),
-  withLanguageData(),
-  withActions(networkActions, mapActionsToProps),
-  withRecall(nodeStorageActions, ['networkId']),
+  withAuthData(),
+
+  withRecall(accountActions, ['net']),
+  withActions(accountActions, mapAccountActionsToProps),
+  withActions(networkActions, mapNetworkActionsToProps),
   withActions(updateAccountsActions, mapAccountsActionsToProps),
-
+  withActions(nodeStorageActions, mapSaveNodeActionsToProps),
   withActions(updateN3AccountsActions, mapN3AccountsActionsToProps),
-
-  withActions(updateSettingsActions, mapSettingsActionsToProps),
-  withReset(dashboardActions, ['currency']),
-  withReset(pricesActions, ['currency']),
-  withRecall(dashboardActions, ['currency']),
 )(Settings)

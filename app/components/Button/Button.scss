@@ -77,6 +77,25 @@
     }
   }
 
+  &.outline {
+    color: var(--secondary-outline-text) !important;
+    border: var(--secondary-outline-border) solid 2px !important;
+
+    path {
+      fill: var(--button-primary-text) !important;
+    }
+
+    &:not([disabled]):hover {
+      color: var(--secondary-outline-hover-text) !important;
+      background: var(--secondary-outline-background-hover) !important;
+      border: var(--secondary-outline-background-hover) solid 2px !important;
+
+      path {
+        fill: var(--secondary-outline-hover-text) !important;
+      }
+    }
+  }
+
   &.secondary {
     border: solid;
     border-width: 2px;

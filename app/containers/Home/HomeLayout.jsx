@@ -8,20 +8,21 @@ import { FormattedMessage } from 'react-intl'
 import styles from './Home.scss'
 import lightLogo from '../../assets/images/logo-light.png'
 import darkLogo from '../../assets/images/logo-dark.png'
-import withLanguageData from '../../hocs/withLanguageData'
 import { updateSettingsActions } from '../../actions/settingsActions'
 import LanguageSelect from '../../components/Inputs/LanguageSelect'
 import ChainSwitch from '../../components/ChainSwitch'
 import { resetCachedNode } from '../../actions/nodeStorageActions'
+import networkActions from '../../actions/networkActions'
+import withSettingsContext from '../../hocs/withSettingsContext'
 
 type Props = {
   children: React$Node,
   renderNavigation?: Function,
   theme: ThemeType,
   language: string,
-  setLanguageSetting: (value: String) => void,
-  setChain: (chain: string) => any,
+  setSetting: ({ [key: string]: string }) => void,
   chain: string,
+  handleNetworkChange: Function,
 }
 
 type State = {
@@ -35,7 +36,8 @@ class HomeLayout extends React.Component<Props, State> {
 
   updateChain = n3Toggled => {
     const chain = n3Toggled ? 'neo3' : 'neo2'
-    this.props.setChain(chain)
+    this.props.setSetting({ chain })
+    this.props.handleNetworkChange('1')
     resetCachedNode()
   }
 
@@ -45,7 +47,7 @@ class HomeLayout extends React.Component<Props, State> {
       renderNavigation,
       theme,
       language,
-      setLanguageSetting,
+      setSetting,
       chain,
     } = this.props
     const dynamicImage = theme === 'Light' ? lightLogo : darkLogo
@@ -62,7 +64,9 @@ class HomeLayout extends React.Component<Props, State> {
         <div className={styles.innerHomeContainer}>
           {renderNavigation && renderNavigation()}
           <LanguageSelect
-            setLanguageSetting={setLanguageSetting}
+            setLanguageSetting={nextLanguage =>
+              setSetting({ language: nextLanguage })
+            }
             languageMenuOpen={languageMenuOpen}
             toggleMenu={languageMenuOpen => this.setState({ languageMenuOpen })}
             value={language}
@@ -91,14 +95,18 @@ class HomeLayout extends React.Component<Props, State> {
 }
 
 const mapSettingsActionsToProps = actions => ({
-  setLanguageSetting: language => actions.call({ language }),
   setChain: chain =>
     actions.call({
       chain,
     }),
 })
 
+const mapNetworkActionsToProps = (actions): Object => ({
+  handleNetworkChange: networkId => actions.call({ networkId }),
+})
+
 export default compose(
   withActions(updateSettingsActions, mapSettingsActionsToProps),
-  withLanguageData(),
-)(HomeLayout)
+  // if a user switches chains we are going to reset any cached network information
+  withActions(networkActions, mapNetworkActionsToProps),
+)(withSettingsContext(HomeLayout))

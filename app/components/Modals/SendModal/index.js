@@ -7,8 +7,8 @@ import {
   clearRecipientData,
 } from '../../../actions/sendModalActions'
 import withFailureNotification from '../../../hocs/withFailureNotification'
-import withChainData from '../../../hocs/withChainData'
 import withNetworkData from '../../../hocs/withNetworkData'
+import withSettingsContext from '../../../hocs/withSettingsContext'
 
 const mapGetDataToProps = action => ({
   getRecipientData: (url, chain, net) => action.call({ url, chain, net }),
@@ -32,5 +32,4 @@ export default compose(
   withNetworkData(),
   withActions(clearRecipientData, mapClearDataToProps),
   withData(clearRecipientData, mapRecipientDataToProps),
-  withChainData(),
-)(SendModal)
+)(withSettingsContext(SendModal))

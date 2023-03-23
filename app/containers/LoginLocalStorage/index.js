@@ -9,9 +9,9 @@ import { nep2LoginActions } from '../../actions/authActions'
 import withLoadingProp from '../../hocs/withLoadingProp'
 import withFailureNotification from '../../hocs/withFailureNotification'
 import pureStrategy from '../../hocs/helpers/pureStrategy'
-import withChainData from '../../hocs/withChainData'
 import newMigrationWalletActions from '../../actions/newMigrationWalletActions'
 import { updateSettingsActions } from '../../actions/settingsActions'
+import withSettingsContext from '../../hocs/withSettingsContext'
 
 type NewWalletProps = {
   newWalletCreated: Function,
@@ -46,7 +46,6 @@ const mapSettingsActionsToProps = actions => ({
 })
 
 export default compose(
-  withChainData(),
   withData(accountsActions, mapAccountsDataToProps),
   withData(n3AccountsActions, mapN3AccountsDataToProps),
   withActions(nep2LoginActions, mapActionsToProps),
@@ -55,4 +54,4 @@ export default compose(
   withActions(newMigrationWalletActions, mapNewWalletActionsToProps),
   withActions(updateSettingsActions, mapSettingsActionsToProps),
   withFailureNotification(nep2LoginActions),
-)(LoginLocalStorage)
+)(withSettingsContext(LoginLocalStorage))

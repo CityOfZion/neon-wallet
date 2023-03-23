@@ -10,55 +10,13 @@ $panel-top-margin: 25px;
   display: flex;
   flex-direction: column;
 
-  .innerContainer {
-    margin: auto;
-    width: 100%;
-  }
-
-  .networkSwitchContainer {
-    display: flex;
-    justify-content: center;
-
-    span {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      font-size: 14px;
-      font-weight: 500;
-    }
-  }
-
-  .settingsSwitchContainer {
-    justify-content: flex-end;
-    align-self: flex-end;
-  }
-
   .settingsPanel {
     height: 100%;
 
     .settingsPanelHeader {
       display: flex;
       align-items: center;
-
-      .settingsPanelHeaderItem {
-        flex: auto;
-
-        div:last-child {
-          margin-top: 4px;
-        }
-
-        &:last-child {
-          text-align: right;
-          color: #8d98ae;
-          font-size: 14px;
-          a {
-            cursor: pointer;
-            &:hover {
-              text-decoration: underline;
-            }
-          }
-        }
-      }
+      justify-content: space-between;
     }
 
     .settingsDonations {
@@ -76,48 +34,108 @@ $panel-top-margin: 25px;
       margin-bottom: 20px;
     }
   }
-
-  $add-icon-size: 24px;
-
-  .headerButtonContainer {
-    display: flex !important;
-    cursor: pointer;
-    align-items: center;
-    font-size: 14px;
-
-    .add {
-      width: $add-icon-size;
-      height: $add-icon-size;
-      margin-right: 10px;
-    }
-  }
-
-  .settingsItemsContainer {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    max-width: 475px;
-    min-width: 475px;
-    margin: auto;
-  }
-
-  .settingsSelectContainer {
-    display: flex;
-    max-width: 150px;
-    flex: 1;
-  }
 }
 
-.settingsSpacer {
-  opacity: 0.35;
-  background: var(--settings-spacer);
-  height: 20px;
-  width: 100%;
-}
-
-#languageSettingsFlagIcon {
-  opacity: 0.5;
+.settingsIconContainer {
   display: flex;
   align-items: center;
-  padding: 5px;
+  justify-content: center;
+  svg {
+    max-width: 22px;
+    width: 22px;
+    height: 22px;
+    max-height: 22px;
+    path {
+      fill: var(--tab-text) !important;
+    }
+  }
+}
+
+.addNetworkIconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  svg {
+    max-width: 22px;
+    width: 22px;
+    height: 22px;
+    max-height: 22px;
+    path {
+      fill: var(--input-active-border) !important;
+    }
+  }
+}
+
+.settingsIconContainer:hover,
+.settingsTabWrapper:hover {
+  color: var(--input-active-border) !important;
+  svg {
+    max-width: 22px;
+    width: 22px;
+    height: 22px;
+    max-height: 22px;
+    path {
+      fill: var(--input-active-border) !important;
+    }
+  }
+}
+
+.settingsTabWrapper {
+  color: #94999d;
+
+  svg {
+    color: #94999d;
+    path {
+      fill: #94999d !important;
+    }
+  }
+}
+
+.activeSettingsIconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--input-active-border) !important;
+  svg {
+    max-width: 22px;
+    width: 22px;
+    height: 22px;
+    max-height: 22px;
+    path {
+      fill: var(--input-active-border) !important;
+    }
+  }
+}
+
+.activeSettingCheckWrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 4px;
+  svg {
+    max-width: 20px;
+    max-height: 20px;
+    path {
+      fill: var(--input-active-border) !important;
+    }
+  }
+}
+
+.settingsOptionWrapper:hover {
+  color: var(--input-active-border) !important;
+  svg {
+    path {
+      fill: var(--input-active-border) !important;
+    }
+  }
+}
+
+.flagIconContainer {
+  svg {
+    width: 20px;
+  }
+}
+
+.languageSettingsOptionWrapper:hover {
+  color: var(--input-active-border) !important;
 }

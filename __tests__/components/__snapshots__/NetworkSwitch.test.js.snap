@@ -181,7 +181,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
       "receiveYourAddressTabLabel": "YOUR ADDRESS",
       "recieveSelectMethod": "Select Deposit Method",
       "recieveWhyUseQRLabel": "Why use a QR code?",
-      "recoverWallet": "RECOVER WALLET",
+      "recoverWallet": "Recover wallet",
       "recoverWalletLabel": "RECOVER WALLET",
       "removeContact": "Remove Contact",
       "requestAssetAmount": "AMOUNT",
@@ -231,18 +231,18 @@ exports[`NetworkSwitch renders without crashing 1`] = `
       "sendTransferPlural": "TRANSFERS",
       "sendWithFee": "Send {itemCount, plural, one {Asset} other {Assets}} With Fee",
       "sendWithoutFee": "Send {itemCount, plural, one {Asset} other {Assets}} Without Fee",
-      "settingCurrencyLabel": "CURRENCY",
-      "settingsBackUpLink": "EXPORT",
-      "settingsBackUpLinkLabel": "BACKUP WALLET",
+      "settingCurrencyLabel": "Currency",
+      "settingsBackUpLink": "Export",
+      "settingsBackUpLinkLabel": "Backup wallet",
       "settingsCommunity": "Community Support",
       "settingsDonationLink": "Created by CoZ. Donations:",
-      "settingsEncryptLink": "ENCRYPT A KEY",
-      "settingsLanguageLabel": "LANGUAGE",
+      "settingsEncryptLink": "Encrypt a key",
+      "settingsLanguageLabel": "Language",
       "settingsManageLabel": "Manage your neon wallet",
-      "settingsNetworkConfigLabel": "NETWORK CONFIGURATION",
-      "settingsRecoverWalletLink": "IMPORT",
-      "settingsSoundLabel": "SOUND",
-      "settingsThemeLabel": "THEME",
+      "settingsNetworkConfigLabel": "Network configuration",
+      "settingsRecoverWalletLink": "Import",
+      "settingsSoundLabel": "Sound",
+      "settingsThemeLabel": "Theme",
       "sidebarActivity": "Activity",
       "sidebarContacts": "Contacts",
       "sidebarCurrentBlock": "CURRENT BLOCK",
@@ -301,6 +301,13 @@ exports[`NetworkSwitch renders without crashing 1`] = `
           "network": "TestNet",
           "value": "2",
         },
+        Object {
+          "deprecatedLabel": "Custom",
+          "id": "Custom",
+          "label": "Custom",
+          "network": "Custom",
+          "value": "Custom",
+        },
       ]
     }
     onChange={[MockFunction]}
@@ -337,6 +344,13 @@ exports[`NetworkSwitch renders without crashing 1`] = `
               "label": "2.x TestNet",
               "network": "TestNet",
               "value": "2",
+            },
+            Object {
+              "deprecatedLabel": "Custom",
+              "id": "Custom",
+              "label": "Custom",
+              "network": "Custom",
+              "value": "Custom",
             },
           ]
         }
@@ -377,6 +391,13 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                   "label": "2.x TestNet",
                   "network": "TestNet",
                   "value": "2",
+                },
+                Object {
+                  "deprecatedLabel": "Custom",
+                  "id": "Custom",
+                  "label": "Custom",
+                  "network": "Custom",
+                  "value": "Custom",
                 },
               ]
             }
@@ -455,6 +476,13 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                     "network": "TestNet",
                     "value": "2",
                   },
+                  Object {
+                    "deprecatedLabel": "Custom",
+                    "id": "Custom",
+                    "label": "Custom",
+                    "network": "Custom",
+                    "value": "Custom",
+                  },
                 ]
               }
               pageSize={5}
@@ -511,6 +539,13 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                       "label": "2.x TestNet",
                       "network": "TestNet",
                       "value": "2",
+                    },
+                    Object {
+                      "deprecatedLabel": "Custom",
+                      "id": "Custom",
+                      "label": "Custom",
+                      "network": "Custom",
+                      "value": "Custom",
                     },
                   ]
                 }
@@ -575,6 +610,13 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                         "network": "TestNet",
                         "value": "2",
                       },
+                      Object {
+                        "deprecatedLabel": "Custom",
+                        "id": "Custom",
+                        "label": "Custom",
+                        "network": "Custom",
+                        "value": "Custom",
+                      },
                     ],
                     "pageSize": 5,
                     "placeholder": "Select...",
@@ -635,6 +677,13 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                           "label": "2.x TestNet",
                           "network": "TestNet",
                           "value": "2",
+                        },
+                        Object {
+                          "deprecatedLabel": "Custom",
+                          "id": "Custom",
+                          "label": "Custom",
+                          "network": "Custom",
+                          "value": "Custom",
                         },
                       ]
                     }
@@ -699,6 +748,13 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                             "network": "TestNet",
                             "value": "2",
                           },
+                          Object {
+                            "deprecatedLabel": "Custom",
+                            "id": "Custom",
+                            "label": "Custom",
+                            "network": "Custom",
+                            "value": "Custom",
+                          },
                         ],
                         "pageSize": 5,
                         "placeholder": "Select...",
@@ -752,6 +808,13 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                               "label": "2.x TestNet",
                               "network": "TestNet",
                               "value": "2",
+                            },
+                            Object {
+                              "deprecatedLabel": "Custom",
+                              "id": "Custom",
+                              "label": "Custom",
+                              "network": "Custom",
+                              "value": "Custom",
                             },
                           ]
                         }
@@ -816,6 +879,13 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                                 "network": "TestNet",
                                 "value": "2",
                               },
+                              Object {
+                                "deprecatedLabel": "Custom",
+                                "id": "Custom",
+                                "label": "Custom",
+                                "network": "Custom",
+                                "value": "Custom",
+                              },
                             ],
                             "pageSize": 5,
                             "placeholder": "Select...",
@@ -872,6 +942,13 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                                   "label": "2.x TestNet",
                                   "network": "TestNet",
                                   "value": "2",
+                                },
+                                Object {
+                                  "deprecatedLabel": "Custom",
+                                  "id": "Custom",
+                                  "label": "Custom",
+                                  "network": "Custom",
+                                  "value": "Custom",
                                 },
                               ]
                             }
@@ -935,6 +1012,13 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                                     "label": "2.x TestNet",
                                     "network": "TestNet",
                                     "value": "2",
+                                  },
+                                  Object {
+                                    "deprecatedLabel": "Custom",
+                                    "id": "Custom",
+                                    "label": "Custom",
+                                    "network": "Custom",
+                                    "value": "Custom",
                                   },
                                 ],
                                 "pageSize": 5,
@@ -1014,6 +1098,13 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                               "network": "TestNet",
                               "value": "2",
                             },
+                            Object {
+                              "deprecatedLabel": "Custom",
+                              "id": "Custom",
+                              "label": "Custom",
+                              "network": "Custom",
+                              "value": "Custom",
+                            },
                           ]
                         }
                         selectOption={[Function]}
@@ -1077,6 +1168,13 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                                 "network": "TestNet",
                                 "value": "2",
                               },
+                              Object {
+                                "deprecatedLabel": "Custom",
+                                "id": "Custom",
+                                "label": "Custom",
+                                "network": "Custom",
+                                "value": "Custom",
+                              },
                             ],
                             "pageSize": 5,
                             "placeholder": "Select...",
@@ -1129,6 +1227,13 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                                   "label": "2.x TestNet",
                                   "network": "TestNet",
                                   "value": "2",
+                                },
+                                Object {
+                                  "deprecatedLabel": "Custom",
+                                  "id": "Custom",
+                                  "label": "Custom",
+                                  "network": "Custom",
+                                  "value": "Custom",
                                 },
                               ]
                             }
@@ -1192,6 +1297,13 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                                     "label": "2.x TestNet",
                                     "network": "TestNet",
                                     "value": "2",
+                                  },
+                                  Object {
+                                    "deprecatedLabel": "Custom",
+                                    "id": "Custom",
+                                    "label": "Custom",
+                                    "network": "Custom",
+                                    "value": "Custom",
                                   },
                                 ],
                                 "pageSize": 5,
@@ -1254,6 +1366,13 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                                   "network": "TestNet",
                                   "value": "2",
                                 },
+                                Object {
+                                  "deprecatedLabel": "Custom",
+                                  "id": "Custom",
+                                  "label": "Custom",
+                                  "network": "Custom",
+                                  "value": "Custom",
+                                },
                               ]
                             }
                             selectOption={[Function]}
@@ -1316,6 +1435,13 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                                     "label": "2.x TestNet",
                                     "network": "TestNet",
                                     "value": "2",
+                                  },
+                                  Object {
+                                    "deprecatedLabel": "Custom",
+                                    "id": "Custom",
+                                    "label": "Custom",
+                                    "network": "Custom",
+                                    "value": "Custom",
                                   },
                                 ],
                                 "pageSize": 5,

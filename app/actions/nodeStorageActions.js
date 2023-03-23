@@ -20,7 +20,7 @@ const PING_TIMEOUT_OVERRIDE = 1000
 const DEFAULT_PING_TIMEOUT = settings.timeout.ping
 
 const ID = 'nodeStorage'
-const STORAGE_KEY = 'selectedNode'
+export const STORAGE_KEY = 'selectedNode'
 const CACHE_EXPIRATION =
   15 /* minutes */ * 60 /* seconds */ * 1000 /* milliseconds */
 const cachedRPCUrl = {}
@@ -30,6 +30,7 @@ type Net = NetworkLabelTypes
 type Props = {
   url: string,
   net: Net,
+  label?: string,
 }
 
 export const resetCachedNode = () => {
@@ -146,8 +147,16 @@ export const getRPCEndpoint = async (
   }
 }
 
-const setNode = async (node: string, net: Net): Promise<string> =>
-  setStorage(`${STORAGE_KEY}-${net}`, { node, timestamp: new Date().getTime() })
+const setNode = async (
+  node: string,
+  net: Net,
+  label?: string,
+): Promise<string> =>
+  setStorage(`${STORAGE_KEY}-${net}`, {
+    node,
+    timestamp: new Date().getTime(),
+    label: label || '',
+  })
 
 export const getNode = async (
   net: Net,
@@ -158,21 +167,22 @@ export const getNode = async (
     await setNode('', net)
     return ''
   }
+
   const storage = await getStorage(`${STORAGE_KEY}-${net}`).catch(console.error)
   const nodeInStorage = get(storage, 'node')
   const expiration = get(storage, 'timestamp')
   if (!nodeInStorage || !expiration || determineIfCacheIsExpired(expiration)) {
     return ''
   }
-
   return nodeInStorage
 }
 
 export default createActions(
   ID,
-  ({ url, net }: Props = {}) => async (): Promise<string> => {
+  ({ url, net, label }: Props = {}) => async (): Promise<string> => {
     if (url || url === '') {
-      await setNode(url, net)
+      await setNode(url, net, label)
+
       return url
     }
     return getNode(net)

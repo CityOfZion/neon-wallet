@@ -6,8 +6,8 @@ import { injectIntl } from 'react-intl'
 
 import TokenSwap from './TokenSwap'
 import { generateNewWalletAccount } from '../../../modules/generateWallet'
-import withChainData from '../../../hocs/withChainData'
 import withAuthData from '../../../hocs/withAuthData'
+import withSettingsContext from '../../../hocs/withSettingsContext'
 
 const actionCreators = {
   generateNewWalletAccount,
@@ -22,5 +22,4 @@ export default compose(
     mapDispatchToProps,
   ),
   withAuthData(),
-  withChainData(),
-)(injectIntl(TokenSwap))
+)(withSettingsContext(injectIntl(TokenSwap)))

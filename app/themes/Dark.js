@@ -47,6 +47,12 @@ const BUTTON = {
   '--button-priority-conditional-box-shadow':
     ' -12px -12px 36px 0 rgba(70, 77, 83, 0.46), 12px 12px 36px 0 rgba(18, 21, 23, 0.99), inset -1px -1px 0 0 rgba(0, 0, 0, 0.32), inset 1px 1px 0 0 rgba(214, 210, 210, 0.14)',
   '--secondary-raised-base-text': '#fff',
+
+  '--secondary-outline-text': '#4CFFB3',
+  '--secondary-outline-border': '#4CFFB3',
+  '--secondary-outline-background': '#4CFFB3',
+  '--secondary-outline-background-hover': '#4CFFB3',
+  '--secondary-outline-hover-text': '#21242C',
 }
 
 const INPUT = {

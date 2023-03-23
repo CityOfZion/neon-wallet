@@ -2,12 +2,15 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
+import { ChakraProvider } from '@chakra-ui/react'
 
 import { WalletConnectContextProvider } from '../../context/WalletConnect/WalletConnectContext'
+import { SettingsContextProvider } from '../../context/settings/SettingsContext'
 import {
   DEFAULT_APP_METADATA,
   DEFAULT_PROJECT_ID,
   DEFAULT_RELAY_PROVIDER,
+  DEFAULT_NAMESPACES,
 } from '../../core/constants'
 import IntlWrapper from './IntlWrapper'
 import Routes from './Routes'
@@ -20,17 +23,22 @@ const wcOptions = {
   appMetadata: DEFAULT_APP_METADATA,
   relayServer: DEFAULT_RELAY_PROVIDER,
   projectId: DEFAULT_PROJECT_ID,
+  nameSpaces: DEFAULT_NAMESPACES,
 }
 
 const Root = ({ store }: Props) => (
   <Provider store={store}>
-    <WalletConnectContextProvider options={wcOptions}>
-      <IntlWrapper lang="english">
-        <HashRouter>
-          <Routes store={store} />
-        </HashRouter>
-      </IntlWrapper>
-    </WalletConnectContextProvider>
+    <ChakraProvider resetCSS={false}>
+      <SettingsContextProvider>
+        <WalletConnectContextProvider options={wcOptions}>
+          <IntlWrapper lang="english">
+            <HashRouter>
+              <Routes store={store} />
+            </HashRouter>
+          </IntlWrapper>
+        </WalletConnectContextProvider>
+      </SettingsContextProvider>
+    </ChakraProvider>
   </Provider>
 )
 

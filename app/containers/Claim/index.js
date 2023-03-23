@@ -9,8 +9,8 @@ import Claim from './Claim'
 import claimsActions from '../../actions/claimsActions'
 import { doGasClaim, getDisableClaimButton } from '../../modules/claim'
 import withAuthData from '../../hocs/withAuthData'
-import withChainData from '../../hocs/withChainData'
 import withBalancesData from '../../hocs/withBalancesData'
+import withSettingsContext from '../../hocs/withSettingsContext'
 
 const mapStateToProps = (state: Object) => ({
   disableClaimButton: getDisableClaimButton(state),
@@ -30,7 +30,6 @@ export default compose(
   ),
   withAuthData(),
   withBalancesData(),
-  withChainData(),
   withData(claimsActions, mapClaimsDataToProps),
   injectIntl,
-)(Claim)
+)(withSettingsContext(Claim))

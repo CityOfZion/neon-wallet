@@ -1,11 +1,8 @@
 // @flow
 import { compose } from 'recompose'
-import withChainData from '../../hocs/withChainData'
 
 import withNetworkData from '../../hocs/withNetworkData'
+import withSettingsContext from '../../hocs/withSettingsContext'
 import HeaderBar from './HeaderBar'
 
-export default compose(
-  withNetworkData(),
-  withChainData(),
-)(HeaderBar)
+export default compose(withNetworkData())(withSettingsContext(HeaderBar))

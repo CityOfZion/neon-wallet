@@ -6,9 +6,9 @@ import { injectIntl } from 'react-intl'
 
 import CreateMigrationWallet from './CreateMigrationWallet'
 import { generateNewWalletAccount } from '../../../modules/generateWallet'
-import withChainData from '../../../hocs/withChainData'
 import withAuthData from '../../../hocs/withAuthData'
 import withNetworkData from '../../../hocs/withNetworkData'
+import withSettingsContext from '../../../hocs/withSettingsContext'
 
 const actionCreators = {
   generateNewWalletAccount,
@@ -23,6 +23,5 @@ export default compose(
     mapDispatchToProps,
   ),
   withAuthData(),
-  withChainData(),
   withNetworkData(),
-)(injectIntl(CreateMigrationWallet))
+)(withSettingsContext(injectIntl(CreateMigrationWallet)))

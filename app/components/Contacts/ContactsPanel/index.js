@@ -14,7 +14,7 @@ import {
   showSuccessNotification,
 } from '../../../modules/notifications'
 import { showModal } from '../../../modules/modal'
-import withChainData from '../../../hocs/withChainData'
+import withSettingsContext from '../../../hocs/withSettingsContext'
 
 const actionCreators = {
   showModal,
@@ -35,8 +35,7 @@ export default compose(
     mapDispatchToProps,
   ),
   withRouter,
-  withChainData(),
   withActions(deleteContactActions, mapContactActionsToProps),
   withFailureNotification(deleteContactActions),
   injectIntl,
-)(ContactsPanel)
+)(withSettingsContext(ContactsPanel))

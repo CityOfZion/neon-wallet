@@ -7,14 +7,13 @@ import withAuthData from '../../../hocs/withAuthData'
 
 import ContactForm from './ContactForm'
 import contactsActions from '../../../actions/contactsActions'
-import withChainData from '../../../hocs/withChainData'
 import withCameraAvailability from '../../../hocs/withCameraAvailability'
+import withSettingsContext from '../../../hocs/withSettingsContext'
 
 const mapContactsDataToProps = (contacts: Object) => ({ contacts })
 
 export default compose(
   withAuthData(),
-  withChainData(),
   withData(contactsActions, mapContactsDataToProps),
   withState('formName', 'setName', ({ formName }) => formName || ''),
   withState(
@@ -24,4 +23,4 @@ export default compose(
   ),
   injectIntl,
   withCameraAvailability,
-)(ContactForm)
+)(withSettingsContext(ContactForm))

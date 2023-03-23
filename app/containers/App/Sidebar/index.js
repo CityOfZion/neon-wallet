@@ -1,7 +1,7 @@
 // @flow
 import { compose } from 'recompose'
 import { get } from 'lodash-es'
-import { withData, withCall } from 'spunky'
+import { withData } from 'spunky'
 import { withRouter } from 'react-router-dom'
 
 import Sidebar from './Sidebar'
@@ -9,7 +9,7 @@ import { addPendingTransaction } from '../../../actions/pendingTransactionAction
 import withAuthData from '../../../hocs/withAuthData'
 import { blockHeightActions } from '../../../actions/blockHeightActions'
 import withNetworkData from '../../../hocs/withNetworkData'
-import withChainData from '../../../hocs/withChainData'
+import withSettingsContext from '../../../hocs/withSettingsContext'
 
 const mapPendingTransactionsDataToProps = (
   pendingTransactions: Array<PendingTransactions>,
@@ -25,8 +25,6 @@ export default compose(
   withRouter, // allow `NavLink` components to re-render when the window location changes
   withAuthData(),
   withNetworkData(),
-  withChainData(),
   withData(addPendingTransaction, mapPendingTransactionsDataToProps),
-  // withCall(blockHeightActions, mapBlockHeightDataToProps),
   withData(blockHeightActions, mapBlockHeightDataToProps),
-)(Sidebar)
+)(withSettingsContext(Sidebar))

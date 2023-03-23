@@ -15,9 +15,8 @@ import withFilteredTokensData from '../../hocs/withFilteredTokensData'
 import { getNotifications } from '../../modules/notifications'
 import { showModal } from '../../modules/modal'
 import { internetConnectionPromptPresented } from '../../actions/internetConnectivityPromptActions'
-
 import Dashboard from './Dashboard'
-import withChainData from '../../hocs/withChainData'
+import withSettingsContext from '../../hocs/withSettingsContext'
 
 const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
   notification: getNotifications(state),
@@ -45,7 +44,6 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps,
   ),
-  withChainData(),
 
   // Expose function for polling & reloading account related data.
   withAuthData(),
@@ -57,5 +55,4 @@ export default compose(
   withActions(accountActions, mapAccountActionsToProps),
   withData(internetConnectionPromptPresented),
   withThemeData(),
-  withChainData(),
-)(Dashboard)
+)(withSettingsContext(Dashboard))

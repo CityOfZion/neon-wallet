@@ -11,15 +11,18 @@ import IntlWrapper from '../Root/IntlWrapper'
 import { LIGHT_NETWORK_CONFIG_TOOLTIP } from '../../themes/Light'
 import { DARK_NETWORK_CONFIG_TOOLTIP } from '../../themes/Dark'
 
+import type { Settings } from '../../actions/settingsActions'
+
 type Props = {
   count: number,
   theme: string,
   store: any,
+  settings: Settings,
 }
 
 class LogoWithTooltipAndBlockHeight extends React.Component<Props> {
   render() {
-    const { count, theme, store } = this.props
+    const { count, theme, store, settings } = this.props
 
     const themeBasedLogo =
       theme === 'Light' ? LightLogoWithoutText : DarkLogoWithoutText
@@ -32,7 +35,7 @@ class LogoWithTooltipAndBlockHeight extends React.Component<Props> {
         onShow={() => this.handleOnShow()}
         html={
           <IntlWrapper store={store}>
-            <NetworkConfigurationTooltip store={store} />{' '}
+            <NetworkConfigurationTooltip {...settings} store={store} />{' '}
           </IntlWrapper>
         }
       >

@@ -12,7 +12,8 @@ import {
   MAIN_NETWORK_LABEL,
   DEFAULT_LANGUAGE,
 } from '../../app/core/constants'
-import NetworkConfigurationTooltip, { renderNode } from '../../app/components/NetworkConfigurationTooltip'
+import NetworkConfigurationTooltip from '../../app/components/NetworkConfigurationTooltip'
+import { renderNode } from '../../app/components/NetworkConfigurationTooltip/NetworkConfigurationTooltip'
 import IntlWrapper from '../../app/components/Root/IntlWrapper'
 
 const { LOADED, LOADING } = progressValues
@@ -62,9 +63,9 @@ const networkConfigTooltipSetup = (
   const store = configureStore([thunk])(state)
   const wrapper = mount(
     <Provider store={store}>
-      <IntlWrapper lang="en">
+      <IntlWrapper store={store}>
         <MemoryRouter initialEntries={['/']} keyLength={0}>
-          <NetworkConfigurationTooltip />
+          <NetworkConfigurationTooltip blockExplorer="Dora" />
         </MemoryRouter>
       </IntlWrapper>
     </Provider>,
@@ -83,7 +84,7 @@ const renderNodeSetup = (
   const store = configureStore([thunk])(state)
   const wrapper = mount(
     <Provider store={store}>
-      <IntlWrapper lang="en">
+      <IntlWrapper store={store}>
         <MemoryRouter initialEntries={['/']} keyLength={0}>
           <div>{renderNode(node)}</div>
         </MemoryRouter>

@@ -7,7 +7,7 @@ import AddContactPanel from './AddContactPanel'
 import { addContactActions } from '../../../actions/contactsActions'
 import withProgressChange from '../../../hocs/withProgressChange'
 import withFailureNotification from '../../../hocs/withFailureNotification'
-import withChainData from '../../../hocs/withChainData'
+import withSettingsContext from '../../../hocs/withSettingsContext'
 
 const { LOADED } = progressValues
 
@@ -18,7 +18,7 @@ const mapContactActionsToProps = (actions: Object) => ({
 
 export default compose(
   withProps(({ name }) => ({ oldName: name })),
-  withChainData(),
+
   withProgressChange(
     addContactActions,
     LOADED,
@@ -26,4 +26,4 @@ export default compose(
   ),
   withActions(addContactActions, mapContactActionsToProps),
   withFailureNotification(addContactActions),
-)(AddContactPanel)
+)(withSettingsContext(AddContactPanel))

@@ -55,6 +55,7 @@ export default class ContactForm extends React.Component<Props, State> {
   }
 
   static defaultProps = {
+    /* $FlowFixMe */
     submitLabel: <FormattedMessage id="saveContactButtonText" />,
     name: '',
     address: '',

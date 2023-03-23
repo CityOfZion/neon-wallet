@@ -117,7 +117,7 @@ export default class Home extends React.Component<Props, State> {
     }
 
     return (
-      <HomeLayout theme={theme} chain={chain}>
+      <HomeLayout theme={theme}>
         <div className={styles.inputContainer}>
           <Tabs
             selectedIndex={this.state.tabIndex}

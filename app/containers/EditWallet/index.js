@@ -23,7 +23,7 @@ import EditWallet from './EditWallet'
 import n3AccountsActions, {
   updateAccountsActions as updateN3AccountsActions,
 } from '../../actions/n3AccountsActions'
-import withChainData from '../../hocs/withChainData'
+import withSettingsContext from '../../hocs/withSettingsContext'
 
 const mapAccountsDataToProps = accounts => ({
   accounts,
@@ -60,7 +60,6 @@ export default compose(
     mapDispatchToProps,
   ),
   withAuthData(),
-  withChainData(),
   withCall(accountsActions),
   withCall(n3AccountsActions),
   withData(accountsActions, mapAccountsDataToProps),
@@ -77,4 +76,4 @@ export default compose(
     true,
   ),
   injectIntl,
-)(EditWallet)
+)(withSettingsContext(EditWallet))

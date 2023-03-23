@@ -16,7 +16,7 @@ import {
   showErrorNotification,
   showSuccessNotification,
 } from '../../../modules/notifications'
-import withChainData from '../../../hocs/withChainData'
+import withSettingsContext from '../../../hocs/withSettingsContext'
 
 const actionCreators = {
   showErrorNotification,
@@ -43,9 +43,8 @@ export default compose(
     null,
     mapDispatchToProps,
   ),
-  withChainData(),
   withCall(nodeStorageActions),
   withData(accountsActions, mapAccountsDataToProps),
   withActions(updateAccountsActions, mapAccountsActionsToProps),
   withActions(updateN3AccountsActions, mapN3AccountsActionsToProps),
-)(ImportWallet)
+)(withSettingsContext(ImportWallet))

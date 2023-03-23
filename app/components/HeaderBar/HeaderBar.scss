@@ -56,6 +56,23 @@
   opacity: 0.5;
 }
 
+.customNetwork {
+  text-align: left;
+  font-size: 10px;
+  margin: -12px 0 0 12px;
+  color: #d355e7;
+  // opacity: 0.5;
+  svg {
+    margin-left: 2px;
+    height: 18px;
+    width: 18px;
+
+    path {
+      fill: #d355e7 !important;
+    }
+  }
+}
+
 .withBorder {
   border-right: 1px solid #5c677f;
 }

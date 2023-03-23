@@ -15,7 +15,6 @@ import NeoLogo from '../../assets/icons/neo.svg'
 import NodeSelectIcon from '../../assets/icons/node-select.svg'
 import BlockExplorerIcon from '../../assets/icons/block-explorer.svg'
 import CogIcon from '../../assets/icons/cog-icon.svg'
-import networkConfigStyles from '../../containers/NetworkConfiguration/NetworkConfiguration.scss'
 import settingsStyles from '../../containers/Settings/Settings.scss'
 import styles from './NetworkConfigurationTooltip.scss'
 import WarningIcon from '../../assets/icons/warning.svg'
@@ -26,9 +25,9 @@ type Props = {
   theme: string,
   publicKey: string,
   selectedNode: string,
-  explorer: string,
   intl: IntlShape,
   chain: string,
+  blockExplorer: string,
 }
 
 export function renderNode(node: Array<any>) {
@@ -60,7 +59,7 @@ export default function NetworkConfigurationTooltip({
   intl,
   publicKey,
   selectedNode,
-  explorer,
+  blockExplorer,
   chain,
 }: Props = {}) {
   const [node, setNode] = useState([])
@@ -92,7 +91,6 @@ export default function NetworkConfigurationTooltip({
       style={themes[theme]}
       className={classNames(
         settingsStyles.settingsItemsContainer,
-        networkConfigStyles.networkItemsContainer,
         styles.tooltipContainer,
       )}
     >
@@ -144,7 +142,9 @@ export default function NetworkConfigurationTooltip({
             noBorderBottom
           >
             <div className={settingsStyles.settingsSelectContainer}>
-              <div className={styles.configLabel}>{explorer.toUpperCase()}</div>
+              <div className={styles.configLabel}>
+                {blockExplorer.toUpperCase()}
+              </div>
             </div>
           </SettingsItem>
 
@@ -156,7 +156,7 @@ export default function NetworkConfigurationTooltip({
             tooltip
             noBorderBottom
           >
-            <div className={networkConfigStyles.settingsSelectContainer}>
+            <div>
               <div className={styles.configLabel}>
                 {findNetworkByDeprecatedLabel(net, chain).label.toUpperCase()}
               </div>
@@ -164,10 +164,10 @@ export default function NetworkConfigurationTooltip({
           </SettingsItem>
           <div className={styles.tooltipItemBorder} />
           <div className={styles.buttonContainer}>
-            <Link to={ROUTES.NETWORK_CONFIGURATION}>
+            <Link to={ROUTES.SETTINGS}>
               <Button
                 shouldCenterButtonLabelText
-                elevated
+                outline
                 renderIcon={() => <CogIcon />}
               >
                 {intl.formatMessage({

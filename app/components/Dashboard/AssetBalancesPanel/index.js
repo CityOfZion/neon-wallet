@@ -19,9 +19,9 @@ import withFailureNotification from '../../../hocs/withFailureNotification'
 import withNetworkData from '../../../hocs/withNetworkData'
 import withAuthData from '../../../hocs/withAuthData'
 import withFilteredTokensData from '../../../hocs/withFilteredTokensData'
-import withChainData from '../../../hocs/withChainData'
 import { ASSETS } from '../../../core/constants'
 import { toBigNumber } from '../../../core/math'
+import withSettingsContext from '../../../hocs/withSettingsContext'
 
 const mapBalanceDataToProps = balances => ({
   NEO: balances.NEO,
@@ -66,7 +66,6 @@ export default compose(
   // Reload data with the currency changes.
   withNetworkData(),
   withAuthData(),
-  withChainData(),
   withFilteredTokensData(),
   withProgressPanel(assetBalancesPanelActions, {
     title: <FormattedMessage id="dashboardAssetsPanelLabel" />,
@@ -90,4 +89,4 @@ export default compose(
     {},
     true,
   ),
-)(AssetBalancesPanel)
+)(withSettingsContext(AssetBalancesPanel))

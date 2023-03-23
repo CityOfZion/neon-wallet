@@ -30,7 +30,7 @@ type Props = {
   chain: string,
   className?: string,
   contacts: Object,
-  explorer: ExplorerType,
+  blockExplorer: ExplorerType,
   isPending?: boolean,
   networkId: string,
   pendingTx: {
@@ -99,7 +99,7 @@ export default class Transaction extends React.Component<Props> {
   }
 
   handleViewTransaction = () => {
-    const { networkId, explorer, tx, chain } = this.props
+    const { networkId, blockExplorer, tx, chain } = this.props
     let txid
 
     if (chain === 'neo3') {
@@ -107,7 +107,7 @@ export default class Transaction extends React.Component<Props> {
     } else {
       ;({ txid } = tx)
     }
-    openExplorerTx(networkId, explorer, txid, chain)
+    openExplorerTx(networkId || '1', blockExplorer, txid, chain)
   }
 
   renderTxDate = (time: ?number) => {

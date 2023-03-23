@@ -234,7 +234,7 @@ export default class CreateMigrationWallet extends React.Component<
                   address={TO_ACCOUNT.address}
                   asWrapper
                   chain="neo3"
-                  explorer={EXPLORERS.DORA}
+                  blockExplorer={EXPLORERS.DORA}
                   networkId={this.props.networkId}
                 >
                   {/* $FlowFixMe */}

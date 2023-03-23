@@ -6,8 +6,8 @@ import '@formatjs/intl-pluralrules/polyfill-locales'
 import { IntlProvider } from 'react-intl'
 
 import translations from '../../translations'
-import withLanguageData from '../../hocs/withLanguageData'
-import { LANGUAGES } from '../../core/constants'
+import { LANGUAGES, DEFAULT_LANGUAGE } from '../../core/constants'
+import { useSettingsContext } from '../../context/settings/SettingsContext'
 
 const {
   english,
@@ -26,7 +26,6 @@ const {
 
 type IntlWrapperProps = {
   children: any,
-  language: string,
 }
 
 const tranlationsMappings = {
@@ -44,18 +43,22 @@ const tranlationsMappings = {
   [LANGUAGES.DUTCH.value]: dutch,
 }
 
-class IntlWrapper extends React.Component<IntlWrapperProps> {
-  render() {
-    const { children, language } = this.props
-    return (
-      <IntlProvider
-        locale="en"
-        messages={tranlationsMappings[language] || english}
-      >
-        {children}
-      </IntlProvider>
-    )
-  }
+function IntlWrapper(props: IntlWrapperProps) {
+  const { children } = props
+  const { settings } = useSettingsContext()
+
+  const language = settings
+    ? settings.language || DEFAULT_LANGUAGE
+    : DEFAULT_LANGUAGE
+
+  return (
+    <IntlProvider
+      locale="en"
+      messages={tranlationsMappings[language] || english}
+    >
+      {children}
+    </IntlProvider>
+  )
 }
 
-export default compose(withLanguageData())(IntlWrapper)
+export default IntlWrapper

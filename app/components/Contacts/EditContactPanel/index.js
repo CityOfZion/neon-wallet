@@ -18,7 +18,7 @@ import {
 import withProgressChange from '../../../hocs/withProgressChange'
 import withFailureNotification from '../../../hocs/withFailureNotification'
 import { showModal } from '../../../modules/modal'
-import withChainData from '../../../hocs/withChainData'
+import withSettingsContext from '../../../hocs/withSettingsContext'
 
 const { LOADED } = progressValues
 
@@ -56,10 +56,9 @@ export default compose(
     LOADED,
     (state, props) => props.onSave && props.onSave(),
   ),
-  withChainData(),
   withActions(updateContactActions, mapContactActionsToProps),
   withActions(deleteContactActions, mapDeleteContactActionsToProps),
   withFailureNotification(deleteContactActions),
   withFailureNotification(updateContactActions),
   injectIntl,
-)(EditContactPanel)
+)(withSettingsContext(EditContactPanel))

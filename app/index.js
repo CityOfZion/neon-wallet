@@ -1,6 +1,6 @@
 import 'raf/polyfill'
 import React from 'react'
-import { render } from 'react-dom'
+import { createRoot } from 'react-dom/client'
 
 import store from './store/configureStore'
 import Root from './components/Root'
@@ -9,4 +9,7 @@ import './styles/main.global.scss'
 
 if (module.hot) module.hot.accept()
 
-render(<Root store={store} />, document.getElementById('root'))
+const container = document.getElementById('root')
+
+const root = createRoot(container) // createRoot(container!) if you use TypeScript
+root.render(<Root store={store} />)
