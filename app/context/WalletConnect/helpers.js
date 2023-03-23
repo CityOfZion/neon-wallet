@@ -143,6 +143,13 @@ class N3Helper {
     if (request.method === 'verifyMessage') {
       result = this.verifyMessage(request.params)
     }
+
+    if (request.method === 'traverseIterator') {
+      result = await new rpc.RPCClient(this.rpcAddress).traverseIterator(
+        ...request.params,
+      )
+    }
+
     if (request.method === 'getapplicationlog') {
       result = await new rpc.RPCClient(this.rpcAddress).getApplicationLog(
         request.params[0],
@@ -330,7 +337,9 @@ class N3Helper {
       account: account.scriptHash,
     })
 
-    signer.scopes = signerEntry && signerEntry.scopes
+    signer.scopes = signerEntry
+      ? signerEntry.scopes
+      : tx.WitnessScope.CalledByEntry
     if (signerEntry && signerEntry.allowedContracts) {
       signer.allowedContracts = signerEntry.allowedContracts.map(ac =>
         Neon.u.HexString.fromHex(ac),

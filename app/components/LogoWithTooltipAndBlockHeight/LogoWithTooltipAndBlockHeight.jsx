@@ -35,7 +35,7 @@ class LogoWithTooltipAndBlockHeight extends React.Component<Props> {
         onShow={() => this.handleOnShow()}
         html={
           <IntlWrapper store={store}>
-            <NetworkConfigurationTooltip settings={settings} store={store} />{' '}
+            <NetworkConfigurationTooltip {...settings} store={store} />{' '}
           </IntlWrapper>
         }
       >

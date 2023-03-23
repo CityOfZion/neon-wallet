@@ -155,6 +155,7 @@ exports[`Sidebar renders without crashing 1`] = `
           "networkConfigTooltipAddress": "ADDRESS:",
           "networkConfigTooltipPublicKey": "PUBLIC KEY:",
           "networkConfigTooltipUpdateSettings": "Update Settings",
+          "networkConfigTooltipVotedNode": "VOTE CAST FOR:",
           "networkSettingsAutomatic": "AUTOMATIC",
           "networkSettingsCurrentLabel": "CURRENT NETWORK",
           "networkSettingsExplorerLabel": "BLOCK EXPLORER",
@@ -715,8 +716,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                       <IntlWrapper
                                         store={undefined}
                                       >
-                                        <Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))))))
-                                          settings={undefined}
+                                        <Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))))
                                           store={undefined}
                                         />
                                          
@@ -745,8 +745,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                         <IntlWrapper
                                           store={undefined}
                                         >
-                                          <Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))))))
-                                            settings={undefined}
+                                          <Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))))
                                             store={undefined}
                                           />
                                            

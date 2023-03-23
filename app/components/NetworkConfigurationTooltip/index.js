@@ -6,7 +6,6 @@ import { withCall, withData } from 'spunky'
 import { injectIntl } from 'react-intl'
 
 import NetworkConfigurationTooltip from './NetworkConfigurationTooltip'
-import withExplorerData from '../../hocs/withExplorerData'
 import { getNetworks } from '../../core/networks'
 import {
   showErrorNotification,
@@ -18,7 +17,6 @@ import nodeStorageActions from '../../actions/nodeStorageActions'
 import accountsActions from '../../actions/accountsActions'
 import withAuthData from '../../hocs/withAuthData'
 import withThemeData from '../../hocs/withThemeData'
-import withSettingsContext from '../../hocs/withSettingsContext'
 
 const mapStateToProps = state => ({
   networks: getNetworks(state.spunky.settings.data.chain),
@@ -50,8 +48,6 @@ export default compose(
   withCall(nodeStorageActions),
   withData(accountsActions, mapAccountsDataToProps),
   withData(nodeStorageActions, mapSelectedNodeDataToProps),
-  // withExplorerData(),
   withAuthData(),
-  withThemeData(),
   injectIntl,
 )(NetworkConfigurationTooltip)

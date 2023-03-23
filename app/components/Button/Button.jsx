@@ -15,6 +15,7 @@ type Props = {
   shouldCenterButtonLabelText: boolean,
   children: React$Node,
   elevated?: boolean,
+  outline?: boolean,
 }
 
 class Button extends React.Component<Props> {
@@ -33,6 +34,7 @@ class Button extends React.Component<Props> {
       'active',
       'shouldCenterButtonLabelText',
       'elevated',
+      'outline',
     )
 
     return (
@@ -44,6 +46,7 @@ class Button extends React.Component<Props> {
           this.getActiveButtonStyle(),
           this.getButtonStyle(),
           this.getElevatedSecondaryStyle(),
+          this.getOutlineStyle(),
         )}
       >
         {this.renderIcon()}
@@ -82,6 +85,8 @@ class Button extends React.Component<Props> {
       : styles.secondary
 
   getIconStyle = () => (this.props.primary ? styles.primary : styles.secondary)
+
+  getOutlineStyle = () => (this.props.outline ? styles.outline : undefined)
 }
 
 export default Button

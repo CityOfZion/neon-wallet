@@ -155,6 +155,7 @@ exports[`News renders without crashing 1`] = `
           "networkConfigTooltipAddress": "ADDRESS:",
           "networkConfigTooltipPublicKey": "PUBLIC KEY:",
           "networkConfigTooltipUpdateSettings": "Update Settings",
+          "networkConfigTooltipVotedNode": "VOTE CAST FOR:",
           "networkSettingsAutomatic": "AUTOMATIC",
           "networkSettingsCurrentLabel": "CURRENT NETWORK",
           "networkSettingsExplorerLabel": "BLOCK EXPLORER",

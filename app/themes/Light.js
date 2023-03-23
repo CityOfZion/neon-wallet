@@ -44,6 +44,12 @@ const BUTTON = {
   '--button-flag-icon-color': '#394152',
   '--button-flag-icon-opacity': 0.3,
   '--secondary-raised-base-text': '#7f8f98',
+
+  '--secondary-outline-text': '#394152',
+  '--secondary-outline-border': '#F1F5FC',
+  '--secondary-outline-background': '#F1F5FC',
+  '--secondary-outline-background-hover': '#F1F5FC',
+  '--secondary-outline-hover-text': '#394152',
 }
 
 const INPUT = {
