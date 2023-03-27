@@ -20,16 +20,6 @@ export default class Panel extends React.Component<Props> {
     renderHeader: null,
   }
 
-  render = () => (
-    <div
-      onScroll={this.props.onScroll}
-      className={classNames(styles.panel, this.props.className)}
-    >
-      {this.renderHeader()}
-      {this.renderContent()}
-    </div>
-  )
-
   renderHeader = () => {
     const { renderHeader, headerClassName } = this.props
 
@@ -48,9 +38,19 @@ export default class Panel extends React.Component<Props> {
     const { contentClassName, children } = this.props
 
     return (
-      <Content className={classNames(styles.content, contentClassName)}>
+      <Content
+        className={classNames(styles.content, contentClassName)}
+        onScroll={this.props.onScroll}
+      >
         {children}
       </Content>
     )
   }
+
+  render = () => (
+    <div className={classNames(styles.panel, this.props.className)}>
+      {this.renderHeader()}
+      {this.renderContent()}
+    </div>
+  )
 }
