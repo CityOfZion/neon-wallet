@@ -343,7 +343,7 @@ export const WalletConnectContextProvider = ({
         topic: requestEvent.topic,
         response: formatJsonRpcError(
           requestEvent.id,
-          'Failed or Rejected Request',
+          error.message ?? 'Failed or Rejected Request',
         ),
       })
       setError(
@@ -354,7 +354,10 @@ export const WalletConnectContextProvider = ({
     }
   } // this should not be a callback because it would require the developer to put it as dependency
 
-  const rejectRequest = async (requestEvent: SessionRequest) => {
+  const rejectRequest = async (
+    requestEvent: SessionRequest,
+    error?: string,
+  ) => {
     if (!signClient) {
       throw new Error('Client is not initialized')
     }
@@ -362,7 +365,7 @@ export const WalletConnectContextProvider = ({
       topic: requestEvent.topic,
       response: formatJsonRpcError(
         requestEvent.id,
-        'Failed or Rejected Request',
+        error ?? 'Request rejected by user',
       ),
     })
     await removeFromPending(requestEvent)
