@@ -104,14 +104,17 @@ export default function NetworkConfigurationTooltip({
             </span>
             <div className={styles.addressLink}> {address}</div>
           </div>
-          <div className={styles.votedNodeInfo}>
-            <span>
-              {intl.formatMessage({
-                id: 'networkConfigTooltipVotedNode',
-              })}
-            </span>
-            {renderNode(node)}
-          </div>
+
+          {chain === 'neo3' && (
+            <div className={styles.votedNodeInfo}>
+              <span>
+                {intl.formatMessage({
+                  id: 'networkConfigTooltipVotedNode',
+                })}
+              </span>
+              {renderNode(node)}
+            </div>
+          )}
           {publicKey && (
             <div className={styles.publicKeyInfo}>
               <span>
