@@ -1048,24 +1048,6 @@ exports[`Sidebar renders without crashing 1`] = `
                                             TOOLTIP_TEST
                                           </div>
                                         </div>
-                                        <div
-                                          className="votedNodeInfo"
-                                        >
-                                          <span>
-                                            VOTE CAST FOR:
-                                          </span>
-                                          <div
-                                            className="votedNode"
-                                          >
-                                            <Component
-                                              className="warningIcon"
-                                            >
-                                              <svg
-                                                className="warningIcon"
-                                              />
-                                            </Component>
-                                          </div>
-                                        </div>
                                         <SettingsLink
                                           label="AUTOMATIC"
                                           noBorderBottom={true}
