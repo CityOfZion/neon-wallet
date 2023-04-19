@@ -33,6 +33,8 @@ type Props = {
   }) => Object,
   performMigration: ({
     sendEntries: Array<SendEntryType>,
+    migrationAddress: string,
+    net: string,
   }) => Object,
   calculateN3Fees: ({
     sendEntries: Array<SendEntryType>,
@@ -55,6 +57,7 @@ type Props = {
   handleSwapComplete: () => void,
   showModal: (modalType: string, modalProps: Object) => any,
   migrationAddress?: string,
+  net: string,
 }
 
 type State = {
@@ -462,7 +465,7 @@ export default class Send extends React.Component<Props, State> {
 
     const sendEntries = sendRowDetails.map((row: Object) => ({
       address:
-        this.props.networkId === '1'
+        this.props.networkId === '1' || !this.props.networkId
           ? BLACK_HOLE_MAIN_NET
           : BLACK_HOLE_TEST_NET,
       amount: toNumber(row.amount.toString()),
@@ -525,6 +528,7 @@ export default class Send extends React.Component<Props, State> {
               .performMigration({
                 sendEntries,
                 migrationAddress: this.props.migrationAddress,
+                net: this.props.net,
               })
               .then(() => {
                 this.props.handleSwapComplete()
@@ -581,6 +585,7 @@ export default class Send extends React.Component<Props, State> {
               .performMigration({
                 sendEntries,
                 migrationAddress: this.props.migrationAddress,
+                net: this.props.net,
               })
               .then(() => {
                 this.props.handleSwapComplete()

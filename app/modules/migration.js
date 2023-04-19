@@ -30,9 +30,11 @@ const N3 = require('@cityofzion/neon-js-next')
 export const performMigration = ({
   sendEntries,
   migrationAddress,
+  net,
 }: {
   sendEntries: Array<SendEntryType>,
   migrationAddress?: string,
+  net: string,
 }) => (dispatch: DispatchType, getState: GetStateType): Promise<*> =>
   // TODO: will need to be dynamic based on network
   // eslint-disable-next-line
@@ -61,8 +63,6 @@ export const performMigration = ({
         isHardwareSend ? fromAddress : wif,
       )
 
-      // eslint-disable-next-line
-      const net = state.spunky.network.data == 1 ? 'MainNet' : 'TestNet'
       let endpoint = await getNode(net)
       if (!endpoint) {
         endpoint = await getRPCEndpoint(net)
