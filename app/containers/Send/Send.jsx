@@ -584,7 +584,7 @@ export default class Send extends React.Component<Props, State> {
             this.props
               .performMigration({
                 sendEntries,
-                migrationAddress: this.props.migrationAddress,
+                migrationAddress: this.props.migrationAddress ?? '',
                 net: this.props.net,
               })
               .then(() => {
