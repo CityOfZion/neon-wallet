@@ -150,6 +150,12 @@ class N3Helper {
       )
     }
 
+    if (request.method === 'getWalletInfo') {
+      result = {
+        isLedger: isHardwareLogin ?? false,
+      }
+    }
+
     if (request.method === 'getapplicationlog') {
       result = await new rpc.RPCClient(this.rpcAddress).getApplicationLog(
         request.params[0],
