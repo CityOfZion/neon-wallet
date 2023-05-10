@@ -383,6 +383,7 @@ export const DEFAULT_METHODS = [
   'getcontractstate',
   'findstates',
   'getWalletInfo',
+  'getNetworkVersion',
 ]
 export const DEFAULT_AUTOACCEPT_METHODS = [
   'testInvoke',
@@ -393,6 +394,7 @@ export const DEFAULT_AUTOACCEPT_METHODS = [
   'getcontractstate',
   'findstates',
   'getWalletInfo',
+  'getNetworkVersion',
 ]
 
 export const DEFAULT_LOGGER = 'error'
