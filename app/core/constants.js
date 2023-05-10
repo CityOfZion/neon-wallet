@@ -382,6 +382,8 @@ export const DEFAULT_METHODS = [
   'getrawmempool',
   'getcontractstate',
   'findstates',
+  'getWalletInfo',
+  'getNetworkVersion',
 ]
 export const DEFAULT_AUTOACCEPT_METHODS = [
   'testInvoke',
@@ -391,6 +393,8 @@ export const DEFAULT_AUTOACCEPT_METHODS = [
   'getrawmempool',
   'getcontractstate',
   'findstates',
+  'getWalletInfo',
+  'getNetworkVersion',
 ]
 
 export const DEFAULT_LOGGER = 'error'
