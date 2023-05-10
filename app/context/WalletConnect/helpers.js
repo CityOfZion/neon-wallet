@@ -174,6 +174,13 @@ class N3Helper {
         Neon.create.query({ ...queryLike, jsonrpc: '2.0' }),
       )
     }
+
+    if (request.method === 'getWalletInfo') {
+      result = {
+        isLedger: isHardwareLogin ?? false,
+      }
+    }
+
     return {
       id: sessionRequest.id,
       jsonrpc: '2.0',

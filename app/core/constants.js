@@ -395,6 +395,7 @@ export const DEFAULT_AUTOACCEPT_METHODS = [
   'findstates',
   'getWalletInfo',
   'getNetworkVersion',
+  'getWalletInfo',
 ]
 
 export const DEFAULT_LOGGER = 'error'
