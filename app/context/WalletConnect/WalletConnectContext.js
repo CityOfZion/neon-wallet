@@ -175,7 +175,9 @@ export const WalletConnectContextProvider = ({
         throw new Error('Client is not initialized')
       }
 
-      signClient.events.removeAllListeners()
+      signClient.events.removeAllListeners('session_proposal')
+      signClient.events.removeAllListeners('session_request')
+      signClient.events.removeAllListeners('session_delete')
 
       signClient.on('session_proposal', (proposal: SessionProposal) => {
         setSessionProposals(old => [...old, proposal])

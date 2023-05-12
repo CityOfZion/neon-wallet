@@ -174,6 +174,7 @@ class N3Helper {
         Neon.create.query({ ...queryLike, jsonrpc: '2.0' }),
       )
     }
+
     return {
       id: sessionRequest.id,
       jsonrpc: '2.0',
