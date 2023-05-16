@@ -41,6 +41,7 @@ if (gotTheLock) {
       deeplinkingUrl = deeplinkingUrl.endsWith('/')
         ? deeplinkingUrl.slice(0, -1)
         : deeplinkingUrl
+
       if (mainWindow?.webContents) {
         mainWindow.webContents.send('link', deeplinkingUrl)
       }
@@ -211,6 +212,12 @@ app.on('ready', () => {
     mainWindow.on('closed', () => {
       mainWindow = null
     })
+
+    // if there is a deepLinkingUrl in memory and the app was
+    // not previously opened, send the url to the renderer
+    if (deeplinkingUrl) {
+      mainWindow.webContents.send('link', deeplinkingUrl)
+    }
   }
 
   // register any shortcuts here
