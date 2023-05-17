@@ -58,10 +58,8 @@ Execute these commands in the project's root directory:
 
 Setup:
 
-- `yarn install` - Installing node dependencies
+- `yarn` - Installing node dependencies
   - If you get any errors related to the node-hid package, please check installation instructions here: https://github.com/node-hid/node-hid#compiling-from-source. On Linux you may need to run `sudo apt install libusb-1.0-0 libusb-1.0-0-dev`, for example.
-- `./node_modules/.bin/electron -v` confirm electron is version 1.8.4
-- Electron may take anywhere from 10 to 15 seconds to fully start using the commands below. Be patient.
 
 Developing:
 
@@ -87,6 +85,22 @@ A gentle reminder, github issues are meant to be used by developers for maintain
 
 should be asked in proper support channels such as the [NEO subreddit](https://www.reddit.com/r/NEO/), or the official [NEO Discord Channel](https://discord.gg/R8v48YA). You should also check the list of [frequently asked questions (FAQ)](https://github.com/CityOfZion/awesome-NEO/blob/master/resources/faq.md) to see if your question has been answered there already.
 
-### Contributing
+### Releasing
 
-Contributing to neon-wallet is eligible for rewards distributed in NEO via the [City of Zion](https://github.com/CityOfZion/standards/blob/master/Introduction.md). Open issues are categorized into high, medium and low impact to roughly group issues and feature requests into their significance and impact to the project. These categories generally correspond to the level of reward that will be distributed upon completion of the issue. Additionally, QA testing, pull request review and creation of issues are also all items eligible for contribution rewards.
+- To bump the patch version:
+
+```
+yarn create-release:patch
+```
+
+- To bump the minor version:
+
+```
+yarn create-release:minor
+```
+
+- To bump the major version:
+
+```
+yarn create-release:major
+```
