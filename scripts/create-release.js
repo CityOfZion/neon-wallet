@@ -26,13 +26,14 @@ try {
   execSync(`git commit -m "Bump version to ${newVersion}"`)
   execSync('git push origin HEAD --no-verify')
 } catch (error) {
+  console.log(error)
   console.error('Error occurred during commit and push:', error)
 }
 
 // Create and push the tag
 try {
   execSync(`git tag v${newVersion}`)
-  execSync('git push origin HEAD --no-verify')
+  execSync(`git push origin v${newVersion} --no-verify`)
 } catch (error) {
   console.error('Error occurred during tag creation and push:', error)
 }
