@@ -73,7 +73,7 @@
   display: flex;
   align-items: center;
   padding: 5px;
-  color: var(--panel-header-text);
+  color: var(--contacts-delete-contact-name);
   text-decoration: none;
   cursor: pointer;
 
@@ -81,6 +81,10 @@
     margin-right: 15px;
     height: 24px;
     width: 24px;
+
+    path {
+      fill: var(--contacts-delete-contact-name);
+    }
   }
 
   .addIcon {

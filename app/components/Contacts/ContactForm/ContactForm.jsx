@@ -15,6 +15,8 @@ import GridIcon from '../../../assets/icons/grid.svg'
 import styles from './ContactForm.scss'
 import QrCodeScanner from '../../QrCodeScanner'
 import Close from '../../../assets/icons/close.svg'
+import AddIcon from '../../../assets/icons/add.svg'
+import { Box } from '@chakra-ui/react'
 
 type Props = {
   submitLabel: string,
@@ -37,6 +39,7 @@ type State = {
   nameError: string,
   addressError: string,
   scannerActive: boolean,
+  addressCount: number,
 }
 
 export default class ContactForm extends React.Component<Props, State> {
@@ -47,6 +50,7 @@ export default class ContactForm extends React.Component<Props, State> {
       nameError: '',
       addressError: '',
       scannerActive: false,
+      addressCount: 1,
     }
   }
 
@@ -106,7 +110,7 @@ export default class ContactForm extends React.Component<Props, State> {
               </div>
             </React.Fragment>
           ) : (
-            <React.Fragment>
+            <Box width="100%" margin="auto">
               <TextInput
                 id="contactName"
                 name="name"
@@ -121,21 +125,44 @@ export default class ContactForm extends React.Component<Props, State> {
                 onChange={this.handleChangeName}
                 error={nameError}
               />
-              <TextInput
-                id="contactAddress"
-                label={intl.formatMessage({
-                  id: 'contactWalletAddress',
-                })}
-                name="address"
-                className={styles.input}
-                placeholder={intl.formatMessage({
-                  id: 'enterAWalletAddress',
-                })}
-                value={formAddress}
-                onChange={this.handleChangeAddress}
-                error={addressError}
-              />
-              <div className={styles.dialogueAndButtonContainer}>
+              {new Array(this.state.addressCount).fill(0).map((_, i) => (
+                <TextInput
+                  id="contactAddress"
+                  label={intl.formatMessage({
+                    id: 'contactWalletAddress',
+                  })}
+                  name="address"
+                  className={styles.input}
+                  placeholder={intl.formatMessage({
+                    id: 'enterAWalletAddress',
+                  })}
+                  value={formAddress}
+                  onChange={this.handleChangeAddress}
+                  error={addressError}
+                />
+              ))}
+
+              <Box
+                width="100%"
+                margin="auto"
+                marginTop={24}
+                border="1px dashed  var(--contacts-delete-contact-name)"
+              >
+                <Button
+                  onClick={() => {
+                    this.setState(state => ({
+                      addressCount: state.addressCount + 1,
+                    }))
+                  }}
+                  secondary
+                  renderIcon={AddIcon}
+                  className={styles.addButton}
+                >
+                  <span>Add address</span>
+                </Button>
+              </Box>
+
+              {/* <div className={styles.dialogueAndButtonContainer}>
                 <DialogueBox
                   icon={<WarningIcon />}
                   text={intl.formatMessage({
@@ -143,9 +170,9 @@ export default class ContactForm extends React.Component<Props, State> {
                   })}
                   className={styles.conactFormDialogue}
                 />
-              </div>
+              </div> */}
               <div className={styles.submitButtonRow}>
-                {showScanner && (
+                {/* {showScanner && (
                   <Button
                     id="scan-private-key-qr-button"
                     primary
@@ -155,7 +182,7 @@ export default class ContactForm extends React.Component<Props, State> {
                   >
                     <FormattedMessage id="authScanQRButton" />
                   </Button>
-                )}
+                )} */}
                 <Button
                   className={styles.submitButton}
                   primary
@@ -166,7 +193,7 @@ export default class ContactForm extends React.Component<Props, State> {
                   {submitLabel}
                 </Button>
               </div>
-            </React.Fragment>
+            </Box>
           )}
         </form>
       </section>

@@ -4,7 +4,7 @@ import { noop } from 'lodash-es'
 import { FormattedMessage } from 'react-intl'
 
 import FullHeightPanel from '../../Panel/FullHeightPanel'
-import ContactForm from '../ContactForm'
+import ContactForm from '../ContactFormRefactor'
 import { ROUTES } from '../../../core/constants'
 import AddIcon from '../../../assets/icons/add.svg'
 import BackButton from '../../BackButton'

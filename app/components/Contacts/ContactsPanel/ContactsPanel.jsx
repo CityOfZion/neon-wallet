@@ -20,6 +20,7 @@ import CopyToClipboard from '../../CopyToClipboard'
 import LogoWithStrikethrough from '../../LogoWithStrikethrough'
 
 import styles from './ContactsPanel.scss'
+import { Box } from '@chakra-ui/react'
 
 type Contact = {
   address: string,
@@ -104,18 +105,37 @@ export default class ContactsPanel extends React.Component<Props, State> {
   renderHeader = () => {
     const { sorting } = this.state
     const { contacts } = this.props
+
     return (
-      <div className={styles.headerSelect}>
-        <StyledReactSelect
-          disabled={isEmpty(contacts)}
-          value={sorting}
-          onChange={this.handleSort}
-          options={SORTING_OPTIONS}
-          isSearchable={false}
-          transparent
-          hideHighlight
-        />
-      </div>
+      <Box
+        className={styles.headerSelect}
+        width="100%"
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+      >
+        <FormattedMessage id="contactsPageLabel" />
+        {/* {contacts ? (
+          <StyledReactSelect
+            disabled={isEmpty(contacts)}
+            value={sorting}
+            onChange={this.handleSort}
+            options={SORTING_OPTIONS}
+            isSearchable={false}
+            transparent
+            hideHighlight
+          />
+        ) : (
+          <div />
+        )} */}
+
+        <Link id="add" className={styles.addButton} to={ROUTES.ADD_CONTACT}>
+          <AddIcon className={styles.addIcon} />
+          <span>
+            <FormattedMessage id="newContact" />
+          </span>
+        </Link>
+      </Box>
     )
   }
 
@@ -188,16 +208,16 @@ export default class ContactsPanel extends React.Component<Props, State> {
     return (
       <React.Fragment>
         <HeaderBar
-          label={<FormattedMessage id="contactsPageLabel" />}
+          // label={<FormattedMessage id="contactsPageLabel" />}
           shouldRenderRefresh={false}
-          renderRightContent={() => (
-            <Link id="add" className={styles.addButton} to={ROUTES.ADD_CONTACT}>
-              <AddIcon className={styles.addIcon} />
-              <span>
-                <FormattedMessage id="newContact" />
-              </span>
-            </Link>
-          )}
+          // renderRightContent={() => (
+          //   <Link id="add" className={styles.addButton} to={ROUTES.ADD_CONTACT}>
+          //     <AddIcon className={styles.addIcon} />
+          //     <span>
+          //       <FormattedMessage id="newContact" />
+          //     </span>
+          //   </Link>
+          // )}
         />
         <Panel
           className={styles.contactsPanel}
