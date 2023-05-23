@@ -125,3 +125,24 @@
   height: 250px;
   position: relative;
 }
+
+.deleteButton {
+  width: 100%;
+  border: none;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 12px;
+
+  svg {
+    height: 24px;
+    width: 24px;
+    min-width: 24px;
+
+    path {
+      fill: #ee6d66;
+    }
+  }
+}

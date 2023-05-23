@@ -5,6 +5,7 @@ import { FormattedMessage, intlShape } from 'react-intl'
 import { wallet } from '@cityofzion/neon-js'
 import { wallet as n3Wallet } from '@cityofzion/neon-js-next'
 import { type ProgressState } from 'spunky'
+import { Box } from '@chakra-ui/react'
 
 import Button from '../../Button'
 import TextInput from '../../Inputs/TextInput'
@@ -16,7 +17,7 @@ import styles from './ContactForm.scss'
 import QrCodeScanner from '../../QrCodeScanner'
 import Close from '../../../assets/icons/close.svg'
 import AddIcon from '../../../assets/icons/add.svg'
-import { Box } from '@chakra-ui/react'
+import TrashCanIcon from '../../../assets/icons/delete.svg'
 
 type Props = {
   submitLabel: string,
@@ -126,20 +127,31 @@ export default class ContactForm extends React.Component<Props, State> {
                 error={nameError}
               />
               {new Array(this.state.addressCount).fill(0).map((_, i) => (
-                <TextInput
-                  id="contactAddress"
-                  label={intl.formatMessage({
-                    id: 'contactWalletAddress',
-                  })}
-                  name="address"
-                  className={styles.input}
-                  placeholder={intl.formatMessage({
-                    id: 'enterAWalletAddress',
-                  })}
-                  value={formAddress}
-                  onChange={this.handleChangeAddress}
-                  error={addressError}
-                />
+                <>
+                  <TextInput
+                    id="contactAddress"
+                    label={intl.formatMessage({
+                      id: 'contactWalletAddress',
+                    })}
+                    name="address"
+                    className={styles.input}
+                    placeholder={intl.formatMessage({
+                      id: 'enterAWalletAddress',
+                    })}
+                    value={formAddress}
+                    onChange={this.handleChangeAddress}
+                    error={addressError}
+                  />
+
+                  {i > 0 && (
+                    <button
+                      className={styles.deleteButton}
+                      onClick={this.handleDeleteAddress(i)}
+                    >
+                      <TrashCanIcon />
+                    </button>
+                  )}
+                </>
               ))}
 
               <Box

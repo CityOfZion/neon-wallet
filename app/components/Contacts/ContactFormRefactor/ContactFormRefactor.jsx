@@ -4,7 +4,7 @@ import { noop } from 'lodash-es'
 import { FormattedMessage, intlShape } from 'react-intl'
 import { wallet } from '@cityofzion/neon-js'
 import { wallet as n3Wallet } from '@cityofzion/neon-js-next'
-import { type ProgressState } from 'spunky'
+import { Box } from '@chakra-ui/react'
 
 import Button from '../../Button'
 import TextInput from '../../Inputs/TextInput'
@@ -16,16 +16,14 @@ import styles from './ContactFormRefactor.scss'
 import QrCodeScanner from '../../QrCodeScanner'
 import Close from '../../../assets/icons/close.svg'
 import AddIcon from '../../../assets/icons/add.svg'
-import { Box } from '@chakra-ui/react'
+import TrashCanIcon from '../../../assets/icons/delete.svg'
 import { useContactsContext } from '../../../context/contacts/ContactsContext'
 
 type Props = {
   submitLabel: string,
   formName: string,
   formAddress: string,
-
   setName: Function,
-
   intl: intlShape,
 }
 
@@ -37,7 +35,7 @@ type State = {
 }
 
 export default function ContactForm(props: Props) {
-  const { contacts } = useContactsContext()
+  const { contacts, updateContacts } = useContactsContext()
   const [addressCount, setAddressCount] = React.useState(1)
   const [errorMapping, setErrorMapping] = React.useState({
     addresses: [],
@@ -45,6 +43,7 @@ export default function ContactForm(props: Props) {
   })
   const [name, setName] = React.useState('')
   const [addresses, setAddresses] = React.useState([''])
+  const [loading, setLoading] = React.useState(false)
   const { submitLabel, formName, formAddress, intl } = props
 
   function handleChangeName(event) {
@@ -88,6 +87,45 @@ export default function ContactForm(props: Props) {
     setAddresses(nextAddresses)
   }
 
+  function handleDeleteAddress(index) {
+    const nextAddresses = [...addresses]
+    nextAddresses.splice(index, 1)
+    setAddresses(nextAddresses)
+    setAddressCount(addressCount - 1)
+  }
+
+  function shouldDisableSubmitButton() {
+    const hasValidNameAndAtLeastOneAddress =
+      name.length > 0 && addresses[0] !== ''
+
+    return (
+      loading ||
+      errorMapping.name ||
+      (errorMapping.addresses.some(address => address.length > 0) ||
+        !hasValidNameAndAtLeastOneAddress)
+    )
+  }
+
+  function parseChainFromAddress(address): string {
+    const chains = {
+      NEO_LEGACY: 'neo2',
+      NEO3: 'neo3',
+    }
+    return wallet.isAddress(address) ? chains.NEO_LEGACY : chains.NEO3
+  }
+
+  function handleSaveAddress() {
+    setLoading(true)
+    const data = addresses.map(address => ({
+      address,
+      chain: parseChainFromAddress(address),
+    }))
+    updateContacts(name, data)
+    setLoading(false)
+  }
+
+  console.log({ contacts })
+
   return (
     <section className={styles.contactFormContainer}>
       <form className={styles.contactForm} onSubmit={() => null}>
@@ -107,20 +145,36 @@ export default function ContactForm(props: Props) {
             error={errorMapping.name}
           />
           {new Array(addressCount).fill(0).map((_, i) => (
-            <TextInput
-              id="contactAddress"
-              label={intl.formatMessage({
-                id: 'contactWalletAddress',
-              })}
-              name="address"
-              className={styles.input}
-              placeholder={intl.formatMessage({
-                id: 'enterAWalletAddress',
-              })}
-              value={addresses[i]}
-              onChange={e => handleChangeAddress(e, i)}
-              error={errorMapping.addresses[i]}
-            />
+            <Box key={i} display="flex" alignItems="center" width="100%">
+              <Box width="100%">
+                <TextInput
+                  id="contactAddress"
+                  label={intl.formatMessage({
+                    id: 'contactWalletAddress',
+                  })}
+                  name="address"
+                  className={styles.input}
+                  placeholder={intl.formatMessage({
+                    id: 'enterAWalletAddress',
+                  })}
+                  value={addresses[i]}
+                  onChange={e => handleChangeAddress(e, i)}
+                  error={errorMapping.addresses[i]}
+                />
+              </Box>
+              {i > 0 && (
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="flex-end"
+                  className={styles.deleteButton}
+                  onClick={() => handleDeleteAddress(i)}
+                  width={60}
+                >
+                  <TrashCanIcon />
+                </Box>
+              )}
+            </Box>
           ))}
 
           <Box
@@ -134,7 +188,6 @@ export default function ContactForm(props: Props) {
                 setAddressCount(addressCount + 1)
                 setAddresses([...addresses, ''])
               }}
-              secondary
               renderIcon={AddIcon}
               className={styles.addButton}
             >
@@ -144,17 +197,17 @@ export default function ContactForm(props: Props) {
 
           <div className={styles.submitButtonRow}>
             <Button
+              onClick={() => handleSaveAddress()}
               className={styles.submitButton}
               primary
               type="submit"
-              disabled
+              disabled={shouldDisableSubmitButton()}
               renderIcon={AddContactIcon}
             >
               {submitLabel}
             </Button>
           </div>
         </Box>
-        )}
       </form>
     </section>
   )

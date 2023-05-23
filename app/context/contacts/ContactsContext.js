@@ -13,12 +13,16 @@ type Contacts = {
 
 type ContactsContextType = {
   contacts: Contacts,
+  updateContacts: (contactName: string, data: ContactInfo[]) => Promise<any>,
 }
 
-const STORAGE_KEY = 'addressBook'
+const STORAGE_KEY = 'multi-chain-address-book'
 
 export const ContactsContext = React.createContext<ContactsContextType>({})
 export const useContactsContext = () => useContext(ContactsContext)
+
+// TODO: create a migration script that will migrate the old address book to the new one
+// and ensure type safety
 
 export const ContactsContextProvider = ({
   children,
@@ -32,7 +36,7 @@ export const ContactsContextProvider = ({
   const saveContacts = async (contacts: Contacts): Promise<any> =>
     setStorage(STORAGE_KEY, contacts)
 
-  const updateContacts = async (contactName: string, data: ContactInfo) => {
+  const updateContacts = async (contactName: string, data: ContactInfo[]) => {
     const contacts = await getContacts()
     const newContacts = { ...contacts, [contactName]: data }
     await saveContacts(newContacts)
