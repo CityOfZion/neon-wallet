@@ -56,7 +56,10 @@ const customStyles = {
       fontSize: props.selectProps.fontSize,
       fontWeight: props.selectProps.fontWeight,
       padding: !props.hideHighlight && '7px 15px !important',
-      justifyContent: props.selectProps.settingsSelect && 'flex-end',
+      justifyContent:
+        props.selectProps.alignValueContainer ||
+        (props.selectProps.settingsSelect && 'flex-end'),
+      // maxWidth: '20px',
       ...conditionalStyles,
     }
   },

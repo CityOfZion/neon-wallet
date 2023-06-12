@@ -2,6 +2,7 @@
 
 .contactsPanel {
   overflow-y: auto;
+  height: 100%;
 
   .name {
     width: 180px;
@@ -23,9 +24,11 @@
   .contact {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    padding: 12px;
+    // justify-content: center;
+    // justify-content: space-between;
     flex-wrap: nowrap;
-    padding: 12px 12px 12px 24px;
+    // padding: 12px 12px 12px 24px;
 
     button {
       background-color: transparent;
@@ -43,7 +46,12 @@
       justify-content: space-between;
       margin-bottom: -5px;
       span {
+        padding-left: 4px;
+        margin-bottom: 4px;
+        // display: flex;
+        // align-items: center;
         text-overflow: ellipsis;
+        margin-right: auto;
         overflow: hidden;
       }
     }
@@ -94,8 +102,12 @@
   }
 }
 
+.editButton {
+  width: 100px;
+}
+
 .oddNumberedRow {
-  background: var(--contacts-odd-numbered-row);
+  // background: var(--contacts-odd-numbered-row);
 }
 
 .emptyContactsContainer {
@@ -107,7 +119,11 @@
 }
 
 .groupHeader {
-  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  height: 24px;
+  font-size: 12px;
   background-color: var(--contacts-group-header-background);
   color: var(--contacts-group-header-text);
   font-weight: bold;
@@ -127,5 +143,46 @@
     font-size: 18px;
     color: var(--contacts-delete-contact-name);
     text-align: center;
+  }
+}
+
+.contactRow {
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  // box-sizing: border-box;
+  // width: $size;
+  // height: $size;
+  border-left: 4px solid transparent;
+  // font-size: 24px;
+  // display: flex;
+  // flex-direction: column;
+  // cursor: pointer;
+  // text-decoration: none;
+  // text-align: center;
+
+  // div {
+  //   font-size: 10px;
+  //   margin-top: 5px;
+  // }
+
+  &,
+  & svg,
+  & svg path {
+    color: var(--sidebar-icon);
+    fill: currentColor;
+  }
+
+  &.active,
+  &:hover {
+    // color: var(--sidebar-active-border);
+    background: var(--sidebar-active-background);
+    border-color: var(--sidebar-active-border);
+
+    &,
+    & svg,
+    & svg path {
+      // color: var(--base-text);
+    }
   }
 }

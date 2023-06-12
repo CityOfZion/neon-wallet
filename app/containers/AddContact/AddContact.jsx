@@ -9,20 +9,30 @@ type Props = {
   history: Object,
   name: string,
   address: string,
+  match: {
+    params: {
+      name: string,
+    },
+  },
 }
 
-export default class AddContact extends React.Component<Props> {
-  render() {
-    return (
-      <div className={styles.addContact}>
-        <AddContactPanel
-          name={this.props.name}
-          address={this.props.address}
-          onSave={this.handleSave}
-        />
-      </div>
-    )
-  }
+function AddContact(props: Props) {
+  const handleSave = () => props.history.push(ROUTES.CONTACTS)
+  const { match } = props
+  const { name } = match.params
 
-  handleSave = () => this.props.history.push(ROUTES.CONTACTS)
+  console.log({ name })
+
+  return (
+    <div className={styles.addContact}>
+      <AddContactPanel
+        name={name}
+        // name={props.name}
+        // address={props.address}
+        onSave={handleSave}
+      />
+    </div>
+  )
 }
+
+export default AddContact

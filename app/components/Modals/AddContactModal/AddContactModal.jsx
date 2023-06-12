@@ -1,6 +1,7 @@
 // @flow
-import React, { Component } from 'react'
+import React from 'react'
 import { FormattedMessage } from 'react-intl'
+import { useParams } from 'react-router-dom'
 
 import BaseModal from '../BaseModal'
 import ContactForm from '../../Contacts/ContactForm'
@@ -13,28 +14,26 @@ type Props = {
   chain: string,
 }
 
-class AddContactModal extends Component<Props> {
-  handleSubmit = (name: string, address: string) => {
-    const { onSave, hideModal, triggerSuccessNotification, chain } = this.props
-
+function AddContactModal(props: Props) {
+  function handleSubmit(name: string, address: string) {
+    const { onSave, hideModal, triggerSuccessNotification, chain } = props
     onSave(name, address, chain)
     triggerSuccessNotification('Contact added.')
     hideModal()
   }
+  const { name } = useParams()
+  const { address, hideModal } = props
 
-  render() {
-    const { address, hideModal } = this.props
-
-    return (
-      <BaseModal hideModal={hideModal} height="600px">
-        <ContactForm
-          showScanner
-          formAddress={address}
-          submitLabel={<FormattedMessage id="addToContacts" />}
-          onSubmit={this.handleSubmit}
-        />
-      </BaseModal>
-    )
-  }
+  return (
+    <BaseModal hideModal={hideModal} height="600px">
+      <ContactForm
+        showScanner
+        formAddress={address}
+        submitLabel={<FormattedMessage id="addToContacts" />}
+        onSubmit={handleSubmit}
+      />
+    </BaseModal>
+  )
 }
+
 export default AddContactModal

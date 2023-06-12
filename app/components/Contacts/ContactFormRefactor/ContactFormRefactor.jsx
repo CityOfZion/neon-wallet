@@ -1,41 +1,38 @@
 // @flow
 import React from 'react'
-import { noop } from 'lodash-es'
-import { FormattedMessage, intlShape } from 'react-intl'
+// import { noop } from 'lodash-es'
+import { intlShape } from 'react-intl'
 import { wallet } from '@cityofzion/neon-js'
 import { wallet as n3Wallet } from '@cityofzion/neon-js-next'
 import { Box } from '@chakra-ui/react'
+import { BSNeo3 } from '@cityofzion/bs-neo3'
 
 import Button from '../../Button'
 import TextInput from '../../Inputs/TextInput'
-import DialogueBox from '../../DialogueBox'
+// import DialogueBox from '../../DialogueBox'
 import AddContactIcon from '../../../assets/icons/contacts-add.svg'
-import WarningIcon from '../../../assets/icons/warning.svg'
-import GridIcon from '../../../assets/icons/grid.svg'
+// import WarningIcon from '../../../assets/icons/warning.svg'
+// import GridIcon from '../../../assets/icons/grid.svg'
 import styles from './ContactFormRefactor.scss'
-import QrCodeScanner from '../../QrCodeScanner'
-import Close from '../../../assets/icons/close.svg'
+// import QrCodeScanner from '../../QrCodeScanner'
+// import Close from '../../../assets/icons/close.svg'
 import AddIcon from '../../../assets/icons/add.svg'
 import TrashCanIcon from '../../../assets/icons/delete.svg'
 import { useContactsContext } from '../../../context/contacts/ContactsContext'
+import { ROUTES } from '../../../core/constants'
 
 type Props = {
+  name: string,
   submitLabel: string,
-  formName: string,
-  formAddress: string,
-  setName: Function,
   intl: intlShape,
-}
-
-type State = {
-  nameError: string,
-  addressError: string,
-  scannerActive: boolean,
-  addressCount: number,
+  showSuccessNotification: ({ message: string }) => any,
+  history: {
+    push: Function,
+  },
 }
 
 export default function ContactForm(props: Props) {
-  const { contacts, updateContacts } = useContactsContext()
+  const { contacts, updateContacts, deleteContact } = useContactsContext()
   const [addressCount, setAddressCount] = React.useState(1)
   const [errorMapping, setErrorMapping] = React.useState({
     addresses: [],
@@ -44,7 +41,19 @@ export default function ContactForm(props: Props) {
   const [name, setName] = React.useState('')
   const [addresses, setAddresses] = React.useState([''])
   const [loading, setLoading] = React.useState(false)
-  const { submitLabel, formName, formAddress, intl } = props
+  const { intl, submitLabel, showSuccessNotification, history } = props
+
+  // this indicates we are in edit mode
+  React.useEffect(
+    () => {
+      if (props.name && contacts[props.name]) {
+        setName(props.name)
+        setAddresses(contacts[props.name]?.map(contact => contact.address))
+        setAddressCount(contacts[props.name]?.length)
+      }
+    },
+    [props.name],
+  )
 
   function handleChangeName(event) {
     const existingNames = Object.keys(contacts)
@@ -58,11 +67,69 @@ export default function ContactForm(props: Props) {
     setName(event.target.value)
   }
 
-  function handleChangeAddress(event, index) {
-    // valid address could be an N3 adddress OR legacy
+  async function handleChangeAddress(event, index) {
+    const nextAddresses = [...addresses]
+    nextAddresses[index] = event.target.value
+    setAddresses(nextAddresses)
+
+    let addressValue = event.target.value
+
+    // if the address contains the string .neo we follow a separate validation path
+    if (event.target.value.includes('.neo')) {
+      setLoading(true)
+      const NeoBlockChainService = new BSNeo3()
+      const results = await NeoBlockChainService.getOwnerOfNNS(
+        event.target.value,
+      )
+      if (!n3Wallet.isAddress(results)) {
+        // update the error mapping that the address is invalid
+        const nextErrorMappingForAddresses = [...errorMapping.addresses]
+        nextErrorMappingForAddresses[index] = intl.formatMessage({
+          id: 'errors.contact.invalidAddress',
+        })
+        return setErrorMapping({
+          ...errorMapping,
+          addresses: nextErrorMappingForAddresses,
+        })
+      }
+      const nextErrorMappingForAddresses = [...errorMapping.addresses]
+      nextErrorMappingForAddresses[index] = ''
+      setErrorMapping({
+        ...errorMapping,
+        addresses: nextErrorMappingForAddresses,
+      })
+      addressValue = results
+      setLoading(false)
+    }
+
+    // perform validation below
+    // 1.) check if address is valid
+    // 2.) check if address is already in contacts
     const validAddress =
-      wallet.isAddress(event.target.value) ||
-      n3Wallet.isAddress(event.target.value)
+      wallet.isAddress(addressValue) || n3Wallet.isAddress(addressValue)
+
+    const existingAddresses = Object.values(contacts).reduce(
+      // $FlowFixMe
+      (acc, contact) => [...acc, ...contact.map(address => address.address)],
+      [],
+    )
+
+    if (existingAddresses.includes(addressValue)) {
+      const nextErrorMappingForAddresses = [...errorMapping.addresses]
+      nextErrorMappingForAddresses[index] = intl.formatMessage({
+        id: 'errors.contact.contactExists',
+      })
+      return setErrorMapping({
+        ...errorMapping,
+        addresses: nextErrorMappingForAddresses,
+      })
+    }
+    const nextErrorMappingForAddresses = [...errorMapping.addresses]
+    nextErrorMappingForAddresses[index] = ''
+    setErrorMapping({
+      ...errorMapping,
+      addresses: nextErrorMappingForAddresses,
+    })
 
     if (!validAddress) {
       const nextErrorMappingForAddresses = [...errorMapping.addresses]
@@ -81,10 +148,6 @@ export default function ContactForm(props: Props) {
         addresses: nextErrorMappingForAddresses,
       })
     }
-
-    const nextAddresses = [...addresses]
-    nextAddresses[index] = event.target.value
-    setAddresses(nextAddresses)
   }
 
   function handleDeleteAddress(index) {
@@ -92,16 +155,26 @@ export default function ContactForm(props: Props) {
     nextAddresses.splice(index, 1)
     setAddresses(nextAddresses)
     setAddressCount(addressCount - 1)
+    // clear the error message for the deleted address
+    const nextErrorMappingForAddresses = [...errorMapping.addresses]
+    nextErrorMappingForAddresses[index] = ''
+    setErrorMapping({
+      ...errorMapping,
+      addresses: nextErrorMappingForAddresses,
+    })
   }
 
   function shouldDisableSubmitButton() {
     const hasValidNameAndAtLeastOneAddress =
       name.length > 0 && addresses[0] !== ''
 
+    const hasAnEmptyAddress = addresses.some(address => address === '')
+
     return (
       loading ||
       errorMapping.name ||
-      (errorMapping.addresses.some(address => address.length > 0) ||
+      hasAnEmptyAddress ||
+      (errorMapping.addresses.some(address => address?.length > 0) ||
         !hasValidNameAndAtLeastOneAddress)
     )
   }
@@ -111,20 +184,32 @@ export default function ContactForm(props: Props) {
       NEO_LEGACY: 'neo2',
       NEO3: 'neo3',
     }
+    if (address.includes('.neo')) {
+      return chains.NEO3
+    }
     return wallet.isAddress(address) ? chains.NEO_LEGACY : chains.NEO3
   }
 
-  function handleSaveAddress() {
+  async function handleSaveAddress() {
     setLoading(true)
     const data = addresses.map(address => ({
       address,
       chain: parseChainFromAddress(address),
     }))
-    updateContacts(name, data)
+    await updateContacts(name, data)
+    // this indicates an update where they changed the
+    // contents of the name field for an existing contact
+    if (props.name && props.name !== name) {
+      await deleteContact(props.name)
+    }
+    showSuccessNotification({
+      message: props.name
+        ? `Successfully updated contact ${name}`
+        : `Successfully added contact ${name}`,
+    })
     setLoading(false)
+    history.push(ROUTES.CONTACTS)
   }
-
-  console.log({ contacts })
 
   return (
     <section className={styles.contactFormContainer}>
@@ -162,7 +247,7 @@ export default function ContactForm(props: Props) {
                   error={errorMapping.addresses[i]}
                 />
               </Box>
-              {i > 0 && (
+              {addresses.length > 1 && (
                 <Box
                   display="flex"
                   alignItems="center"
@@ -197,6 +282,7 @@ export default function ContactForm(props: Props) {
 
           <div className={styles.submitButtonRow}>
             <Button
+              loading={loading}
               onClick={() => handleSaveAddress()}
               className={styles.submitButton}
               primary
@@ -204,7 +290,8 @@ export default function ContactForm(props: Props) {
               disabled={shouldDisableSubmitButton()}
               renderIcon={AddContactIcon}
             >
-              {submitLabel}
+              {/* TODO: this needs a translation */}
+              {props.name ? 'Update contact' : submitLabel}
             </Button>
           </div>
         </Box>
@@ -212,181 +299,3 @@ export default function ContactForm(props: Props) {
     </section>
   )
 }
-
-// import { BSNeo3 } from '@cityofzion/bs-neo3'
-
-// const validateAddressOrNSS = useCallback(
-//   debounce(async ({ addressOrDomain, selectedAccount, selectedContact, selectedWallet }: HandleChange) => {
-//     setNNSAddress(undefined)
-
-//     let isValid = false
-//     let address: string | undefined
-
-//     const serviceLib = getBlockchainServiceLib(account.blockchain)
-//     if (hasNNS(serviceLib) && serviceLib.validateNNSFormat(addressOrDomain)) {
-//       try {
-//         setLoading(true)
-//         const nnsAddress = await serviceLib.getOwnerOfNNS(addressOrDomain.toLowerCase())
-//         setNNSAddress(addressOrDomain.toLowerCase())
-//         isValid = true
-//         address = nnsAddress
-//         onAddressChange(nnsAddress)
-//       } finally {
-//         setLoading(false)
-//       }
-//     } else if (blockchainService.validateAddress(addressOrDomain)) {
-//       isValid = true
-//       address = addressOrDomain
-//     }
-
-//     onAddressValidation(isValid)
-//     const foundedAccount = selectedAccount
-//       ? selectedAccount
-//       : address
-//       ? accounts.find(account => account.address === address)
-//       : undefined
-
-//     const foundedWallet = selectedWallet
-//       ? selectedWallet
-//       : address && foundedAccount
-//       ? foundedAccount.getWallet(wallets)
-//       : undefined
-
-//     const foundedContact = selectedContact
-//       ? selectedContact
-//       : contacts.find(contact => contact.addresses.some(address => address.addressOrDomain === addressOrDomain))
-
-//     onAccountChange(foundedAccount)
-//     onWalletChange(foundedWallet)
-//     onContactChange(foundedContact)
-//   }, 1000),
-//   [getBlockchainServiceLib, blockchainService]
-// )
-
-// componentWillMount() {
-//   const { newAddress, setAddress } = this.props
-
-//   if (newAddress) {
-//     setAddress('')
-//   }
-// }
-
-// disableButton = (name: string, address: string) => {
-//   const { chain } = this.props
-//   if (name.length === 0) {
-//     return true
-//   }
-
-//   if (name.length > 100) {
-//     return true
-//   }
-
-//   if (
-//     chain === 'neo3'
-//       ? !n3Wallet.isAddress(address)
-//       : !wallet.isAddress(address)
-//   ) {
-//     return true
-//   }
-
-//   return false
-// }
-
-// validate = (name: string, address: string) => {
-//   const validName = this.validateName(name)
-//   const validAddress = this.validateAddress(address)
-
-//   return validName && validAddress
-// }
-
-// validateName = (name: string) => {
-//   const { contacts, mode, intl } = this.props
-//   let error
-
-//   if (name.length === 0) {
-//     error = intl.formatMessage({ id: 'errors.contact.nameNull' }) // eslint-disable-line
-//   }
-
-//   if (name.length > 100) {
-//     error = intl.formatMessage({ id: 'errors.contact.nameLength' })
-//   }
-
-//   if (mode !== 'edit') {
-//     const nameExists = Object.keys(contacts).filter(
-//       (contactName: string) => contactName === name,
-//     )
-
-//     if (nameExists.length > 0) {
-//       error = intl.formatMessage({ id: 'errors.contact.nameDupe' })
-//     }
-//   }
-
-//   if (error) {
-//     this.setState({ nameError: error })
-//     return false
-//   }
-//   return true
-// }
-
-// validateAddress = (address: string) => {
-//   const { mode, contacts, formAddress, intl, chain } = this.props
-//   let error
-
-//   if (
-//     chain === 'neo3'
-//       ? !n3Wallet.isAddress(address)
-//       : !wallet.isAddress(address)
-//   ) {
-//     error = intl.formatMessage({ id: 'errors.contact.invalidAddress' })
-//   }
-
-//   if (mode !== 'edit') {
-//     const addressExists = Object.keys(contacts)
-//       .map(acc => contacts[acc])
-//       .filter(adr => adr === formAddress)
-
-//     if (addressExists.length > 0) {
-//       error = intl.formatMessage({ id: 'errors.contact.contactExists' })
-//     }
-//   }
-
-//   if (error) {
-//     this.setState({ addressError: error })
-//     return false
-//   }
-//   return true
-// }
-
-// clearErrors = (name: string) => {
-//   if (name === 'name') {
-//     this.setState({ nameError: '' })
-//   }
-
-//   if (name === 'address') {
-//     this.setState({ addressError: '' })
-//   }
-// }
-
-// handleChangeName = (event: Object) => {
-//   this.clearErrors(event.target.name)
-//   this.props.setName(event.target.value)
-//   this.validate(event.target.value, this.props.formAddress)
-// }
-
-// handleChangeAddress = (event: Object) => {
-//   this.clearErrors(event.target.name)
-//   this.props.setAddress(event.target.value)
-//   this.validate(this.props.formName, event.target.value)
-// }
-
-// handleSubmit = (event: Object) => {
-//   event.preventDefault()
-//   const { onSubmit, formName, formAddress } = this.props
-
-//   const validInput = this.validate(formName, formAddress)
-
-//   if (validInput) {
-//     onSubmit(formName, formAddress)
-//   }
-// }
-// }

@@ -8,6 +8,7 @@ import DisplayInput from '../../../DisplayInput'
 import { isNumber, toBigNumber } from '../../../../../core/math'
 import { formatNumberByDecimalScale } from '../../../../../core/formatters'
 import TrashCanIcon from '../../../../../assets/icons/delete.svg'
+import { useContactsContext } from '../../../../../context/contacts/ContactsContext'
 
 import styles from '../SendRecipientList.scss'
 
@@ -30,8 +31,13 @@ type Props = {
   isMigration: boolean,
 }
 
-class SendRecipientListItem extends Component<Props> {
-  handleFieldChange = (value: string, type: 'asset' | 'amount' | 'address') => {
+function SendRecipientListItem(props: Props) {
+  const { contacts } = useContactsContext()
+
+  function handleFieldChange(
+    value: string,
+    type: 'asset' | 'amount' | 'address',
+  ) {
     const {
       index,
       updateRowField,
@@ -40,10 +46,8 @@ class SendRecipientListItem extends Component<Props> {
       calculateMaxValue,
       asset,
       isMigration,
-    } = this.props
-
+    } = props
     let normalizedValue = value
-
     if (type === 'address') {
       const isContactString = Object.keys(contacts).find(
         contact => contact === value,
@@ -57,118 +61,118 @@ class SendRecipientListItem extends Component<Props> {
         ? dynamicMax
         : value
     }
-
     clearErrors(index, type)
     updateRowField(index, type, normalizedValue)
   }
 
-  handleMaxClick = () => {
-    const { index, updateRowField, calculateMaxValue, asset } = this.props
+  function handleMaxClick() {
+    const { index, updateRowField, calculateMaxValue, asset } = props
     const max = calculateMaxValue(asset, index)
     updateRowField(index, 'amount', max.toString())
   }
 
-  handleDeleteRow = () => {
-    const { index, removeRow } = this.props
+  function handleDeleteRow() {
+    const { index, removeRow } = props
     removeRow(index)
   }
 
-  clearErrorsOnFocus = (e: Object) => {
+  function clearErrorsOnFocus(e: Object) {
     const { name } = e.target
-    const { clearErrors, index } = this.props
+    const { clearErrors, index } = props
     clearErrors(index, name)
   }
 
-  createAssetList = (): Array<string> => Object.keys(this.props.sendableAssets)
-
-  createContactList = (): Array<string> => Object.keys(this.props.contacts)
-
-  render() {
-    const {
-      index,
-      address,
-      amount,
-      asset,
-      errors,
-      max,
-      showConfirmSend,
-      numberOfRecipients,
-      intl,
-      isMigration,
-    } = this.props
-
-    const selectInput = showConfirmSend ? (
-      <DisplayInput value={asset} />
-    ) : (
-      <SelectInput
-        value={asset}
-        name="asset"
-        onChange={value => this.handleFieldChange(value, 'asset')}
-        items={this.createAssetList()}
-        onFocus={this.clearErrorsOnFocus}
-      />
-    )
-
-    const numberInput = showConfirmSend ? (
-      <DisplayInput value={formatNumberByDecimalScale(amount)} />
-    ) : (
-      <NumberInput
-        value={amount || 0}
-        max={max}
-        name="amount"
-        onChange={(e, value) => this.handleFieldChange(value, 'amount')}
-        handleMaxClick={this.handleMaxClick}
-        onFocus={this.clearErrorsOnFocus}
-        error={errors && errors.amount}
-        options={{ numeralDecimalScale: 8 }}
-      />
-    )
-    // TODO: this should be converted to use the StyledReactSelect component
-    // currently the UI does not indicate if there are no contacts
-    const addressInput = showConfirmSend ? (
-      <DisplayInput value={address} />
-    ) : (
-      <SelectInput
-        placeholder={intl.formatMessage({ id: 'sendAddressPlaceholder' })}
-        value={address || ''}
-        name="address"
-        onChange={value => this.handleFieldChange(value, 'address')}
-        items={isMigration ? [] : this.createContactList()}
-        onFocus={this.clearErrorsOnFocus}
-        error={errors && errors.address}
-        disabled={isMigration}
-      />
-    )
-
-    const trashCanButton = showConfirmSend ? null : (
-      <button
-        type="button"
-        className={styles.deleteButton}
-        onClick={this.handleDeleteRow}
-        disabled={showConfirmSend}
-      >
-        <TrashCanIcon />
-      </button>
-    )
-
-    return (
-      <li className={styles.sendRecipientListItem}>
-        {!isMigration && (
-          <div className={styles.rowNumber}>{`${`0${index + 1}`.slice(
-            -2,
-          )}`}</div>
-        )}
-        <div className={styles.asset}>{selectInput}</div>
-        <div className={styles.amount}>{numberInput}</div>
-        <div className={styles.address}>{addressInput}</div>
-        {!isMigration && (
-          <div className={styles.delete}>
-            {numberOfRecipients > 1 && trashCanButton}
-          </div>
-        )}
-      </li>
-    )
+  function createAssetList(): Array<string> {
+    return Object.keys(props.sendableAssets)
   }
+
+  function createContactList(): Array<string> {
+    // returns only the names of the contacts
+    return Object.keys(contacts)
+  }
+
+  const {
+    index,
+    address,
+    amount,
+    asset,
+    errors,
+    max,
+    showConfirmSend,
+    numberOfRecipients,
+    intl,
+    isMigration,
+  } = props
+
+  const selectInput = showConfirmSend ? (
+    <DisplayInput value={asset} />
+  ) : (
+    <SelectInput
+      value={asset}
+      name="asset"
+      onChange={value => handleFieldChange(value, 'asset')}
+      items={createAssetList()}
+      onFocus={clearErrorsOnFocus}
+    />
+  )
+
+  const numberInput = showConfirmSend ? (
+    <DisplayInput value={formatNumberByDecimalScale(amount)} />
+  ) : (
+    <NumberInput
+      value={amount || 0}
+      max={max}
+      name="amount"
+      onChange={(e, value) => handleFieldChange(value, 'amount')}
+      handleMaxClick={handleMaxClick}
+      onFocus={clearErrorsOnFocus}
+      error={errors && errors.amount}
+      options={{ numeralDecimalScale: 8 }}
+    />
+  )
+  // TODO: this should be converted to use the StyledReactSelect component
+  // currently the UI does not indicate if there are no contacts
+  const addressInput = showConfirmSend ? (
+    <DisplayInput value={address} />
+  ) : (
+    <SelectInput
+      placeholder={intl.formatMessage({ id: 'sendAddressPlaceholder' })}
+      value={address || ''}
+      name="address"
+      onChange={value => handleFieldChange(value, 'address')}
+      items={isMigration ? [] : createContactList()}
+      onFocus={clearErrorsOnFocus}
+      error={errors && errors.address}
+      disabled={isMigration}
+    />
+  )
+
+  const trashCanButton = showConfirmSend ? null : (
+    <button
+      type="button"
+      className={styles.deleteButton}
+      onClick={handleDeleteRow}
+      disabled={showConfirmSend}
+    >
+      <TrashCanIcon />
+    </button>
+  )
+
+  return (
+    <li className={styles.sendRecipientListItem}>
+      {!isMigration && (
+        <div className={styles.rowNumber}>{`${`0${index + 1}`.slice(-2)}`}</div>
+      )}
+      <div className={styles.asset}>{selectInput}</div>
+      <div className={styles.amount}>{numberInput}</div>
+      <div className={styles.address}>{addressInput}</div>
+      {!isMigration && (
+        <div className={styles.delete}>
+          {numberOfRecipients > 1 && trashCanButton}
+        </div>
+      )}
+    </li>
+  )
 }
 
 export default injectIntl(SendRecipientListItem)
