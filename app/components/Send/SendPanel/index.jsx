@@ -126,6 +126,7 @@ const SendPanel = ({
         calculateMaxValue={calculateMaxValue}
         isWatchOnly={isWatchOnly}
         isMigration={isMigration}
+        chain={chain}
       />
       {chain === 'neo2' &&
         !isMigration && (

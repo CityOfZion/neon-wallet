@@ -1,7 +1,6 @@
 // @flow
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import { useParams } from 'react-router-dom'
 
 import BaseModal from '../BaseModal'
 import ContactForm from '../../Contacts/ContactForm'
@@ -21,7 +20,6 @@ function AddContactModal(props: Props) {
     triggerSuccessNotification('Contact added.')
     hideModal()
   }
-  const { name } = useParams()
   const { address, hideModal } = props
 
   return (

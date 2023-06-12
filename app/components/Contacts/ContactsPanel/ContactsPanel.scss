@@ -41,11 +41,13 @@
     .address {
       display: flex;
       align-items: center;
-      width: 375px;
+      // width: 420px;
+      // min-width: 420px;
       font-size: 14px;
-      justify-content: space-between;
+      // justify-content: space-between;
       margin-bottom: -5px;
       span {
+        word-break: break-word;
         padding-left: 4px;
         margin-bottom: 4px;
         // display: flex;

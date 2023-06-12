@@ -1,7 +1,12 @@
 // @flow
 import React, { Component } from 'react'
+import { compose, withProps } from 'recompose'
 import { injectIntl, IntlShape } from 'react-intl'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { BSNeo3 } from '@cityofzion/bs-neo3'
 
+import { showModal } from '../../../../../modules/modal'
 import SelectInput from '../../../../Inputs/SelectInput'
 import NumberInput from '../../../../Inputs/NumberInput'
 import DisplayInput from '../../../DisplayInput'
@@ -11,6 +16,8 @@ import TrashCanIcon from '../../../../../assets/icons/delete.svg'
 import { useContactsContext } from '../../../../../context/contacts/ContactsContext'
 
 import styles from '../SendRecipientList.scss'
+import { MODAL_TYPES } from '../../../../../core/constants'
+import { Center } from '@chakra-ui/react'
 
 type Props = {
   asset: string,
@@ -21,7 +28,6 @@ type Props = {
   errors: Object,
   sendableAssets: Object,
   showConfirmSend: boolean,
-  contacts: Object,
   numberOfRecipients: number,
   clearErrors: (index: number, field: string) => any,
   removeRow: (index: number) => any,
@@ -29,6 +35,8 @@ type Props = {
   calculateMaxValue: (asset: string, index: number) => string,
   intl: IntlShape,
   isMigration: boolean,
+  showModal: (modalType: string, modalProps: Object) => any,
+  chain: string,
 }
 
 function SendRecipientListItem(props: Props) {
@@ -41,19 +49,44 @@ function SendRecipientListItem(props: Props) {
     const {
       index,
       updateRowField,
-      contacts,
       clearErrors,
       calculateMaxValue,
       asset,
       isMigration,
+      showModal,
     } = props
     let normalizedValue = value
     if (type === 'address') {
-      const isContactString = Object.keys(contacts).find(
-        contact => contact === value,
-      )
-      if (isContactString) {
-        normalizedValue = contacts[value]
+      const contact = contacts[value]
+
+      // if the value is an address and contains .neo it indicates that it is potentially
+      // an NNS domain so we verify and manipulate the value here
+      if (value.includes('.neo') && !contact) {
+        const NeoBlockChainService = new BSNeo3()
+        NeoBlockChainService.getOwnerOfNNS(value).then(results => {
+          clearErrors(index, type)
+          updateRowField(index, type, results)
+        })
+      }
+
+      if (contact) {
+        const filteredByChain = contact.filter(c => c.chain === props.chain)
+
+        // if the contact has multiple addresses for the chain we need to render a modal
+        // which allows them to select the address they want to send to
+        if (filteredByChain.length > 1) {
+          return showModal(MODAL_TYPES.CHOOSE_ADDRESS_FROM_CONTACT, {
+            contactName: value,
+            chain: props.chain,
+            onClick: address => {
+              // console.log('address', address)
+              // normalizedValue = address
+              clearErrors(index, type)
+              updateRowField(index, type, address)
+            },
+          })
+        }
+        normalizedValue = filteredByChain[0].address
       }
     } else if (type === 'amount' && value && isNumber(value)) {
       const dynamicMax = calculateMaxValue(asset, index)
@@ -87,8 +120,13 @@ function SendRecipientListItem(props: Props) {
   }
 
   function createContactList(): Array<string> {
-    // returns only the names of the contacts
-    return Object.keys(contacts)
+    // filter out contacts if they do not contain
+    // addresses for the current chain
+    const { chain } = props
+    const filteredContacts = Object.keys(contacts).filter(contact =>
+      contacts[contact].some(address => address.chain === chain),
+    )
+    return filteredContacts
   }
 
   const {
@@ -175,4 +213,16 @@ function SendRecipientListItem(props: Props) {
   )
 }
 
-export default injectIntl(SendRecipientListItem)
+const actionCreators = {
+  showModal,
+}
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(actionCreators, dispatch)
+
+export default compose(
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
+)(injectIntl(SendRecipientListItem))

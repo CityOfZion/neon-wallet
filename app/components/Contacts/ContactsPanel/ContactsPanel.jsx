@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { orderBy, groupBy, isEmpty } from 'lodash-es'
 import classNames from 'classnames'
 import { FormattedMessage, IntlShape } from 'react-intl'
-import { Box, Center, Divider } from '@chakra-ui/react'
+import { Box, Center, Divider, Text, Image } from '@chakra-ui/react'
 
 import StyledReactSelect from '../../Inputs/StyledReactSelect/StyledReactSelect'
 import HeaderBar from '../../HeaderBar'
@@ -187,14 +187,23 @@ function ContactsPanel(props: Props) {
       >
         {' '}
         <div className={styles.address}>
-          <Box width="22px" marginRight="12px">
-            {chain === 'neo2' ? (
-              <img src={OldNeoLogo} alt="legacy" />
-            ) : (
-              <img src={NEO_IMAGE} alt="n3" />
+          <Image
+            width="22px"
+            maxWidth="22px"
+            // height="22px"
+            // maxHeight="22px"
+            marginRight="12px"
+            src={chain === 'neo2' ? OldNeoLogo : NEO_IMAGE}
+          />
+
+          <Box display="flex" flexDirection="column" width="300px">
+            <span>{address}</span>
+            {parsedAddress && (
+              <Text marginLeft="4px" opacity={0.5} fontSize="12px">
+                {parsedAddress}
+              </Text>
             )}
           </Box>
-          <span>{address}</span>
           <CopyToClipboard
             className={styles.copy}
             text={parsedAddress || address}
