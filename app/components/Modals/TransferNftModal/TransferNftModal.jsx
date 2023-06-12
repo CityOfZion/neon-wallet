@@ -142,7 +142,14 @@ export default function TransferNftModal(props: Props) {
           },
         },
       }
-      const results = await new N3Helper(endpoint, 0).rpcCall(account, testReq)
+      const results = await new N3Helper(endpoint, 0).rpcCall(
+        account,
+        testReq,
+        isHardwareLogin,
+        signingFunction,
+        showInfoNotification,
+        hideNotification,
+      )
 
       const { result } = results
 
