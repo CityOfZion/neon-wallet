@@ -17,7 +17,6 @@ type Props = {
   showAddContactModal: (to: string) => void,
   symbol: string,
   to: string,
-  tokenName: string,
   txDate: React$Node,
 }
 
@@ -30,13 +29,10 @@ class N3NEP11ReceiveAbstract extends React.Component<Props> {
       from,
       intl,
       to,
-      tokenName,
       showAddContactModal,
       symbol,
       txDate,
     } = this.props
-
-    console.log({ from, to })
 
     const logo = image && (
       <img

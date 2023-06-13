@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { orderBy, groupBy, isEmpty } from 'lodash-es'
 import classNames from 'classnames'
 import { FormattedMessage, IntlShape } from 'react-intl'
-import { Box, Center, Divider, Text, Image } from '@chakra-ui/react'
+import { Box, Divider, Text, Image } from '@chakra-ui/react'
 
 import StyledReactSelect from '../../Inputs/StyledReactSelect/StyledReactSelect'
 import HeaderBar from '../../HeaderBar'
@@ -14,39 +14,27 @@ import Button from '../../Button'
 import AddIcon from '../../../assets/icons/add.svg'
 import InfoIcon from '../../../assets/icons/info.svg'
 import EditIcon from '../../../assets/icons/edit.svg'
-import DeleteIcon from '../../../assets/icons/delete.svg'
 import SendIcon from '../../../assets/icons/send.svg'
-import { ROUTES, MODAL_TYPES } from '../../../core/constants'
+import { ROUTES } from '../../../core/constants'
 import CopyToClipboard from '../../CopyToClipboard'
 import LogoWithStrikethrough from '../../LogoWithStrikethrough'
-
-import { imageMap } from '../../../assets/nep5/svg'
-import OldNeoLogo from '../../../assets/images/neo-logo.png'
-
-const NEO_IMAGE = imageMap.NEO
-
-import styles from './ContactsPanel.scss'
-
 import {
   useContactsContext,
   type Contacts,
-  type ContactInfo,
 } from '../../../context/contacts/ContactsContext'
+import { imageMap } from '../../../assets/nep5/svg'
+import OldNeoLogo from '../../../assets/images/neo-logo.png'
+import styles from './ContactsPanel.scss'
 
-type ParsedContact = {
-  addresses: ContactInfo[],
-  name: string,
-}
+const NEO_IMAGE = imageMap.NEO
 
 type OrderDirection = 'desc' | 'asc'
 
 type Props = {
-  // history: Object,
-  // deleteContact: (string, string) => void,
-  // showSuccessNotification: ({ message: string }) => void,
-  // showModal: (modalType: string, modalProps: Object) => any,
   intl: IntlShape,
-  // chain: string,
+  history: {
+    push: Function,
+  },
 }
 
 type SelectOption = {
@@ -69,6 +57,7 @@ function ContactsPanel(props: Props) {
   const [sorting, setSorting] = useState(SORTING_OPTIONS[0])
   const { contacts } = useContactsContext()
   const [selectedContact, setSelectedContact] = useState(null)
+  const { intl } = props
 
   function handleSort(option: SelectOption) {
     setSorting(option)
@@ -86,27 +75,6 @@ function ContactsPanel(props: Props) {
   function handleEdit(name: string) {
     props.history.push(`/contacts/edit/${encodeURIComponent(name)}`)
   }
-
-  // function handleDelete(name: string) {
-  //   const { showModal, showSuccessNotification, intl, chain } = props
-  //   showModal(MODAL_TYPES.CONFIRM, {
-  //     title: 'Confirm Delete',
-  //     renderBody: () => (
-  //       <div className={styles.confirmDeleteModalPrompt}>
-  //         {`${intl.formatMessage({
-  //           id: 'confirmRemoveContact',
-  //         })}`}
-  //         <h2>{name}</h2>
-  //       </div>
-  //     ),
-  //     onClick: () => {
-  //       props.deleteContact(name, chain)
-  //       showSuccessNotification({
-  //         message: 'Contact removal was successful.',
-  //       })
-  //     },
-  //   })
-  // }
 
   function findContactAndReturnParsedContact(
     name: string,
@@ -174,24 +142,13 @@ function ContactsPanel(props: Props) {
     chain: string,
     parsedAddress?: string,
   ) {
-    const { intl } = props
     return (
-      <Box
-        width="100%"
-        key={address}
-        display={'flex'}
-        className={styles.contact}
-        // className={classNames(styles.contact, {
-        //   [styles.oddNumberedRow]: i % 2 === 0,
-        // })}
-      >
+      <Box width="100%" key={address} display="flex" className={styles.contact}>
         {' '}
         <div className={styles.address}>
           <Image
             width="22px"
             maxWidth="22px"
-            // height="22px"
-            // maxHeight="22px"
             marginRight="12px"
             src={chain === 'neo2' ? OldNeoLogo : NEO_IMAGE}
           />
@@ -210,14 +167,7 @@ function ContactsPanel(props: Props) {
             tooltip={intl.formatMessage({ id: 'copyAddressTooltip' })}
           />
         </div>
-        <Box className={styles.actions} marginLeft={'auto'}>
-          {/* <Button
-            className={styles.deleteButton}
-            renderIcon={DeleteIcon}
-            onClick={() => handleDelete(name)}
-          >
-            <FormattedMessage id="deleteLabel" />
-          </Button> */}
+        <Box className={styles.actions} marginLeft="auto">
           <Address address={parsedAddress || address} asWrapper>
             <Button className={styles.infoButton} renderIcon={InfoIcon}>
               <FormattedMessage id="sidebarActivity" />
@@ -279,7 +229,7 @@ function ContactsPanel(props: Props) {
                   paddingX="12px"
                   width="100%"
                 >
-                  <Box margin="12px" marginLeft={'auto'} marginTop="2px">
+                  <Box margin="12px" marginLeft="auto" marginTop="2px">
                     <StyledReactSelect
                       alignValueContainer="flex-end"
                       disabled={isEmpty(contacts)}
@@ -295,15 +245,13 @@ function ContactsPanel(props: Props) {
                     ({ groupName, groupContacts }) => (
                       <Box key={`group${groupName}`} width="100%">
                         <div className={styles.groupHeader}>{groupName}</div>
-                        {groupContacts.map(({ address, name }, i) => (
+                        {groupContacts.map(({ name }, i) => (
                           <Box
                             height={55}
-                            display={'flex'}
-                            alignItems={'center'}
-                            // justifyContent={'center'}
+                            display="flex"
+                            alignItems="center"
                             cursor="pointer"
                             onClick={() => setSelectedContact(name)}
-                            // width="100%"
                             className={classNames({
                               [styles.contactRow]: true,
                               [styles.active]: name === selectedContact,
@@ -311,7 +259,7 @@ function ContactsPanel(props: Props) {
                           >
                             <Box
                               width="100%"
-                              display={'flex'}
+                              display="flex"
                               key={`contact${name}${i}`}
                               className={classNames(styles.contact, {
                                 [styles.oddNumberedRow]: i % 2 === 0,
@@ -331,19 +279,19 @@ function ContactsPanel(props: Props) {
               </Box>
               {selectedContact && (
                 <Box
-                  display={'flex'}
-                  flexDirection={'column'}
-                  alignItems={'flex-start'}
+                  display="flex"
+                  flexDirection="column"
+                  alignItems="flex-start"
                   padding="24px"
                   width="100%"
                 >
                   <Box
-                    display={'flex'}
-                    width={'100%'}
+                    display="flex"
+                    width="100%"
                     alignItems="center"
-                    justifyContent={'space-between'}
+                    justifyContent="space-between"
                   >
-                    <Box display={'flex'} alignItems={'center'}>
+                    <Box display="flex" alignItems="center">
                       <ContactAvatar name={selectedContact} />
                       {selectedContact}
                     </Box>

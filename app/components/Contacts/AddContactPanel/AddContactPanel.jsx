@@ -59,11 +59,7 @@ function AddContactPanel(props: Props) {
       renderBackButton={() => <BackButton routeTo={ROUTES.CONTACTS} />}
       headerText={<FormattedMessage id="addAContact" />}
       renderInstructions={() => (
-        <Box
-          display="flex"
-          alignItems={'center'}
-          justifyContent={'space-between'}
-        >
+        <Box display="flex" alignItems="center" justifyContent="space-between">
           {' '}
           <FormattedMessage id="addContactDetails" />
           <Box

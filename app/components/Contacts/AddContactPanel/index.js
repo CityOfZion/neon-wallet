@@ -4,6 +4,7 @@ import { withActions, progressValues } from 'spunky'
 import { trim } from 'lodash-es'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { withRouter } from 'react-router-dom'
 
 import AddContactPanel from './AddContactPanel'
 import { addContactActions } from '../../../actions/contactsActions'
@@ -15,7 +16,6 @@ import {
   showErrorNotification,
   showSuccessNotification,
 } from '../../../modules/notifications'
-import { withRouter } from 'react-router-dom'
 
 const { LOADED } = progressValues
 

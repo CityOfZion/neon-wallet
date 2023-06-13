@@ -16,7 +16,6 @@ type Props = {
 class N3ClaimAbstract extends React.Component<Props> {
   render = () => {
     const { amount, image, isPending, symbol, txDate } = this.props
-    console.log({ amount })
     return (
       <div className={classNames(styles.transactionContainerN3)}>
         <div className={styles.abstractContainerN3}>

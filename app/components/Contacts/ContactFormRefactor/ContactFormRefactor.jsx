@@ -9,13 +9,8 @@ import { BSNeo3 } from '@cityofzion/bs-neo3'
 
 import Button from '../../Button'
 import TextInput from '../../Inputs/TextInput'
-// import DialogueBox from '../../DialogueBox'
 import AddContactIcon from '../../../assets/icons/contacts-add.svg'
-// import WarningIcon from '../../../assets/icons/warning.svg'
-// import GridIcon from '../../../assets/icons/grid.svg'
 import styles from './ContactFormRefactor.scss'
-// import QrCodeScanner from '../../QrCodeScanner'
-// import Close from '../../../assets/icons/close.svg'
 import AddIcon from '../../../assets/icons/add.svg'
 import TrashCanIcon from '../../../assets/icons/delete.svg'
 import { useContactsContext } from '../../../context/contacts/ContactsContext'
@@ -41,7 +36,6 @@ export default function ContactForm(props: Props) {
     history,
     formAddress,
   } = props
-  console.log({ formAddress })
   const { contacts, updateContacts, deleteContact } = useContactsContext()
   const [addressCount, setAddressCount] = React.useState(1)
   const [errorMapping, setErrorMapping] = React.useState({

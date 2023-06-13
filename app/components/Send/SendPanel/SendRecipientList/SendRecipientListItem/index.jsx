@@ -1,6 +1,6 @@
 // @flow
-import React, { Component } from 'react'
-import { compose, withProps } from 'recompose'
+import React from 'react'
+import { compose } from 'recompose'
 import { injectIntl, IntlShape } from 'react-intl'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -14,10 +14,8 @@ import { isNumber, toBigNumber } from '../../../../../core/math'
 import { formatNumberByDecimalScale } from '../../../../../core/formatters'
 import TrashCanIcon from '../../../../../assets/icons/delete.svg'
 import { useContactsContext } from '../../../../../context/contacts/ContactsContext'
-
 import styles from '../SendRecipientList.scss'
 import { MODAL_TYPES } from '../../../../../core/constants'
-import { Center } from '@chakra-ui/react'
 
 type Props = {
   asset: string,

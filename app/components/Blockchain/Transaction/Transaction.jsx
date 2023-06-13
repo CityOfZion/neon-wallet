@@ -30,7 +30,6 @@ type Props = {
   address: string,
   chain: string,
   className?: string,
-  contacts: Object,
   blockExplorer: ExplorerType,
   isPending?: boolean,
   networkId: string,
@@ -63,20 +62,6 @@ export default function Transaction(props: Props) {
 
   function findContact(address: string): string {
     if (contacts && !isEmpty(contacts)) {
-      /*
-        export type ContactInfo = {
-          address: string,
-          chain: string,
-          // this key is dynamic and based on the current
-          // response of the NNS contract at runtime
-          parsedAddress?: string,
-        }
-
-        export type Contacts = {
-          [name: string]: ContactInfo[],
-        }
-      */
-
       // find the contact with the matching address based on the types above and
       // return the keyname for that contact
       let contactName = ''
@@ -85,29 +70,20 @@ export default function Transaction(props: Props) {
         if (contact.some(c => c.address === address)) {
           contactName = key
         }
-        // if (contact.address === address) {
-        //   contactName = key
-        // }
       })
-      if (contactName) return contactName
+      if (contactName) {
+        return (
+          <Tooltip title={address} className={styles.largerFont}>
+            {contactName}
+          </Tooltip>
+        )
+      }
     }
 
     return address
-    // if (contacts && !isEmpty(contacts)) {
-    //   const label = contacts[address]
-    //   return label ? (
-    //     <Tooltip title={address} className={styles.largerFont}>
-    //       {label}
-    //     </Tooltip>
-    //   ) : (
-    //     address
-    //   )
-    // }
-    // return address
   }
 
   function displayModal(address: string) {
-    console.log({ address })
     props.showAddContactModal({ address })
   }
 
