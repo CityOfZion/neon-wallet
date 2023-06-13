@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { wallet as n3Wallet } from '@cityofzion/neon-js-next'
+import { BSNeo3 } from '@cityofzion/bs-neo3'
 
 import { NFT } from '../../../containers/NftGallery/NftGallery'
 import Button from '../../Button'
@@ -14,6 +15,8 @@ import { getNode, getRPCEndpoint } from '../../../actions/nodeStorageActions'
 import N3Helper from '../../../context/WalletConnect/helpers'
 import { convertToArbitraryDecimals } from '../../../core/formatters'
 import { addPendingTransaction } from '../../../actions/pendingTransactionActions'
+import { useContactsContext } from '../../../context/contacts/ContactsContext'
+import { MODAL_TYPES } from '../../../core/constants'
 
 type Props = {
   hideModal: () => any,
@@ -23,7 +26,6 @@ type Props = {
   isWatchOnly: boolean,
   showModal: (type: string, props: any) => any,
   contract: string,
-  contacts: Object,
   intl: Object,
   net: string,
   address: string,
@@ -36,13 +38,13 @@ type Props = {
   dispatch: any => any,
   isHardwareLogin: boolean,
   signingFunction: () => void,
+  recipientAddressProp: string,
 }
 
 export default function TransferNftModal(props: Props) {
   const {
     hideModal,
     contract,
-    contacts,
     intl,
     net,
     tokenId,
@@ -55,6 +57,7 @@ export default function TransferNftModal(props: Props) {
     showErrorNotification,
     showInfoNotification,
     hideNotification,
+    recipientAddressProp,
   } = props
   function handleSubmit() {}
 
@@ -63,11 +66,14 @@ export default function TransferNftModal(props: Props) {
     networkFee: 0,
   }
 
-  const [recipientAddress, setRecipientAddress] = useState('')
+  const [recipientAddress, setRecipientAddress] = useState(
+    recipientAddressProp ?? '',
+  )
   const [recipientAddressError, setRecipientAddressError] = useState('')
   const [gasFee, setGasFee] = useState(DEFAULT_FEES)
   const [sendButtonDisabled, setSendButtonDisabled] = useState(false)
   const [loading, setLoading] = useState(true)
+  const { contacts } = useContactsContext()
 
   function toggleHasEnoughGas(hasGas) {
     setSendButtonDisabled(!hasGas)
@@ -99,12 +105,54 @@ export default function TransferNftModal(props: Props) {
 
   function updateRecipient(value) {
     let normalizedValue = value
-    const isContactString = Object.keys(contacts).find(
-      contact => contact === value,
-    )
-    if (isContactString) {
-      normalizedValue = contacts[value]
+    const contact = contacts[value]
+    // if the value is an address and contains .neo it indicates that it is potentially
+    // an NNS domain so we verify and manipulate the value here
+    if (value.includes('.neo') && !contact) {
+      const NeoBlockChainService = new BSNeo3()
+      return NeoBlockChainService.getOwnerOfNNS(value).then(results => {
+        // clearErrors(index, type)
+        // updateRowField(index, type, results)
+        setRecipientAddressError('')
+        setRecipientAddress(results)
+        isValidAddress(results)
+      })
     }
+
+    if (contact) {
+      const filteredByChain = contact.filter(c => c.chain === 'neo3')
+
+      // if the contact has multiple addresses for the chain we need to render a modal
+      // which allows them to select the address they want to send to
+      if (filteredByChain.length > 1) {
+        return props.showModal(MODAL_TYPES.CHOOSE_ADDRESS_FROM_CONTACT, {
+          contactName: value,
+          chain: 'neo3',
+          onClick: address => {
+            setTimeout(() => {
+              props.showModal(MODAL_TYPES.TRANSFER_NFT, {
+                ...props,
+                recipientAddressProp: address,
+              })
+            }, 0)
+          },
+          onCancel: () => {
+            setTimeout(() => {
+              props.showModal(MODAL_TYPES.TRANSFER_NFT, {
+                ...props,
+                recipientAddressProp: '',
+              })
+            }, 0)
+          },
+
+          // setRecipientAddressError('')
+          // setRecipientAddress(address)
+          // isValidAddress(address)
+        })
+      }
+      normalizedValue = filteredByChain[0].address
+    }
+
     setRecipientAddressError('')
     setRecipientAddress(normalizedValue)
     isValidAddress(normalizedValue)
@@ -117,6 +165,7 @@ export default function TransferNftModal(props: Props) {
       if (!endpoint) {
         endpoint = await getRPCEndpoint(net)
       }
+
       const account = new n3Wallet.Account(wif)
       const testReq = {
         params: {
@@ -223,6 +272,13 @@ export default function TransferNftModal(props: Props) {
     testInvoke()
   }, [])
 
+  function createContactList(): Array<string> {
+    const filteredContacts = Object.keys(contacts).filter(contact =>
+      contacts[contact].some(address => address.chain === 'neo3'),
+    )
+    return filteredContacts
+  }
+
   return (
     <BaseModal
       style={{ content: { width: '775px', height: '100%' } }}
@@ -246,7 +302,7 @@ export default function TransferNftModal(props: Props) {
             value={recipientAddress}
             name="address"
             onChange={updateRecipient}
-            items={Object.keys(contacts)}
+            items={createContactList()}
             onFocus={() => setRecipientAddressError('')}
             error={recipientAddressError}
           />

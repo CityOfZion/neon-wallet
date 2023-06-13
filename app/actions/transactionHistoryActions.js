@@ -179,6 +179,8 @@ export async function computeN3Activity(
           invocation.metadata.amount = toBigNumber(
             (invocation.metadata.amount /= 10 ** 8),
           ).toString()
+
+          console.log('invocation', invocation)
         }
       } catch (e) {
         console.warn('invocation error:', invocation, e)
@@ -217,6 +219,7 @@ export default createActions(
     if (chain === 'neo3') {
       const network = net === 'MainNet' ? 'mainnet' : 'testnet'
       const data = await NeoRest.addressTXFull(address, page, network)
+      console.log({ data })
       parsedEntries = await computeN3Activity(data, address, net)
     } else {
       const network = net === 'MainNet' ? 'mainnet' : 'testnet'

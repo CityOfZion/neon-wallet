@@ -16,6 +16,7 @@ type Props = {
 class N3ClaimAbstract extends React.Component<Props> {
   render = () => {
     const { amount, image, isPending, symbol, txDate } = this.props
+    console.log({ amount })
     return (
       <div className={classNames(styles.transactionContainerN3)}>
         <div className={styles.abstractContainerN3}>
@@ -34,7 +35,10 @@ class N3ClaimAbstract extends React.Component<Props> {
               <img src={image} />
               {symbol}
             </div>
-            <div className={styles.txAmountContainerN3}>{amount}</div>
+            <div className={styles.txAmountContainerN3}>
+              {/* eslint-disable-next-line no-restricted-globals */}
+              {!isNaN(amount) && amount}
+            </div>
           </div>
         </div>
       </div>

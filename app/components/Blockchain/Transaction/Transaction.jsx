@@ -24,6 +24,7 @@ import styles from './Transaction.scss'
 import N3NEP11ReceiveAbstract from './N3NEP11ReceiveAbstract'
 import N3NEP11SendAbstract from './N3NEP11SendAbstract'
 import N3PendingAbstract from './N3PendingAbstract'
+import { useContactsContext } from '../../../context/contacts/ContactsContext'
 
 type Props = {
   address: string,
@@ -48,69 +49,78 @@ type Props = {
   renderN2Tx?: boolean,
 }
 
-export default class Transaction extends React.Component<Props> {
-  static defaultProps = {
-    tx: {},
-  }
+export default function Transaction(props: Props) {
+  const {
+    tx: { type },
+    chain,
+    className,
+    isPending,
+    renderN2Tx,
+    address,
+  } = props
 
-  render = () => {
-    const {
-      tx: { type },
-      chain,
-      className,
-      isPending,
-      renderN2Tx,
-    } = this.props
-    return (
-      <div className={classNames(styles.transactionContainer, className)}>
-        {chain === 'neo3' && !renderN2Tx
-          ? this.renderAbstractN3()
-          : this.renderAbstract(type)}
-        {!isPending && (
-          <Button
-            className={styles.transactionHistoryButton}
-            renderIcon={InfoIcon}
-            onClick={this.handleViewTransaction}
-          >
-            <FormattedMessage id="activityViewTx" />
-          </Button>
-        )}
-      </div>
-    )
-  }
+  const { contacts } = useContactsContext()
 
-  findContact = (address: string): Node | string => {
-    const { contacts } = this.props
+  function findContact(address: string): string {
     if (contacts && !isEmpty(contacts)) {
-      const label = contacts[address]
-      return label ? (
-        <Tooltip title={address} className={styles.largerFont}>
-          {label}
-        </Tooltip>
-      ) : (
-        address
-      )
+      /*
+        export type ContactInfo = {
+          address: string,
+          chain: string,
+          // this key is dynamic and based on the current
+          // response of the NNS contract at runtime
+          parsedAddress?: string,
+        }
+
+        export type Contacts = {
+          [name: string]: ContactInfo[],
+        }
+      */
+
+      // find the contact with the matching address based on the types above and
+      // return the keyname for that contact
+      let contactName = ''
+      Object.keys(contacts).forEach(key => {
+        const contact = contacts[key]
+        console.log({ contact })
+        if (contact.some(c => c.address === address)) {
+          contactName = key
+        }
+        // if (contact.address === address) {
+        //   contactName = key
+        // }
+      })
+      if (contactName) return contactName
     }
+
     return address
+    // if (contacts && !isEmpty(contacts)) {
+    //   const label = contacts[address]
+    //   return label ? (
+    //     <Tooltip title={address} className={styles.largerFont}>
+    //       {label}
+    //     </Tooltip>
+    //   ) : (
+    //     address
+    //   )
+    // }
+    // return address
   }
 
-  displayModal = (address: string) => {
-    this.props.showAddContactModal({ address })
+  function displayModal(address: string) {
+    props.showAddContactModal({ address })
   }
 
-  handleViewTransaction = () => {
-    const { networkId, blockExplorer, tx, chain } = this.props
-    let txid
-
+  function handleViewTransaction() {
+    const { networkId, blockExplorer, tx, chain } = props
+    let { txid } = tx
     if (chain === 'neo3') {
       txid = tx.hash.substring(2)
-    } else {
-      ;({ txid } = tx)
     }
     openExplorerTx(networkId || '1', blockExplorer, txid, chain)
   }
 
-  renderTxDate = (time: ?number) => {
+  function renderTxDate(time: ?number) {
     if (!time) {
       return null
     }
@@ -122,15 +132,15 @@ export default class Transaction extends React.Component<Props> {
     )
   }
 
-  renderAbstract = (type: string, isN3?: boolean) => {
-    const { isPending, address } = this.props
-    const { time, label, amount, isNetworkFee, to, from, image } = this.props.tx
-    const contactTo = this.findContact(to)
-    const contactFrom = from && this.findContact(from)
+  function renderAbstract(type: string, isN3?: boolean) {
+    const { isPending, address } = props
+    const { time, label, amount, isNetworkFee, to, from, image } = props.tx
+    const contactTo = findContact(to)
+    const contactFrom = from && findContact(from)
     const contactToExists = contactTo !== to
     const contactFromExists = contactFrom !== from
     const logo = image && <img src={image} alt={`${label}`} />
-    const txDate = this.renderTxDate(time)
+    const txDate = renderTxDate(time)
 
     const abstractProps = {
       txDate,
@@ -139,27 +149,27 @@ export default class Transaction extends React.Component<Props> {
       amount,
       contactFrom,
       contactToExists,
-      findContact: this.findContact,
-      showAddContactModal: this.displayModal,
+      findContact,
+      showAddContactModal: displayModal,
       isNetworkFee,
       contactFromExists,
       from,
       address,
-      ...this.props.tx,
+      ...props.tx,
     }
 
     if (isPending) {
       return isN3 ? (
         <N3PendingAbstract
           {...abstractProps}
-          {...this.props.pendingTx}
-          renderTxDate={this.renderTxDate}
+          {...props.pendingTx}
+          renderTxDate={renderTxDate}
         />
       ) : (
         <PendingAbstract
           {...abstractProps}
-          {...this.props.pendingTx}
-          renderTxDate={this.renderTxDate}
+          {...props.pendingTx}
+          renderTxDate={renderTxDate}
         />
       )
     }
@@ -184,22 +194,22 @@ export default class Transaction extends React.Component<Props> {
    * Builds a contract invocation object.
    * @returns {null|*}
    */
-  renderAbstractN3 = () => {
-    const { isPending, tx, address } = this.props
+  function renderAbstractN3() {
+    const { isPending, tx } = props
     const { time, type, sender } = tx
-    const txDate = this.renderTxDate(time || (tx.metadata && tx.metadata.time))
+    const txDate = renderTxDate(time || (tx.metadata && tx.metadata.time))
 
     const metadata = {
       txDate,
       isPending,
       sender,
-      findContact: this.findContact,
-      showAddContactModal: this.displayModal,
+      findContact,
+      showAddContactModal: displayModal,
       ...tx.metadata,
     }
 
     if (isPending) {
-      return this.renderAbstract(type, true)
+      return renderAbstract(type, true)
     }
 
     switch (type) {
@@ -226,4 +236,21 @@ export default class Transaction extends React.Component<Props> {
         return null
     }
   }
+
+  return (
+    <div className={classNames(styles.transactionContainer, className)}>
+      {chain === 'neo3' && !renderN2Tx
+        ? renderAbstractN3()
+        : renderAbstract(type)}
+      {!isPending && (
+        <Button
+          className={styles.transactionHistoryButton}
+          renderIcon={InfoIcon}
+          onClick={handleViewTransaction}
+        >
+          <FormattedMessage id="activityViewTx" />
+        </Button>
+      )}
+    </div>
+  )
 }
