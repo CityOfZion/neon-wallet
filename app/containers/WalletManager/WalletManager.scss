@@ -1,0 +1,110 @@
+@import '../../styles/variables';
+
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  button {
+    width: 125px;
+    background: transparent !important;
+  }
+  button:hover {
+    background: var(--button-secondary-hover) !important;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .walletManagerDetails {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    min-height: 60px;
+    align-self: center;
+    padding: 30px;
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+    border-bottom: solid 0.5px #8d98ae;
+
+    h2 {
+      margin-right: 24px;
+    }
+
+    .iconAndHeader,
+    .buttonRow {
+      display: flex;
+      padding: 0px 0px;
+      align-items: center;
+      padding-left: 15px;
+    }
+
+    .walletIcon {
+      display: flex;
+      margin-right: 10px;
+
+      svg {
+        width: 40px;
+        height: 40px;
+        margin: auto;
+        overflow: visible;
+
+        g {
+          path {
+            fill: none;
+          }
+        }
+      }
+    }
+
+    h2 {
+      /* Manage Wallets: */
+      font-family: var(--font-gotham-light);
+      font-weight: 400;
+      font-size: 30px;
+      line-height: 32px;
+    }
+  }
+
+  .walletList {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    align-self: center;
+    overflow-y: auto;
+
+    .walletInfoRow {
+      display: flex;
+      min-height: 60px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 15px 10px 30px;
+      border-bottom: solid 0.5px rgba(93, 103, 127, 0.5);
+    }
+
+    .accountLabel {
+      font-size: 14px;
+      text-overflow: ellipsis;
+      width: 115px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .address {
+      font-family: var(--font-gotham-book);
+      font-size: 12px;
+      width: 300px;
+      color: #8d98ae;
+    }
+  }
+}
+
+.noWalletInfo {
+  width: 100%;
+  text-align: center;
+  margin-top: 60px;
+  font-style: italic;
+  opacity: 0.8;
+}

@@ -1,0 +1,10 @@
+.contacts {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .panel:not(:last-child) {
+    margin-bottom: 24px;
+  }
+}

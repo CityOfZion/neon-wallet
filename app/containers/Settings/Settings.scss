@@ -1,0 +1,141 @@
+$panel-top-margin: 25px;
+
+.panelContent {
+  padding: 0 !important;
+  height: 100%;
+}
+
+.settingsContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .settingsPanel {
+    height: 100%;
+
+    .settingsPanelHeader {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .settingsDonations {
+      font-size: 12px;
+      text-align: center;
+      justify-content: center;
+      display: flex;
+      text-decoration: none;
+      font-family: var(--font-gotham-book);
+      font-size: 10px;
+      color: var(--settings-donation-text);
+      letter-spacing: 0.4px;
+      text-align: center;
+      margin-top: auto;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.settingsIconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  svg {
+    max-width: 22px;
+    width: 22px;
+    height: 22px;
+    max-height: 22px;
+    path {
+      fill: var(--tab-text) !important;
+    }
+  }
+}
+
+.addNetworkIconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  svg {
+    max-width: 22px;
+    width: 22px;
+    height: 22px;
+    max-height: 22px;
+    path {
+      fill: var(--input-active-border) !important;
+    }
+  }
+}
+
+.settingsIconContainer:hover,
+.settingsTabWrapper:hover {
+  color: var(--input-active-border) !important;
+  svg {
+    max-width: 22px;
+    width: 22px;
+    height: 22px;
+    max-height: 22px;
+    path {
+      fill: var(--input-active-border) !important;
+    }
+  }
+}
+
+.settingsTabWrapper {
+  color: #94999d;
+
+  svg {
+    color: #94999d;
+    path {
+      fill: #94999d !important;
+    }
+  }
+}
+
+.activeSettingsIconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--input-active-border) !important;
+  svg {
+    max-width: 22px;
+    width: 22px;
+    height: 22px;
+    max-height: 22px;
+    path {
+      fill: var(--input-active-border) !important;
+    }
+  }
+}
+
+.activeSettingCheckWrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 4px;
+  svg {
+    max-width: 20px;
+    max-height: 20px;
+    path {
+      fill: var(--input-active-border) !important;
+    }
+  }
+}
+
+.settingsOptionWrapper:hover {
+  color: var(--input-active-border) !important;
+  svg {
+    path {
+      fill: var(--input-active-border) !important;
+    }
+  }
+}
+
+.flagIconContainer {
+  svg {
+    width: 20px;
+  }
+}
+
+.languageSettingsOptionWrapper:hover {
+  color: var(--input-active-border) !important;
+}

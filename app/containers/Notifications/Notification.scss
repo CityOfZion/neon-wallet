@@ -1,0 +1,44 @@
+.icon {
+  position: absolute;
+  left: 25px;
+  top: 25px;
+  transition: '0.3s ease-in-out';
+  transform: 'translate3d(0, 0, 0)';
+  will-change: 'transform, opacity';
+
+  .is-hidden {
+    opacity: 0;
+  }
+
+  .is-visible {
+    opacity: 1;
+  }
+}
+
+.icon svg {
+  margin-top: -4px;
+  width: 22px;
+  height: 22px;
+}
+
+.errorIcon {
+  svg path {
+    fill: var(--notifications-error-icon-color);
+  }
+}
+
+.warnIcon {
+  svg path {
+    opacity: 0.3;
+  }
+}
+
+.successIcon {
+  svg path {
+    fill: var(--notifications-success-icon-color);
+  }
+}
+
+.warning {
+  opacity: 0.75;
+}
