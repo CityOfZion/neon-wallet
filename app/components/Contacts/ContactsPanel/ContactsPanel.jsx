@@ -44,6 +44,7 @@ type SelectOption = {
 }
 
 type ParsedContact = {
+  // eslint-disable-next-line react/no-unused-prop-types
   addresses: ContactInfo[],
   name: string,
 }
