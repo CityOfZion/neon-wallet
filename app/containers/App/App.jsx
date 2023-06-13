@@ -186,6 +186,7 @@ const App = ({
   return (
     <ErrorBoundary>
       <div style={themes[theme]} className={styles.container}>
+        <Notifications />
         {address &&
           routesWithSideBar.includes(location.pathname) && (
             <Sidebar store={store} theme={theme} className={styles.sidebar} />
@@ -193,7 +194,7 @@ const App = ({
         <div className={styles.wrapper}>
           <FramelessNavigation />
           <div className={styles.content}>{children}</div>
-          <Notifications />
+
           <ModalRenderer />
         </div>
       </div>
