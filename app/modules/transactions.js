@@ -306,6 +306,7 @@ export const sendTransaction = ({
   sendEntries,
   fees = 0,
   isWatchOnly,
+  chain,
 }: {
   sendEntries: Array<SendEntryType>,
   fees: number,
@@ -325,7 +326,7 @@ export const sendTransaction = ({
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
   const isHardwareSend = getIsHardwareLogin(state)
-  const { tokens, chain } = state.spunky.settings.data
+  const { tokens } = state.spunky.settings.data
   return chain === 'neo3'
     ? new Promise(async (resolve, reject) => {
         try {
