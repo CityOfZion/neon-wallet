@@ -21,6 +21,7 @@ import LogoWithStrikethrough from '../../LogoWithStrikethrough'
 import {
   useContactsContext,
   type Contacts,
+  type ContactInfo,
 } from '../../../context/contacts/ContactsContext'
 import { imageMap } from '../../../assets/nep5/svg'
 import OldNeoLogo from '../../../assets/images/neo-logo.png'
@@ -313,6 +314,8 @@ function ContactsPanel(props: Props) {
                   <Divider />
 
                   {findContactAndReturnParsedContact(selectedContact) &&
+                    findContactAndReturnParsedContact(selectedContact)
+                      .addresses &&
                     findContactAndReturnParsedContact(
                       selectedContact,
                     ).addresses.map(({ address, chain, parsedAddress }) =>
