@@ -1,12 +1,10 @@
 @import '../../../styles/variables.scss';
 
 .contactFormContainer {
-  // height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
   flex: 1;
-  // margin-bottom: 48px;
 
   form {
     width: 100%;
@@ -120,7 +118,6 @@
 .scannerContainer {
   display: flex;
   justify-content: center;
-  // margin-bottom: 12px;
   margin: 24px 0;
   height: 250px;
   position: relative;

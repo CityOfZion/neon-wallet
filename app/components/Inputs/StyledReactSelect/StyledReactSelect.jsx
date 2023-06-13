@@ -59,7 +59,6 @@ const customStyles = {
       justifyContent:
         props.selectProps.alignValueContainer ||
         (props.selectProps.settingsSelect && 'flex-end'),
-      // maxWidth: '20px',
       ...conditionalStyles,
     }
   },

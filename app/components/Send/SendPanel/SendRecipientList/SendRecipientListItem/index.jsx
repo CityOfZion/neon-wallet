@@ -77,8 +77,6 @@ function SendRecipientListItem(props: Props) {
             contactName: value,
             chain: props.chain,
             onClick: address => {
-              // console.log('address', address)
-              // normalizedValue = address
               clearErrors(index, type)
               updateRowField(index, type, address)
             },

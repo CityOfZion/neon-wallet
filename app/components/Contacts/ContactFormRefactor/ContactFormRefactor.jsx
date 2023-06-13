@@ -1,6 +1,5 @@
 // @flow
 import React from 'react'
-// import { noop } from 'lodash-es'
 import { intlShape } from 'react-intl'
 import { wallet } from '@cityofzion/neon-js'
 import { wallet as n3Wallet } from '@cityofzion/neon-js-next'

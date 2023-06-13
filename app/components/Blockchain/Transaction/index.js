@@ -1,8 +1,6 @@
 // @flow
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
-import { withData } from 'spunky'
-import { invert } from 'lodash-es'
 
 import Transaction from './Transaction'
 import withNetworkData from '../../../hocs/withNetworkData'
@@ -24,5 +22,4 @@ export default compose(
   ),
   withAuthData(),
   withNetworkData(),
-  // withExplorerData(),
 )(withSettingsContext(Transaction))
