@@ -77,7 +77,7 @@ export default function TransferNftModal(props: Props) {
   }
 
   function isValidAddress(address: string) {
-    if (address[0]?.toLocaleUpperCase() !== 'N') {
+    if (address && address[0] && address[0].toLocaleUpperCase() !== 'N') {
       setRecipientAddressError(
         intl.formatMessage({
           id: 'errors.send.invalidN3Address',
