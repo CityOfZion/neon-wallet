@@ -16,6 +16,10 @@ export type Contacts = {
   [name: string]: ContactInfo[],
 }
 
+export type DeprecatedContact = {
+  [name: string]: string,
+}
+
 type ContactsContextType = {
   contacts: Contacts,
   updateContacts: (contactName: string, data: ContactInfo[]) => Promise<any>,
@@ -24,11 +28,11 @@ type ContactsContextType = {
 
 const STORAGE_KEY = 'multi-chain-address-book'
 
+const DEPRECATED_STORAGE_KEY = 'addressBook'
+const DEPRECATED_N3_STORAGE_KEY = 'n3AddressBook'
+
 export const ContactsContext = React.createContext<ContactsContextType>({})
 export const useContactsContext = () => useContext(ContactsContext)
-
-// TODO: create a migration script that will migrate the old address book to the new one
-// and ensure type safety
 
 export const ContactsContextProvider = ({
   children,
@@ -36,7 +40,29 @@ export const ContactsContextProvider = ({
   children: React$Node,
 }) => {
   const [contacts, setContacts] = React.useState({})
-  const getContacts = async (): Promise<Contacts> => getStorage(STORAGE_KEY)
+
+  const getContacts = async (): Promise<Contacts> => {
+    const contacts = await getStorage(STORAGE_KEY)
+    const deprecatedLegacyContacts = await getStorage(DEPRECATED_STORAGE_KEY)
+    const deprecatedN3Contacts = await getStorage(DEPRECATED_N3_STORAGE_KEY)
+    // transform the deprecated contacts into the new format
+    const newContacts = {}
+    // eslint-disable-next-line guard-for-in
+    for (const contactName in deprecatedLegacyContacts) {
+      const contactAddress = deprecatedLegacyContacts[contactName]
+      if (typeof contactAddress === 'string') {
+        newContacts[contactName] = [{ address: contactAddress, chain: 'neo2' }]
+      }
+    }
+    // eslint-disable-next-line guard-for-in
+    for (const contactName in deprecatedN3Contacts) {
+      const contactAddress = deprecatedN3Contacts[contactName]
+      if (typeof contactAddress === 'string') {
+        newContacts[contactName] = [{ address: contactAddress, chain: 'neo3' }]
+      }
+    }
+    return { ...contacts, ...newContacts }
+  }
 
   const saveContacts = async (contacts: Contacts): Promise<any> =>
     setStorage(STORAGE_KEY, contacts)

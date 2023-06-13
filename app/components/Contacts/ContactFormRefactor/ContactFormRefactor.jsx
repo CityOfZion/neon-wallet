@@ -26,12 +26,22 @@ type Props = {
   submitLabel: string,
   intl: intlShape,
   showSuccessNotification: ({ message: string }) => any,
+  formAddress?: string,
   history: {
     push: Function,
   },
+  handleSubmit?: () => void,
 }
 
 export default function ContactForm(props: Props) {
+  const {
+    intl,
+    submitLabel,
+    showSuccessNotification,
+    history,
+    formAddress,
+  } = props
+  console.log({ formAddress })
   const { contacts, updateContacts, deleteContact } = useContactsContext()
   const [addressCount, setAddressCount] = React.useState(1)
   const [errorMapping, setErrorMapping] = React.useState({
@@ -39,9 +49,8 @@ export default function ContactForm(props: Props) {
     name: '',
   })
   const [name, setName] = React.useState('')
-  const [addresses, setAddresses] = React.useState([''])
+  const [addresses, setAddresses] = React.useState([formAddress || ''])
   const [loading, setLoading] = React.useState(false)
-  const { intl, submitLabel, showSuccessNotification, history } = props
 
   // this indicates we are in edit mode
   React.useEffect(
@@ -208,7 +217,12 @@ export default function ContactForm(props: Props) {
         : `Successfully added contact ${name}`,
     })
     setLoading(false)
-    history.push(ROUTES.CONTACTS)
+
+    if (props.handleSubmit) {
+      props.handleSubmit()
+    } else {
+      history.push(ROUTES.CONTACTS)
+    }
   }
 
   return (

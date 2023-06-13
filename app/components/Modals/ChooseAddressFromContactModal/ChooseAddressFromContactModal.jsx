@@ -30,11 +30,7 @@ const ChooseAddressFromContactModal = ({
   chain,
 }: Props) => {
   const { contacts } = useContactsContext()
-
   const contact = contacts[contactName]
-  // const firstAddress =
-  //   (contact && contact[0]?.parsedAddress) || (contact && contact[0]?.address)
-
   const [selectedAddress, setSelectedAddress] = React.useState('')
 
   const filteredContactByChain = React.useMemo(
@@ -65,8 +61,8 @@ const ChooseAddressFromContactModal = ({
           {' '}
           Choose an address for {contactName}:
         </Text>
-        <Divider marginTop="0" marginBottom="24px" />
         <Box height="100%" display="flex" flexDirection="column">
+          <Divider padding="0" margin="0" opacity={0.2} />
           {filteredContactByChain &&
             filteredContactByChain.map(
               ({ address, parsedAddress, chain }, i) => (
@@ -88,8 +84,6 @@ const ChooseAddressFromContactModal = ({
                     <Image
                       width="22px"
                       maxWidth="22px"
-                      // height="22px"
-                      // maxHeight="22px"
                       marginRight="12px"
                       src={chain === 'neo2' ? OldNeoLogo : NEO_IMAGE}
                     />
@@ -109,9 +103,7 @@ const ChooseAddressFromContactModal = ({
                     </Box>
                   </Box>
 
-                  {i + 1 !== contact.length && (
-                    <Divider padding="0" margin="0" />
-                  )}
+                  <Divider padding="0" margin="0" opacity={0.2} />
                 </Box>
               ),
             )}

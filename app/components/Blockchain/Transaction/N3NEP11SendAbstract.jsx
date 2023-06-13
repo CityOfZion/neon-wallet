@@ -7,6 +7,7 @@ import styles from './Transaction.scss'
 import ReceiveIcon from '../../../assets/icons/receive-tx.svg'
 import ContactsAdd from '../../../assets/icons/contacts-add.svg'
 import CopyToClipboard from '../../CopyToClipboard'
+import SendIcon from '../../../assets/icons/send-tx.svg'
 
 type Props = {
   image: string,
@@ -49,7 +50,7 @@ class N3NEP11SendAbstract extends React.Component<Props> {
         <div className={styles.abstractContainerN3}>
           <div className={styles.txTypeIconContainerN3}>
             <div className={styles.sendIconContainer}>
-              <ReceiveIcon />
+              <SendIcon />
             </div>
           </div>
           {isPending ? 'Pending' : txDate}
@@ -77,7 +78,7 @@ class N3NEP11SendAbstract extends React.Component<Props> {
           <Button
             className={styles.transactionHistoryButton}
             renderIcon={ContactsAdd}
-            onClick={() => showAddContactModal(from)}
+            onClick={() => showAddContactModal(to)}
             disabled={contactToExists}
           >
             <FormattedMessage id="activityAddAddress" />

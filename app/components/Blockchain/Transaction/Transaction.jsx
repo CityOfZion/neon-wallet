@@ -82,7 +82,6 @@ export default function Transaction(props: Props) {
       let contactName = ''
       Object.keys(contacts).forEach(key => {
         const contact = contacts[key]
-        console.log({ contact })
         if (contact.some(c => c.address === address)) {
           contactName = key
         }
@@ -108,6 +107,7 @@ export default function Transaction(props: Props) {
   }
 
   function displayModal(address: string) {
+    console.log({ address })
     props.showAddContactModal({ address })
   }
 

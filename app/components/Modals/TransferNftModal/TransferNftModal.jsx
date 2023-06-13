@@ -39,6 +39,7 @@ type Props = {
   isHardwareLogin: boolean,
   signingFunction: () => void,
   recipientAddressProp: string,
+  publicKey: string,
 }
 
 export default function TransferNftModal(props: Props) {
@@ -58,6 +59,7 @@ export default function TransferNftModal(props: Props) {
     showInfoNotification,
     hideNotification,
     recipientAddressProp,
+    publicKey,
   } = props
   function handleSubmit() {}
 
@@ -71,6 +73,7 @@ export default function TransferNftModal(props: Props) {
   )
   const [recipientAddressError, setRecipientAddressError] = useState('')
   const [gasFee, setGasFee] = useState(DEFAULT_FEES)
+  const [feesInitialized, setFeesInitialized] = useState(false)
   const [sendButtonDisabled, setSendButtonDisabled] = useState(false)
   const [loading, setLoading] = useState(true)
   const { contacts } = useContactsContext()
@@ -80,7 +83,7 @@ export default function TransferNftModal(props: Props) {
   }
 
   function isValidAddress(address: string) {
-    if (address[0].toLocaleUpperCase() !== 'N') {
+    if (address && address[0] && address[0].toLocaleUpperCase() !== 'N') {
       setRecipientAddressError(
         intl.formatMessage({
           id: 'errors.send.invalidN3Address',
@@ -144,10 +147,6 @@ export default function TransferNftModal(props: Props) {
               })
             }, 0)
           },
-
-          // setRecipientAddressError('')
-          // setRecipientAddress(address)
-          // isValidAddress(address)
         })
       }
       normalizedValue = filteredByChain[0].address
@@ -165,8 +164,7 @@ export default function TransferNftModal(props: Props) {
       if (!endpoint) {
         endpoint = await getRPCEndpoint(net)
       }
-
-      const account = new n3Wallet.Account(wif)
+      const account = new n3Wallet.Account(isHardwareLogin ? publicKey : wif)
       const testReq = {
         params: {
           request: {
@@ -191,7 +189,15 @@ export default function TransferNftModal(props: Props) {
           },
         },
       }
-      const results = await new N3Helper(endpoint, 0).rpcCall(account, testReq)
+
+      const results = await new N3Helper(endpoint, 0).rpcCall(
+        account,
+        testReq,
+        isHardwareLogin,
+        signingFunction,
+        showInfoNotification,
+        hideNotification,
+      )
 
       const { result } = results
 
@@ -214,11 +220,11 @@ export default function TransferNftModal(props: Props) {
       setLoading(false)
       hideModal()
     } catch (e) {
-      setLoading(false)
-      console.error({ e })
+      hideModal()
       showErrorNotification({
-        message: 'An unknown error has occurred. Please try again.',
+        message: e.message,
       })
+      setLoading(false)
     }
   }
 
@@ -267,6 +273,7 @@ export default function TransferNftModal(props: Props) {
         networkFee: fee,
         systemFee: 0,
       })
+      setFeesInitialized(true)
       setLoading(false)
     }
     testInvoke()
@@ -308,7 +315,7 @@ export default function TransferNftModal(props: Props) {
           />
 
           <N3Fees
-            fees={loading ? DEFAULT_FEES : gasFee}
+            fees={loading && !feesInitialized ? DEFAULT_FEES : gasFee}
             notEnoughGasCallback={toggleHasEnoughGas}
           />
 
