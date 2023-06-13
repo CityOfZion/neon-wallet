@@ -25,10 +25,7 @@
     display: flex;
     align-items: center;
     padding: 12px;
-    // justify-content: center;
-    // justify-content: space-between;
     flex-wrap: nowrap;
-    // padding: 12px 12px 12px 24px;
 
     button {
       background-color: transparent;
@@ -41,17 +38,12 @@
     .address {
       display: flex;
       align-items: center;
-      // width: 420px;
-      // min-width: 420px;
       font-size: 14px;
-      // justify-content: space-between;
       margin-bottom: -5px;
       span {
         word-break: break-word;
         padding-left: 4px;
         margin-bottom: 4px;
-        // display: flex;
-        // align-items: center;
         text-overflow: ellipsis;
         margin-right: auto;
         overflow: hidden;
@@ -108,10 +100,6 @@
   width: 100px;
 }
 
-.oddNumberedRow {
-  // background: var(--contacts-odd-numbered-row);
-}
-
 .emptyContactsContainer {
   position: absolute;
   width: 50%;
@@ -149,24 +137,7 @@
 }
 
 .contactRow {
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
-  // box-sizing: border-box;
-  // width: $size;
-  // height: $size;
   border-left: 4px solid transparent;
-  // font-size: 24px;
-  // display: flex;
-  // flex-direction: column;
-  // cursor: pointer;
-  // text-decoration: none;
-  // text-align: center;
-
-  // div {
-  //   font-size: 10px;
-  //   margin-top: 5px;
-  // }
 
   &,
   & svg,
@@ -177,14 +148,7 @@
 
   &.active,
   &:hover {
-    // color: var(--sidebar-active-border);
     background: var(--sidebar-active-background);
     border-color: var(--sidebar-active-border);
-
-    &,
-    & svg,
-    & svg path {
-      // color: var(--base-text);
-    }
   }
 }
