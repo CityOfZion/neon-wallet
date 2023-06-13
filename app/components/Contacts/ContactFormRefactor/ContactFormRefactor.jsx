@@ -51,7 +51,10 @@ export default function ContactForm(props: Props) {
     () => {
       if (props.name && contacts[props.name]) {
         setName(props.name)
-        setAddresses(contacts[props.name]?.map(contact => contact.address))
+        setAddresses(
+          contacts[props.name] &&
+            contacts[props.name].map(contact => contact.address),
+        )
         setAddressCount(contacts[props.name]?.length)
       }
     },

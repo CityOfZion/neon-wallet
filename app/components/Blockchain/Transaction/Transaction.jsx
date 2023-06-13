@@ -60,7 +60,7 @@ export default function Transaction(props: Props) {
 
   const { contacts } = useContactsContext()
 
-  function findContact(address: string): string {
+  function findContact(address: string): string | React$Node {
     if (contacts && !isEmpty(contacts)) {
       // find the contact with the matching address based on the types above and
       // return the keyname for that contact

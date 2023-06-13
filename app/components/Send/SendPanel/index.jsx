@@ -224,6 +224,7 @@ const SendPanel = ({
           clearErrors={clearErrors}
           showConfirmSend={showConfirmSend}
           calculateMaxValue={calculateMaxValue}
+          chain={chain}
         />
         <ConfirmSend
           handleEditRecipientsClick={handleEditRecipientsClick}

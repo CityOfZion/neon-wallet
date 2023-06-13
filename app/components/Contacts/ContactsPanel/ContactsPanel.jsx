@@ -42,6 +42,11 @@ type SelectOption = {
   value: OrderDirection,
 }
 
+type ParsedContact = {
+  addresses: ContactInfo[],
+  name: string,
+}
+
 const SORTING_OPTIONS = [
   {
     label: 'A-Z',
@@ -307,11 +312,12 @@ function ContactsPanel(props: Props) {
                   </Box>
                   <Divider />
 
-                  {findContactAndReturnParsedContact(
-                    selectedContact,
-                  ).addresses.map(({ address, chain, parsedAddress }) =>
-                    renderContact(address, chain, parsedAddress),
-                  )}
+                  {findContactAndReturnParsedContact(selectedContact) &&
+                    findContactAndReturnParsedContact(
+                      selectedContact,
+                    ).addresses.map(({ address, chain, parsedAddress }) =>
+                      renderContact(address, chain, parsedAddress),
+                    )}
                 </Box>
               )}
             </Box>
