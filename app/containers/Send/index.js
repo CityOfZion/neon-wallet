@@ -1,7 +1,6 @@
 // @flow
 import { compose } from 'recompose'
 import { values, omit } from 'lodash-es'
-import { withData, withCall } from 'spunky'
 import { connect, type MapStateToProps } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { injectIntl } from 'react-intl'
@@ -17,7 +16,6 @@ import withAuthData from '../../hocs/withAuthData'
 import withBalancesData from '../../hocs/withBalancesData'
 import withCurrencyData from '../../hocs/withCurrencyData'
 import withFilteredTokensData from '../../hocs/withFilteredTokensData'
-import contactsActions from '../../actions/contactsActions'
 import balancesActions from '../../actions/balancesActions'
 import withSuccessNotification from '../../hocs/withSuccessNotification'
 import withFailureNotification from '../../hocs/withFailureNotification'
@@ -73,8 +71,6 @@ const mapPricesDataToProps = (prices: Object) => ({
   prices,
 })
 
-const mapContactsDataToProps = (contacts: Object) => ({ contacts })
-
 const mapBalanceDataToProps = (balances: Object) => ({
   NEO: balances ? balances.NEO : 0,
   GAS: balances ? balances.GAS : 0,
@@ -90,8 +86,6 @@ export default compose(
   withTokensData(),
   withBalancesData(mapBalanceDataToProps),
   withCurrencyData('currencyCode'),
-  withCall(contactsActions),
-  withData(contactsActions, mapContactsDataToProps),
   withPricesData(mapPricesDataToProps),
   withNetworkData(),
   withAuthData(),

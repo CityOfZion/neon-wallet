@@ -8,15 +8,12 @@ import { withRouter } from 'react-router-dom'
 
 import withAuthData from '../../../hocs/withAuthData'
 import ContactForm from './ContactFormRefactor'
-import contactsActions from '../../../actions/contactsActions'
 import withCameraAvailability from '../../../hocs/withCameraAvailability'
 import withSettingsContext from '../../../hocs/withSettingsContext'
 import {
   showErrorNotification,
   showSuccessNotification,
 } from '../../../modules/notifications'
-
-const mapContactsDataToProps = (contacts: Object) => ({ contacts })
 
 const actionCreators = {
   showErrorNotification,
@@ -32,7 +29,6 @@ export default compose(
     mapDispatchToProps,
   ),
   withAuthData(),
-  withData(contactsActions, mapContactsDataToProps),
   withState('formName', 'setName', ({ formName }) => formName || ''),
   withState(
     'formAddress',

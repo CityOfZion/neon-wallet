@@ -6,12 +6,9 @@ import { invert } from 'lodash-es'
 
 import Transaction from './Transaction'
 import withNetworkData from '../../../hocs/withNetworkData'
-// import withExplorerData from '../../../hocs/withExplorerData'
 import withAuthData from '../../../hocs/withAuthData'
 import { showModal } from '../../../modules/modal'
 import { MODAL_TYPES } from '../../../core/constants'
-
-import contactsActions from '../../../actions/contactsActions'
 
 import withSettingsContext from '../../../hocs/withSettingsContext'
 
@@ -20,17 +17,12 @@ const mapDispatchToProps = dispatch => ({
     dispatch(showModal(MODAL_TYPES.ADD_CONTACT, props)),
 })
 
-const mapContactsDataToProps = (contacts: Object) => ({
-  contacts: invert(contacts),
-})
-
 export default compose(
   connect(
     null,
     mapDispatchToProps,
   ),
   withAuthData(),
-  withData(contactsActions, mapContactsDataToProps),
   withNetworkData(),
   // withExplorerData(),
 )(withSettingsContext(Transaction))
