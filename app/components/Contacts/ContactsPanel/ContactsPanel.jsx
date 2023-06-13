@@ -312,15 +312,12 @@ function ContactsPanel(props: Props) {
                     </Box>
                   </Box>
                   <Divider />
-
-                  {findContactAndReturnParsedContact(selectedContact) &&
-                    findContactAndReturnParsedContact(selectedContact)
-                      .addresses &&
-                    findContactAndReturnParsedContact(
-                      selectedContact,
-                    ).addresses.map(({ address, chain, parsedAddress }) =>
-                      renderContact(address, chain, parsedAddress),
-                    )}
+                  {/* $FlowFixMe */}
+                  {findContactAndReturnParsedContact(
+                    selectedContact,
+                  ).addresses.map(({ address, chain, parsedAddress }) =>
+                    renderContact(address, chain, parsedAddress),
+                  )}
                 </Box>
               )}
             </Box>
