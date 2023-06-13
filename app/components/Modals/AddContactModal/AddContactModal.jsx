@@ -15,14 +15,21 @@ function AddContactModal(props: Props) {
   const { address, hideModal } = props
 
   return (
-    <BaseModal hideModal={hideModal} height="100%" width="400px">
-      <Box width="350px">
-        <ContactForm
-          showScanner
-          formAddress={address}
-          submitLabel={<FormattedMessage id="addToContacts" />}
-          handleSubmit={() => props.hideModal()}
-        />
+    <BaseModal hideModal={hideModal} height="100%" width="600px">
+      <Box
+        width="100%"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Box width="450px" marginLeft="-24px">
+          <ContactForm
+            showScanner
+            formAddress={address}
+            submitLabel={<FormattedMessage id="addToContacts" />}
+            handleSubmit={() => props.hideModal()}
+          />
+        </Box>
       </Box>
     </BaseModal>
   )
