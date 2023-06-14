@@ -144,3 +144,8 @@ export default class TransactionHistory extends React.Component<Props> {
     }
   }
 }
+
+TransactionHistory.defaultProps = {
+  transactions: [],
+  pendingTransactions: [],
+}

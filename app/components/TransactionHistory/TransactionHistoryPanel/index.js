@@ -65,9 +65,6 @@ export default compose(
   ),
   withAuthData(),
   withNetworkData(),
-  // withProgressPanel(transactionHistoryActions, {
-  //   title: '',
-  // }),
   withActions(transactionHistoryActions, mapAccountActionsToProps),
   withActions(getPendingTransactionInfo, mapPendingTransactionActionsToProps),
   withCall(getPendingTransactionInfo),
