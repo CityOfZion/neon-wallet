@@ -218,7 +218,6 @@ export default createActions(
     if (chain === 'neo3') {
       const network = net === 'MainNet' ? 'mainnet' : 'testnet'
       const data = await NeoRest.addressTXFull(address, page, network)
-      // console.log({ data })
       count = data.totalCount
       parsedEntries = await computeN3Activity(data, address, net)
     } else {
