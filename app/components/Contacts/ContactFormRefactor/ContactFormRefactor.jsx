@@ -72,70 +72,65 @@ export default function ContactForm(props: Props) {
     setName(event.target.value)
   }
 
-  async function handleChangeAddress(event, index) {
-    const nextAddresses = [...addresses]
-    nextAddresses[index] = event.target.value
-    setAddresses(nextAddresses)
-
-    let addressValue = event.target.value
-
-    // if the address contains the string .neo we follow a separate validation path
-    if (event.target.value.includes('.neo')) {
-      setLoading(true)
-      const NeoBlockChainService = new BSNeo3()
-      const results = await NeoBlockChainService.getOwnerOfNNS(
-        event.target.value,
-      )
-      if (!n3Wallet.isAddress(results)) {
-        // update the error mapping that the address is invalid
-        const nextErrorMappingForAddresses = [...errorMapping.addresses]
-        nextErrorMappingForAddresses[index] = intl.formatMessage({
-          id: 'errors.contact.invalidAddress',
-        })
-        return setErrorMapping({
-          ...errorMapping,
-          addresses: nextErrorMappingForAddresses,
-        })
-      }
-      const nextErrorMappingForAddresses = [...errorMapping.addresses]
-      nextErrorMappingForAddresses[index] = ''
-      setErrorMapping({
-        ...errorMapping,
-        addresses: nextErrorMappingForAddresses,
-      })
-      addressValue = results
-      setLoading(false)
-    }
-
-    // perform validation below
-    // 1.) check if address is valid
-    // 2.) check if address is already in contacts
-    const validAddress =
-      wallet.isAddress(addressValue) || n3Wallet.isAddress(addressValue)
-
-    const existingAddresses = Object.values(contacts).reduce(
-      // $FlowFixMe
-      (acc, contact) => [...acc, ...contact.map(address => address.address)],
-      [],
-    )
-
-    if (existingAddresses.includes(addressValue)) {
-      const nextErrorMappingForAddresses = [...errorMapping.addresses]
-      nextErrorMappingForAddresses[index] = intl.formatMessage({
-        id: 'errors.contact.contactExists',
-      })
-      return setErrorMapping({
-        ...errorMapping,
-        addresses: nextErrorMappingForAddresses,
-      })
-    }
+  function clearErrorForGivenIndex(index) {
     const nextErrorMappingForAddresses = [...errorMapping.addresses]
     nextErrorMappingForAddresses[index] = ''
     setErrorMapping({
       ...errorMapping,
       addresses: nextErrorMappingForAddresses,
     })
+  }
 
+  async function handleNNSDomain(address, index) {
+    setLoading(true)
+    const NeoBlockChainService = new BSNeo3()
+    const results = await NeoBlockChainService.getOwnerOfNNS(address)
+    if (!n3Wallet.isAddress(results)) {
+      // update the error mapping that the address is invalid
+      const nextErrorMappingForAddresses = [...errorMapping.addresses]
+      nextErrorMappingForAddresses[index] = intl.formatMessage({
+        id: 'errors.contact.invalidAddress',
+      })
+      return setErrorMapping({
+        ...errorMapping,
+        addresses: nextErrorMappingForAddresses,
+      })
+    }
+    clearErrorForGivenIndex(index)
+    setLoading(false)
+    return results
+  }
+
+  // validates whether or not the address is a valid legacy or N3 address
+  // and whether or not the address already exists in the contacts list
+  function isValidAddress(
+    address: string,
+    index: number,
+    NNSDomain: string,
+  ): boolean {
+    const validAddress =
+      wallet.isAddress(address) || n3Wallet.isAddress(address)
+
+    const existingAddresses = Object.values(contacts).reduce(
+      (acc, contact) => [
+        ...acc,
+        // $FlowFixMe
+        ...contact.map(address => address.parsedAddress || address.address),
+      ],
+      [],
+    )
+
+    if (existingAddresses.includes(NNSDomain || address)) {
+      const nextErrorMappingForAddresses = [...errorMapping.addresses]
+      nextErrorMappingForAddresses[index] = intl.formatMessage({
+        id: 'errors.contact.contactExists',
+      })
+      setErrorMapping({
+        ...errorMapping,
+        addresses: nextErrorMappingForAddresses,
+      })
+      return false
+    }
     if (!validAddress) {
       const nextErrorMappingForAddresses = [...errorMapping.addresses]
       nextErrorMappingForAddresses[index] = intl.formatMessage({
@@ -145,14 +140,30 @@ export default function ContactForm(props: Props) {
         ...errorMapping,
         addresses: nextErrorMappingForAddresses,
       })
-    } else {
-      const nextErrorMappingForAddresses = [...errorMapping.addresses]
-      nextErrorMappingForAddresses[index] = ''
-      setErrorMapping({
-        ...errorMapping,
-        addresses: nextErrorMappingForAddresses,
-      })
+      return false
     }
+    return true
+  }
+
+  async function handleChangeAddress(event, index): Promise<void> {
+    const nextAddresses = [...addresses]
+    nextAddresses[index] = event.target.value
+    setAddresses(nextAddresses)
+    let addressValue = event.target.value
+    if (event.target.value.includes('.neo')) {
+      const results = await handleNNSDomain(event.target.value, index)
+      if (results) {
+        addressValue = results
+      } else {
+        return undefined
+      }
+    }
+    const valid = isValidAddress(
+      addressValue,
+      index,
+      event.target.value.includes('.neo') ? event.target.value : '',
+    )
+    if (valid) clearErrorForGivenIndex(index)
   }
 
   function handleDeleteAddress(index) {
@@ -160,13 +171,7 @@ export default function ContactForm(props: Props) {
     nextAddresses.splice(index, 1)
     setAddresses(nextAddresses)
     setAddressCount(addressCount - 1)
-    // clear the error message for the deleted address
-    const nextErrorMappingForAddresses = [...errorMapping.addresses]
-    nextErrorMappingForAddresses[index] = ''
-    setErrorMapping({
-      ...errorMapping,
-      addresses: nextErrorMappingForAddresses,
-    })
+    clearErrorForGivenIndex(index)
   }
 
   function shouldDisableSubmitButton() {

@@ -250,8 +250,8 @@ function ContactsPanel(props: Props) {
                     />
                   </Box>
                   {getContactsInGroups(contacts, sorting.value).map(
-                    ({ groupName, groupContacts }) => (
-                      <Box key={`group${groupName}`} width="100%">
+                    ({ groupName, groupContacts }, i) => (
+                      <Box key={i} width="100%">
                         <div className={styles.groupHeader}>{groupName}</div>
                         {groupContacts.map(({ name }, i) => (
                           <Box
