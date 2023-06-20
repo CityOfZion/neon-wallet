@@ -1,12 +1,12 @@
 // @flow
-import { api, sc, u, wallet, settings } from '@cityofzion/neon-js'
+import { api, sc, u, wallet, settings } from '@cityofzion/neon-js-legacy'
 import {
   api as n3Api,
   wallet as n3Wallet,
   u as n3U,
   rpc as n3Rpc,
   tx,
-} from '@cityofzion/neon-js-next'
+} from '@cityofzion/neon-js'
 import { flatMap, keyBy, isEmpty, get } from 'lodash-es'
 import axios from 'axios'
 

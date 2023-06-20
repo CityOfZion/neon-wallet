@@ -1,6 +1,6 @@
 // @flow
-import { rpc as n3Rpc } from '@cityofzion/neon-js-next'
-import { api, u, rpc, sc, wallet } from '@cityofzion/neon-js'
+import { rpc as n3Rpc } from '@cityofzion/neon-js'
+import { api, u, rpc, sc, wallet } from '@cityofzion/neon-js-legacy'
 
 import hashToSymbol from './hashToSymbol'
 import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'

@@ -1,7 +1,7 @@
 // @flow
 import React, { Fragment } from 'react'
 import moment from 'moment'
-import { tx, rpc, api } from '@cityofzion/neon-js'
+import { tx, rpc, api } from '@cityofzion/neon-js-legacy'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import classNames from 'classnames'
 import { isEmpty } from 'lodash-es'

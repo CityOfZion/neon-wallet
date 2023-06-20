@@ -1,6 +1,6 @@
 // @flow
 import React, { Fragment } from 'react'
-import { wallet } from '@cityofzion/neon-js'
+import { wallet } from '@cityofzion/neon-js-legacy'
 import { withRouter } from 'react-router-dom'
 import { cloneDeep } from 'lodash-es'
 import { IntlShape, injectIntl, FormattedMessage } from 'react-intl'

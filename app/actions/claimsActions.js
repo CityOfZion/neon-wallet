@@ -1,6 +1,6 @@
 // @flow
 import { api } from '@cityofzion/neon-js-legacy-latest'
-import { rpc as n3Rpc, u as n3U } from '@cityofzion/neon-js-next'
+import { rpc as n3Rpc, u as n3U } from '@cityofzion/neon-js'
 import { createActions } from 'spunky'
 
 import { getNode, getRPCEndpoint } from './nodeStorageActions'

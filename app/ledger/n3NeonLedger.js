@@ -1,7 +1,7 @@
 // @flow
-import * as neonJs from '@cityofzion/neon-js-next'
+import * as neonJs from '@cityofzion/neon-js'
 import * as n3ledger from '@cityofzion/neon-ledger-next'
-import type { Transaction } from '@cityofzion/neon-js-next'
+import type { Transaction } from '@cityofzion/neon-js'
 import LedgerNode from '@ledgerhq/hw-transport-node-hid-noevents'
 import { cloneDeep } from 'lodash-es'
 

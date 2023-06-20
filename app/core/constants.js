@@ -1,6 +1,5 @@
 // @flow
 import React from 'react'
-import { SessionTypes } from '@walletconnect/types'
 
 import tokenList from './tokenList.json'
 import nodesMainNet from './nodes-main-net.json'
@@ -157,6 +156,7 @@ export const ROUTES = {
   MOBILE: '/mobile',
   MIGRATION: '/migration',
   CONNECT_DAPP: '/connect-dapp',
+  DAPP_REQUEST: '/dapp-request',
   NFT: '/NFT',
 }
 
@@ -369,57 +369,29 @@ export const NODES_N3_MAIN_NET = n3NodesMainNet
 
 export const PRICE_UNAVAILABLE = 'N/A'
 
-export const DEFAULT_RELAY_PROVIDER = 'wss://relay.walletconnect.com'
-
-export const DEFAULT_PROJECT_ID = '56de852a69580b46d61b53f7b3922ce1'
-
-export const DEFAULT_METHODS = [
-  'invokeFunction',
-  'testInvoke',
-  'signMessage',
-  'verifyMessage',
-  'traverseIterator',
-  'getapplicationlog',
-  'getrawmempool',
-  'getcontractstate',
-  'findstates',
-  'getWalletInfo',
-  'getNetworkVersion',
-]
-export const DEFAULT_AUTOACCEPT_METHODS = [
-  'testInvoke',
-  'verifyMessage',
-  'traverseIterator',
-  'getapplicationlog',
-  'getrawmempool',
-  'getcontractstate',
-  'findstates',
-  'getWalletInfo',
-  'getNetworkVersion',
-]
-
-export const DEFAULT_LOGGER = 'error'
-
-export const DEFAULT_APP_METADATA = {
-  name: 'CoZ Wallet Prototype',
-  description: 'WalletConnect integration Prototype',
-  url: 'https://coz.io/',
-  icons: [
-    'https://raw.githubusercontent.com/CityOfZion/visual-identity/develop/_CoZ%20Branding/_Logo/_Logo%20icon/_PNG%20200x178px/CoZ_Icon_DARKBLUE_200x178px.png',
-  ],
+export const COLORS_BY_PARAMETER_TYPE = {
+  Any: 'rgba(149,149,149,0.7)',
+  Signature: 'rgba(233,38,92,0.7)',
+  Boolean: 'rgba(211,85,231,0.7)',
+  Integer: 'rgba(177,103,242,0.7)',
+  Hash160: 'rgba(0,133,41,0.7)',
+  Address: 'rgba(0,133,41,0.7)',
+  Null: 'rgba(255,255,255,0.7)',
+  Hash256: 'rgba(29,181,255,0.7)',
+  ByteArray: 'rgba(13,205,255,0.7)',
+  PublicKey: 'rgba(0,214,157,0.7)',
+  String: 'rgba(103,221,139,0.7)',
+  ByteString: 'rgba(103,221,139,0.7)',
+  Array: 'rgba(242,143,0,0.7)',
+  Buffer: 'rgba(242,143,0,0.7)',
+  InteropInterface: 'rgba(165,0,0,0.7)',
+  Void: 'rgba(82,141,147,0.7)',
 }
 
-export const DEFAULT_CHAIN = 'neo3:testnet'
-export const DEFAULT_NETWORKS = {
-  'neo3:testnet': { url: 'https://testnet1.neo.coz.io:443', name: 'Testnet' },
-  'neo3:mainnet': { url: 'http://seed1.neo.org:10332', name: 'Mainnet' },
-  'neo3:private': { url: null, name: 'Private Network' },
-}
-export const DEFAULT_BLOCKCHAINS = ['neo3']
-export const DEFAULT_NAMESPACES: SessionTypes.Namespaces = {
-  [DEFAULT_BLOCKCHAINS[0]]: {
-    accounts: [], // will be overridden
-    methods: [...DEFAULT_METHODS],
-    events: [],
-  },
+export const WITNESS_SCOPE = {
+  '0': 'None',
+  '1': 'CalledByEntry',
+  '16': 'CustomContracts',
+  '32': 'CustomGroups',
+  '128': 'Global',
 }

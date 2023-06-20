@@ -2,7 +2,7 @@
 import classNames from 'classnames'
 import React from 'react'
 import { intlShape } from 'react-intl'
-import { wallet as n3Wallet } from '@cityofzion/neon-js-next'
+import { wallet as n3Wallet } from '@cityofzion/neon-js'
 
 import n3Logo from '../../../assets/images/n3_logo.png'
 import Address from '../../Blockchain/Address/Address'

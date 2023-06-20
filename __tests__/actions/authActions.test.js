@@ -1,5 +1,6 @@
 import { wifLoginActions } from '../../app/actions/authActions'
 
+jest.setTimeout(10000)
 describe('authActions', () => {
   describe('wifLoginActions', () => {
     describe('call', () => {

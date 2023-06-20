@@ -1,5 +1,5 @@
 // @flow
-import { rpc } from '@cityofzion/neon-js'
+import { rpc } from '@cityofzion/neon-js-legacy'
 import { createActions } from 'spunky'
 import { isEmpty } from 'lodash-es'
 import { getNode, getRPCEndpoint } from './nodeStorageActions'

@@ -1,8 +1,8 @@
 // @flow
 import { createActions } from 'spunky'
 import axios from 'axios'
-import { rpc } from '@cityofzion/neon-js'
-import { rpc as n3Rpc } from '@cityofzion/neon-js-next'
+import { rpc } from '@cityofzion/neon-js-legacy'
+import { rpc as n3Rpc } from '@cityofzion/neon-js'
 
 import { getSettings } from './settingsActions'
 import { getNode, getRPCEndpoint } from './nodeStorageActions'

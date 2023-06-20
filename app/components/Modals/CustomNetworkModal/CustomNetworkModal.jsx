@@ -1,7 +1,13 @@
 // @flow
 import React, { useEffect } from 'react'
 import { Box } from '@chakra-ui/react'
-import { api, u, rpc as neonJsRpc, sc, wallet } from '@cityofzion/neon-js'
+import {
+  api,
+  u,
+  rpc as neonJsRpc,
+  sc,
+  wallet,
+} from '@cityofzion/neon-js-legacy'
 
 import FullHeightPanel from '../../Panel/FullHeightPanel'
 import BaseModal from '../BaseModal'

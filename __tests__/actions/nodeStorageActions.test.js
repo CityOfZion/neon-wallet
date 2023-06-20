@@ -1,4 +1,4 @@
-import { api } from '@cityofzion/neon-js'
+import { api } from '@cityofzion/neon-js-legacy'
 import nock from 'nock'
 import { ipcRenderer } from 'electron'
 

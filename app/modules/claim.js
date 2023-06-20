@@ -1,11 +1,11 @@
 // @flow
-import { api, type Claims } from '@cityofzion/neon-js'
+import { api, type Claims } from '@cityofzion/neon-js-legacy'
 import { api as apiLatest, rpc } from '@cityofzion/neon-js-legacy-latest'
 import {
   api as n3Api,
   wallet as n3Wallet,
   rpc as n3Rpc,
-} from '@cityofzion/neon-js-next'
+} from '@cityofzion/neon-js'
 import { map, reduce } from 'lodash-es'
 
 import {

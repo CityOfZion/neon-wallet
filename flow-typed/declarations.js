@@ -1,7 +1,7 @@
 // @flow
 /* eslint-disable */
 
-import { type Fixed8 } from '@cityofzion/neon-js'
+import { type Fixed8 } from '@cityofzion/neon-js-legacy'
 
 import {
   ROUTES,

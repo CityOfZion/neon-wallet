@@ -3,7 +3,7 @@ import React from 'react'
 import axios from 'axios'
 import classNames from 'classnames'
 import Confetti from 'react-dom-confetti'
-import { wallet as n3Wallet } from '@cityofzion/neon-js-next'
+import { wallet as n3Wallet } from '@cityofzion/neon-js'
 
 import Button from '../../components/Button'
 import HeaderBar from '../../components/HeaderBar'

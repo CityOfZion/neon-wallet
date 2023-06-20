@@ -1,8 +1,7 @@
 // @flow
 import axios from 'axios'
 import { keyBy } from 'lodash-es'
-import { api } from '@cityofzion/neon-js'
-// import { wallet } from '@cityofzion/neon-js'
+import { api } from '@cityofzion/neon-js-legacy'
 
 import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 import { addPendingTransaction } from '../actions/pendingTransactionActions'
@@ -25,7 +24,7 @@ import { toBigNumber } from '../core/math'
 import { buildTransferScript } from './transactions'
 
 const N2 = require('@cityofzion/neon-js-legacy-latest')
-const N3 = require('@cityofzion/neon-js-next')
+const N3 = require('@cityofzion/neon-js')
 
 export const performMigration = ({
   sendEntries,
@@ -219,7 +218,8 @@ export const performMigration = ({
             if (e.message === 'Navigate to the NEO app on your Ledger device') {
               dispatch(
                 showInfoNotification({
-                  message: `Please open the legacy Neo app to sign the migration transaction.`,
+                  message:
+                    'Please open the legacy Neo app to sign the migration transaction.',
                 }),
               )
 
@@ -242,7 +242,8 @@ export const performMigration = ({
             if (e.message === 'Navigate to the NEO app on your Ledger device') {
               dispatch(
                 showInfoNotification({
-                  message: `Please open the legacy Neo app to sign the migration transaction.`,
+                  message:
+                    'Please open the legacy Neo app to sign the migration transaction.',
                 }),
               )
               CONFIG.error = true

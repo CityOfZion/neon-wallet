@@ -1,8 +1,8 @@
 // @flow
 import React from 'react'
 import { uniqueId, get } from 'lodash-es'
-import { wallet } from '@cityofzion/neon-js'
-import { wallet as n3Wallet } from '@cityofzion/neon-js-next'
+import { wallet } from '@cityofzion/neon-js-legacy'
+import { wallet as n3Wallet } from '@cityofzion/neon-js'
 import { FormattedMessage, IntlShape } from 'react-intl'
 
 import {
