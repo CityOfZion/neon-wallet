@@ -1,8 +1,7 @@
 .transactionHistory {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  max-height: calc(100vh - 120px) !important;
+  height: calc(100vh - 195px) !important;
 
   .transactionHistoryPanel {
     flex: 1 1 auto;

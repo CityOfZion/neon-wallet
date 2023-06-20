@@ -17,8 +17,9 @@ import {
   showInfoNotification,
 } from '../../../modules/notifications'
 
-const mapTransactionsDataToProps = transactions => ({
-  transactions,
+const mapTransactionsDataToProps = data => ({
+  transactions: data?.entries ?? [],
+  count: data?.count ?? 0,
 })
 
 const mapAccountActionsToProps = (actions, { net, address }) => ({
@@ -64,9 +65,6 @@ export default compose(
   ),
   withAuthData(),
   withNetworkData(),
-  withProgressPanel(transactionHistoryActions, {
-    title: '',
-  }),
   withActions(transactionHistoryActions, mapAccountActionsToProps),
   withActions(getPendingTransactionInfo, mapPendingTransactionActionsToProps),
   withCall(getPendingTransactionInfo),
