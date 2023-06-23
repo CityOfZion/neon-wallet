@@ -26,3 +26,22 @@
 .transactions {
   margin: -24px;
 }
+
+.loadMoreButton {
+  height: 40px;
+}
+
+.transactionHistoryPanel {
+  margin-top: -12px;
+}
+
+.buttonLoadingIndicator {
+  position: relative;
+  width: 15px;
+  height: 15px;
+  opacity: 0.4;
+  margin: auto;
+  left: -10px;
+  top: auto;
+  transform: none;
+}

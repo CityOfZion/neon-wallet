@@ -16,7 +16,6 @@ import withAuthData from '../../hocs/withAuthData'
 import withBalancesData from '../../hocs/withBalancesData'
 import withCurrencyData from '../../hocs/withCurrencyData'
 import withFilteredTokensData from '../../hocs/withFilteredTokensData'
-import contactsActions from '../../actions/contactsActions'
 import accountActions from '../../actions/accountActions'
 import accountsActions from '../../actions/accountsActions'
 import withLoadingProp from '../../hocs/withLoadingProp'
@@ -68,8 +67,6 @@ const mapPricesDataToProps = (prices: Object) => ({
   prices,
 })
 
-const mapContactsDataToProps = (contacts: Object) => ({ contacts })
-
 const mapBalanceDataToProps = (balances: Object) => ({
   NEO: balances ? balances.NEO : 0,
   GAS: balances ? balances.GAS : 0,
@@ -97,7 +94,6 @@ export default compose(
   ),
   withBalancesData(mapBalanceDataToProps),
   withCurrencyData('currencyCode'),
-  withData(contactsActions, mapContactsDataToProps),
   withPricesData(mapPricesDataToProps),
   withNetworkData(),
   withAuthData(),

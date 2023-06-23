@@ -19,6 +19,7 @@ type Props = {
   updateRowField: (index: number, field: string, value: any) => any,
   calculateMaxValue: (asset: string, index: number) => string,
   isMigration?: boolean,
+  chain: string,
 }
 
 const SendRecipientList = ({
@@ -31,6 +32,7 @@ const SendRecipientList = ({
   showConfirmSend,
   calculateMaxValue,
   isMigration,
+  chain,
 }: Props) => {
   const renderRows = () =>
     sendRowDetails.map((row, index) => (
@@ -43,10 +45,10 @@ const SendRecipientList = ({
         removeRow={removeRow}
         updateRowField={updateRowField}
         sendableAssets={sendableAssets}
-        contacts={contacts}
         clearErrors={clearErrors}
         calculateMaxValue={calculateMaxValue}
         isMigration={isMigration}
+        chain={chain}
       />
     ))
 

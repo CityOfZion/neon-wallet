@@ -126,6 +126,7 @@ const SendPanel = ({
         calculateMaxValue={calculateMaxValue}
         isWatchOnly={isWatchOnly}
         isMigration={isMigration}
+        chain={chain}
       />
       {chain === 'neo2' &&
         !isMigration && (
@@ -223,6 +224,7 @@ const SendPanel = ({
           clearErrors={clearErrors}
           showConfirmSend={showConfirmSend}
           calculateMaxValue={calculateMaxValue}
+          chain={chain}
         />
         <ConfirmSend
           handleEditRecipientsClick={handleEditRecipientsClick}

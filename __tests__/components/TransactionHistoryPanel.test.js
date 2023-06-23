@@ -45,7 +45,7 @@ const initialState = {
       batch: false,
       progress: LOADED,
       loadedCount: 1,
-      data: [],
+      data: { transactions: [] },
     },
   },
 }
@@ -114,10 +114,11 @@ describe('TransactionHistoryPanel', () => {
 
   test('correctly renders with NEO and GAS transaction history', () => {
     const transactionState = merge({}, initialState, {
-      spunky: { transactionHistory: { data: transactions } },
+      spunky: {
+        transactionHistory: { data: { entries: transactions, count: 2 } },
+      },
     })
     const { wrapper } = setup(transactionState, false)
-
     const transactionList = wrapper.find('#transactionList')
     expect(transactionList.children().length).toEqual(2)
 

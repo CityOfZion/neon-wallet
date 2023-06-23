@@ -2,27 +2,26 @@
 import React from 'react'
 
 import AddContactPanel from '../../components/Contacts/AddContactPanel'
-import { ROUTES } from '../../core/constants'
 import styles from './AddContact.scss'
 
 type Props = {
-  history: Object,
   name: string,
-  address: string,
+  match: {
+    params: {
+      name: string,
+    },
+  },
 }
 
-export default class AddContact extends React.Component<Props> {
-  render() {
-    return (
-      <div className={styles.addContact}>
-        <AddContactPanel
-          name={this.props.name}
-          address={this.props.address}
-          onSave={this.handleSave}
-        />
-      </div>
-    )
-  }
+function AddContact(props: Props) {
+  const { match } = props
+  const { name } = match.params
 
-  handleSave = () => this.props.history.push(ROUTES.CONTACTS)
+  return (
+    <div className={styles.addContact}>
+      <AddContactPanel name={name} />
+    </div>
+  )
 }
+
+export default AddContact

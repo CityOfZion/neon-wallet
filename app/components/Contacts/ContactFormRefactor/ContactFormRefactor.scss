@@ -1,10 +1,14 @@
 @import '../../../styles/variables.scss';
 
 .contactFormContainer {
-  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   flex: 1;
+
+  form {
+    width: 100%;
+  }
 
   .contactFormHeader {
     color: var(--panel-header-text);
@@ -21,13 +25,15 @@
   }
 
   .contactForm {
-    max-width: 500px;
+    min-width: 350px;
+    width: 100%;
     padding: 24px;
     margin: 0 auto;
     height: 100%;
     display: flex;
     flex-direction: column;
     flex: 1;
+    padding-bottom: 0px;
 
     .input {
       margin-bottom: 10px;
@@ -76,8 +82,10 @@
   }
 
   .submitButtonRow {
+    margin-top: 50px;
+    margin-bottom: 150px;
     display: flex;
-    margin-top: auto;
+
     button:first-child {
       margin-right: 12px;
     }
@@ -87,13 +95,51 @@
   }
 }
 
+.addButton {
+  color: var(--contacts-delete-contact-name) !important;
+
+  svg {
+    margin-right: 15px;
+    height: 24px;
+    width: 24px;
+
+    path {
+      fill: var(--contacts-delete-contact-name) !important;
+    }
+  }
+
+  .addIcon {
+    margin-right: 5px;
+    height: 24px;
+    width: 24px;
+  }
+}
 
 .scannerContainer {
   display: flex;
   justify-content: center;
-  // margin-bottom: 12px;
   margin: 24px 0;
   height: 250px;
   position: relative;
+}
 
+.deleteButton {
+  width: 100%;
+  border: none;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 12px;
+
+  svg {
+    height: 24px;
+    width: 24px;
+    min-width: 24px;
+
+    path {
+      fill: #ee6d66;
+    }
+  }
 }

@@ -213,10 +213,12 @@ export default createActions(
     }
 
     let parsedEntries = []
+    let count = 0
 
     if (chain === 'neo3') {
       const network = net === 'MainNet' ? 'mainnet' : 'testnet'
       const data = await NeoRest.addressTXFull(address, page, network)
+      count = data.totalCount
       parsedEntries = await computeN3Activity(data, address, net)
     } else {
       const network = net === 'MainNet' ? 'mainnet' : 'testnet'
@@ -225,15 +227,16 @@ export default createActions(
         page,
         network,
       )
+      count = data.total_entries
       parsedEntries = await parseAbstractData(data.entries, address, net)
     }
     page += 1
     if (shouldIncrementPagination) {
       if (page === 1) entries = []
       entries.push(...parsedEntries)
-      return entries
+      return { entries, count }
     }
     entries = [...parsedEntries]
-    return entries
+    return { entries, count }
   },
 )

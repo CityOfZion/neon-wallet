@@ -34,7 +34,10 @@ class N3ClaimAbstract extends React.Component<Props> {
               <img src={image} />
               {symbol}
             </div>
-            <div className={styles.txAmountContainerN3}>{amount}</div>
+            <div className={styles.txAmountContainerN3}>
+              {/* eslint-disable-next-line no-restricted-globals */}
+              {!isNaN(amount) && amount}
+            </div>
           </div>
         </div>
       </div>

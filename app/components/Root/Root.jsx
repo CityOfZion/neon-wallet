@@ -14,6 +14,7 @@ import {
 } from '../../core/constants'
 import IntlWrapper from './IntlWrapper'
 import Routes from './Routes'
+import { ContactsContextProvider } from '../../context/contacts/ContactsContext'
 
 type Props = {
   store: Object,
@@ -31,11 +32,13 @@ const Root = ({ store }: Props) => (
     <ChakraProvider resetCSS={false}>
       <SettingsContextProvider>
         <WalletConnectContextProvider options={wcOptions}>
-          <IntlWrapper lang="english">
-            <HashRouter>
-              <Routes store={store} />
-            </HashRouter>
-          </IntlWrapper>
+          <ContactsContextProvider>
+            <IntlWrapper lang="english">
+              <HashRouter>
+                <Routes store={store} />
+              </HashRouter>
+            </IntlWrapper>
+          </ContactsContextProvider>
         </WalletConnectContextProvider>
       </SettingsContextProvider>
     </ChakraProvider>

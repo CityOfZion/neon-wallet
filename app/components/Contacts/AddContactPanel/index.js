@@ -1,29 +1,31 @@
 // @flow
 import { compose, withProps } from 'recompose'
-import { withActions, progressValues } from 'spunky'
-import { trim } from 'lodash-es'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { withRouter } from 'react-router-dom'
 
 import AddContactPanel from './AddContactPanel'
-import { addContactActions } from '../../../actions/contactsActions'
-import withProgressChange from '../../../hocs/withProgressChange'
-import withFailureNotification from '../../../hocs/withFailureNotification'
 import withSettingsContext from '../../../hocs/withSettingsContext'
+import { showModal } from '../../../modules/modal'
+import {
+  showErrorNotification,
+  showSuccessNotification,
+} from '../../../modules/notifications'
 
-const { LOADED } = progressValues
+const actionCreators = {
+  showModal,
+  showErrorNotification,
+  showSuccessNotification,
+}
 
-const mapContactActionsToProps = (actions: Object) => ({
-  onSave: (name, address, chain) =>
-    actions.call({ name: trim(name), address: trim(address), chain }),
-})
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(actionCreators, dispatch)
 
 export default compose(
-  withProps(({ name }) => ({ oldName: name })),
-
-  withProgressChange(
-    addContactActions,
-    LOADED,
-    (state, props) => props.onSave && props.onSave(),
+  connect(
+    null,
+    mapDispatchToProps,
   ),
-  withActions(addContactActions, mapContactActionsToProps),
-  withFailureNotification(addContactActions),
+  withProps(({ name }) => ({ oldName: name })),
+  withRouter,
 )(withSettingsContext(AddContactPanel))

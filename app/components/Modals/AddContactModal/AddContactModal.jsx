@@ -1,40 +1,38 @@
 // @flow
-import React, { Component } from 'react'
+import React from 'react'
 import { FormattedMessage } from 'react-intl'
+import { Box } from '@chakra-ui/react'
 
 import BaseModal from '../BaseModal'
-import ContactForm from '../../Contacts/ContactForm'
+import ContactForm from '../../Contacts/ContactFormRefactor'
 
 type Props = {
   address: string,
   hideModal: () => null,
-  triggerSuccessNotification: (text: string) => void,
-  onSave: (name: string, address: string, chain: string) => any,
-  chain: string,
 }
 
-class AddContactModal extends Component<Props> {
-  handleSubmit = (name: string, address: string) => {
-    const { onSave, hideModal, triggerSuccessNotification, chain } = this.props
+function AddContactModal(props: Props) {
+  const { address, hideModal } = props
 
-    onSave(name, address, chain)
-    triggerSuccessNotification('Contact added.')
-    hideModal()
-  }
-
-  render() {
-    const { address, hideModal } = this.props
-
-    return (
-      <BaseModal hideModal={hideModal} height="600px">
-        <ContactForm
-          showScanner
-          formAddress={address}
-          submitLabel={<FormattedMessage id="addToContacts" />}
-          onSubmit={this.handleSubmit}
-        />
-      </BaseModal>
-    )
-  }
+  return (
+    <BaseModal hideModal={hideModal} height="100%" width="600px">
+      <Box
+        width="100%"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Box width="450px" marginLeft="-24px">
+          <ContactForm
+            showScanner
+            formAddress={address}
+            submitLabel={<FormattedMessage id="addToContacts" />}
+            handleSubmit={() => props.hideModal()}
+          />
+        </Box>
+      </Box>
+    </BaseModal>
+  )
 }
+
 export default AddContactModal

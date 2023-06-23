@@ -18,6 +18,7 @@ import LedgerMigrationConfirm from '../../components/Modals/LedgerMigrationConfi
 import TransferNftModal from '../../components/Modals/TransferNftModal'
 import NetworkSwitchModal from '../../components/Modals/NetworkSwitchModal'
 import CustomNetworkModal from '../../components/Modals/CustomNetworkModal'
+import ChooseAddressFromContactModal from '../../components/Modals/ChooseAddressFromContactModal'
 
 const {
   CONFIRM,
@@ -35,6 +36,7 @@ const {
   TRANSFER_NFT,
   NETWORK_SWITCH,
   CUSTOM_NETWORK,
+  CHOOSE_ADDRESS_FROM_CONTACT,
 } = MODAL_TYPES
 
 const MODAL_COMPONENTS = {
@@ -53,6 +55,7 @@ const MODAL_COMPONENTS = {
   [TRANSFER_NFT]: TransferNftModal,
   [NETWORK_SWITCH]: NetworkSwitchModal,
   [CUSTOM_NETWORK]: CustomNetworkModal,
+  [CHOOSE_ADDRESS_FROM_CONTACT]: ChooseAddressFromContactModal,
 }
 
 type Props = {

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TransactionHistoryPanel renders without crashing 1`] = `
-<Connect(withData(Connect(withData(withProps(Connect(withActions(Connect(withProgress(withProgressComponents(Connect(withActions(Connect(withActions(Connect(withCall(Connect(withData(Connect(withProgress(withProps(Connect(withData(TransactionHistory)))))))))))))))))))))))
+<Connect(withData(Connect(withData(withProps(Connect(withActions(Connect(withActions(Connect(withCall(Connect(withData(Connect(withProgress(withProps(Connect(withData(TransactionHistory))))))))))))))))))
   showErrorNotification={[Function]}
   showInfoNotification={[Function]}
   showSuccessNotification={[Function]}

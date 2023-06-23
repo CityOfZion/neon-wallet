@@ -7,13 +7,7 @@ import { connect } from 'react-redux'
 import { showSuccessNotification } from '../../../modules/notifications'
 
 import AddContactModal from './AddContactModal'
-import { addContactActions } from '../../../actions/contactsActions'
 import withSettingsContext from '../../../hocs/withSettingsContext'
-
-const mapContactActionsToProps = (actions: Object) => ({
-  onSave: (name: string, address: string, chain: string) =>
-    actions.call({ name: trim(name), address: trim(address), chain }),
-})
 
 const mapDispatchToProps = (dispatch: Function) => ({
   triggerSuccessNotification(text: string) {
@@ -26,5 +20,4 @@ export default compose(
     null,
     mapDispatchToProps,
   ),
-  withActions(addContactActions, mapContactActionsToProps),
 )(withSettingsContext(AddContactModal))

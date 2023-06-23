@@ -1,22 +1,38 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { injectIntl } from 'react-intl'
+import { FormattedMessage, IntlShape, injectIntl } from 'react-intl'
+import Button from '../../Button'
 import styles from './Transaction.scss'
 import ReceiveIcon from '../../../assets/icons/receive-tx.svg'
+import ContactsAdd from '../../../assets/icons/contacts-add.svg'
+import CopyToClipboard from '../../CopyToClipboard'
 
 type Props = {
   image: string,
   isPending: boolean,
-
+  findContact: (address: string) => React$Node | null,
+  from: string,
+  intl: IntlShape,
+  showAddContactModal: (to: string) => void,
   symbol: string,
-  tokenName: string,
+  to: string,
   txDate: React$Node,
 }
 
 class N3NEP11ReceiveAbstract extends React.Component<Props> {
   render = () => {
-    const { image, isPending, tokenName, symbol, txDate } = this.props
+    const {
+      image,
+      isPending,
+      findContact,
+      from,
+      intl,
+      to,
+      showAddContactModal,
+      symbol,
+      txDate,
+    } = this.props
 
     const logo = image && (
       <img
@@ -24,7 +40,8 @@ class N3NEP11ReceiveAbstract extends React.Component<Props> {
         alt={`${symbol}`}
       />
     )
-
+    const contactTo = to && findContact(to)
+    const contactToExists = contactTo !== to
     return (
       <div className={classNames(styles.transactionContainerN3)}>
         <div className={styles.abstractContainerN3}>
@@ -47,6 +64,22 @@ class N3NEP11ReceiveAbstract extends React.Component<Props> {
             </div>
             <div className={styles.txAmountContainerN3} />
           </div>
+          <div className={styles.txSubjectContainerN3}>
+            <p>{contactTo}</p>
+            <CopyToClipboard
+              className={styles.copy}
+              text={contactTo}
+              tooltip={intl.formatMessage({ id: 'copyAddressTooltip' })}
+            />
+          </div>
+          <Button
+            className={styles.transactionHistoryButton}
+            renderIcon={ContactsAdd}
+            onClick={() => showAddContactModal(from)}
+            disabled={contactToExists}
+          >
+            <FormattedMessage id="activityAddAddress" />
+          </Button>
         </div>
       </div>
     )

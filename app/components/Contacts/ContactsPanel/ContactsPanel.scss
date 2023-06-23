@@ -2,6 +2,7 @@
 
 .contactsPanel {
   overflow-y: auto;
+  height: 100%;
 
   .name {
     width: 180px;
@@ -23,9 +24,8 @@
   .contact {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    padding: 12px;
     flex-wrap: nowrap;
-    padding: 12px 12px 12px 24px;
 
     button {
       background-color: transparent;
@@ -38,12 +38,14 @@
     .address {
       display: flex;
       align-items: center;
-      width: 375px;
       font-size: 14px;
-      justify-content: space-between;
       margin-bottom: -5px;
       span {
+        word-break: break-word;
+        padding-left: 4px;
+        margin-bottom: 4px;
         text-overflow: ellipsis;
+        margin-right: auto;
         overflow: hidden;
       }
     }
@@ -73,7 +75,7 @@
   display: flex;
   align-items: center;
   padding: 5px;
-  color: var(--panel-header-text);
+  color: var(--contacts-delete-contact-name);
   text-decoration: none;
   cursor: pointer;
 
@@ -81,6 +83,10 @@
     margin-right: 15px;
     height: 24px;
     width: 24px;
+
+    path {
+      fill: var(--contacts-delete-contact-name);
+    }
   }
 
   .addIcon {
@@ -90,8 +96,8 @@
   }
 }
 
-.oddNumberedRow {
-  background: var(--contacts-odd-numbered-row);
+.editButton {
+  width: 100px;
 }
 
 .emptyContactsContainer {
@@ -103,7 +109,11 @@
 }
 
 .groupHeader {
-  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  height: 24px;
+  font-size: 12px;
   background-color: var(--contacts-group-header-background);
   color: var(--contacts-group-header-text);
   font-weight: bold;
@@ -123,5 +133,22 @@
     font-size: 18px;
     color: var(--contacts-delete-contact-name);
     text-align: center;
+  }
+}
+
+.contactRow {
+  border-left: 4px solid transparent;
+
+  &,
+  & svg,
+  & svg path {
+    color: var(--sidebar-icon);
+    fill: currentColor;
+  }
+
+  &.active,
+  &:hover {
+    background: var(--sidebar-active-background);
+    border-color: var(--sidebar-active-border);
   }
 }
