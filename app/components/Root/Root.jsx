@@ -4,34 +4,22 @@ import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
 import { ChakraProvider } from '@chakra-ui/react'
 
-import { WalletConnectContextProvider } from '../../context/WalletConnect/WalletConnectContext'
+import { WalletConnectWalletProvider } from '@cityofzion/wallet-connect-sdk-wallet-react'
 import { SettingsContextProvider } from '../../context/settings/SettingsContext'
-import {
-  DEFAULT_APP_METADATA,
-  DEFAULT_PROJECT_ID,
-  DEFAULT_RELAY_PROVIDER,
-  DEFAULT_NAMESPACES,
-} from '../../core/constants'
 import IntlWrapper from './IntlWrapper'
 import Routes from './Routes'
 import { ContactsContextProvider } from '../../context/contacts/ContactsContext'
+import { walletConnectOptions } from '../../util/walletConnect'
 
 type Props = {
   store: Object,
-}
-
-const wcOptions = {
-  appMetadata: DEFAULT_APP_METADATA,
-  relayServer: DEFAULT_RELAY_PROVIDER,
-  projectId: DEFAULT_PROJECT_ID,
-  nameSpaces: DEFAULT_NAMESPACES,
 }
 
 const Root = ({ store }: Props) => (
   <Provider store={store}>
     <ChakraProvider resetCSS={false}>
       <SettingsContextProvider>
-        <WalletConnectContextProvider options={wcOptions}>
+        <WalletConnectWalletProvider options={walletConnectOptions}>
           <ContactsContextProvider>
             <IntlWrapper lang="english">
               <HashRouter>
@@ -39,7 +27,7 @@ const Root = ({ store }: Props) => (
               </HashRouter>
             </IntlWrapper>
           </ContactsContextProvider>
-        </WalletConnectContextProvider>
+        </WalletConnectWalletProvider>
       </SettingsContextProvider>
     </ChakraProvider>
   </Provider>

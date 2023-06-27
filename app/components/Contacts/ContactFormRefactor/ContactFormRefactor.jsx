@@ -1,8 +1,8 @@
 // @flow
 import React from 'react'
 import { intlShape } from 'react-intl'
-import { wallet } from '@cityofzion/neon-js'
-import { wallet as n3Wallet } from '@cityofzion/neon-js-next'
+import { wallet } from '@cityofzion/neon-js-legacy'
+import { wallet as n3Wallet } from '@cityofzion/neon-js'
 import { Box } from '@chakra-ui/react'
 import { BSNeo3 } from '@cityofzion/bs-neo3'
 

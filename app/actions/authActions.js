@@ -1,6 +1,6 @@
 // @flow
-import { wallet } from '@cityofzion/neon-js'
-import { wallet as n3Wallet } from '@cityofzion/neon-js-next'
+import { wallet } from '@cityofzion/neon-js-legacy'
+import { wallet as n3Wallet } from '@cityofzion/neon-js'
 import { noop } from 'lodash-es'
 import { createActions } from 'spunky'
 import dns from 'dns'

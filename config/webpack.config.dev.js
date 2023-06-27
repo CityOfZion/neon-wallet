@@ -67,8 +67,6 @@ module.exports = {
   ],
   module: {
     rules: [
-      // Must be added to support syntax used in several of the wallet
-      // connect dependencies => https://github.com/WalletConnect/walletconnect-monorepo/issues/1349
       {
         test: /@?(@walletconnect).*\.(ts|js)x?$/,
         loader: 'babel-loader',

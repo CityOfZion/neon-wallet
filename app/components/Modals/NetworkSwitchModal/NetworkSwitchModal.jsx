@@ -8,38 +8,64 @@ import CloseButton from '../../CloseButton'
 import Cog from '../../../assets/icons/cog-icon.svg'
 
 import Button from '../../Button'
+import { networksIDSByNetworksLabel } from '../../../util/walletConnect'
+import { useSettingsContext } from '../../../context/settings/SettingsContext'
 
 type Props = {
   hideModal: Function,
   net: string,
   dAppName: string,
-  approveSession: (network: string) => void,
-  rejectSession: () => void,
+  onSwitch: () => void,
+  onCancel: (error?: string) => void,
   switchNetworks: (id: string) => void,
+  saveSelectedNode: Function,
+  proposalNetwork: string,
 }
 
-export default function NetworkSwitchModal(props: Props) {
-  const {
-    hideModal,
-    net,
-    dAppName = 'The dApp you are using',
-    approveSession,
-    rejectSession,
-    switchNetworks,
-  } = props
-
-  const requestedNetwork = net === 'MainNet' ? 'TestNet' : 'MainNet'
-  const requestedNetworkId = net === 'MainNet' ? '2' : '1'
+export default function NetworkSwitchModal({
+  hideModal,
+  net,
+  dAppName,
+  onSwitch,
+  onCancel,
+  switchNetworks,
+  saveSelectedNode,
+  proposalNetwork,
+}: Props) {
+  const { settings } = useSettingsContext()
 
   function handleCancelClick() {
-    rejectSession()
+    onCancel()
     hideModal()
   }
 
   function handleApproveClick() {
-    switchNetworks(requestedNetworkId)
-    approveSession(requestedNetwork.toLowerCase())
-    hideModal()
+    try {
+      const network = Object.entries(networksIDSByNetworksLabel).find(
+        ([key]) => key === proposalNetwork,
+      )
+
+      if (!network) throw new Error('Invalid network')
+      const networkId = (network[1]: any)
+
+      if (networkId === 'Custom') {
+        const customNetwork = settings.customNetworks[0]
+
+        if (!customNetwork) throw new Error('There is no custom network')
+        saveSelectedNode({
+          url: customNetwork.rpc,
+          net: 'Custom',
+          label: customNetwork.label,
+        })
+      }
+
+      switchNetworks(networkId)
+      onSwitch()
+    } catch (error) {
+      onCancel(error.message)
+    } finally {
+      hideModal()
+    }
   }
 
   return (
@@ -67,8 +93,7 @@ export default function NetworkSwitchModal(props: Props) {
         )}
       >
         <p className={styles.explanation}>
-          {' '}
-          {dAppName} has made a session request for {requestedNetwork} however
+          {dAppName} has made a session request for {proposalNetwork} however
           you are currently on {net}, would you like to change networks and
           accept this request?
         </p>

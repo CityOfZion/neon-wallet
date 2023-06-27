@@ -3,19 +3,19 @@ import Tippy from '@tippyjs/react'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
+import { useWalletConnectWallet } from '@cityofzion/wallet-connect-sdk-wallet-react'
 import { ROUTES } from '../../core/constants'
 import Dapps from '../../assets/icons/dapps.svg'
 import GreenDapps from '../../assets/icons/green-dapps.svg'
 import Plus from '../../assets/icons/add.svg'
 import styles from './DapiStatus.scss'
-import { useWalletConnect } from '../../context/WalletConnect/WalletConnectContext'
 
 const DapiStatus = ({
   showSuccessNotification,
 }: {
   showSuccessNotification: ({ message: string }) => void,
 }) => {
-  const { sessions, disconnect } = useWalletConnect()
+  const { sessions, disconnect } = useWalletConnectWallet()
 
   return (
     <div className={styles.tooltipContainer}>
@@ -45,7 +45,7 @@ const DapiStatus = ({
                         s.peer.metadata.name
                       }`,
                     })
-                    disconnect(s.topic)
+                    disconnect(s)
                   }}
                 >
                   {' '}

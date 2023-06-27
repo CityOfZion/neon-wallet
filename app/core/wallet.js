@@ -1,5 +1,5 @@
 // @flow
-import { wallet } from '@cityofzion/neon-js'
+import { wallet } from '@cityofzion/neon-js-legacy'
 import { map, extend } from 'lodash-es'
 import axios from 'axios'
 
