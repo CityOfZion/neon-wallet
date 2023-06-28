@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { orderBy, groupBy, isEmpty } from 'lodash-es'
 import classNames from 'classnames'
 import { FormattedMessage, IntlShape } from 'react-intl'
-import { Box, Divider, Text, Image } from '@chakra-ui/react'
+import { Box, Divider, Text, Image, Center } from '@chakra-ui/react'
 
 import StyledReactSelect from '../../Inputs/StyledReactSelect/StyledReactSelect'
 import HeaderBar from '../../HeaderBar'
@@ -14,8 +14,9 @@ import Button from '../../Button'
 import AddIcon from '../../../assets/icons/add.svg'
 import InfoIcon from '../../../assets/icons/info.svg'
 import EditIcon from '../../../assets/icons/edit.svg'
+import TrashCanIcon from '../../../assets/icons/delete.svg'
 import SendIcon from '../../../assets/icons/send.svg'
-import { ROUTES } from '../../../core/constants'
+import { MODAL_TYPES, ROUTES } from '../../../core/constants'
 import CopyToClipboard from '../../CopyToClipboard'
 import LogoWithStrikethrough from '../../LogoWithStrikethrough'
 import {
@@ -36,6 +37,8 @@ type Props = {
   history: {
     push: Function,
   },
+  showModal: Function,
+  showSuccessNotification: Function,
 }
 
 type SelectOption = {
@@ -63,38 +66,12 @@ const SORTING_OPTIONS = [
 
 function ContactsPanel(props: Props) {
   const [sorting, setSorting] = useState(SORTING_OPTIONS[0])
-  const { contacts } = useContactsContext()
+  const { contacts, deleteContact } = useContactsContext()
   const [selectedContact, setSelectedContact] = useState(null)
   const { intl } = props
 
   function handleSort(option: SelectOption) {
     setSorting(option)
-  }
-
-  useEffect(
-    () => {
-      if (Object.keys(contacts).length > 0) {
-        setSelectedContact(Object.keys(contacts)[0])
-      }
-    },
-    [contacts],
-  )
-
-  function handleEdit(name: string) {
-    props.history.push(`/contacts/edit/${encodeURIComponent(name)}`)
-  }
-
-  function findContactAndReturnParsedContact(
-    name: string,
-  ): ParsedContact | void {
-    const contactsArray: ParsedContact[] = Object.entries(contacts).map(
-      ([name, address]) => ({
-        name,
-        /* $FlowFixMe */
-        addresses: address,
-      }),
-    )
-    return contactsArray.find(contact => contact.name === name)
   }
 
   function getContactsInGroups(
@@ -122,6 +99,63 @@ function ContactsPanel(props: Props) {
       }),
     )
     return orderBy(groupedContacts, 'groupName', orderDirection)
+  }
+
+  function getFirstSortedContactName() {
+    const contactsInGroups = getContactsInGroups(contacts, sorting.value)
+    if (contactsInGroups.length > 0) {
+      return contactsInGroups[0].groupContacts[0].name
+    }
+    return null
+  }
+
+  useEffect(
+    () => {
+      if (Object.keys(contacts).length > 0) {
+        setSelectedContact(getFirstSortedContactName())
+      }
+    },
+    [contacts],
+  )
+
+  function handleEdit(name: string) {
+    props.history.push(`/contacts/edit/${encodeURIComponent(name)}`)
+  }
+
+  function findContactAndReturnParsedContact(
+    name: string,
+  ): ParsedContact | void {
+    const contactsArray: ParsedContact[] = Object.entries(contacts).map(
+      ([name, address]) => ({
+        name,
+        /* $FlowFixMe */
+        addresses: address,
+      }),
+    )
+    return contactsArray.find(contact => contact.name === name)
+  }
+
+  async function handleDeleteContact(name: string) {
+    await deleteContact(name)
+    setSelectedContact(null)
+  }
+
+  function showConfirmDeleteModal(name) {
+    props.showModal(MODAL_TYPES.CONFIRM, {
+      title: 'Confirm Delete',
+      height: '200px',
+      renderBody: () => (
+        <Center marginBottom="50px">
+          Are you sure you want to delete this contact?
+        </Center>
+      ),
+      onClick: async () => {
+        await handleDeleteContact(name)
+        props.showSuccessNotification({
+          message: `Contact ${name} has been deleted.`,
+        })
+      },
+    })
   }
 
   function ContactAvatar({ name }: { name: string }) {
@@ -254,30 +288,33 @@ function ContactsPanel(props: Props) {
                       <Box key={i} width="100%">
                         <div className={styles.groupHeader}>{groupName}</div>
                         {groupContacts.map(({ name }, i) => (
-                          <Box
-                            height={55}
-                            display="flex"
-                            alignItems="center"
-                            cursor="pointer"
-                            onClick={() => setSelectedContact(name)}
-                            className={classNames({
-                              [styles.contactRow]: true,
-                              [styles.active]: name === selectedContact,
-                            })}
-                          >
+                          <>
+                            {i > 0 && <Divider marginY="0px" opacity={0.1} />}
                             <Box
-                              width="100%"
+                              height={55}
                               display="flex"
-                              key={`contact${name}${i}`}
-                              className={classNames(styles.contact, {
-                                [styles.oddNumberedRow]: i % 2 === 0,
+                              alignItems="center"
+                              cursor="pointer"
+                              onClick={() => setSelectedContact(name)}
+                              className={classNames({
+                                [styles.contactRow]: true,
+                                [styles.active]: name === selectedContact,
                               })}
                             >
-                              {' '}
-                              <ContactAvatar name={name} />
-                              {name}
+                              <Box
+                                width="100%"
+                                display="flex"
+                                key={`contact${name}${i}`}
+                                className={classNames(styles.contact, {
+                                  [styles.oddNumberedRow]: i % 2 === 0,
+                                })}
+                              >
+                                {' '}
+                                <ContactAvatar name={name} />
+                                {name}
+                              </Box>
                             </Box>
-                          </Box>
+                          </>
                         ))}
                       </Box>
                     ),
@@ -303,7 +340,7 @@ function ContactsPanel(props: Props) {
                       <ContactAvatar name={selectedContact} />
                       {selectedContact}
                     </Box>
-                    <Box marginLeft="auto">
+                    <Box marginLeft="auto" display="flex">
                       <Button
                         className={styles.editButton}
                         renderIcon={EditIcon}
@@ -311,15 +348,25 @@ function ContactsPanel(props: Props) {
                       >
                         <FormattedMessage id="manageWalletsEdit" />
                       </Button>
+
+                      <Button
+                        className={styles.removeButton}
+                        renderIcon={TrashCanIcon}
+                        onClick={() => showConfirmDeleteModal(selectedContact)}
+                      >
+                        Remove
+                      </Button>
                     </Box>
                   </Box>
                   <Divider />
-                  {/* $FlowFixMe */}
-                  {findContactAndReturnParsedContact(
-                    selectedContact,
-                  ).addresses.map(({ address, chain, parsedAddress }) =>
-                    renderContact(address, chain, parsedAddress),
-                  )}
+
+                  {selectedContact &&
+                    findContactAndReturnParsedContact(
+                      selectedContact,
+                      /* $FlowFixMe */
+                    ).addresses.map(({ address, chain, parsedAddress }) =>
+                      renderContact(address, chain, parsedAddress),
+                    )}
                 </Box>
               )}
             </Box>

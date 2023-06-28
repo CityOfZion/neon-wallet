@@ -1,5 +1,5 @@
 // @flow
-import { compose, withProps } from 'recompose'
+import { compose } from 'recompose'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
@@ -26,6 +26,5 @@ export default compose(
     null,
     mapDispatchToProps,
   ),
-  withProps(({ name }) => ({ oldName: name })),
   withRouter,
 )(withSettingsContext(AddContactPanel))
