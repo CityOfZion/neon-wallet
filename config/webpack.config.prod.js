@@ -85,14 +85,14 @@ module.exports = {
         },
       },
       {
-        test: /(@cityofzion\/neon-invoker).*\.(ts|js)x?$/,
+        test: /(@cityofzion\/neon-invoker|neon-invoker\/node_modules).*\.(ts|js)x?$/,
         loader: 'babel-loader',
         options: {
           presets: [['@babel/preset-env', { targets: 'defaults' }]],
         },
       },
       {
-        test: /(@cityofzion\/neon-parser).*\.(ts|js)x?$/,
+        test: /(@cityofzion\/neon-parser|neon-parser\/node_modules).*\.(ts|js)x?$/,
         loader: 'babel-loader',
         options: {
           presets: [['@babel/preset-env', { targets: 'defaults' }]],
