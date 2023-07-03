@@ -1,5 +1,5 @@
 // @flow
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 import { ROUTES } from '../../../core/constants'
 import CloseButton from '../../CloseButton'
@@ -15,16 +15,16 @@ type Props = {
 
 const ConnectionUrlForm = ({ onURI }: Props) => {
   const [url, setUrl] = useState('')
-  const [buttonDisabled, setButtonDisabled] = useState(false)
+  const buttonDisabled = useRef(false)
 
-  async function handleSubmit() {
-    if (buttonDisabled) return
+  const handleSubmit = async (uri: string) => {
+    if (buttonDisabled.current) return
+    buttonDisabled.current = true
 
-    setButtonDisabled(true)
     try {
-      await onURI(url)
+      await onURI(uri)
     } finally {
-      setButtonDisabled(false)
+      buttonDisabled.current = false
     }
   }
 
@@ -47,7 +47,7 @@ const ConnectionUrlForm = ({ onURI }: Props) => {
       )}
       renderInstructions={renderInstructions}
     >
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <form className={styles.form} onSubmit={() => handleSubmit(url)}>
         <TextInput
           name="dApp URL"
           label="Scan or Paste URL"

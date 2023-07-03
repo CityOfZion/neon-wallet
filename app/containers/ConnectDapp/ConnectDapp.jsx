@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 // @flow
 import React, { useCallback, useEffect, useState, useMemo } from 'react'
 
@@ -18,21 +17,22 @@ const CONNECTION_STEPS = {
   LOADING: 'LOADING',
 }
 
-const ConnectDapp = ({ history, showErrorNotification }: Props) => {
+const ConnectDapp = ({ showErrorNotification, history }: Props) => {
+  const uri = history.location?.state?.uri
   const { connect, proposals } = useWalletConnectWallet()
 
-  const [connectionStep, setConnectionStep] = useState(
-    CONNECTION_STEPS.ENTER_URL,
-  )
+  const [connectionStep, setConnectionStep] = useState()
 
   const proposal = useMemo(() => proposals[0], [proposals])
 
   const handleOnURI = useCallback(
     async uri => {
-      setConnectionStep(true)
+      setConnectionStep(CONNECTION_STEPS.LOADING)
+
       try {
         await connect(uri)
       } catch (error) {
+        setConnectionStep(CONNECTION_STEPS.ENTER_URL)
         showErrorNotification({
           message: `An error occurred attempting to connect to a dapp: ${
             error.message
@@ -41,22 +41,6 @@ const ConnectDapp = ({ history, showErrorNotification }: Props) => {
       }
     },
     [connect, showErrorNotification],
-  )
-
-  // Effect for handling passing URI as query param to component
-  useEffect(
-    () => {
-      if (
-        !history.location ||
-        !history.location.state ||
-        !history.location.state.uri
-      )
-        return
-
-      const decoded = atob(history.location.state.uri)
-      handleOnURI(decoded)
-    },
-    [history, handleOnURI],
   )
 
   useEffect(
@@ -71,9 +55,19 @@ const ConnectDapp = ({ history, showErrorNotification }: Props) => {
     [proposal],
   )
 
-  return connectionStep === CONNECTION_STEPS.LOADING ? (
-    <ConnectionLoader />
-  ) : connectionStep === CONNECTION_STEPS.APPROVE_CONNECTION ? (
+  useEffect(
+    () => {
+      if (!uri) return
+
+      const decoded = atob(uri)
+      handleOnURI(decoded)
+    },
+    [uri, handleOnURI],
+  )
+
+  if (connectionStep === CONNECTION_STEPS.LOADING) return <ConnectionLoader />
+
+  return connectionStep === CONNECTION_STEPS.APPROVE_CONNECTION ? (
     <ApproveConnection proposal={proposal} />
   ) : (
     <ConnectionUrlForm onURI={handleOnURI} />
