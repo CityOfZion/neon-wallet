@@ -23,7 +23,6 @@ import Deny from '../../../assets/icons/deny_connection.svg'
 import Tooltip from '../../Tooltip'
 import Info from '../../../assets/icons/info.svg'
 
-import { convertToArbitraryDecimals } from '../../../core/formatters'
 import { getNode, getRPCEndpoint } from '../../../actions/nodeStorageActions'
 import Invocation from './Invocation'
 import InvokeResult from './InvokeResult'
@@ -37,7 +36,7 @@ type Props = {
   publicKey: string,
   history: any,
   showSuccessNotification({ message: string }): any,
-  showInfoNotification({ message: string, autoDismiss: number }): any,
+  showInfoNotification({ message: string, autoDismiss?: number }): any,
   hideNotification(id: string): any,
   theme: string,
   net: string,
@@ -67,6 +66,18 @@ const InvokeFunction = ({
     async () => {
       try {
         setLoading(true)
+
+        if (
+          requestParams.extraNetworkFee ||
+          requestParams.extraSystemFee ||
+          requestParams.networkFeeOverride ||
+          requestParams.systemFeeOverride
+        ) {
+          showInfoNotification({
+            message: 'The dApp has overwritten the fees',
+          })
+        }
+
         const account = new n3Wallet.Account(publicKey)
         let rpcAddress = await getNode(net)
         if (!rpcAddress) {
@@ -76,21 +87,12 @@ const InvokeFunction = ({
         const invoker = await NeonInvoker.init({ rpcAddress, account })
         const { total } = await invoker.calculateFee(requestParams)
 
-        const extraNetworkFee = convertToArbitraryDecimals(
-          requestParams.extraNetworkFee ?? 0,
-          8,
-        )
-        const extraSystemFee = convertToArbitraryDecimals(
-          requestParams.extraSystemFee ?? 0,
-          8,
-        )
-
-        setFee(total + Number(extraNetworkFee) + Number(extraSystemFee))
+        setFee(total)
       } finally {
         setLoading(false)
       }
     },
-    [publicKey, net, requestParams],
+    [publicKey, net, requestParams, showInfoNotification],
   )
 
   const reject = () => {

@@ -2107,6 +2107,11 @@
   resolved "https://registry.yarnpkg.com/@cityofzion/neo3-invoker/-/neo3-invoker-1.5.1.tgz#13a0f448aac13afa305a806a724fd0a4764915f0"
   integrity sha512-P1w9Ajxa3S5lT+cvsjF/ZDpZFuvvg3e/bVC87PBbpD+FysVFsONlZCIomevkSV4LnzCgrxDQ00KzmYOiNHvWcg==
 
+"@cityofzion/neo3-invoker@1.5.2":
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neo3-invoker/-/neo3-invoker-1.5.2.tgz#0ebf58f8cd74d3b4977aa4cf0efb1b96548b866f"
+  integrity sha512-kPT9s1p4MHqTk6hq4uF7duAshOpQTdk3pIsR98MnubERdlERcFEO8Sq76ZG4yrKLr6eFB+YxWrY6xjIlyBcb2A==
+
 "@cityofzion/neo3-parser@1.6.0":
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/@cityofzion/neo3-parser/-/neo3-parser-1.6.0.tgz#154d60baa6e6c541321f0d1fa796b38f6bed6aa3"
@@ -2212,6 +2217,16 @@
   integrity sha512-71eUsYTSm9MzuZcrNspzak+CQ2s4XHQAqNV+M++rwCCSSKqxMWb8GKuLGAI7muEBZv4l8a19PSlbMASWDfegKA==
   dependencies:
     "@cityofzion/neo3-invoker" "1.5.1"
+    "@cityofzion/neon-core" "5.3.0"
+    "@cityofzion/neon-js" "5.3.0"
+    chai "~4.3.7"
+
+"@cityofzion/neon-invoker@1.5.2":
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neon-invoker/-/neon-invoker-1.5.2.tgz#9188985659df1998d0138c6be8f36c04d76cb759"
+  integrity sha512-rW0Z8vaLE5RvUyOfNBJTSlVJ+MyYWiz+/1fx8d5I3/cxJVNXAKIyS0Igs9T3eUH219rodhXjd/515uygdVseZA==
+  dependencies:
+    "@cityofzion/neo3-invoker" "1.5.2"
     "@cityofzion/neon-core" "5.3.0"
     "@cityofzion/neon-js" "5.3.0"
     chai "~4.3.7"
