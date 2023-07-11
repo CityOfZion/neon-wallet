@@ -55,7 +55,7 @@ const App = ({
   showInfoNotification,
 }: Props) => {
   const { requests, sessions, disconnect } = useWalletConnectWallet()
-  const [queuedWcReroute, setQueuedWcReroute] = React.useState(null)
+  const [deeplinkUri, setDeeplinkUri] = React.useState(null)
 
   useEffect(() => {
     async function handleUpgrade() {
@@ -73,25 +73,24 @@ const App = ({
 
   useEffect(
     () => {
-      const handle = (event, url) => {
+      const handle = (_event, url) => {
         const { uri } = parseQuery(decodeURI(url))
-        if (uri) {
-          if (address) {
-            history[
-              history.location.pathname === ROUTES.CONNECT_DAPP
-                ? 'replace'
-                : 'push'
-            ]({
-              pathname: ROUTES.CONNECT_DAPP,
-              state: { uri },
-            })
-          } else {
-            showInfoNotification({
-              message: 'Please login before connecting to a dApp.',
-            })
-            setQueuedWcReroute(uri)
-          }
+        if (!uri) return
+
+        if (!address) {
+          showInfoNotification({
+            message: 'Please login before connecting to a dApp.',
+          })
+          setDeeplinkUri(uri)
+          return
         }
+
+        history[
+          history.location.pathname === ROUTES.CONNECT_DAPP ? 'replace' : 'push'
+        ]({
+          pathname: ROUTES.CONNECT_DAPP,
+          state: { uri },
+        })
       }
 
       ipc.on('link', handle)
@@ -105,19 +104,15 @@ const App = ({
 
   useEffect(
     () => {
-      if (queuedWcReroute && address) {
-        setTimeout(() => {
-          // Add a timeout so that the dashboard still loads
-          // before redirecting to the connect dapp screen
-          setQueuedWcReroute(null)
-          history.push({
-            pathname: ROUTES.CONNECT_DAPP,
-            state: { uri: queuedWcReroute },
-          })
-        }, 1000)
-      }
+      if (!deeplinkUri || !address) return
+
+      setDeeplinkUri(null)
+      history.push({
+        pathname: ROUTES.CONNECT_DAPP,
+        state: { uri: deeplinkUri },
+      })
     },
-    [address, queuedWcReroute, history],
+    [address, deeplinkUri, history],
   )
 
   useEffect(
