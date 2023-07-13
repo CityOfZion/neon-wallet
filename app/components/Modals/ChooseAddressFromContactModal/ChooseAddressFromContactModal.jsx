@@ -10,6 +10,8 @@ import { useContactsContext } from '../../../context/contacts/ContactsContext'
 import CheckMarkIcon from '../../../assets/icons/alternate-check.svg'
 import { imageMap } from '../../../assets/nep5/svg'
 import OldNeoLogo from '../../../assets/images/neo-logo.png'
+import CloseButton from '../../CloseButton'
+import styles from './ChooseAddressFromContactModal.scss'
 
 const NEO_IMAGE = imageMap.NEO
 
@@ -48,20 +50,45 @@ const ChooseAddressFromContactModal = ({
       style={{
         content: {
           height: '400px',
+          width: '500px',
         },
       }}
     >
       <Box height="100%" display="flex" flexDirection="column" overflowY="auto">
-        <Text
-          fontSize="18px"
+        <Box
+          display="flex"
           paddingX="24px"
-          paddingTop="12px"
-          paddingBottom="0px"
+          paddingY="12px"
+          // width="100%"
+          justifyContent="space-between"
+          backgroundColor={'var(--panel-header)'}
         >
-          {' '}
-          Choose an address for {contactName}:
-        </Text>
-        <Box height="100%" display="flex" flexDirection="column">
+          <Text fontSize="18px" margin={0} padding={0}>
+            {' '}
+            {/* Choose an address for {contactName}: */}
+            Address selection
+          </Text>
+          <CloseButton
+            onClick={() => {
+              hideModal()
+              onCancel()
+            }}
+            renderWithoutLink
+            className={styles.closeButton}
+          />
+        </Box>
+        <Box height="100%" display="flex" flexDirection="column" padding="12px">
+          <Text
+            paddingX="24px"
+            paddingTop="6px"
+            paddingBottom="0px"
+            fontSize={14}
+          >
+            {' '}
+            Please select which of {contactName}'s addresses you would like to
+            use.
+          </Text>
+
           <Divider padding="0" margin="0" opacity={0.2} />
           {filteredContactByChain &&
             filteredContactByChain.map(
@@ -74,6 +101,14 @@ const ChooseAddressFromContactModal = ({
                       selectedAddress === address) &&
                     'var(--sidebar-active-background)'
                   }
+                  border="solid 2px transparent"
+                  borderLeft={
+                    (selectedAddress === parsedAddress ||
+                      selectedAddress === address) &&
+                    'solid 2px var(--sidebar-active-border)'
+                  }
+
+                  // border-color: var(--sidebar-active-border);
                 >
                   <Box
                     display="flex"
@@ -91,7 +126,7 @@ const ChooseAddressFromContactModal = ({
                     <Box display="flex" flexDirection="column">
                       <span>{address}</span>
                       {parsedAddress && (
-                        <Text opacity={0.5} fontSize="12px">
+                        <Text opacity={0.5} marginBottom="0px" fontSize="12px">
                           {parsedAddress}
                         </Text>
                       )}
@@ -109,7 +144,7 @@ const ChooseAddressFromContactModal = ({
             )}
 
           <Box marginTop="auto" padding="24px">
-            <Button
+            {/* <Button
               elevated
               id="cancel"
               onClick={() => {
@@ -118,8 +153,8 @@ const ChooseAddressFromContactModal = ({
               }}
             >
               <FormattedMessage id="modalActionCancel" />
-            </Button>
-            <Box marginBottom="4px" />
+            </Button> */}
+            {/* <Box marginBottom="4px" /> */}
 
             <Button
               id="confirm"

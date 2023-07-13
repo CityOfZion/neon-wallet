@@ -180,6 +180,7 @@ export default function ContactForm(props: Props) {
       headerText={computeHeaderText()}
       containerClassName={styles.contactsFullHeightPanel}
       className={styles.contactsFullHeightPanel}
+      childrenContainerClassName={styles.childrenContainerClassName}
       renderInstructions={false}
     >
       <section className={styles.contactFormContainer}>

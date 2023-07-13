@@ -2,18 +2,15 @@
 
 .contactsFullHeightPanel {
   height: 100% !important;
-  // background-color: yellow;
 }
 
 .contactFormContainer {
-  width: 100%;
   display: flex;
   flex-direction: column;
   flex: 1;
   height: 100%;
 
   form {
-    width: 100%;
     height: 100%;
   }
 
@@ -32,8 +29,7 @@
   }
 
   .contactForm {
-    min-width: 350px;
-    width: 100%;
+    width: 350px;
     padding: 24px;
     margin: 0 auto;
     height: 100%;
@@ -173,4 +169,8 @@
       fill: #d355e7 !important;
     }
   }
+}
+
+.childrenContainerClassName {
+  width: 100% !important;
 }
