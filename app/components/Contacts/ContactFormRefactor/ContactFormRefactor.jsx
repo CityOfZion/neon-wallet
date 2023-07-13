@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import { wallet } from '@cityofzion/neon-js-legacy'
-import { Box, Text } from '@chakra-ui/react'
+import { Box, Text, Image } from '@chakra-ui/react'
 import { FormattedMessage } from 'react-intl'
 
 import Button from '../../Button'

@@ -1,8 +1,8 @@
 // @flow
 import { Box, Image, Text } from '@chakra-ui/react'
 import React from 'react'
-import { wallet } from '@cityofzion/neon-js'
-import { wallet as n3Wallet } from '@cityofzion/neon-js-next'
+import { wallet as n3Wallet } from '@cityofzion/neon-js'
+import { wallet } from '@cityofzion/neon-js-legacy'
 import { BSNeo3 } from '@cityofzion/bs-neo3'
 
 import TextInput from '../../Inputs/TextInput'
