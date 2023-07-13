@@ -1,4 +1,4 @@
-import { rpc } from '@cityofzion/neon-js'
+import { rpc } from '@cityofzion/neon-js-legacy'
 
 import main, {
   blockHeightActions,

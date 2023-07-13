@@ -1,5 +1,5 @@
 // @flow
-import { rpc, settings } from '@cityofzion/neon-js'
+import { rpc, settings } from '@cityofzion/neon-js-legacy'
 import { createActions } from 'spunky'
 
 import {

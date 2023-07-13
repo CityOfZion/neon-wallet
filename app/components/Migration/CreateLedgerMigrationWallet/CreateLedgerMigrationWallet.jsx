@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import { wallet as n3Wallet } from '@cityofzion/neon-js-next'
+import { wallet as n3Wallet } from '@cityofzion/neon-js'
 
 import LoginLedgerNanoS from '../../../containers/LoginLedgerNanoS'
 import n3Logo from '../../../assets/images/n3_logo.png'

@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import fs from 'fs'
 
 import { get } from 'lodash-es'
+import { useWalletConnectWallet } from '@cityofzion/wallet-connect-sdk-wallet-react'
 import { getStorage } from '../../core/storage'
 import { recoverWallet } from '../../modules/generateWallet'
 import { useSettingsContext } from '../../context/settings/SettingsContext'
@@ -425,6 +426,7 @@ function ActiveSettingsTab({
   saveSelectedNode: Function,
 }) {
   const { settings, setSetting } = useSettingsContext()
+  const { disconnect, sessions } = useWalletConnectWallet()
   const [selectedNodeLabel, setSelectedNodeLabel] = React.useState('')
 
   React.useEffect(() => {
@@ -582,6 +584,7 @@ function ActiveSettingsTab({
           selectedSetting={selectedNetworkSetting()}
           /* $FlowFixMe */
           updateSettings={({ network }) => {
+            Promise.all(sessions.map(disconnect))
             if (network === 'MainNet (default)' || network === 'TestNet') {
               return handleNetworkChange(
                 network === 'MainNet (default)' ? '1' : '2',

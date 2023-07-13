@@ -312,39 +312,6 @@ p {
     }
   }
 
-  .parameterArray {
-    background: var(--wc-connection-details-bg2);
-    color: var(--wc-connection-details-color);
-    padding: 2px;
-    margin: 4px;
-    display: inline-table !important;
-    border-radius: 4px;
-    border: 2px solid;
-    width: 300px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    justify-content: space-between;
-
-    div {
-      // width: 100%;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .arrayValue {
-      text-overflow: ellipsis;
-      overflow: hidden;
-      width: 300px;
-
-      span {
-        width: 100%;
-        padding: 6px;
-        text-overflow: ellipsis;
-        overflow: hidden;
-      }
-    }
-  }
-
   .parameterType {
     color: #ffffff;
     font-weight: 400;
@@ -477,4 +444,17 @@ p {
   padding: 6px 24px;
   margin: auto;
   width: 600px;
+}
+
+.invocationLoaderContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.invocationLoader {
+  position: unset !important;
+  left: unset !important;
+  top: unset !important;
+  transform: unset !important;
 }

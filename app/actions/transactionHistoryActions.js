@@ -1,7 +1,7 @@
 // @flow
 import { NeoLegacyREST, NeoRest } from '@cityofzion/dora-ts/dist/api'
 import { createActions } from 'spunky'
-import { rpc as n3Rpc, sc, u } from '@cityofzion/neon-js-next'
+import { rpc as n3Rpc, sc, u } from '@cityofzion/neon-js'
 import axios from 'axios'
 
 import { TX_TYPES } from '../core/constants'

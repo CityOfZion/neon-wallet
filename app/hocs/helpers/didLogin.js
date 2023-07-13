@@ -1,7 +1,7 @@
 // @flow
-import { wallet } from '@cityofzion/neon-js'
+import { wallet } from '@cityofzion/neon-js-legacy'
 
-import { wallet as n3Wallet } from '@cityofzion/neon-js-next'
+import { wallet as n3Wallet } from '@cityofzion/neon-js'
 
 export default function didLogin(oldAddress: ?string, newAddress: ?string) {
   return (

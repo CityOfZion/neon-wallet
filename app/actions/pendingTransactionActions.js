@@ -1,6 +1,6 @@
 // @flow
 import { createActions } from 'spunky'
-import Neon, { rpc } from '@cityofzion/neon-js'
+import Neon, { rpc } from '@cityofzion/neon-js-legacy'
 import { isEmpty } from 'lodash-es'
 
 import { toBigNumber } from '../core/math'

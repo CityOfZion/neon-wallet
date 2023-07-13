@@ -2,6 +2,8 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import Logout from '../../app/containers/App/Sidebar/Logout/Logout'
+import { WalletConnectWalletProvider } from '@cityofzion/wallet-connect-sdk-wallet-react'
+import { walletConnectOptions } from '../../app/util/walletConnect'
 
 describe('Logout', () => {
   const logout = jest.fn()

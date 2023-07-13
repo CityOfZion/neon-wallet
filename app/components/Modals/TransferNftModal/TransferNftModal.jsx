@@ -1,9 +1,10 @@
 // @flow
 import React, { useState, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { wallet as n3Wallet } from '@cityofzion/neon-js-next'
+import { wallet as n3Wallet } from '@cityofzion/neon-js'
 import { BSNeo3 } from '@cityofzion/bs-neo3'
 
+import { NeonInvoker } from '@cityofzion/neon-invoker'
 import { NFT } from '../../../containers/NftGallery/NftGallery'
 import Button from '../../Button'
 import SelectInput from '../../Inputs/SelectInput'
@@ -12,8 +13,6 @@ import N3Fees from '../../Send/N3Fees'
 import BaseModal from '../BaseModal'
 import styles from './TransferNftModal.scss'
 import { getNode, getRPCEndpoint } from '../../../actions/nodeStorageActions'
-import N3Helper from '../../../context/WalletConnect/helpers'
-import { convertToArbitraryDecimals } from '../../../core/formatters'
 import { addPendingTransaction } from '../../../actions/pendingTransactionActions'
 import { useContactsContext } from '../../../context/contacts/ContactsContext'
 import { MODAL_TYPES } from '../../../core/constants'
@@ -31,10 +30,10 @@ type Props = {
   address: string,
   tokenId: string,
   wif: string,
-  showSuccessNotification: ({ message: string }) => any,
-  showErrorNotification: ({ message: string }) => any,
-  showInfoNotification: ({ message: string }) => any,
-  hideNotification: (id: string) => void,
+  showSuccessNotification({ message: string }): any,
+  showErrorNotification({ message: string }): any,
+  showInfoNotification({ message: string, autoDismiss: number }): any,
+  hideNotification(id: string): any,
   dispatch: any => any,
   isHardwareLogin: boolean,
   signingFunction: () => void,
@@ -52,14 +51,14 @@ export default function TransferNftModal(props: Props) {
     address,
     wif,
     dispatch,
-    isHardwareLogin,
-    signingFunction,
     showSuccessNotification,
     showErrorNotification,
     showInfoNotification,
     hideNotification,
     recipientAddressProp,
     publicKey,
+    isHardwareLogin,
+    signingFunction,
   } = props
   function handleSubmit() {}
 
@@ -72,8 +71,7 @@ export default function TransferNftModal(props: Props) {
     recipientAddressProp ?? '',
   )
   const [recipientAddressError, setRecipientAddressError] = useState('')
-  const [gasFee, setGasFee] = useState(DEFAULT_FEES)
-  const [feesInitialized, setFeesInitialized] = useState(false)
+  const [fees, setFees] = useState(DEFAULT_FEES)
   const [sendButtonDisabled, setSendButtonDisabled] = useState(false)
   const [loading, setLoading] = useState(true)
   const { contacts } = useContactsContext()
@@ -160,53 +158,54 @@ export default function TransferNftModal(props: Props) {
   async function transfer() {
     try {
       setLoading(true)
-      let endpoint = await getNode(net)
-      if (!endpoint) {
-        endpoint = await getRPCEndpoint(net)
+      let rpcAddress = await getNode(net)
+      if (!rpcAddress) {
+        rpcAddress = await getRPCEndpoint(net)
       }
       const account = new n3Wallet.Account(isHardwareLogin ? publicKey : wif)
-      const testReq = {
-        params: {
-          request: {
-            method: 'multiInvoke',
-            params: {
-              invocations: [
-                {
-                  scriptHash: contract,
-                  operation: 'transfer',
-                  args: [
-                    {
-                      type: 'Hash160',
-                      value: recipientAddress,
-                    },
-                    { type: 'ByteArray', value: tokenId },
-                    { type: 'Any', value: null },
-                  ],
-                },
-              ],
-              signers: [{ scopes: 1 }],
-            },
-          },
-        },
+
+      const invoker = await NeonInvoker.init({
+        rpcAddress,
+        account,
+        signingCallback: signingFunction,
+      })
+
+      let notificationId
+
+      if (isHardwareLogin) {
+        notificationId = showInfoNotification({
+          message: 'Please sign the transaction on your hardware device',
+          autoDismiss: 0,
+        })
       }
 
-      const results = await new N3Helper(endpoint, 0).rpcCall(
-        account,
-        testReq,
-        isHardwareLogin,
-        signingFunction,
-        showInfoNotification,
-        hideNotification,
-      )
+      const hash = await invoker.invokeFunction({
+        invocations: [
+          {
+            scriptHash: contract,
+            operation: 'transfer',
+            args: [
+              {
+                type: 'Hash160',
+                value: recipientAddress,
+              },
+              { type: 'ByteArray', value: tokenId },
+              { type: 'Any', value: null },
+            ],
+          },
+        ],
+      })
 
-      const { result } = results
+      if (notificationId) {
+        hideNotification(notificationId)
+      }
 
       dispatch(
         addPendingTransaction.call({
           address,
           net,
           tx: {
-            hash: result,
+            hash,
             sendEntries: [
               { amount: 1, address, contractHash: contract, symbol: 'N/A' },
             ],
@@ -217,67 +216,52 @@ export default function TransferNftModal(props: Props) {
       showSuccessNotification({
         message: 'Transaction pending! Your NFT will be transferred shortly.',
       })
-      setLoading(false)
-      hideModal()
     } catch (e) {
-      hideModal()
       showErrorNotification({
         message: e.message,
       })
+    } finally {
       setLoading(false)
+      hideModal()
     }
   }
 
-  useEffect(() => {
-    async function testInvoke() {
-      setLoading(true)
-      let endpoint = await getNode(net)
-      if (!endpoint) {
-        endpoint = await getRPCEndpoint(net)
-      }
-      const account = new n3Wallet.Account(address)
-      const testReq = {
-        params: {
-          request: {
-            method: 'testInvoke',
-            params: {
-              invocations: [
+  useEffect(
+    () => {
+      ;(async () => {
+        let rpcAddress = await getNode(net)
+        if (!rpcAddress) {
+          rpcAddress = await getRPCEndpoint(net)
+        }
+        const account = new n3Wallet.Account(isHardwareLogin ? publicKey : wif)
+
+        const invoker = await NeonInvoker.init({ rpcAddress, account })
+        const { networkFee, systemFee } = await invoker.calculateFee({
+          invocations: [
+            {
+              scriptHash: contract,
+              operation: 'transfer',
+              args: [
                 {
-                  scriptHash: contract,
-                  operation: 'transfer',
-                  args: [
-                    {
-                      type: 'Hash160',
-                      value: address,
-                    },
-                    { type: 'ByteArray', value: tokenId },
-                    { type: 'Any', value: null },
-                  ],
+                  type: 'Hash160',
+                  value: address,
                 },
+                { type: 'ByteArray', value: tokenId },
+                { type: 'Any', value: null },
               ],
-              signers: [{ scopes: 1 }],
             },
-          },
-        },
-      }
-      const results = await new N3Helper(endpoint, 0).rpcCall(
-        account,
-        testReq,
-        isHardwareLogin,
-        signingFunction,
-        showInfoNotification,
-        hideNotification,
-      )
-      const fee = convertToArbitraryDecimals(results.result.gasconsumed)
-      setGasFee({
-        networkFee: fee,
-        systemFee: 0,
-      })
-      setFeesInitialized(true)
-      setLoading(false)
-    }
-    testInvoke()
-  }, [])
+          ],
+          signers: [{ scopes: 1 }],
+        })
+
+        setFees({
+          networkFee,
+          systemFee,
+        })
+      })()
+    },
+    [address, tokenId, isHardwareLogin, publicKey, wif, net, contract],
+  )
 
   function createContactList(): Array<string> {
     const filteredContacts = Object.keys(contacts).filter(contact =>
@@ -314,10 +298,7 @@ export default function TransferNftModal(props: Props) {
             error={recipientAddressError}
           />
 
-          <N3Fees
-            fees={loading && !feesInitialized ? DEFAULT_FEES : gasFee}
-            notEnoughGasCallback={toggleHasEnoughGas}
-          />
+          <N3Fees fees={fees} notEnoughGasCallback={toggleHasEnoughGas} />
 
           <Button
             className={styles.submitButton}
