@@ -59,13 +59,10 @@ const ChooseAddressFromContactModal = ({
           display="flex"
           paddingX="24px"
           paddingY="12px"
-          // width="100%"
           justifyContent="space-between"
-          backgroundColor={'var(--panel-header)'}
+          backgroundColor="var(--panel-header)"
         >
           <Text fontSize="18px" margin={0} padding={0}>
-            {' '}
-            {/* Choose an address for {contactName}: */}
             Address selection
           </Text>
           <CloseButton
@@ -107,8 +104,6 @@ const ChooseAddressFromContactModal = ({
                       selectedAddress === address) &&
                     'solid 2px var(--sidebar-active-border)'
                   }
-
-                  // border-color: var(--sidebar-active-border);
                 >
                   <Box
                     display="flex"
@@ -144,18 +139,6 @@ const ChooseAddressFromContactModal = ({
             )}
 
           <Box marginTop="auto" padding="24px">
-            {/* <Button
-              elevated
-              id="cancel"
-              onClick={() => {
-                hideModal()
-                onCancel()
-              }}
-            >
-              <FormattedMessage id="modalActionCancel" />
-            </Button> */}
-            {/* <Box marginBottom="4px" /> */}
-
             <Button
               id="confirm"
               disabled={!selectedAddress}
