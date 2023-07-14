@@ -230,3 +230,10 @@ export default function Transaction(props: Props) {
     </div>
   )
 }
+
+// add a default prop of an empty object to prevent errors when tx is undefined
+Transaction.defaultProps = {
+  tx: {
+    type: null,
+  },
+}
