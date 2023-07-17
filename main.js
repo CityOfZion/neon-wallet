@@ -307,6 +307,16 @@ ipcMain.handle('close', () => {
   win.close()
 })
 
+ipcMain.handle('restore', () => {
+  if (!mainWindow) return
+  if (mainWindow.isMinimized()) {
+    mainWindow.restore()
+  } else {
+    mainWindow.show()
+  }
+  mainWindow.focus()
+})
+
 autoUpdater.logger = log
 autoUpdater.logger.transports.file.level = 'info'
 
