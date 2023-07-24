@@ -183,14 +183,6 @@ const NEWS = {
   '--news-content-border-color': '#ececec',
 }
 
-export const LIGHT_NETWORK_CONFIG_TOOLTIP = {
-  '--network-config-tooltip-label': '#8D98AE',
-  '--network-config-tooltip-background': '#fff',
-  '--network-config-tooltip-color': '#394152',
-  '--network-config-box-shadow':
-    '-3px -3px 17px 0 transparent, 3px 4px 20px 0 rgba(18,21,23,0.24)',
-}
-
 export const NOTIFICATIONS = {
   '--notifications-error-icon-color': '#fff',
   '--notifications-success-icon-color': '#fff',
@@ -242,7 +234,6 @@ export default {
   ...CONTACTS,
   ...SEND,
   ...QR_SCANNER,
-  ...LIGHT_NETWORK_CONFIG_TOOLTIP,
   ...NOTIFICATIONS,
   ...RELEASE_NOTES,
   ...MOBILE,

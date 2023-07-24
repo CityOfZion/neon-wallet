@@ -16,7 +16,6 @@ import withNetworkData from '../../hocs/withNetworkData'
 import nodeStorageActions from '../../actions/nodeStorageActions'
 import accountsActions from '../../actions/accountsActions'
 import withAuthData from '../../hocs/withAuthData'
-import withThemeData from '../../hocs/withThemeData'
 
 const mapStateToProps = state => ({
   networks: getNetworks(state.spunky.settings.data.chain),

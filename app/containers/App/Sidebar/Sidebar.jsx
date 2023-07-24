@@ -17,17 +17,13 @@ import NewsIcon from '../../../assets/navigation/news.svg'
 import MobileIcon from '../../../assets/navigation/mobile.svg'
 import MigrationIcon from '../../../assets/navigation/migration.svg'
 import CanvasIcon from '../../../assets/navigation/canvas.svg'
-import LogoWithTooltipAndBlockHeight from '../../../components/LogoWithTooltipAndBlockHeight/LogoWithTooltipAndBlockHeight'
+import LogoWithTooltipAndBlockHeight from '../../../components/LogoWithTooltipAndBlockHeight'
 
 import styles from './Sidebar.scss'
-import { useSettingsContext } from '../../../context/settings/SettingsContext'
 
 type Props = {
   className: string,
-  theme: ThemeType,
   pendingTransactionsCount: number,
-  count: number,
-  store: any,
   chain: string,
   isWatchOnly?: boolean,
   net: string,
@@ -35,10 +31,7 @@ type Props = {
 
 const Sidebar = ({
   className,
-  theme,
   pendingTransactionsCount,
-  count,
-  store,
   chain,
   isWatchOnly,
   net,
@@ -46,19 +39,12 @@ const Sidebar = ({
   const isConditionalWatchOnlyLink = () =>
     chain === 'neo2' || (chain === 'neo3' && !isWatchOnly)
 
-  const { settings } = useSettingsContext()
-
   return (
     <div
       className={classNames(styles.container, className, styles.tinySideBar)}
     >
       <div className={styles.group}>
-        <LogoWithTooltipAndBlockHeight
-          store={store}
-          theme={theme}
-          count={count}
-          settings={settings}
-        />
+        <LogoWithTooltipAndBlockHeight />
         <NavLink
           id="dashboard"
           exact

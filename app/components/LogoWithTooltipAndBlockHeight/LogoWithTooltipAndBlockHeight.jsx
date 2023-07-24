@@ -2,91 +2,83 @@
 import React, { Fragment } from 'react'
 import { FormattedMessage } from 'react-intl'
 
-import Tooltip from '../Tooltip'
+import {
+  Box,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
+  PopoverContentProps,
+  PopoverArrowProps,
+  Portal,
+} from '@chakra-ui/react'
 import NetworkConfigurationTooltip from '../NetworkConfigurationTooltip'
 import LightLogoWithoutText from '../../assets/images/logo-without-text-black.png'
 import DarkLogoWithoutText from '../../assets/images/logo-without-text.png'
 import styles from '../../containers/App/Sidebar/Sidebar.scss'
 import IntlWrapper from '../Root/IntlWrapper'
-import { LIGHT_NETWORK_CONFIG_TOOLTIP } from '../../themes/Light'
-import { DARK_NETWORK_CONFIG_TOOLTIP } from '../../themes/Dark'
-
-import type { Settings } from '../../actions/settingsActions'
+import { useSettingsContext } from '../../context/settings/SettingsContext'
 
 type Props = {
   count: number,
-  theme: string,
-  store: any,
-  settings: Settings,
 }
 
-class LogoWithTooltipAndBlockHeight extends React.Component<Props> {
-  render() {
-    const { count, theme, store, settings } = this.props
+export default function LogoWithTooltipAndBlockHeight({ count }: Props) {
+  const {
+    settings: { theme },
+  } = useSettingsContext()
 
-    const themeBasedLogo =
-      theme === 'Light' ? LightLogoWithoutText : DarkLogoWithoutText
+  const themeBasedLogo =
+    theme === 'Light' ? LightLogoWithoutText : DarkLogoWithoutText
 
-    return (
-      <Tooltip
-        position="left"
-        interactive
-        theme="network-settings"
-        onShow={() => this.handleOnShow()}
-        html={
-          <IntlWrapper store={store}>
-            <NetworkConfigurationTooltip {...settings} store={store} />{' '}
-          </IntlWrapper>
+  const contentStyles: PopoverContentProps =
+    theme === 'Light'
+      ? { bgColor: '#fff', color: '#394152' }
+      : {
+          bgColor: '#21242C',
+          color: '#fff',
         }
-      >
-        <div className={styles.logo} id="neon-logo-container">
-          <img src={themeBasedLogo} id="neon-logo" alt="neon-logo" />
-        </div>
 
-        <div id="block-height-container" className={styles.blockHeight}>
-          {count && (
-            <Fragment>
-              <div id="block-height-label" className={styles.heightText}>
-                <FormattedMessage id="sidebarCurrentBlock" />
-              </div>
-              <div id="block-height">{count.toLocaleString()}</div>
-            </Fragment>
-          )}
-        </div>
-      </Tooltip>
-    )
-  }
+  const arrowStyles: PopoverArrowProps =
+    theme === 'Light' ? { bgColor: 'white' } : { bgColor: '#21242C' }
 
-  // Because our tooltip component gets injected into the DOM on show
-  // the only way to update its "theme" is via manual DOM manipulation
-  // only after it has been rendered
-  handleOnShow = () => {
-    const { theme } = this.props
-    setTimeout(() => {
-      const currentlySelectedThemeElement = document.querySelector(
-        '.tippy-popper',
-      )
-      const tooltipTheme =
-        theme === 'Light'
-          ? LIGHT_NETWORK_CONFIG_TOOLTIP
-          : DARK_NETWORK_CONFIG_TOOLTIP
-      if (currentlySelectedThemeElement) {
-        // $FlowFixMe
-        const styleString = Object.entries(tooltipTheme).reduce(
-          // eslint-disable-next-line
-          (styleString, [propName, propValue]) => {
-            // $FlowFixMe
-            return `${styleString}${propName}:${propValue};`
-          },
-          '',
-        )
-        // $FlowFixMe
-        currentlySelectedThemeElement.style.cssText = `${
-          currentlySelectedThemeElement.style.cssText
-        } ${styleString}`
-      }
-    }, 1)
-  }
+  return (
+    <Popover placement="right-end" trigger="hover">
+      <PopoverTrigger>
+        <Box>
+          <div className={styles.logo} id="neon-logo-container">
+            <img src={themeBasedLogo} id="neon-logo" alt="neon-logo" />
+          </div>
+
+          <div id="block-height-container" className={styles.blockHeight}>
+            {count && (
+              <Fragment>
+                <div id="block-height-label" className={styles.heightText}>
+                  <FormattedMessage id="sidebarCurrentBlock" />
+                </div>
+                <div id="block-height">{count.toLocaleString()}</div>
+              </Fragment>
+            )}
+          </div>
+        </Box>
+      </PopoverTrigger>
+
+      <Portal>
+        <PopoverContent
+          boxShadow="-3px -3px 17px 0 transparent, 3px 4px 20px 0 rgba(18,21,23,0.24)"
+          border="none"
+          borderRadius="4px"
+          {...contentStyles}
+        >
+          <PopoverArrow {...arrowStyles} />
+          <PopoverBody>
+            <IntlWrapper>
+              <NetworkConfigurationTooltip />
+            </IntlWrapper>
+          </PopoverBody>
+        </PopoverContent>
+      </Portal>
+    </Popover>
+  )
 }
-
-export default LogoWithTooltipAndBlockHeight

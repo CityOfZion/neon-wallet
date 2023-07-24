@@ -21,6 +21,8 @@ import DarkLogoWithoutText from '../../../assets/images/logo-without-text.png'
 import Tooltip from '../../app/components/Tooltip'
 import NetworkConfigurationTooltip from '../../app/components/NetworkConfigurationTooltip'
 import IntlWrapper from '../../app/components/Root/IntlWrapper'
+import { SettingsContextProvider } from '../../app/context/settings/SettingsContext'
+import { act } from 'react-test-renderer'
 
 const { LOADED, LOADING } = progressValues
 
@@ -63,13 +65,16 @@ const setup = (state = initialState, shallowRender = true) => {
   const store = configureStore([thunk])(state)
   const wrapper = mount(
     <Provider store={store}>
-      <IntlWrapper>
-        <MemoryRouter initialEntries={['/']} keyLength={0}>
-          <Sidebar />
-        </MemoryRouter>
-      </IntlWrapper>
+      <SettingsContextProvider>
+        <IntlWrapper>
+          <MemoryRouter initialEntries={['/']} keyLength={0}>
+            <Sidebar />
+          </MemoryRouter>
+        </IntlWrapper>
+      </SettingsContextProvider>
     </Provider>,
   )
+
   return {
     store,
     wrapper,

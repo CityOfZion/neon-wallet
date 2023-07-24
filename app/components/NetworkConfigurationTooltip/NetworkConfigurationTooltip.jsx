@@ -18,16 +18,14 @@ import CogIcon from '../../assets/icons/cog-icon.svg'
 import settingsStyles from '../../containers/Settings/Settings.scss'
 import styles from './NetworkConfigurationTooltip.scss'
 import WarningIcon from '../../assets/icons/warning.svg'
+import { useSettingsContext } from '../../context/settings/SettingsContext'
 
 type Props = {
   address: string,
   net: string,
-  theme: string,
   publicKey: string,
   selectedNode: string,
   intl: IntlShape,
-  chain: string,
-  blockExplorer: string,
 }
 
 export function renderNode(node: Array<any>) {
@@ -55,14 +53,14 @@ export function renderNode(node: Array<any>) {
 export default function NetworkConfigurationTooltip({
   net,
   address,
-  theme,
   intl,
   publicKey,
   selectedNode,
-  blockExplorer,
-  chain,
 }: Props = {}) {
   const [node, setNode] = useState([])
+  const {
+    settings: { blockExplorer, chain, theme },
+  } = useSettingsContext()
 
   useEffect(() => {
     const getVotedNode = async () => {
@@ -138,20 +136,27 @@ export default function NetworkConfigurationTooltip({
             onClick={() => undefined}
           />
           <div className={styles.tooltipItemBorder} />
-          <SettingsItem
-            renderIcon={() => <BlockExplorerIcon />}
-            title={intl.formatMessage({ id: 'networkSettingsExplorerLabel' })}
-            tooltip
-            noBorderBottom
-          >
-            <div className={settingsStyles.settingsSelectContainer}>
-              <div className={styles.configLabel}>
-                {blockExplorer.toUpperCase()}
-              </div>
-            </div>
-          </SettingsItem>
 
-          <div className={styles.tooltipItemBorder} />
+          {blockExplorer && (
+            <>
+              <SettingsItem
+                renderIcon={() => <BlockExplorerIcon />}
+                title={intl.formatMessage({
+                  id: 'networkSettingsExplorerLabel',
+                })}
+                tooltip
+                noBorderBottom
+              >
+                <div className={settingsStyles.settingsSelectContainer}>
+                  <div className={styles.configLabel}>
+                    {blockExplorer.toUpperCase()}
+                  </div>
+                </div>
+              </SettingsItem>
+
+              <div className={styles.tooltipItemBorder} />
+            </>
+          )}
 
           <SettingsItem
             renderIcon={() => <NeoLogo />}
