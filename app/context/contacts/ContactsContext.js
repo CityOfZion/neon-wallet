@@ -105,7 +105,7 @@ export const ContactsContextProvider = ({
     const newContacts = { ...contacts }
     delete newContacts[contactName]
     await saveContacts(newContacts)
-    fetchPotentialNameServiceAddresses(newContacts)
+    await fetchPotentialNameServiceAddresses(newContacts)
   }
 
   useEffect(() => {

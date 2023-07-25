@@ -16,6 +16,7 @@ type Props = {
   children: React$Node,
   elevated?: boolean,
   outline?: boolean,
+  iconClassName?: string,
 }
 
 class Button extends React.Component<Props> {
@@ -35,6 +36,7 @@ class Button extends React.Component<Props> {
       'shouldCenterButtonLabelText',
       'elevated',
       'outline',
+      'iconClassName',
     )
 
     return (
@@ -56,7 +58,11 @@ class Button extends React.Component<Props> {
   }
 
   renderIcon = () => {
-    const { renderIcon, shouldCenterButtonLabelText } = this.props
+    const {
+      renderIcon,
+      shouldCenterButtonLabelText,
+      iconClassName,
+    } = this.props
 
     if (renderIcon) {
       return (
@@ -65,6 +71,7 @@ class Button extends React.Component<Props> {
             styles.icon,
             { [styles.centeredLabel]: shouldCenterButtonLabelText },
             this.getIconStyle(),
+            iconClassName,
           )}
         >
           {renderIcon()}

@@ -24,7 +24,7 @@
   .contact {
     display: flex;
     align-items: center;
-    padding: 12px;
+    padding: 0 12px;
     flex-wrap: nowrap;
 
     button {
@@ -97,7 +97,22 @@
 }
 
 .editButton {
-  width: 100px;
+  width: 110px;
+}
+
+.removeButton {
+  width: 115px;
+  color: #d355e7 !important;
+
+  svg {
+    margin-right: 10px;
+    min-height: 24px;
+    min-width: 24px;
+
+    path {
+      fill: #d355e7 !important;
+    }
+  }
 }
 
 .emptyContactsContainer {
