@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 const {
   app,
   shell,
@@ -8,54 +9,51 @@ const {
   ipcMain,
   safeStorage,
   dialog,
-} = require('electron') // eslint-disable-line import/no-extraneous-dependencies
+} = require('electron')
 const path = require('path')
 const url = require('url')
 const { autoUpdater } = require('electron-updater')
 const log = require('electron-log')
-const fs = require('fs')
 
 const port = process.env.PORT || 3000
 
 let mainWindow = null
-let deeplinkingUrl
+let initialDeepLinkUri = null
 
-// Force Single Instance Application
-const gotTheLock = app.requestSingleInstanceLock()
-if (gotTheLock) {
-  app.on('second-instance', (e, argv) => {
-    // Someone tried to run a second instance, we should focus our window.
-
-    // Protocol handler for win32
-    // argv: An array of the second instance’s (command line / deep linked) arguments
-    if (process.platform === 'win32' || process.platform === 'linux') {
-      // Keep only command line / deep linked arguments
-      const args = argv.slice(1)
-      if (process.platform === 'win32') {
-        // eslint-disable-next-line
-        deeplinkingUrl = args[1]
-      } else {
-        // eslint-disable-next-line
-        deeplinkingUrl = args[0]
-      }
-      deeplinkingUrl = deeplinkingUrl.endsWith('/')
-        ? deeplinkingUrl.slice(0, -1)
-        : deeplinkingUrl
-
-      if (mainWindow?.webContents) {
-        mainWindow.webContents.send('link', deeplinkingUrl)
-      }
-    }
-
-    if (mainWindow) {
-      if (mainWindow.isMinimized()) mainWindow.restore()
-      mainWindow.focus()
-    }
-  })
+if (process.defaultApp) {
+  if (process.argv.length >= 2) {
+    app.setAsDefaultProtocolClient('neon', process.execPath, [
+      path.resolve(process.argv[1]),
+    ])
+  }
 } else {
-  app.quit()
-  return
+  app.setAsDefaultProtocolClient('neon')
 }
+
+const gotTheLock = app.requestSingleInstanceLock()
+if (!gotTheLock) {
+  app.quit()
+} else {
+  app.on('second-instance', (_event, commandLine) => {
+    const url = commandLine.pop()
+
+    if (!mainWindow) {
+      initialDeepLinkUri = url
+      return
+    }
+
+    mainWindow.webContents.send('link', url)
+  })
+}
+
+app.on('open-url', (_event, url) => {
+  if (!mainWindow) {
+    initialDeepLinkUri = url
+    return
+  }
+
+  mainWindow.webContents.send('link', url)
+})
 
 // adapted from https://github.com/chentsulin/electron-react-boilerplate
 const installExtensions = () => {
@@ -67,15 +65,12 @@ const installExtensions = () => {
   ).catch(console.error)
 }
 
-app.on('window-all-closed', () => {
-  app.quit()
-})
-
 app.on('ready', () => {
   // https://github.com/electron/electron/blob/master/docs/tutorial/security.md#csp-http-header
   session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
     callback({ responseHeaders: "default-src 'none'" }) // eslint-disable-line
   })
+
   const onAppReady = () => {
     mainWindow = new BrowserWindow({
       height: 750,
@@ -122,9 +117,8 @@ app.on('ready', () => {
       })
     }
 
-    if (process.platform === 'win32') {
-      // Keep only command line / deep linked arguments
-      deeplinkingUrl = process.argv.slice(1)
+    if (process.platform === 'win32' && process.argv.length > 1) {
+      initialDeepLinkUri = process.argv[1]
     }
 
     if (process.platform !== 'darwin') {
@@ -194,10 +188,6 @@ app.on('ready', () => {
       inputMenu.popup(mainWindow)
     })
 
-    mainWindow.webContents.on('did-finish-load', () => {
-      mainWindow.webContents.send('link', deeplinkingUrl)
-    })
-
     if (process.env.START_HOT) {
       mainWindow.loadURL(`http://localhost:${port}/dist`)
     } else {
@@ -208,15 +198,6 @@ app.on('ready', () => {
           pathname: path.join(__dirname, '/app/dist/index.html'),
         }),
       )
-    }
-    mainWindow.on('closed', () => {
-      mainWindow = null
-    })
-
-    // if there is a deepLinkingUrl in memory and the app was
-    // not previously opened, send the url to the renderer
-    if (deeplinkingUrl) {
-      mainWindow.webContents.send('link', deeplinkingUrl)
     }
   }
 
@@ -231,22 +212,6 @@ app.on('ready', () => {
     onAppReady()
   }
 })
-
-app.on('open-url', (event, url) => {
-  deeplinkingUrl = url
-  if (mainWindow?.webContents) {
-    mainWindow.webContents.send('link', deeplinkingUrl)
-  }
-})
-
-if (process.env.NODE_ENV === 'development' && process.platform === 'win32') {
-  // Set the path of electron.exe and your app.
-  // These two additional parameters are only available on windows.
-  // Setting this is required to get this working in dev mode.
-  app.setAsDefaultProtocolClient('neon', process.execPath, [])
-} else {
-  app.setAsDefaultProtocolClient('neon')
-}
 
 app.on('web-contents-created', (event, wc) => {
   wc.on('before-input-event', (event, input) => {
@@ -294,17 +259,35 @@ ipcMain.handle('dialog', async (event, method, params) => {
   return result
 })
 
+ipcMain.handle('getInitialDeepLinkUri', async () => {
+  const uri = initialDeepLinkUri
+  initialDeepLinkUri = null
+  return uri
+})
+
 ipcMain.handle('minimize', () => {
   const win = BrowserWindow.getFocusedWindow()
   win.minimize()
 })
+
 ipcMain.handle('maximize', () => {
   const win = BrowserWindow.getFocusedWindow()
   win.setFullScreen(!win.isFullScreen())
 })
+
 ipcMain.handle('close', () => {
   const win = BrowserWindow.getFocusedWindow()
   win.close()
+})
+
+ipcMain.handle('restore', () => {
+  if (!mainWindow) return
+  if (mainWindow.isMinimized()) {
+    mainWindow.restore()
+  } else {
+    mainWindow.show()
+  }
+  mainWindow.focus()
 })
 
 autoUpdater.logger = log

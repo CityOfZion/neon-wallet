@@ -1,5 +1,5 @@
 // @flow
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useWalletConnectWallet } from '@cityofzion/wallet-connect-sdk-wallet-react'
 import { ROUTES } from '../../core/constants'
@@ -55,7 +55,7 @@ const App = ({
   showInfoNotification,
 }: Props) => {
   const { requests, sessions, disconnect } = useWalletConnectWallet()
-  const [deeplinkUri, setDeeplinkUri] = React.useState(null)
+  const [decodedDeeplinkUri, setDecodedDeeplinkUri] = useState(null)
 
   useEffect(() => {
     async function handleUpgrade() {
@@ -71,48 +71,44 @@ const App = ({
     handleUpgrade()
   }, [])
 
+  useEffect(() => {
+    const listener = async (_event, uri) => {
+      await ipc.invoke('restore')
+      setDecodedDeeplinkUri(uri)
+    }
+
+    ipc.on('link', listener)
+
+    return () => {
+      ipc.off('link', listener)
+    }
+  }, [])
+
+  useEffect(() => {
+    ipc.invoke('getInitialDeepLinkUri').then(setDecodedDeeplinkUri)
+  }, [])
+
   useEffect(
     () => {
-      const handle = (_event, url) => {
-        const { uri } = parseQuery(decodeURI(url))
-        if (!uri) return
+      if (!decodedDeeplinkUri) return
 
-        if (!address) {
-          showInfoNotification({
-            message: 'Please login before connecting to a dApp.',
-          })
-          setDeeplinkUri(uri)
-          return
-        }
-
-        history[
-          history.location.pathname === ROUTES.CONNECT_DAPP ? 'replace' : 'push'
-        ]({
-          pathname: ROUTES.CONNECT_DAPP,
-          state: { uri },
+      if (!address) {
+        showInfoNotification({
+          message: 'Please login before connecting to a dApp.',
         })
+        return
       }
 
-      ipc.on('link', handle)
+      const { uri } = parseQuery(decodeURI(decodedDeeplinkUri))
+      if (!uri) return
 
-      return () => {
-        ipc.off('link', handle)
-      }
-    },
-    [address, showInfoNotification, history],
-  )
-
-  useEffect(
-    () => {
-      if (!deeplinkUri || !address) return
-
-      setDeeplinkUri(null)
       history.push({
         pathname: ROUTES.CONNECT_DAPP,
-        state: { uri: deeplinkUri },
+        state: { uri },
       })
+      setDecodedDeeplinkUri(null)
     },
-    [address, deeplinkUri, history],
+    [address, decodedDeeplinkUri, history, showInfoNotification],
   )
 
   useEffect(
