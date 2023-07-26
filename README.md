@@ -87,7 +87,9 @@ should be asked in proper support channels such as the [NEO subreddit](https://w
 
 ### Releasing
 
-- To bump the patch version:
+- The CI process for deploys is triggered via tags, the script below will automatically bump the version in `package.json` and create a tag on whatever branch it is being run from. CI will automatically create a DRAFT release, that must manually be promoted to "the latest release". Currently, release notes must also be manually generated.
+
+* To bump the patch version:
 
 ```
 yarn create-release:patch
