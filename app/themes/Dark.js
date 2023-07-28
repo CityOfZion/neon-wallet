@@ -178,12 +178,6 @@ const NEWS = {
   '--news-content-border-color': 'rgba(141, 152, 174, .5)',
 }
 
-export const DARK_NETWORK_CONFIG_TOOLTIP = {
-  '--network-config-tooltip-label': '#8D98AE',
-  '--network-config-tooltip-background': '#21242C',
-  '--network-config-tooltip-color': '#fff',
-}
-
 export const NOTIFICATIONS = {
   '--notifications-error-icon-color': '#eb70ff',
   '--notifications-success-icon-color': '#4cffb3',
@@ -234,7 +228,6 @@ export default {
   ...SETTINGS,
   ...SEND,
   ...QR_SCANNER,
-  ...DARK_NETWORK_CONFIG_TOOLTIP,
   ...NOTIFICATIONS,
   ...RELEASE_NOTES,
   ...MOBILE,

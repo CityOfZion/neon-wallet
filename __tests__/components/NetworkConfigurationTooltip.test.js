@@ -15,6 +15,7 @@ import {
 import NetworkConfigurationTooltip from '../../app/components/NetworkConfigurationTooltip'
 import { renderNode } from '../../app/components/NetworkConfigurationTooltip/NetworkConfigurationTooltip'
 import IntlWrapper from '../../app/components/Root/IntlWrapper'
+import { SettingsContextProvider } from '../../app/context/settings/SettingsContext'
 
 const { LOADED, LOADING } = progressValues
 
@@ -63,11 +64,13 @@ const networkConfigTooltipSetup = (
   const store = configureStore([thunk])(state)
   const wrapper = mount(
     <Provider store={store}>
-      <IntlWrapper store={store}>
-        <MemoryRouter initialEntries={['/']} keyLength={0}>
-          <NetworkConfigurationTooltip blockExplorer="Dora" />
-        </MemoryRouter>
-      </IntlWrapper>
+      <SettingsContextProvider>
+        <IntlWrapper store={store}>
+          <MemoryRouter initialEntries={['/']} keyLength={0}>
+            <NetworkConfigurationTooltip blockExplorer="Dora" />
+          </MemoryRouter>
+        </IntlWrapper>
+      </SettingsContextProvider>
     </Provider>,
   )
   return {
@@ -97,7 +100,7 @@ const renderNodeSetup = (
   }
 }
 
-describe('Sidebar', () => {
+describe('NetworkConfigurationTooltip', () => {
   test('renders without crashing', () => {
     const { wrapper } = networkConfigTooltipSetup()
     expect(wrapper).toMatchSnapshot()
