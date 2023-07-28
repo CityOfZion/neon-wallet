@@ -109,7 +109,10 @@ const ApproveConnection = ({
     <FullHeightPanel
       headerText="Wallet Connect"
       renderCloseButton={() => (
-        <CloseButton onClick={rejectSession} routeTo={ROUTES.DASHBOARD} />
+        <CloseButton
+          onClick={() => rejectSession()}
+          routeTo={ROUTES.DASHBOARD}
+        />
       )}
       renderHeaderIcon={() => (
         <div className={styles.walletConnectIcon}>
