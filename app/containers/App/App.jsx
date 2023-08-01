@@ -119,6 +119,8 @@ const App = ({
       const session = sessions.find(session => session.topic === request.topic)
       if (!session) return
 
+      ipc.invoke('restore')
+
       history[
         history.location.pathname === ROUTES.DAPP_REQUEST ? 'replace' : 'push'
       ]({
