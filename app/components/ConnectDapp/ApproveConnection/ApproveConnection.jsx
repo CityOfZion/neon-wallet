@@ -66,19 +66,13 @@ const ApproveConnection = ({
     }
   }
 
-  const rejectSession = async (error?: string) => {
+  const rejectSession = async () => {
     try {
       await rejectProposal(proposal)
-      if (error) {
-        showErrorNotification({
-          message: error,
-        })
-      } else {
-        showSuccessNotification({
-          message: `You have rejected connection from ${metadata.name}.`,
-          stack: true,
-        })
-      }
+      showSuccessNotification({
+        message: `You have rejected connection from ${metadata.name}.`,
+        stack: true,
+      })
     } catch (error) {
       showErrorNotification({
         message: `An error occurred attempting to reject proposal: ${
@@ -151,17 +145,9 @@ const ApproveConnection = ({
           <div className={styles.confirmation} style={{ border: 'none' }}>
             Please confirm you would like to connect
             <div>
-              <Confirm
-                onClick={() => {
-                  handleApproveSessionClick()
-                }}
-              />
+              <Confirm onClick={handleApproveSessionClick} />
 
-              <Deny
-                onClick={() => {
-                  rejectSession()
-                }}
-              />
+              <Deny onClick={rejectSession} />
             </div>
           </div>
         </div>
