@@ -3,11 +3,9 @@ import hashlib
 import subprocess
 import requests
 
-# This python script will download the latest release of neon-wallet and generate
+# This python script will download any release of neon-wallet and generate
 # the checksums for each file. The checksums will be copied to your clipboard for pasting into
 # the release notes on GitHub.
-#
-# This script requires Python 2.7 and the requests and tqdm libraries.
 
 GITHUB_API_URL = "https://api.github.com/repos/CityOfZion/neon-wallet/releases"
 
