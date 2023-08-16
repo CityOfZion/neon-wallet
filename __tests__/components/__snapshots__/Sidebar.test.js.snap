@@ -692,13 +692,13 @@ exports[`Sidebar renders without crashing 1`] = `
                                                   "insert": [Function],
                                                   "inserted": Object {
                                                     "0": true,
-                                                    "15f2gqw": true,
+                                                    "109rzhi": true,
                                                     "178n531": true,
                                                   },
                                                   "key": "css",
                                                   "nonce": undefined,
                                                   "registered": Object {
-                                                    "css-15f2gqw": "position:relative;display:flex;flex-direction:column;border:none;border-radius:4px;box-shadow:lg;background-color:#21242C;color:#fff;",
+                                                    "css-109rzhi": "position:relative;display:flex;flex-direction:column;box-shadow:-3px -3px 17px 0 transparent, 3px 4px 20px 0 rgba(18,21,23,0.24);border:none;border-radius:4px;background-color:#21242C;color:#fff;",
                                                   },
                                                   "sheet": StyleSheet {
                                                     "_alreadyInsertedOrderInsensitiveRule": true,
@@ -717,7 +717,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                                         data-s=""
                                                       >
                                                         
-                                                        .css-15f2gqw{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;border:none;border-radius:4px;box-shadow:lg;background-color:#21242C;color:#fff;}
+                                                        .css-109rzhi{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;box-shadow:-3px -3px 17px 0 transparent,3px 4px 20px 0 rgba(18,21,23,0.24);border:none;border-radius:4px;background-color:#21242C;color:#fff;}
                                                       </style>
                                                       <style
                                                         data-emotion="css"
@@ -746,7 +746,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                                         data-s=""
                                                       >
                                                         
-                                                        .css-15f2gqw{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;border:none;border-radius:4px;box-shadow:lg;background-color:#21242C;color:#fff;}
+                                                        .css-109rzhi{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;box-shadow:-3px -3px 17px 0 transparent,3px 4px 20px 0 rgba(18,21,23,0.24);border:none;border-radius:4px;background-color:#21242C;color:#fff;}
                                                       </style>,
                                                       <style
                                                         data-emotion="css"
@@ -832,7 +832,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                                 >
                                                   <section
                                                     aria-describedby="popover-body-:r1:"
-                                                    class="chakra-popover__content css-15f2gqw"
+                                                    class="chakra-popover__content css-109rzhi"
                                                     id="popover-content-:r1:"
                                                     role="tooltip"
                                                     style="transform-origin: var(--popper-transform-origin); opacity: 0; visibility: hidden; transform: scale(0.95) translateZ(0);"
@@ -952,8 +952,8 @@ exports[`Sidebar renders without crashing 1`] = `
                                               bgColor="#21242C"
                                               border="none"
                                               borderRadius="4px"
+                                              boxShadow="-3px -3px 17px 0 transparent, 3px 4px 20px 0 rgba(18,21,23,0.24)"
                                               color="#fff"
-                                              shadow="lg"
                                             >
                                               <ForwardRef(ChakraComponent)
                                                 className="chakra-popover__popper"
@@ -983,13 +983,13 @@ exports[`Sidebar renders without crashing 1`] = `
                                                         "insert": [Function],
                                                         "inserted": Object {
                                                           "0": true,
-                                                          "15f2gqw": true,
+                                                          "109rzhi": true,
                                                           "178n531": true,
                                                         },
                                                         "key": "css",
                                                         "nonce": undefined,
                                                         "registered": Object {
-                                                          "css-15f2gqw": "position:relative;display:flex;flex-direction:column;border:none;border-radius:4px;box-shadow:lg;background-color:#21242C;color:#fff;",
+                                                          "css-109rzhi": "position:relative;display:flex;flex-direction:column;box-shadow:-3px -3px 17px 0 transparent, 3px 4px 20px 0 rgba(18,21,23,0.24);border:none;border-radius:4px;background-color:#21242C;color:#fff;",
                                                         },
                                                         "sheet": StyleSheet {
                                                           "_alreadyInsertedOrderInsensitiveRule": true,
@@ -1008,7 +1008,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                                               data-s=""
                                                             >
                                                               
-                                                              .css-15f2gqw{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;border:none;border-radius:4px;box-shadow:lg;background-color:#21242C;color:#fff;}
+                                                              .css-109rzhi{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;box-shadow:-3px -3px 17px 0 transparent,3px 4px 20px 0 rgba(18,21,23,0.24);border:none;border-radius:4px;background-color:#21242C;color:#fff;}
                                                             </style>
                                                             <style
                                                               data-emotion="css"
@@ -1037,7 +1037,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                                               data-s=""
                                                             >
                                                               
-                                                              .css-15f2gqw{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;border:none;border-radius:4px;box-shadow:lg;background-color:#21242C;color:#fff;}
+                                                              .css-109rzhi{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;box-shadow:-3px -3px 17px 0 transparent,3px 4px 20px 0 rgba(18,21,23,0.24);border:none;border-radius:4px;background-color:#21242C;color:#fff;}
                                                             </style>,
                                                             <style
                                                               data-emotion="css"
@@ -1084,6 +1084,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                                       bgColor="#21242C"
                                                       border="none"
                                                       borderRadius="4px"
+                                                      boxShadow="-3px -3px 17px 0 transparent, 3px 4px 20px 0 rgba(18,21,23,0.24)"
                                                       className="chakra-popover__content"
                                                       color="#fff"
                                                       id="popover-content-:r1:"
@@ -1093,7 +1094,6 @@ exports[`Sidebar renders without crashing 1`] = `
                                                       onMouseEnter={[Function]}
                                                       onMouseLeave={[Function]}
                                                       role="tooltip"
-                                                      shadow="lg"
                                                       style={
                                                         Object {
                                                           "--popper-arrow-shadow-color": undefined,
@@ -1116,6 +1116,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                                         bgColor="#21242C"
                                                         border="none"
                                                         borderRadius="4px"
+                                                        boxShadow="-3px -3px 17px 0 transparent, 3px 4px 20px 0 rgba(18,21,23,0.24)"
                                                         className="chakra-popover__content"
                                                         color="#fff"
                                                         id="popover-content-:r1:"
@@ -1126,7 +1127,6 @@ exports[`Sidebar renders without crashing 1`] = `
                                                         onMouseEnter={[Function]}
                                                         onMouseLeave={[Function]}
                                                         role="tooltip"
-                                                        shadow="lg"
                                                         style={
                                                           Object {
                                                             "--popper-arrow-shadow-color": undefined,
@@ -1183,6 +1183,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                                           bgColor="#21242C"
                                                           border="none"
                                                           borderRadius="4px"
+                                                          boxShadow="-3px -3px 17px 0 transparent, 3px 4px 20px 0 rgba(18,21,23,0.24)"
                                                           className="chakra-popover__content"
                                                           color="#fff"
                                                           id="popover-content-:r1:"
@@ -1193,7 +1194,6 @@ exports[`Sidebar renders without crashing 1`] = `
                                                           onMouseEnter={[Function]}
                                                           onMouseLeave={[Function]}
                                                           role="tooltip"
-                                                          shadow="lg"
                                                           style={
                                                             Object {
                                                               "--popper-arrow-shadow-color": undefined,
@@ -1243,13 +1243,13 @@ exports[`Sidebar renders without crashing 1`] = `
                                                                 "insert": [Function],
                                                                 "inserted": Object {
                                                                   "0": true,
-                                                                  "15f2gqw": true,
+                                                                  "109rzhi": true,
                                                                   "178n531": true,
                                                                 },
                                                                 "key": "css",
                                                                 "nonce": undefined,
                                                                 "registered": Object {
-                                                                  "css-15f2gqw": "position:relative;display:flex;flex-direction:column;border:none;border-radius:4px;box-shadow:lg;background-color:#21242C;color:#fff;",
+                                                                  "css-109rzhi": "position:relative;display:flex;flex-direction:column;box-shadow:-3px -3px 17px 0 transparent, 3px 4px 20px 0 rgba(18,21,23,0.24);border:none;border-radius:4px;background-color:#21242C;color:#fff;",
                                                                 },
                                                                 "sheet": StyleSheet {
                                                                   "_alreadyInsertedOrderInsensitiveRule": true,
@@ -1268,7 +1268,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                                                       data-s=""
                                                                     >
                                                                       
-                                                                      .css-15f2gqw{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;border:none;border-radius:4px;box-shadow:lg;background-color:#21242C;color:#fff;}
+                                                                      .css-109rzhi{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;box-shadow:-3px -3px 17px 0 transparent,3px 4px 20px 0 rgba(18,21,23,0.24);border:none;border-radius:4px;background-color:#21242C;color:#fff;}
                                                                     </style>
                                                                     <style
                                                                       data-emotion="css"
@@ -1297,7 +1297,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                                                       data-s=""
                                                                     >
                                                                       
-                                                                      .css-15f2gqw{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;border:none;border-radius:4px;box-shadow:lg;background-color:#21242C;color:#fff;}
+                                                                      .css-109rzhi{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;box-shadow:-3px -3px 17px 0 transparent,3px 4px 20px 0 rgba(18,21,23,0.24);border:none;border-radius:4px;background-color:#21242C;color:#fff;}
                                                                     </style>,
                                                                     <style
                                                                       data-emotion="css"
@@ -1314,9 +1314,9 @@ exports[`Sidebar renders without crashing 1`] = `
                                                             serialized={
                                                               Object {
                                                                 "map": undefined,
-                                                                "name": "15f2gqw",
+                                                                "name": "109rzhi",
                                                                 "next": undefined,
-                                                                "styles": "position:relative;display:flex;flex-direction:column;border:none;border-radius:4px;box-shadow:lg;background-color:#21242C;color:#fff;",
+                                                                "styles": "position:relative;display:flex;flex-direction:column;box-shadow:-3px -3px 17px 0 transparent, 3px 4px 20px 0 rgba(18,21,23,0.24);border:none;border-radius:4px;background-color:#21242C;color:#fff;",
                                                                 "toString": [Function],
                                                               }
                                                             }
@@ -1324,7 +1324,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                                           <ForwardRef(MotionComponent)
                                                             animate="exit"
                                                             aria-describedby="popover-body-:r1:"
-                                                            className="chakra-popover__content css-15f2gqw"
+                                                            className="chakra-popover__content css-109rzhi"
                                                             id="popover-content-:r1:"
                                                             initial={false}
                                                             onAnimationComplete={[Function]}
@@ -1378,7 +1378,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                                           >
                                                             <section
                                                               aria-describedby="popover-body-:r1:"
-                                                              className="chakra-popover__content css-15f2gqw"
+                                                              className="chakra-popover__content css-109rzhi"
                                                               id="popover-content-:r1:"
                                                               onBlur={[Function]}
                                                               onKeyDown={[Function]}
@@ -1424,13 +1424,13 @@ exports[`Sidebar renders without crashing 1`] = `
                                                                           "insert": [Function],
                                                                           "inserted": Object {
                                                                             "0": true,
-                                                                            "15f2gqw": true,
+                                                                            "109rzhi": true,
                                                                             "178n531": true,
                                                                           },
                                                                           "key": "css",
                                                                           "nonce": undefined,
                                                                           "registered": Object {
-                                                                            "css-15f2gqw": "position:relative;display:flex;flex-direction:column;border:none;border-radius:4px;box-shadow:lg;background-color:#21242C;color:#fff;",
+                                                                            "css-109rzhi": "position:relative;display:flex;flex-direction:column;box-shadow:-3px -3px 17px 0 transparent, 3px 4px 20px 0 rgba(18,21,23,0.24);border:none;border-radius:4px;background-color:#21242C;color:#fff;",
                                                                           },
                                                                           "sheet": StyleSheet {
                                                                             "_alreadyInsertedOrderInsensitiveRule": true,
@@ -1449,7 +1449,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                                                                 data-s=""
                                                                               >
                                                                                 
-                                                                                .css-15f2gqw{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;border:none;border-radius:4px;box-shadow:lg;background-color:#21242C;color:#fff;}
+                                                                                .css-109rzhi{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;box-shadow:-3px -3px 17px 0 transparent,3px 4px 20px 0 rgba(18,21,23,0.24);border:none;border-radius:4px;background-color:#21242C;color:#fff;}
                                                                               </style>
                                                                               <style
                                                                                 data-emotion="css"
@@ -1478,7 +1478,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                                                                 data-s=""
                                                                               >
                                                                                 
-                                                                                .css-15f2gqw{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;border:none;border-radius:4px;box-shadow:lg;background-color:#21242C;color:#fff;}
+                                                                                .css-109rzhi{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;box-shadow:-3px -3px 17px 0 transparent,3px 4px 20px 0 rgba(18,21,23,0.24);border:none;border-radius:4px;background-color:#21242C;color:#fff;}
                                                                               </style>,
                                                                               <style
                                                                                 data-emotion="css"
@@ -1539,13 +1539,13 @@ exports[`Sidebar renders without crashing 1`] = `
                                                                                 "insert": [Function],
                                                                                 "inserted": Object {
                                                                                   "0": true,
-                                                                                  "15f2gqw": true,
+                                                                                  "109rzhi": true,
                                                                                   "178n531": true,
                                                                                 },
                                                                                 "key": "css",
                                                                                 "nonce": undefined,
                                                                                 "registered": Object {
-                                                                                  "css-15f2gqw": "position:relative;display:flex;flex-direction:column;border:none;border-radius:4px;box-shadow:lg;background-color:#21242C;color:#fff;",
+                                                                                  "css-109rzhi": "position:relative;display:flex;flex-direction:column;box-shadow:-3px -3px 17px 0 transparent, 3px 4px 20px 0 rgba(18,21,23,0.24);border:none;border-radius:4px;background-color:#21242C;color:#fff;",
                                                                                 },
                                                                                 "sheet": StyleSheet {
                                                                                   "_alreadyInsertedOrderInsensitiveRule": true,
@@ -1564,7 +1564,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                                                                       data-s=""
                                                                                     >
                                                                                       
-                                                                                      .css-15f2gqw{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;border:none;border-radius:4px;box-shadow:lg;background-color:#21242C;color:#fff;}
+                                                                                      .css-109rzhi{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;box-shadow:-3px -3px 17px 0 transparent,3px 4px 20px 0 rgba(18,21,23,0.24);border:none;border-radius:4px;background-color:#21242C;color:#fff;}
                                                                                     </style>
                                                                                     <style
                                                                                       data-emotion="css"
@@ -1593,7 +1593,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                                                                       data-s=""
                                                                                     >
                                                                                       
-                                                                                      .css-15f2gqw{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;border:none;border-radius:4px;box-shadow:lg;background-color:#21242C;color:#fff;}
+                                                                                      .css-109rzhi{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;box-shadow:-3px -3px 17px 0 transparent,3px 4px 20px 0 rgba(18,21,23,0.24);border:none;border-radius:4px;background-color:#21242C;color:#fff;}
                                                                                     </style>,
                                                                                     <style
                                                                                       data-emotion="css"
@@ -1642,13 +1642,13 @@ exports[`Sidebar renders without crashing 1`] = `
                                                                           "insert": [Function],
                                                                           "inserted": Object {
                                                                             "0": true,
-                                                                            "15f2gqw": true,
+                                                                            "109rzhi": true,
                                                                             "178n531": true,
                                                                           },
                                                                           "key": "css",
                                                                           "nonce": undefined,
                                                                           "registered": Object {
-                                                                            "css-15f2gqw": "position:relative;display:flex;flex-direction:column;border:none;border-radius:4px;box-shadow:lg;background-color:#21242C;color:#fff;",
+                                                                            "css-109rzhi": "position:relative;display:flex;flex-direction:column;box-shadow:-3px -3px 17px 0 transparent, 3px 4px 20px 0 rgba(18,21,23,0.24);border:none;border-radius:4px;background-color:#21242C;color:#fff;",
                                                                           },
                                                                           "sheet": StyleSheet {
                                                                             "_alreadyInsertedOrderInsensitiveRule": true,
@@ -1667,7 +1667,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                                                                 data-s=""
                                                                               >
                                                                                 
-                                                                                .css-15f2gqw{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;border:none;border-radius:4px;box-shadow:lg;background-color:#21242C;color:#fff;}
+                                                                                .css-109rzhi{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;box-shadow:-3px -3px 17px 0 transparent,3px 4px 20px 0 rgba(18,21,23,0.24);border:none;border-radius:4px;background-color:#21242C;color:#fff;}
                                                                               </style>
                                                                               <style
                                                                                 data-emotion="css"
@@ -1696,7 +1696,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                                                                 data-s=""
                                                                               >
                                                                                 
-                                                                                .css-15f2gqw{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;border:none;border-radius:4px;box-shadow:lg;background-color:#21242C;color:#fff;}
+                                                                                .css-109rzhi{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;box-shadow:-3px -3px 17px 0 transparent,3px 4px 20px 0 rgba(18,21,23,0.24);border:none;border-radius:4px;background-color:#21242C;color:#fff;}
                                                                               </style>,
                                                                               <style
                                                                                 data-emotion="css"
