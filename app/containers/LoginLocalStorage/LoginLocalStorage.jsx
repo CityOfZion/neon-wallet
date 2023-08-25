@@ -19,7 +19,7 @@ type Props = {
   chain: string,
   newMigratedWalletName: string,
   newWalletCreated: Function,
-  setChain: string => any,
+  setSetting: ({ [key: string]: any }) => any,
 }
 
 type State = {
@@ -55,7 +55,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
   // I could seem to get all of these state updates
   // to render as expected... No idea why.
   handleNewMigrationWalletLogic = () => {
-    this.props.setChain('neo3')
+    this.props.setSetting({ chain: 'neo3' })
     setTimeout(() => {
       resetCachedNode()
       const selectedAccount = this.returnMappedAccounts().find(

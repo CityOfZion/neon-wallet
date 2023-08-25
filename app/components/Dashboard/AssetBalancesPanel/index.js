@@ -10,7 +10,6 @@ import assetBalancesPanelActions from '../../../actions/assetBalancesPanelAction
 import balancesActions from '../../../actions/balancesActions'
 import priceHistoryActions from '../../../actions/priceHistoryActions'
 import withBalancesData from '../../../hocs/withBalancesData'
-import withCurrencyData from '../../../hocs/withCurrencyData'
 import withPricesData from '../../../hocs/withPricesData'
 import withLoadingProp from '../../../hocs/withLoadingProp'
 import withProgressPanel from '../../../hocs/withProgressPanel'
@@ -18,7 +17,6 @@ import withSuccessNotification from '../../../hocs/withSuccessNotification'
 import withFailureNotification from '../../../hocs/withFailureNotification'
 import withNetworkData from '../../../hocs/withNetworkData'
 import withAuthData from '../../../hocs/withAuthData'
-import withFilteredTokensData from '../../../hocs/withFilteredTokensData'
 import { ASSETS } from '../../../core/constants'
 import { toBigNumber } from '../../../core/math'
 import withSettingsContext from '../../../hocs/withSettingsContext'
@@ -60,13 +58,10 @@ const mapBalancesActionsToProps = (actions: Object, props: Object) => ({
 })
 
 export default compose(
-  // withCurrencyData('currencyCode'),
-
   // Fetch price & balance data based based upon the selected currency.
   // Reload data with the currency changes.
   withNetworkData(),
   withAuthData(),
-  withFilteredTokensData(),
   withProgressPanel(assetBalancesPanelActions, {
     title: <FormattedMessage id="dashboardAssetsPanelLabel" />,
   }),

@@ -12,8 +12,6 @@ import withPricesData from '../../hocs/withPricesData'
 import withNetworkData from '../../hocs/withNetworkData'
 import withAuthData from '../../hocs/withAuthData'
 import withBalancesData from '../../hocs/withBalancesData'
-import withCurrencyData from '../../hocs/withCurrencyData'
-import withFilteredTokensData from '../../hocs/withFilteredTokensData'
 
 import withLoadingProp from '../../hocs/withLoadingProp'
 import balancesActions from '../../actions/balancesActions'
@@ -77,12 +75,9 @@ export default compose(
     mapDispatchToProps,
   ),
   withBalancesData(mapBalanceDataToProps),
-  withCurrencyData('currencyCode'),
   withPricesData(mapPricesDataToProps),
   withNetworkData(),
   withAuthData(),
-
-  withFilteredTokensData(),
   withLoadingProp(balancesActions),
   withSuccessNotification(
     balancesActions,

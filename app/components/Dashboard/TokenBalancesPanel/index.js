@@ -12,8 +12,6 @@ import balancesActions from '../../../actions/balancesActions'
 import withNetworkData from '../../../hocs/withNetworkData'
 import withAuthData from '../../../hocs/withAuthData'
 import withBalancesData from '../../../hocs/withBalancesData'
-import withCurrencyData from '../../../hocs/withCurrencyData'
-import withFilteredTokensData from '../../../hocs/withFilteredTokensData'
 import withLoadingProp from '../../../hocs/withLoadingProp'
 import withProgressPanel from '../../../hocs/withProgressPanel'
 import { toBigNumber } from '../../../core/math'
@@ -76,11 +74,8 @@ const mapNftActionsToProps = (actions, props) => ({
 })
 
 export default compose(
-  // withCurrencyData('currencyCode'),
-
   withNetworkData(),
   withAuthData(),
-  withFilteredTokensData(),
   withProgressPanel(balancesActions, {
     title: <FormattedMessage id="dashboardBalancePanelLabel" />,
   }),

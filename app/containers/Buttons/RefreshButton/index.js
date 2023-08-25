@@ -8,7 +8,6 @@ import withLoadingProp from '../../../hocs/withLoadingProp'
 import balancesActions from '../../../actions/balancesActions'
 import withAuthData from '../../../hocs/withAuthData'
 import withNetworkData from '../../../hocs/withNetworkData'
-import withFilteredTokensData from '../../../hocs/withFilteredTokensData'
 
 const mapAccountActionsToProps = (actions, props) => ({
   loadWalletData: () =>
@@ -22,7 +21,6 @@ const mapAccountActionsToProps = (actions, props) => ({
 export default compose(
   withAuthData(),
   withNetworkData(),
-  withFilteredTokensData(),
   withActions(accountActions, mapAccountActionsToProps),
   withLoadingProp(balancesActions),
 )(RefreshButton)

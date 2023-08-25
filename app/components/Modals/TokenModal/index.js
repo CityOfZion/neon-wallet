@@ -6,18 +6,14 @@ import { withActions } from 'spunky'
 
 import TokenModal from './TokenModal'
 import accountActions from '../../../actions/accountActions'
-import { updateSettingsActions } from '../../../actions/settingsActions'
 import withAuthData from '../../../hocs/withAuthData'
 import withNetworkData from '../../../hocs/withNetworkData'
 import withTokensData from '../../../hocs/withTokensData'
 import { showErrorNotification } from '../../../modules/notifications'
+import withSettingsContext from '../../../hocs/withSettingsContext'
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ showErrorNotification }, dispatch)
-
-const mapSettingsActionsToProps = actions => ({
-  setUserGeneratedTokens: tokens => actions.call({ tokens }),
-})
 
 const mapAccountActionsToProps = (actions, props) => ({
   onSave: () =>
@@ -36,6 +32,5 @@ export default compose(
   withNetworkData(),
   withAuthData(),
   withTokensData(),
-  withActions(updateSettingsActions, mapSettingsActionsToProps),
   withActions(accountActions, mapAccountActionsToProps),
-)(TokenModal)
+)(withSettingsContext(TokenModal))

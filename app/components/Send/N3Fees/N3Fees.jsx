@@ -9,7 +9,7 @@ import styles from './N3Fees.scss'
 const GAS_IMAGE = imageMap.GAS
 
 type Props = {
-  currencyCode: string,
+  currency: string,
   gasPrice: string,
   GAS: string,
   fees: {
@@ -25,7 +25,7 @@ export default function N3Fees(props: Props) {
       systemFee: 0,
       networkFee: 0,
     },
-    currencyCode,
+    currency,
     gasPrice,
     GAS,
     notEnoughGasCallback,
@@ -82,9 +82,7 @@ export default function N3Fees(props: Props) {
         </div>
 
         <div className={styles.fiatAmount}>
-          <div className={styles.currencyCode}>
-            {currencyCode.toUpperCase()}
-          </div>
+          <div className={styles.currencyCode}>{currency.toUpperCase()}</div>
           {totalFeesInFiat}
         </div>
       </div>

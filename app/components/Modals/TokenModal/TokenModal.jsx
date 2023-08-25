@@ -16,7 +16,7 @@ import { getNetworks } from '../../../core/networks'
 type Props = {
   hideModal: () => any,
   networkId: string,
-  setUserGeneratedTokens: Function,
+  setSetting: Function,
   tokens: Array<TokenItemType>,
   showErrorNotification: Object => any,
   onSave: () => any,
@@ -61,12 +61,7 @@ class TokenModal extends Component<Props, State> {
   }
 
   saveAndValidateTokens = () => {
-    const {
-      setUserGeneratedTokens,
-      hideModal,
-      showErrorNotification,
-      onSave,
-    } = this.props
+    const { setSetting, hideModal, showErrorNotification, onSave } = this.props
     const { tokens } = this.state
 
     const newlyAddedTokens = tokens.filter(token => token.isNotValidated)
@@ -91,7 +86,7 @@ class TokenModal extends Component<Props, State> {
         }
         return token
       })
-      setUserGeneratedTokens([...validatedTokens])
+      setSetting({ tokens: [...validatedTokens] })
       setTimeout(() => {
         onSave()
         hideModal()

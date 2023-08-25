@@ -42,7 +42,7 @@ type Props = {
     tokens: Array<TokenItemType>,
   }) => Object,
   contacts: Object,
-  currencyCode: string,
+  currency: string,
   address: string,
   shouldRenderHeaderBar: boolean,
   location: Object,
@@ -857,7 +857,7 @@ export default class Send extends React.Component<Props, State> {
     const {
       sendableAssets,
       contacts,
-      currencyCode,
+      currency,
       shouldRenderHeaderBar,
       address,
       showSendModal,
@@ -898,7 +898,7 @@ export default class Send extends React.Component<Props, State> {
           !isMigration && (
             <AmountsPanel
               amountsData={this.createSendAmountsData()}
-              currencyCode={currencyCode}
+              currencyCode={currency}
             />
           )}
 

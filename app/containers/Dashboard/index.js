@@ -8,9 +8,7 @@ import dashboardActions from '../../actions/dashboardActions'
 import accountActions from '../../actions/accountActions'
 import withInitialCall from '../../hocs/withInitialCall'
 import withAuthData from '../../hocs/withAuthData'
-import withCurrencyData from '../../hocs/withCurrencyData'
 import withNetworkData from '../../hocs/withNetworkData'
-import withFilteredTokensData from '../../hocs/withFilteredTokensData'
 import { getNotifications } from '../../modules/notifications'
 import { showModal } from '../../modules/modal'
 import { internetConnectionPromptPresented } from '../../actions/internetConnectivityPromptActions'
@@ -47,8 +45,6 @@ export default compose(
   // Expose function for polling & reloading account related data.
   withAuthData(),
   withNetworkData(),
-  withCurrencyData('currency'),
-  withFilteredTokensData(),
   withInitialCall(dashboardActions),
   withReset(accountActions, ['networkId']),
   withActions(accountActions, mapAccountActionsToProps),

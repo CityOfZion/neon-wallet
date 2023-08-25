@@ -14,8 +14,6 @@ import withPricesData from '../../hocs/withPricesData'
 import withNetworkData from '../../hocs/withNetworkData'
 import withAuthData from '../../hocs/withAuthData'
 import withBalancesData from '../../hocs/withBalancesData'
-import withCurrencyData from '../../hocs/withCurrencyData'
-import withFilteredTokensData from '../../hocs/withFilteredTokensData'
 import balancesActions from '../../actions/balancesActions'
 import withSuccessNotification from '../../hocs/withSuccessNotification'
 import withFailureNotification from '../../hocs/withFailureNotification'
@@ -85,11 +83,9 @@ export default compose(
   ),
   withTokensData(),
   withBalancesData(mapBalanceDataToProps),
-  withCurrencyData('currencyCode'),
   withPricesData(mapPricesDataToProps),
   withNetworkData(),
   withAuthData(),
-  withFilteredTokensData(),
   withSuccessNotification(
     balancesActions,
     'notifications.success.receivedBlockchainInfo',

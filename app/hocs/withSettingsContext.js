@@ -8,10 +8,16 @@ import { useSettingsContext } from '../context/settings/SettingsContext'
 function withSettingsContext(WrappedComponent: React$ComponentType<any>) {
   return function EnhancedComponent(props: any) {
     const { settings, setSetting } = useSettingsContext()
+    const tokens = props.networkId
+      ? settings?.tokens?.filter(
+          ({ networkId }) => networkId === props.networkId,
+        )
+      : settings.tokens
     return (
       <WrappedComponent
         {...props}
         {...settings}
+        tokens={tokens}
         setSetting={(setting: { [key: string]: any }) => setSetting(setting)}
       />
     )

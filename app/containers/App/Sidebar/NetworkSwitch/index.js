@@ -7,7 +7,6 @@ import networkActions from '../../../../actions/networkActions'
 import withNetworkData from '../../../../hocs/withNetworkData'
 import withAuthData from '../../../../hocs/withAuthData'
 import accountActions from '../../../../actions/accountActions'
-import withFilteredTokensData from '../../../../hocs/withFilteredTokensData'
 import withSettingsContext from '../../../../hocs/withSettingsContext'
 
 const mapActionsToProps = (actions: Actions): Object => ({
@@ -28,6 +27,5 @@ export default compose(
   withAuthData(),
   withNetworkData(),
   withActions(networkActions, mapActionsToProps),
-  withFilteredTokensData(),
   withActions(accountActions, mapAccountActionsToProps),
 )(withSettingsContext(NetworkSwitch))

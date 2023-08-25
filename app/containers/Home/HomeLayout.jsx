@@ -8,7 +8,6 @@ import { FormattedMessage } from 'react-intl'
 import styles from './Home.scss'
 import lightLogo from '../../assets/images/logo-light.png'
 import darkLogo from '../../assets/images/logo-dark.png'
-import { updateSettingsActions } from '../../actions/settingsActions'
 import LanguageSelect from '../../components/Inputs/LanguageSelect'
 import ChainSwitch from '../../components/ChainSwitch'
 import { resetCachedNode } from '../../actions/nodeStorageActions'
@@ -94,19 +93,19 @@ class HomeLayout extends React.Component<Props, State> {
   }
 }
 
-const mapSettingsActionsToProps = actions => ({
-  setChain: chain =>
-    actions.call({
-      chain,
-    }),
-})
+// const mapSettingsActionsToProps = actions => ({
+//   setChain: chain =>
+//     actions.call({
+//       chain,
+//     }),
+// })
 
 const mapNetworkActionsToProps = (actions): Object => ({
   handleNetworkChange: networkId => actions.call({ networkId }),
 })
 
 export default compose(
-  withActions(updateSettingsActions, mapSettingsActionsToProps),
+  // withActions(updateSettingsActions, mapSettingsActionsToProps),
   // if a user switches chains we are going to reset any cached network information
   withActions(networkActions, mapNetworkActionsToProps),
 )(withSettingsContext(HomeLayout))
