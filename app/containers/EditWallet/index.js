@@ -2,12 +2,9 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
-import { withCall, withData, withActions } from 'spunky'
+import { withData, withActions } from 'spunky'
 import { injectIntl } from 'react-intl'
 
-import accountsActions, {
-  updateAccountsActions,
-} from '../../actions/accountsActions'
 import walletLabelActions, {
   updateLabelActions,
 } from '../../actions/walletLabelActions'
@@ -20,17 +17,11 @@ import withFailureNotification from '../../hocs/withFailureNotification'
 import withAuthData from '../../hocs/withAuthData'
 import { showModal } from '../../modules/modal'
 import EditWallet from './EditWallet'
-import n3AccountsActions, {
-  updateAccountsActions as updateN3AccountsActions,
-} from '../../actions/n3AccountsActions'
 import withSettingsContext from '../../hocs/withSettingsContext'
+import withAccountsData from '../../hocs/withAccountsData'
 
 const mapAccountsDataToProps = accounts => ({
   accounts,
-})
-
-const mapN3AccountsDataToProps = n3Accounts => ({
-  n3Accounts,
 })
 
 const actionCreators = {
@@ -43,14 +34,6 @@ const mapSaveAccountActionsToProps = actions => ({
   saveAccount: ({ label, address }) => actions.call({ label, address }),
 })
 
-const mapSaveAccountsActionsToProps = actions => ({
-  setAccounts: accounts => actions.call(accounts),
-})
-
-const mapSaveN3AccountsActionsToProps = actions => ({
-  setN3Accounts: accounts => actions.call(accounts),
-})
-
 const mapDispatchToProps = dispatch =>
   bindActionCreators(actionCreators, dispatch)
 
@@ -60,13 +43,7 @@ export default compose(
     mapDispatchToProps,
   ),
   withAuthData(),
-  withCall(accountsActions),
-  withCall(n3AccountsActions),
-  withData(accountsActions, mapAccountsDataToProps),
-  withData(n3AccountsActions, mapN3AccountsDataToProps),
   withData(walletLabelActions, mapAccountsDataToProps),
-  withActions(updateAccountsActions, mapSaveAccountsActionsToProps),
-  withActions(updateN3AccountsActions, mapSaveN3AccountsActionsToProps),
   withActions(updateLabelActions, mapSaveAccountActionsToProps),
   withFailureNotification(updateLabelActions),
   withSuccessNotification(
@@ -76,4 +53,4 @@ export default compose(
     true,
   ),
   injectIntl,
-)(withSettingsContext(EditWallet))
+)(withAccountsData(withSettingsContext(EditWallet)))

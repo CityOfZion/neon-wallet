@@ -60,7 +60,7 @@ const mapBalancesActionsToProps = (actions: Object, props: Object) => ({
 })
 
 export default compose(
-  withCurrencyData('currencyCode'),
+  // withCurrencyData('currencyCode'),
 
   // Fetch price & balance data based based upon the selected currency.
   // Reload data with the currency changes.

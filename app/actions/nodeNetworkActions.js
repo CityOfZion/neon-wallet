@@ -12,7 +12,7 @@ import {
   NODES_N3_TEST_NET,
 } from '../core/constants'
 import { raceAll } from '../util/promiseUtils'
-import { getSettings } from './settingsActions'
+import { getSettings } from '../context/settings/SettingsContext'
 
 const ID = 'nodeNetwork'
 const PING_TIMEOUT_OVERRIDE = 5000

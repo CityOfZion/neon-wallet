@@ -9,11 +9,11 @@ import PortfolioPanel from './PortfolioPanel'
 import portfolioPanelActions from '../../../actions/portfolioPanelActions'
 import pricesActions from '../../../actions/pricesActions'
 import withBalancesData from '../../../hocs/withBalancesData'
-import withCurrencyData from '../../../hocs/withCurrencyData'
 import withProgressPanel from '../../../hocs/withProgressPanel'
 import { getTokenBalancesMap } from '../../../core/wallet'
 import { toNumber, toBigNumber } from '../../../core/math'
 import { ASSETS } from '../../../core/constants'
+import withSettingsContext from '../../../hocs/withSettingsContext'
 
 const removeEmptyBalances = balances =>
   pickBy(balances, balance => toBigNumber(balance).gt(0))
@@ -57,7 +57,6 @@ export default compose(
   }),
   withData(pricesActions, mapPricesDataToProps),
   withBalancesData(mapBalancesDataToProps),
-  withCurrencyData(),
   withProps(mapTotalPortfolioValueToProps),
   withProps(mapSortedPortfolioBalanceProps),
-)(PortfolioPanel)
+)(withSettingsContext(PortfolioPanel))

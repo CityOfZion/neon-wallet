@@ -1,13 +1,18 @@
 // @flow
 import { createActions } from 'spunky'
-import { walletHasLabel, getWallet, setWallet } from './accountsActions'
+import {
+  walletHasLabel,
+  getWallet,
+  setWallet,
+  walletHasLabel as n3WalletHasLabel,
+} from '../actions-migrated/accounts'
 
 import {
-  walletHasLabel as n3WalletHasLabel,
   getWallet as n3GetWallet,
   setWallet as n3SetWallet,
-} from './n3AccountsActions'
-import { getSettings } from './settingsActions'
+} from '../actions-migrated/n3Accounts'
+
+import { getSettings } from '../context/settings/SettingsContext'
 
 export const ID = 'walletLabel'
 

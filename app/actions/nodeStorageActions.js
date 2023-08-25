@@ -14,7 +14,7 @@ import {
   NODE_EXLUSION_CRITERIA,
 } from '../core/constants'
 import { findNetworkByDeprecatedLabel } from '../core/networks'
-import { getSettings } from './settingsActions'
+import { getSettings } from '../context/settings/SettingsContext'
 
 const PING_TIMEOUT_OVERRIDE = 1000
 const DEFAULT_PING_TIMEOUT = settings.timeout.ping

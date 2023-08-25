@@ -44,7 +44,5 @@ export default compose(
 
   // Remove stale data from store on logout
   withLogoutReset(authActions),
-  // withLogoutReset(accountActions),
-  // withLogoutReset(n3AccountsActions),
   withLogoutReset(nftGalleryActions),
 )(App)

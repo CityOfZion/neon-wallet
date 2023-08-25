@@ -33,7 +33,6 @@ export default class PortfolioPanel extends React.Component<Props> {
         renderHeader={this.renderHeader}
       >
         {shouldRenderChart ? (
-          // $FlowFixMe
           <React.Fragment>
             <PortfolioBreakdownChart
               className={styles.chart}

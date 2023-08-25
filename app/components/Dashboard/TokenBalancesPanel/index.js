@@ -20,6 +20,7 @@ import { toBigNumber } from '../../../core/math'
 import pricesActions from '../../../actions/pricesActions'
 import { imageMap } from '../../../assets/nep5/png'
 import nftActions from '../../../actions/nftActions'
+import withSettingsContext from '../../../hocs/withSettingsContext'
 
 const mapPricesDataToProps = prices => ({ prices })
 const mapNftDataToProps = nft => ({ nft })
@@ -75,7 +76,7 @@ const mapNftActionsToProps = (actions, props) => ({
 })
 
 export default compose(
-  withCurrencyData('currencyCode'),
+  // withCurrencyData('currencyCode'),
 
   withNetworkData(),
   withAuthData(),
@@ -94,4 +95,4 @@ export default compose(
 
   withData(nftActions, mapNftDataToProps),
   injectIntl,
-)(TokenBalancesPanel)
+)(withSettingsContext(TokenBalancesPanel))

@@ -6,7 +6,7 @@ import { withCall, withData } from 'spunky'
 import { injectIntl } from 'react-intl'
 
 import NetworkConfigurationTooltip from './NetworkConfigurationTooltip'
-import { getNetworks } from '../../core/networks'
+
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -14,12 +14,8 @@ import {
 import { showModal } from '../../modules/modal'
 import withNetworkData from '../../hocs/withNetworkData'
 import nodeStorageActions from '../../actions/nodeStorageActions'
-import accountsActions from '../../actions/accountsActions'
-import withAuthData from '../../hocs/withAuthData'
 
-const mapStateToProps = state => ({
-  networks: getNetworks(state.spunky.settings.data.chain),
-})
+import withAuthData from '../../hocs/withAuthData'
 
 const actionCreators = {
   showModal,
@@ -30,22 +26,17 @@ const actionCreators = {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(actionCreators, dispatch)
 
-const mapAccountsDataToProps = accounts => ({
-  accounts,
-})
-
 const mapSelectedNodeDataToProps = url => ({
   selectedNode: url,
 })
 
 export default compose(
   connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps,
   ),
   withNetworkData(),
   withCall(nodeStorageActions),
-  withData(accountsActions, mapAccountsDataToProps),
   withData(nodeStorageActions, mapSelectedNodeDataToProps),
   withAuthData(),
   injectIntl,

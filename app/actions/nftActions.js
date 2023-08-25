@@ -4,7 +4,7 @@ import axios from 'axios'
 import { rpc } from '@cityofzion/neon-js-legacy'
 import { rpc as n3Rpc } from '@cityofzion/neon-js'
 
-import { getSettings } from './settingsActions'
+import { getSettings } from '../context/settings/SettingsContext'
 import { getNode, getRPCEndpoint } from './nodeStorageActions'
 
 export const ID = 'nft'

@@ -1,12 +1,12 @@
 // @flow
-import { api, rpc } from '@cityofzion/neon-js-legacy'
+import { api } from '@cityofzion/neon-js-legacy'
 import N3Neon, { rpc as n3Rpc } from '@cityofzion/neon-js'
 
 import { imageMap } from '../assets/nep5/png'
 import { getDefaultTokens } from '../core/nep5'
 import { ASSETS, NEO_ID, GAS_ID } from '../core/constants'
 import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
-import { getSettings } from '../actions/settingsActions'
+import { getSettings } from '../context/settings/SettingsContext'
 
 export const getImageBySymbol = (symbol: string) => imageMap[symbol]
 

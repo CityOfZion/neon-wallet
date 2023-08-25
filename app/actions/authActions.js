@@ -7,11 +7,12 @@ import dns from 'dns'
 
 import { bindArgsFromN } from '../util/bindHelpers'
 import { resetBalanceState } from './balancesActions'
-import { getSettings } from './settingsActions'
+
 import { upgradeNEP6AddAddresses } from '../core/account'
 import { validatePassphraseLength } from '../core/wallet'
 import { legacySignWithLedger } from '../ledger/neonLedger'
 import { signWithLedger } from '../ledger/n3NeonLedger'
+import { getSettings } from '../context/settings/SettingsContext'
 
 type WifLoginProps = {
   wif: string,

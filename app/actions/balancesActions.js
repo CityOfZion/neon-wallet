@@ -9,7 +9,7 @@ import axios from 'axios'
 // $FlowFixMe
 import coinAudioSample from '../assets/audio/coin.wav'
 
-import { getSettings } from './settingsActions'
+import { getSettings } from '../context/settings/SettingsContext'
 import { getNode, getRPCEndpoint } from './nodeStorageActions'
 import { ASSETS } from '../core/constants'
 import {

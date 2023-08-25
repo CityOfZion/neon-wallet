@@ -9,7 +9,7 @@ import {
   getImageBySymbol,
   findAndReturnTokenInfo,
 } from '../util/findAndReturnTokenInfo'
-import { getSettings } from './settingsActions'
+import { getSettings } from '../context/settings/SettingsContext'
 import { toBigNumber } from '../core/math'
 import { getNode, getRPCEndpoint } from './nodeStorageActions'
 

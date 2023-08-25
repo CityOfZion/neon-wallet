@@ -10,7 +10,7 @@ import {
   findAndReturnTokenInfo,
   getImageBySymbol,
 } from '../util/findAndReturnTokenInfo'
-import { getSettings } from './settingsActions'
+import { getSettings } from '../context/settings/SettingsContext'
 
 export const ID = 'pendingTransactions'
 const STORAGE_KEY = 'pendingTransactions'

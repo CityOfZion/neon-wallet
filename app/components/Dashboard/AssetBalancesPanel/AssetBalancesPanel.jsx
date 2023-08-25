@@ -23,7 +23,7 @@ type Props = {
   gasPrice: number,
   neoPriceChange: BigNumber,
   gasPriceChange: BigNumber,
-  currencyCode: string,
+  currency: string,
   chain: string,
 }
 
@@ -126,7 +126,7 @@ export default class AssetBalancesPanel extends React.Component<Props> {
   )
 
   getFormattedFiatBalance = (value: number): string => {
-    const { symbol } = CURRENCIES[this.props.currencyCode]
+    const { symbol } = CURRENCIES[this.props.currency]
     return `${symbol}${formatFiat(value)}`
   }
 

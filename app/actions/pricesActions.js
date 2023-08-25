@@ -4,7 +4,7 @@ import { createActions } from 'spunky'
 import { get, isEmpty, map } from 'lodash-es'
 
 import { getDefaultTokens } from '../core/nep5'
-import { getSettings } from './settingsActions'
+import { getSettings } from '../context/settings/SettingsContext'
 import { ASSETS } from '../core/constants'
 import { toFixedDecimals } from '../core/formatters'
 

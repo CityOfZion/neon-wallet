@@ -7,7 +7,7 @@ import settingsActions from '../actions/settingsActions'
 
 export default function withFilteredTokensData(key: string = 'tokens') {
   const mapSettingsDataToProps = (settings, props: Object) => ({
-    [key]: settings.tokens.filter(
+    [key]: settings?.tokens?.filter(
       ({ networkId }) => networkId === props.networkId,
     ),
   })

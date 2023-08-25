@@ -16,15 +16,18 @@ import { Account } from '../core/schemas'
 import toSentence from '../util/toSentence'
 
 // Actions
-import { saveAccountActions, getWallet } from '../actions/accountsActions'
+import { useAccountsStore, getWallet } from '../actions-migrated/accounts'
 import {
-  saveAccountActions as n3SaveAccountActions,
+  useN3AccountsStore,
   getWallet as n3GetWallet,
-} from '../actions/n3AccountsActions'
+} from '../actions-migrated/n3Accounts'
 
 const { BigInteger } = require('jsbn')
 
 // Constants
+const { addAccount: addN3Account } = useN3AccountsStore.getState()
+const { addAccount } = useAccountsStore.getState()
+
 export const NEW_WALLET_ACCOUNT = 'NEW_WALLET_ACCOUNT'
 export const RESET_WALLET_ACCOUNT = 'RESET_WALLET_ACCOUNT'
 
@@ -75,53 +78,53 @@ export const convertOldWalletAccount = (
   })
 }
 
-export const upgradeUserWalletNEP6 = (): Promise<*> =>
-  new Promise((resolve, reject) => {
-    storage.get('userWallet', (readNEP6Error, data) => {
-      if (readNEP6Error) {
-        reject(readNEP6Error)
-      }
+// export const upgradeUserWalletNEP6 = (): Promise<*> =>
+//   new Promise((resolve, reject) => {
+//     storage.get('userWallet', (readNEP6Error, data) => {
+//       if (readNEP6Error) {
+//         reject(readNEP6Error)
+//       }
 
-      if (isEmpty(data)) {
-        storage.get('keys', (readLegacyError, keyData) => {
-          if (readLegacyError) {
-            reject(readLegacyError)
-          }
-          const wallet = { ...DEFAULT_WALLET }
+//       if (isEmpty(data)) {
+//         storage.get('keys', (readLegacyError, keyData) => {
+//           if (readLegacyError) {
+//             reject(readLegacyError)
+//           }
+//           const wallet = { ...DEFAULT_WALLET }
 
-          if (isEmpty(keyData)) {
-            // create empty nep-6 wallet
-            storage.set('userWallet', wallet)
-          } else {
-            const accounts = []
-            // eslint-disable-next-line
-            Object.keys(keyData).map((label: string) => {
-              const newAccount = convertOldWalletAccount(
-                label,
-                keyData[label],
-                accounts.length === 0,
-              )
-              if (newAccount) {
-                accounts.push(newAccount)
-              }
-            })
+//           if (isEmpty(keyData)) {
+//             // create empty nep-6 wallet
+//             storage.set('userWallet', wallet)
+//           } else {
+//             const accounts = []
+//             // eslint-disable-next-line
+//             Object.keys(keyData).map((label: string) => {
+//               const newAccount = convertOldWalletAccount(
+//                 label,
+//                 keyData[label],
+//                 accounts.length === 0,
+//               )
+//               if (newAccount) {
+//                 accounts.push(newAccount)
+//               }
+//             })
 
-            wallet.accounts = accounts
+//             wallet.accounts = accounts
 
-            storage.set('userWallet', wallet, saveError => {
-              if (saveError) {
-                reject(saveError)
-              } else {
-                resolve()
-              }
-            })
-          }
-        })
-      } else {
-        resolve()
-      }
-    })
-  })
+//             storage.set('userWallet', wallet, saveError => {
+//               if (saveError) {
+//                 reject(saveError)
+//               } else {
+//                 resolve()
+//               }
+//             })
+//           }
+//         })
+//       } else {
+//         resolve()
+//       }
+//     })
+//   })
 
 export const recoverWallet = (
   wallet: Object,
@@ -314,14 +317,12 @@ export const generateN3NewWalletAccount = (
           )
         }
 
-        dispatch(
-          n3SaveAccountActions.call({
-            isImport,
-            label: walletName,
-            address,
-            key: encryptedWIF,
-          }),
-        )
+        addN3Account({
+          isImport,
+          label: walletName,
+          address,
+          key: encryptedWIF,
+        })
 
         dispatch(hideNotification(infoNotificationId))
 
@@ -463,14 +464,12 @@ export const generateNewWalletAccount = (
           )
         }
 
-        dispatch(
-          saveAccountActions.call({
-            isImport,
-            label: walletName,
-            address,
-            key: encryptedWIF,
-          }),
-        )
+        addAccount({
+          isImport,
+          label: walletName,
+          address,
+          key: encryptedWIF,
+        })
 
         dispatch(hideNotification(infoNotificationId))
         dispatch(

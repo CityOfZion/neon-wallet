@@ -1,7 +1,6 @@
 // @flow
 import { compose } from 'recompose'
 import { values, omit } from 'lodash-es'
-import { withData, withActions } from 'spunky'
 import { connect, type MapStateToProps } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
@@ -16,14 +15,14 @@ import withAuthData from '../../hocs/withAuthData'
 import withBalancesData from '../../hocs/withBalancesData'
 import withCurrencyData from '../../hocs/withCurrencyData'
 import withFilteredTokensData from '../../hocs/withFilteredTokensData'
-import accountActions from '../../actions/accountActions'
-import accountsActions from '../../actions/accountsActions'
+
 import withLoadingProp from '../../hocs/withLoadingProp'
 import balancesActions from '../../actions/balancesActions'
 import withSuccessNotification from '../../hocs/withSuccessNotification'
 import withFailureNotification from '../../hocs/withFailureNotification'
 import { MODAL_TYPES } from '../../core/constants'
 import withSettingsContext from '../../hocs/withSettingsContext'
+import withAccountsData from '../../hocs/withAccountsData'
 
 const mapDispatchToProps = (dispatch: Function) =>
   bindActionCreators(
@@ -74,19 +73,6 @@ const mapBalanceDataToProps = (balances: Object) => ({
   sendableAssets: filterSendableAssets(balances),
 })
 
-const mapAccountActionsToProps = (actions, props) => ({
-  loadWalletData: () =>
-    actions.call({
-      net: props.net,
-      address: props.address,
-      tokens: props.tokenBalances,
-    }),
-})
-
-const mapAccountsDataToProps = accounts => ({
-  accounts,
-})
-
 export default compose(
   connect(
     mapStateToProps,
@@ -97,8 +83,7 @@ export default compose(
   withPricesData(mapPricesDataToProps),
   withNetworkData(),
   withAuthData(),
-  withActions(accountActions, mapAccountActionsToProps),
-  withData(accountsActions, mapAccountsDataToProps),
+
   withFilteredTokensData(),
   withLoadingProp(balancesActions),
   withSuccessNotification(
@@ -113,4 +98,4 @@ export default compose(
     {},
     true,
   ),
-)(withSettingsContext(Receive))
+)(withAccountsData(withSettingsContext(Receive)))

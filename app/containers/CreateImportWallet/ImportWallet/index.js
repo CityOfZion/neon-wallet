@@ -6,17 +6,13 @@ import { withData, withActions, withCall } from 'spunky'
 
 import ImportWallet from './ImportWallet'
 import nodeStorageActions from '../../../actions/nodeStorageActions'
-import accountsActions, {
-  updateAccountsActions,
-} from '../../../actions/accountsActions'
-
-import { updateAccountsActions as updateN3AccountsActions } from '../../../actions/n3AccountsActions'
 
 import {
   showErrorNotification,
   showSuccessNotification,
 } from '../../../modules/notifications'
 import withSettingsContext from '../../../hocs/withSettingsContext'
+import withAccountsData from '../../../hocs/withAccountsData'
 
 const actionCreators = {
   showErrorNotification,
@@ -44,7 +40,4 @@ export default compose(
     mapDispatchToProps,
   ),
   withCall(nodeStorageActions),
-  withData(accountsActions, mapAccountsDataToProps),
-  withActions(updateAccountsActions, mapAccountsActionsToProps),
-  withActions(updateN3AccountsActions, mapN3AccountsActionsToProps),
-)(withSettingsContext(ImportWallet))
+)(withAccountsData(withSettingsContext(ImportWallet)))

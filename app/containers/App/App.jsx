@@ -6,7 +6,6 @@ import { ROUTES } from '../../core/constants'
 import Sidebar from './Sidebar'
 import ModalRenderer from '../ModalRenderer'
 import Notifications from '../Notifications'
-import { upgradeUserWalletNEP6 } from '../../modules/generateWallet'
 
 import styles from './App.scss'
 import themes from '../../themes'
@@ -62,13 +61,14 @@ const App = ({
   useEffect(() => {
     async function handleUpgrade() {
       checkVersion()
-      try {
-        await upgradeUserWalletNEP6()
-      } catch (error) {
-        showErrorNotification({
-          message: `Error upgrading legacy wallet: ${error.message}`,
-        })
-      }
+      // try {
+      //   await upgradeUserWalletNEP6()
+      // } catch (error) {
+      //   console.log({ error })
+      //   showErrorNotification({
+      //     message: `Error upgrading legacy wallet: ${error.message}`,
+      //   })
+      // }
     }
     handleUpgrade()
   }, [])

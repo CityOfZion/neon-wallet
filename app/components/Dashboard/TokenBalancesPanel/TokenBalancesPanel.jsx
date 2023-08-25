@@ -21,7 +21,7 @@ type Props = {
   className: ?string,
   balances: Array<TokenBalanceType>,
   prices: Object,
-  currencyCode: string,
+  currency: string,
   address: string,
   intl: IntlShape,
   net: string,
@@ -106,8 +106,8 @@ export default class TokenBalancesPanel extends React.Component<Props, State> {
   }
 
   formatPrice = (ticker: string): string => {
-    const { prices, currencyCode } = this.props
-    const { symbol } = CURRENCIES[currencyCode]
+    const { prices, currency } = this.props
+    const { symbol } = CURRENCIES[currency]
     let currPriceOfToken
     if (prices) currPriceOfToken = prices[ticker]
     if (!currPriceOfToken) return PRICE_UNAVAILABLE

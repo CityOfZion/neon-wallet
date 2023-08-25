@@ -5,7 +5,6 @@ import { compose } from 'recompose'
 import { withActions, type Actions, withRecall } from 'spunky'
 
 import Settings from './NewSettings'
-import { updateAccountsActions } from '../../actions/accountsActions'
 
 import {
   showErrorNotification,
@@ -15,10 +14,10 @@ import { showModal } from '../../modules/modal'
 import networkActions from '../../actions/networkActions'
 import withNetworkData from '../../hocs/withNetworkData'
 import nodeStorageActions from '../../actions/nodeStorageActions'
-import { updateAccountsActions as updateN3AccountsActions } from '../../actions/n3AccountsActions'
 import accountActions from '../../actions/accountActions'
 import { getNetworks } from '../../core/networks'
 import withAuthData from '../../hocs/withAuthData'
+import withAccountsData from '../../hocs/withAccountsData'
 
 const actionCreators = {
   showModal,
@@ -70,7 +69,5 @@ export default compose(
   withRecall(accountActions, ['net']),
   withActions(accountActions, mapAccountActionsToProps),
   withActions(networkActions, mapNetworkActionsToProps),
-  withActions(updateAccountsActions, mapAccountsActionsToProps),
   withActions(nodeStorageActions, mapSaveNodeActionsToProps),
-  withActions(updateN3AccountsActions, mapN3AccountsActionsToProps),
-)(Settings)
+)(withAccountsData(Settings))
