@@ -70,6 +70,6 @@ export const useAccountsStore = create(set => ({
 }))
 
 getWallet().then(wallet => {
-  console.log({ wallet })
+  // console.log({ wallet })
   useAccountsStore.setState({ accounts: wallet.accounts })
 })

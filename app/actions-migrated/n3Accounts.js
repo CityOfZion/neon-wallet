@@ -16,7 +16,7 @@ export const setWallet = async (wallet: Object) => {
   setStorage(STORAGE_KEY, wallet)
 }
 
-const useN3AccountsStore = create(set => ({
+export const useN3AccountsStore = create(set => ({
   accounts: [],
   addAccount: async ({
     label,
@@ -68,16 +68,3 @@ const useN3AccountsStore = create(set => ({
 getWallet().then(wallet => {
   useN3AccountsStore.setState({ accounts: wallet.accounts })
 })
-
-export const {
-  accounts,
-  addAccount,
-  removeAccount,
-  updateAccount,
-} = useN3AccountsStore.getState()
-
-export const n3AccountsActions = {
-  addAccount,
-  removeAccount,
-  updateAccount,
-}
