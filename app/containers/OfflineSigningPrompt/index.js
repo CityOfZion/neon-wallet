@@ -6,11 +6,11 @@ import { bindActionCreators } from 'redux'
 
 import { showModal } from '../../modules/modal'
 import OfflineSigningPrompt from './OfflineSigningPrompt'
-import withThemeData from '../../hocs/withThemeData'
 import { logoutActions } from '../../actions/authActions'
 import { MODAL_TYPES } from '../../core/constants'
 import { internetConnectionPromptPresented } from '../../actions/internetConnectivityPromptActions'
 import withAuthData from '../../hocs/withAuthData'
+import withSettingsContext from '../../hocs/withSettingsContext'
 
 type Props = {
   logout: Function,
@@ -45,6 +45,5 @@ export default compose(
   ),
   withActions(logoutActions, mapActionsToProps),
   withActions(internetConnectionPromptPresented, mapPromptActionsToProps),
-  withThemeData(),
   withAuthData(),
-)(OfflineSigningPrompt)
+)(withSettingsContext(OfflineSigningPrompt))

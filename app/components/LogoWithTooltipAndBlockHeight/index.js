@@ -1,16 +1,8 @@
 // @flow
 
 import { compose } from 'recompose'
-import { withData } from 'spunky'
 
 import LogoWithTooltipAndBlockHeight from './LogoWithTooltipAndBlockHeight'
+import withNetworkData from '../../hocs/withNetworkData'
 
-import { blockHeightActions } from '../../actions/blockHeightActions'
-
-const mapBlockHeightDataToProps = (count: Number) => ({
-  count,
-})
-
-export default compose(withData(blockHeightActions, mapBlockHeightDataToProps))(
-  LogoWithTooltipAndBlockHeight,
-)
+export default compose(withNetworkData()(LogoWithTooltipAndBlockHeight))

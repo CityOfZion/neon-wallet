@@ -1,6 +1,6 @@
 import { compose } from 'recompose'
 
-import withThemeData from '../../hocs/withThemeData'
 import ChainSwitch from './ChainSwitch'
+import withSettingsContext from '../../hocs/withSettingsContext'
 
-export default compose(withThemeData())(ChainSwitch)
+export default compose(withSettingsContext(ChainSwitch))

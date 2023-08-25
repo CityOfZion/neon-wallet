@@ -30,6 +30,7 @@ type Props = {
   sendTransaction: ({
     sendEntries: Array<SendEntryType>,
     fees: number,
+    tokens: Array<TokenItemType>,
   }) => Object,
   performMigration: ({
     sendEntries: Array<SendEntryType>,
@@ -38,6 +39,7 @@ type Props = {
   }) => Object,
   calculateN3Fees: ({
     sendEntries: Array<SendEntryType>,
+    tokens: Array<TokenItemType>,
   }) => Object,
   contacts: Object,
   currencyCode: string,
@@ -260,6 +262,7 @@ export default class Send extends React.Component<Props, State> {
     if (!sendRowDetails.length) {
       const fees = await this.props
         .calculateN3Fees({
+          tokens: this.props.tokens,
           sendEntries: [
             // $flow-fix-me
             { address: this.props.address, amount: 1, symbol: 'GAS' },
@@ -310,7 +313,7 @@ export default class Send extends React.Component<Props, State> {
 
     if (shouldCalculateFees) {
       const fees = await this.props
-        .calculateN3Fees({ sendEntries })
+        .calculateN3Fees({ sendEntries, tokens: this.props.tokens })
         .catch(() => {
           console.warn('An error occurred attempting to calculate fees')
         })
@@ -661,6 +664,7 @@ export default class Send extends React.Component<Props, State> {
       fees,
       isWatchOnly: isWatchOnly || showTransactionModal,
       chain,
+      tokens: this.props.tokens,
     })
       .then((result: Object) => {
         if (isWatchOnly || showTransactionModal) {

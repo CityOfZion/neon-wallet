@@ -2,6 +2,6 @@
 import { compose } from 'recompose'
 
 import ReleaseNotesModal from './ReleaseNotesModal'
-import withThemeData from '../../../hocs/withThemeData'
+import withSettingsContext from '../../../hocs/withSettingsContext'
 
-export default compose(withThemeData())(ReleaseNotesModal)
+export default compose(withSettingsContext(ReleaseNotesModal))

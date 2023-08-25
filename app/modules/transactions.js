@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 // @flow
 import { api, sc, u, wallet, settings } from '@cityofzion/neon-js-legacy'
 import {
@@ -204,6 +205,7 @@ const buildNep17IntentsFromEntries = (
     const { address, amount, symbol } = entry
     const token = tokens.find(
       // eslint-disable-next-line eqeqeq
+      // $FlowFixMe
       t => t.networkId == 2 && t.symbol === symbol,
     )
     const contractHash = token
@@ -222,8 +224,10 @@ const buildNep17IntentsFromEntries = (
 
 export const calculateN3Fees = ({
   sendEntries,
+  tokens,
 }: {
   sendEntries: Array<SendEntryType>,
+  tokens: Array<TokenItemType>,
 }) => (dispatch: DispatchType, getState: GetStateType): Promise<*> =>
   new Promise(async (resolve, reject) => {
     try {
@@ -233,7 +237,6 @@ export const calculateN3Fees = ({
       const FROM_ACCOUNT = new n3Wallet.Account(wif)
       const tokenBalances = getTokenBalances(state)
       const tokensBalanceMap = keyBy(tokenBalances, 'symbol')
-      const { tokens } = state.spunky.settings.data
 
       let endpoint = await getNode(net)
       if (!endpoint) {
@@ -307,11 +310,13 @@ export const sendTransaction = ({
   fees = 0,
   isWatchOnly,
   chain,
+  tokens,
 }: {
-  sendEntries: Array<SendEntryType>,
+  sendEntries: Array<any>,
   fees: number,
   isWatchOnly?: boolean,
   chain: string,
+  tokens: Array<TokenItemType>,
 }) => (dispatch: DispatchType, getState: GetStateType): Promise<*> => {
   const state = getState()
   const wif = getWIF(state)
@@ -326,7 +331,7 @@ export const sendTransaction = ({
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
   const isHardwareSend = getIsHardwareLogin(state)
-  const { tokens } = state.spunky.settings.data
+
   return chain === 'neo3'
     ? new Promise(async (resolve, reject) => {
         try {

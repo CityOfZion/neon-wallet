@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
 
 import { hideNotification, getNotifications } from '../../modules/notifications'
-import withThemeData from '../../hocs/withThemeData'
 
 import Notifications from './Notifications'
+import withSettingsContext from '../../hocs/withSettingsContext'
 
 const mapStateToProps = (state: Object) => ({
   notifications: getNotifications(state),
@@ -24,5 +24,4 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps,
   ),
-  withThemeData(),
-)(Notifications)
+)(withSettingsContext(Notifications))

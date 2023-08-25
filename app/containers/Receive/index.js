@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux'
 
 import Receive from './Receive'
 
-import { sendTransaction } from '../../modules/transactions'
 import { showModal } from '../../modules/modal'
 import { getNotifications } from '../../modules/notifications'
 import withPricesData from '../../hocs/withPricesData'
@@ -27,7 +26,6 @@ import withAccountsData from '../../hocs/withAccountsData'
 const mapDispatchToProps = (dispatch: Function) =>
   bindActionCreators(
     {
-      sendTransaction,
       showReceiveModal: props =>
         dispatch(showModal(MODAL_TYPES.RECEIVE, props)),
     },

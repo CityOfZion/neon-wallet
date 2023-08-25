@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux'
 import Home from './Home'
 import authActions from '../../actions/authActions'
 import withLoadingProp from '../../hocs/withLoadingProp'
-import withThemeData from '../../hocs/withThemeData'
 import pureStrategy from '../../hocs/helpers/pureStrategy'
 import { showModal } from '../../modules/modal'
 import withSettingsContext from '../../hocs/withSettingsContext'
@@ -24,5 +23,4 @@ export default compose(
     mapDispatchToProps,
   ),
   withLoadingProp(authActions, { strategy: pureStrategy }),
-  withThemeData(),
 )(withSettingsContext(Home))

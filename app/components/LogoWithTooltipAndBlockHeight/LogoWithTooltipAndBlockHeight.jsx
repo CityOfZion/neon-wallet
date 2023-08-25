@@ -1,5 +1,5 @@
 // @flow
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 
 import {
@@ -19,15 +19,28 @@ import DarkLogoWithoutText from '../../assets/images/logo-without-text.png'
 import styles from '../../containers/App/Sidebar/Sidebar.scss'
 import IntlWrapper from '../Root/IntlWrapper'
 import { useSettingsContext } from '../../context/settings/SettingsContext'
+import {
+  useBlockHeightStore,
+  getBlockHeight,
+} from '../../actions-migrated/blockheight'
 
-type Props = {
-  count: number,
-}
-
-export default function LogoWithTooltipAndBlockHeight({ count }: Props) {
+export default function LogoWithTooltipAndBlockHeight({
+  net,
+}: {
+  net: string,
+}) {
   const {
     settings: { theme },
   } = useSettingsContext()
+
+  const { count } = useBlockHeightStore()
+
+  useEffect(
+    () => {
+      getBlockHeight(net)
+    },
+    [net],
+  )
 
   const themeBasedLogo =
     theme === 'Light' ? LightLogoWithoutText : DarkLogoWithoutText
@@ -52,7 +65,7 @@ export default function LogoWithTooltipAndBlockHeight({ count }: Props) {
           </div>
 
           <div id="block-height-container" className={styles.blockHeight}>
-            {count && (
+            {!!count && (
               <Fragment>
                 <div id="block-height-label" className={styles.heightText}>
                   <FormattedMessage id="sidebarCurrentBlock" />

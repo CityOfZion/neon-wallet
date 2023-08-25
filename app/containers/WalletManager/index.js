@@ -11,8 +11,8 @@ import {
 
 import Loading from '../App/Loading'
 import walletLabelActions from '../../actions/walletLabelActions'
-import withThemeData from '../../hocs/withThemeData'
 import WalletManager from './WalletManager'
+import withSettingsContext from '../../hocs/withSettingsContext'
 
 const { LOADING } = progressValues
 
@@ -32,5 +32,4 @@ export default compose(
     },
   ),
   withData(walletLabelActions, mapAccountsDataToProps),
-  withThemeData(),
-)(WalletManager)
+)(withSettingsContext(WalletManager))

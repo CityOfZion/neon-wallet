@@ -1,6 +1,6 @@
 import { compose } from 'recompose'
 
-import withThemeData from '../../hocs/withThemeData'
 import QrCodeScanner from './QrCodeScanner'
+import withSettingsContext from '../../hocs/withSettingsContext'
 
-export default compose(withThemeData())(QrCodeScanner)
+export default compose(withSettingsContext(QrCodeScanner))

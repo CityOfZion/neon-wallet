@@ -6,11 +6,11 @@ import { injectIntl } from 'react-intl'
 import withLoadingProp from '../../hocs/withLoadingProp'
 import withNetworkData from '../../hocs/withNetworkData'
 import withAuthData from '../../hocs/withAuthData'
-import withThemeData from '../../hocs/withThemeData'
 import NodeSelectPanel from './NodeSelectPanel'
 import nodeNetworkActions from '../../actions/nodeNetworkActions'
 import accountActions from '../../actions/accountActions'
 import nodeStorageActions from '../../actions/nodeStorageActions'
+import withSettingsContext from '../../hocs/withSettingsContext'
 
 const sortByBlockCountThenLatency = (a, b) => {
   if (a.blockCount < b.blockCount) {
@@ -55,7 +55,6 @@ const mapSaveNodeActionsToProps = actions => ({
 export default compose(
   withAuthData(),
   withNetworkData(),
-  withThemeData(),
   withCall(nodeNetworkActions),
   withActions(nodeNetworkActions, mapNodesActionsToProps),
   withActions(nodeStorageActions, mapSaveNodeActionsToProps),
@@ -64,4 +63,4 @@ export default compose(
   withRecall(accountActions, ['selectedNode']),
   withLoadingProp(nodeNetworkActions),
   injectIntl,
-)(NodeSelectPanel)
+)(withSettingsContext(NodeSelectPanel))

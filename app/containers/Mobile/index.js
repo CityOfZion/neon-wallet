@@ -2,11 +2,11 @@
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
 
-import withThemeData from '../../hocs/withThemeData'
 import Mobile from './Mobile'
 import { showModal } from '../../modules/modal'
 import { MODAL_TYPES } from '../../core/constants'
 import withAuthData from '../../hocs/withAuthData'
+import withSettingsContext from '../../hocs/withSettingsContext'
 
 const mapDispatchToProps = dispatch => ({
   showQrForExportModal: props =>
@@ -19,5 +19,4 @@ export default compose(
     mapDispatchToProps,
   ),
   withAuthData(),
-  withThemeData(),
-)(Mobile)
+)(withSettingsContext(Mobile))
