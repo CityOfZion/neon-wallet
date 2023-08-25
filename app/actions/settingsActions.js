@@ -43,9 +43,7 @@ const DEFAULT_SETTINGS: () => Promise<Settings> = async () => ({
 
 export const getSettings = async (): Promise<Settings> => {
   const defaults = await DEFAULT_SETTINGS()
-
   const settings = await getStorage(STORAGE_KEY)
-
   const tokens = uniqBy(
     [
       ...defaults.tokens,
@@ -57,7 +55,6 @@ export const getSettings = async (): Promise<Settings> => {
     ],
     token => [token.networkId, token.scriptHash].join('-'),
   )
-
   return { ...defaults, ...settings, tokens }
 }
 

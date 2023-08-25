@@ -14,6 +14,7 @@ import ErrorBoundary from '../../components/ErrorBoundaries/Main'
 import FramelessNavigation from '../../components/FramelessNavigation'
 import { parseQuery } from '../../core/formatters'
 import withSettingsContext from '../../hocs/withSettingsContext'
+import { useSettingsContext } from '../../context/settings/SettingsContext'
 
 const ipc = require('electron').ipcRenderer
 
@@ -24,7 +25,6 @@ type Props = {
   showErrorNotification: Function,
   showInfoNotification: Function,
   location: Object,
-  theme: string,
   store: any,
   history: any,
 }
@@ -46,7 +46,6 @@ const routesWithSideBar = [
 const App = ({
   children,
   address,
-  theme,
   location,
   checkVersion,
   showErrorNotification,
@@ -56,6 +55,9 @@ const App = ({
 }: Props) => {
   const { requests, sessions, disconnect } = useWalletConnectWallet()
   const [decodedDeeplinkUri, setDecodedDeeplinkUri] = useState(null)
+  const {
+    settings: { theme },
+  } = useSettingsContext()
 
   useEffect(() => {
     async function handleUpgrade() {
