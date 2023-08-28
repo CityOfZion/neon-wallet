@@ -109,7 +109,7 @@ export default class Home extends React.Component<Props, State> {
 
     if (shouldRenderReleaseNotes(pack.version)) {
       // Allow users to view the normal for 1 second
-      // befre rendering the release notes modal
+      // before rendering the release notes modal
       setTimeout(() => {
         this.renderReleaseNotesModal()
       }, 1000)
@@ -117,61 +117,65 @@ export default class Home extends React.Component<Props, State> {
     }
 
     return (
-      <HomeLayout theme={theme}>
-        <div className={styles.inputContainer}>
-          <Tabs
-            selectedIndex={this.state.tabIndex}
-            onSelect={tabIndex => this.setState({ tabIndex })}
-            className="neon-tabs"
-          >
-            <TabList>
-              {this.options.map(
-                option =>
-                  option.chainSupport &&
-                  option.chainSupport.includes(chain) && (
-                    <Tab key={option.displayKey}>
-                      {option.renderDisplayMessage()}
-                    </Tab>
-                  ),
-              )}
-            </TabList>
-            <div className={styles.loginContentContainer}>
-              {this.options.map(
-                option =>
-                  option.chainSupport &&
-                  option.chainSupport.includes(chain) && (
-                    <TabPanel
-                      key={option.displayKey}
-                      selectedClassName={styles.homeTabPanel}
-                    >
-                      {option.render(chain)}
-                    </TabPanel>
-                  ),
-              )}
+      // BUG: this fixes a choppy rendering bug possibly due to
+      //  the async nature of pulling settings out of storage
+      theme && (
+        <HomeLayout theme={theme}>
+          <div className={styles.inputContainer}>
+            <Tabs
+              selectedIndex={this.state.tabIndex}
+              onSelect={tabIndex => this.setState({ tabIndex })}
+              className="neon-tabs"
+            >
+              <TabList>
+                {this.options.map(
+                  option =>
+                    option.chainSupport &&
+                    option.chainSupport.includes(chain) && (
+                      <Tab key={option.displayKey}>
+                        {option.renderDisplayMessage()}
+                      </Tab>
+                    ),
+                )}
+              </TabList>
+              <div className={styles.loginContentContainer}>
+                {this.options.map(
+                  option =>
+                    option.chainSupport &&
+                    option.chainSupport.includes(chain) && (
+                      <TabPanel
+                        key={option.displayKey}
+                        selectedClassName={styles.homeTabPanel}
+                      >
+                        {option.render(chain)}
+                      </TabPanel>
+                    ),
+                )}
+              </div>
+            </Tabs>
+            <div className={styles.buttonRow}>
+              <div className={styles.buttonContainer}>
+                <Link to={ROUTES.CREATE_WALLET}>
+                  <Button disabled={loading} renderIcon={AddIcon}>
+                    <FormattedMessage id="authCreateWallet" />
+                  </Button>
+                </Link>
+              </div>
+              <div className={styles.buttonContainer}>
+                <Link to={ROUTES.IMPORT_WALLET}>
+                  <Button disabled={loading} renderIcon={ImportIcon}>
+                    <FormattedMessage id="authImportWallet" />
+                  </Button>
+                </Link>
+              </div>
             </div>
-          </Tabs>
-          <div className={styles.buttonRow}>
-            <div className={styles.buttonContainer}>
-              <Link to={ROUTES.CREATE_WALLET}>
-                <Button disabled={loading} renderIcon={AddIcon}>
-                  <FormattedMessage id="authCreateWallet" />
-                </Button>
-              </Link>
-            </div>
-            <div className={styles.buttonContainer}>
-              <Link to={ROUTES.IMPORT_WALLET}>
-                <Button disabled={loading} renderIcon={ImportIcon}>
-                  <FormattedMessage id="authImportWallet" />
-                </Button>
-              </Link>
-            </div>
+            <div
+              onClick={this.renderReleaseNotesModal}
+              className={styles.versionNumber}
+            >{`v${pack.version}`}</div>
           </div>
-          <div
-            onClick={this.renderReleaseNotesModal}
-            className={styles.versionNumber}
-          >{`v${pack.version}`}</div>
-        </div>
-      </HomeLayout>
+        </HomeLayout>
+      )
     )
   }
 }

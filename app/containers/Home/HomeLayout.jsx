@@ -49,9 +49,9 @@ class HomeLayout extends React.Component<Props, State> {
       setSetting,
       chain,
     } = this.props
+    console.log({ theme })
     const dynamicImage = theme === 'Light' ? lightLogo : darkLogo
     const { languageMenuOpen } = this.state
-
     return (
       <div
         id="home"
@@ -92,13 +92,6 @@ class HomeLayout extends React.Component<Props, State> {
     )
   }
 }
-
-// const mapSettingsActionsToProps = actions => ({
-//   setChain: chain =>
-//     actions.call({
-//       chain,
-//     }),
-// })
 
 const mapNetworkActionsToProps = (actions): Object => ({
   handleNetworkChange: networkId => actions.call({ networkId }),

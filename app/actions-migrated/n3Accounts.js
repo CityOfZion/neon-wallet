@@ -6,6 +6,7 @@ import { getStorage, setStorage } from '../core/storage'
 import { DEFAULT_WALLET } from '../core/constants'
 import { Account } from '../core/schemas'
 import { walletHasKey, walletHasLabel } from './accounts'
+import { use } from 'chai'
 
 const STORAGE_KEY = 'n3UserWallet'
 
@@ -62,9 +63,12 @@ export const useN3AccountsStore = create(set => ({
       accounts,
     }))
   },
+  getAccounts: async () => {
+    const wallet = await getWallet()
+    set(() => ({
+      accounts: wallet.accounts,
+    }))
+  },
 }))
 
-// Retrieve the initial value for the accounts key asynchronously
-getWallet().then(wallet => {
-  useN3AccountsStore.setState({ accounts: wallet.accounts })
-})
+useN3AccountsStore.getState().getAccounts()

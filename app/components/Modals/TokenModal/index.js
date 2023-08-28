@@ -8,7 +8,6 @@ import TokenModal from './TokenModal'
 import accountActions from '../../../actions/accountActions'
 import withAuthData from '../../../hocs/withAuthData'
 import withNetworkData from '../../../hocs/withNetworkData'
-import withTokensData from '../../../hocs/withTokensData'
 import { showErrorNotification } from '../../../modules/notifications'
 import withSettingsContext from '../../../hocs/withSettingsContext'
 
@@ -31,6 +30,5 @@ export default compose(
   ),
   withNetworkData(),
   withAuthData(),
-  withTokensData(),
   withActions(accountActions, mapAccountActionsToProps),
 )(withSettingsContext(TokenModal))

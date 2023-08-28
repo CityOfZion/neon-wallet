@@ -67,9 +67,12 @@ export const useAccountsStore = create(set => ({
       accounts,
     }))
   },
+  getAccounts: async () => {
+    const wallet = await getWallet()
+    set(() => ({
+      accounts: wallet.accounts,
+    }))
+  },
 }))
 
-getWallet().then(wallet => {
-  // console.log({ wallet })
-  useAccountsStore.setState({ accounts: wallet.accounts })
-})
+useAccountsStore.getState().getAccounts()

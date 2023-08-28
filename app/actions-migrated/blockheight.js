@@ -5,7 +5,7 @@ import { rpc } from '@cityofzion/neon-js-legacy'
 import { isEmpty } from 'lodash-es'
 import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 
-export const useBlockHeightStore = create(set => ({
+export const useBlockHeightStore = create(() => ({
   count: 0,
 }))
 

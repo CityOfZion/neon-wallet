@@ -18,7 +18,6 @@ import balancesActions from '../../actions/balancesActions'
 import withSuccessNotification from '../../hocs/withSuccessNotification'
 import withFailureNotification from '../../hocs/withFailureNotification'
 import { MODAL_TYPES } from '../../core/constants'
-import withTokensData from '../../hocs/withTokensData'
 import withSettingsContext from '../../hocs/withSettingsContext'
 
 const mapDispatchToProps = (dispatch: Function) =>
@@ -81,7 +80,6 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps,
   ),
-  withTokensData(),
   withBalancesData(mapBalanceDataToProps),
   withPricesData(mapPricesDataToProps),
   withNetworkData(),
