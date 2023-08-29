@@ -10,17 +10,13 @@ import withAuthData from '../../../../hocs/withAuthData'
 type Props = {
   logout: Function,
 }
-
-// const mapActionsToProps = (actions): Props => ({
-//   logout: () => actions.call(),
-// })
+// TODO: we need to reset other account dependent data here
 
 const mapPromptActionsToProps = actions => ({
   promptHasBeenDisplayed: boolean => actions.call(boolean),
 })
 
 export default compose(
-  // withActions(logoutActions, mapActionsToProps),
   withActions(internetConnectionPromptPresented, mapPromptActionsToProps),
   withAuthData,
 )(Logout)
