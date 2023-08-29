@@ -29,6 +29,6 @@ export default compose(
     mapDispatchToProps,
   ),
   withNetworkData(),
-  withAuthData(),
+  withAuthData,
   withActions(accountActions, mapAccountActionsToProps),
 )(withSettingsContext(TokenModal))

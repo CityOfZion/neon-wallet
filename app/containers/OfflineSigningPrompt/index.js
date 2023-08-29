@@ -45,5 +45,5 @@ export default compose(
   ),
   withActions(logoutActions, mapActionsToProps),
   withActions(internetConnectionPromptPresented, mapPromptActionsToProps),
-  withAuthData(),
+  withAuthData,
 )(withSettingsContext(OfflineSigningPrompt))

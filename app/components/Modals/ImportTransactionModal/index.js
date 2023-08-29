@@ -31,7 +31,7 @@ export default compose(
     null,
     mapDispatchToProps,
   ),
-  withAuthData(),
+  withAuthData,
   withNetworkData(),
   withData(internetConnectionPromptPresented),
 )(withSettingsContext(ImportTransactionModal))

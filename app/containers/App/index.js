@@ -7,7 +7,7 @@ import authActions from '../../actions/authActions'
 import withLoginRedirect from '../../hocs/auth/withLoginRedirect'
 import withLogoutRedirect from '../../hocs/auth/withLogoutRedirect'
 import withLogoutReset from '../../hocs/auth/withLogoutReset'
-import withAuthData from '../../hocs/withAuthData'
+// import withAuthData from '../../hocs/withAuthData'
 import { checkVersion } from '../../modules/metadata'
 import {
   showErrorNotification,
@@ -17,6 +17,7 @@ import {
 
 import App from './App'
 import nftGalleryActions from '../../actions/nftGalleryActions'
+import withAuthData from '../../hocs/withAuthData'
 
 const actionCreators = {
   checkVersion,
@@ -36,7 +37,7 @@ export default compose(
   ),
 
   // Provide authenticated state so dashboard knows what layout to use.
-  withAuthData(),
+  withAuthData,
 
   // Navigate to the home or dashboard when the user logs in or out.
   withLoginRedirect,

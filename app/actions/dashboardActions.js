@@ -13,7 +13,7 @@ import nftGalleryActions from './nftGalleryActions'
 export const ID = 'dashboard'
 
 export default createBatchActions(ID, {
-  balances: balancesActions,
+  // balances: balancesActions,
   nft: nftActions,
   claims: claimsActions,
   prices: pricesActions,

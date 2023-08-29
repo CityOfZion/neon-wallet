@@ -75,19 +75,19 @@ const mapNftActionsToProps = (actions, props) => ({
 
 export default compose(
   withNetworkData(),
-  withAuthData(),
-  withProgressPanel(balancesActions, {
+  withAuthData,
+  withProgressPanel(pricesActions, {
     title: <FormattedMessage id="dashboardBalancePanelLabel" />,
   }),
   withBalancesData(mapBalanceDataToProps),
   withData(pricesActions, mapPricesDataToProps),
-
   // expose data & functionality needed for `refresh` action
-  withActions(balancesActions, mapBalancesActionsToProps),
-  withLoadingProp(balancesActions),
+  // withActions(balancesActions, mapBalancesActionsToProps),
+  // withLoadingProp(balancesActions),
   withActions(nftActions, mapNftActionsToProps),
   withLoadingProp(nftActions),
 
   withData(nftActions, mapNftDataToProps),
   injectIntl,
-)(withSettingsContext(TokenBalancesPanel))
+  withSettingsContext,
+)(TokenBalancesPanel)

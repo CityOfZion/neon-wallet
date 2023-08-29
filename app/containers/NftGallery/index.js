@@ -30,7 +30,7 @@ export default compose(
   withData(nftGalleryActions),
   withLoadingProp(nftGalleryActions),
   withActions(nftGalleryActions, mapNFTGalleryActionsToProps),
-  withAuthData(),
+  withAuthData,
   withNetworkData(),
   withSuccessNotification(
     nftGalleryActions,

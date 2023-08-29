@@ -28,7 +28,8 @@ export default compose(
     null,
     mapDispatchToProps,
   ),
-  withAuthData(),
+  withAuthData,
   withNetworkData(),
   withRouter,
-)(withSettingsContext(InvokeFunction))
+  withSettingsContext,
+)(InvokeFunction)

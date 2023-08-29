@@ -22,6 +22,6 @@ export default compose(
     null,
     mapDispatchToProps,
   ),
-  withAuthData(),
+  withAuthData,
   withNetworkData(),
 )(withSettingsContext(injectIntl(CreateMigrationWallet)))

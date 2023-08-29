@@ -52,6 +52,7 @@ const App = ({
   history,
   showInfoNotification,
 }: Props) => {
+  console.log({ address })
   const { requests, sessions, disconnect } = useWalletConnectWallet()
   const [decodedDeeplinkUri, setDecodedDeeplinkUri] = useState(null)
   const {
@@ -147,6 +148,18 @@ const App = ({
       }
     },
     [sessions, disconnect],
+  )
+
+  // check if the incoming address prop is different than old one
+  // if it is, then we need to reset the state of the app
+  useEffect(
+    () => {
+      if (address) {
+        console.log('routing to dashboard')
+        history.push(ROUTES.DASHBOARD)
+      }
+    },
+    [address, history],
   )
 
   return (

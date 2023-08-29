@@ -14,6 +14,7 @@ const mapActionsToProps = (actions): Props => ({
   logout: () => actions.call(),
 })
 
-export default compose(withActions(logoutActions, mapActionsToProps))(
-  withSettingsContext(Main),
-)
+export default compose(
+  withActions(logoutActions, mapActionsToProps),
+  withSettingsContext,
+)(Main)

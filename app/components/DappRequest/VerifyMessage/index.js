@@ -23,6 +23,6 @@ export default compose(
     null,
     mapDispatchToProps,
   ),
-  withAuthData(),
+  withAuthData,
   withRouter,
 )(VerifyMessage)

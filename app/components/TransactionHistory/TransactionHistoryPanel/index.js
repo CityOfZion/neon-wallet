@@ -63,7 +63,7 @@ export default compose(
     null,
     mapDispatchToProps,
   ),
-  withAuthData(),
+  withAuthData,
   withNetworkData(),
   withActions(transactionHistoryActions, mapAccountActionsToProps),
   withActions(getPendingTransactionInfo, mapPendingTransactionActionsToProps),

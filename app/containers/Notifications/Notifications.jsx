@@ -22,6 +22,7 @@ class Notifications extends Component<Props> {
     // Adapted from https://github.com/gor181/react-notification-system-redux/blob/master/src/notifications.js
     const { hideNotification } = this.props
     const { notifications } = nextProps
+    console.log({ notifications })
     if (notifications.length > 0) {
       const systemNotifications = this.rnsRef.state.notifications || []
       const systemNotificationsIds = systemNotifications.map(
@@ -80,6 +81,7 @@ class Notifications extends Component<Props> {
 
   render() {
     const { theme } = this.props
+
     return (
       <ReactNotificationSystem
         ref={node => {

@@ -42,7 +42,7 @@ export default compose(
     null,
     mapDispatchToProps,
   ),
-  withAuthData(),
+  withAuthData,
   withData(walletLabelActions, mapAccountsDataToProps),
   withActions(updateLabelActions, mapSaveAccountActionsToProps),
   withFailureNotification(updateLabelActions),

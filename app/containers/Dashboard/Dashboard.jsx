@@ -16,6 +16,7 @@ import GreenWallet from '../../assets/icons/wallet-green.svg'
 import RefreshButton from '../Buttons/RefreshButton'
 import styles from './Dashboard.scss'
 import DapiStatus from '../../components/DapiStatus'
+import { useBalancesStore } from '../../actions-migrated/balances'
 
 type Props = {
   loadWalletData: Function,
@@ -34,6 +35,12 @@ export default class Dashboard extends Component<Props> {
 
   componentDidMount() {
     this.addPolling()
+    const { getBalances } = useBalancesStore.getState()
+    getBalances({
+      address: this.props.address,
+      net: this.props.net,
+      tokens: this.props.tokens,
+    })
   }
 
   componentWillUnmount() {
@@ -43,7 +50,6 @@ export default class Dashboard extends Component<Props> {
   componentWillReceiveProps(nextProps: Props) {
     if (this.props.loadWalletData !== nextProps.loadWalletData) {
       this.removePolling()
-
       this.addPolling()
     }
   }

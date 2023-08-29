@@ -21,5 +21,5 @@ export default compose(
     null,
     mapDispatchToProps,
   ),
-  withAuthData(),
+  withAuthData,
 )(withSettingsContext(injectIntl(TokenSwap)))

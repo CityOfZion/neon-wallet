@@ -35,6 +35,8 @@ export default class AssetBalancesPanel extends React.Component<Props> {
   render = () => {
     const { NEO, GAS, className, chain } = this.props
 
+    // console.log({ NEO, GAS })
+
     const hasAssets = NEO !== '0' || GAS !== '0'
 
     return (

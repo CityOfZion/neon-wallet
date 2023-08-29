@@ -27,4 +27,5 @@ export default compose(
   ),
   injectIntl,
   withRouter,
-)(withSettingsContext(ContactForm))
+  withSettingsContext,
+)(ContactForm)

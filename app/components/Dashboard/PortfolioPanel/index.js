@@ -59,4 +59,5 @@ export default compose(
   withBalancesData(mapBalancesDataToProps),
   withProps(mapTotalPortfolioValueToProps),
   withProps(mapSortedPortfolioBalanceProps),
-)(withSettingsContext(PortfolioPanel))
+  withSettingsContext,
+)(PortfolioPanel)

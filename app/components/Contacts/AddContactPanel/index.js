@@ -27,4 +27,5 @@ export default compose(
     mapDispatchToProps,
   ),
   withRouter,
-)(withSettingsContext(AddContactPanel))
+  withSettingsContext,
+)(AddContactPanel)

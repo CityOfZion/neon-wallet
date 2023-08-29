@@ -37,7 +37,7 @@ export default compose(
     mapDispatchToProps,
   ),
   withNetworkData(),
-  withAuthData(),
+  withAuthData,
   withLoadingProp(balancesActions),
   withSuccessNotification(
     balancesActions,

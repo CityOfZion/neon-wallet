@@ -20,6 +20,7 @@ export default compose(
     null,
     mapDispatchToProps,
   ),
-  withAuthData(),
+  withAuthData,
   withNetworkData(),
-)(withSettingsContext(Transaction))
+  withSettingsContext,
+)(Transaction)

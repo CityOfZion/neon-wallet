@@ -12,5 +12,5 @@ export default createBatchActions(ID, {
   prices: pricesActions,
   priceHistory: priceHistoryActions,
   claims: claimsActions,
-  balances: balancesActions,
+  // balances: balancesActions,
 })

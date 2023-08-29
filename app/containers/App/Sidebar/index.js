@@ -18,7 +18,7 @@ const mapPendingTransactionsDataToProps = (
 
 export default compose(
   withRouter, // allow `NavLink` components to re-render when the window location changes
-  withAuthData(),
+  withAuthData,
   withNetworkData(),
   withData(addPendingTransaction, mapPendingTransactionsDataToProps),
 )(withSettingsContext(Sidebar))

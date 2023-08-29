@@ -1,26 +1,15 @@
 // @flow
 import { compose } from 'recompose'
-import { withActions, withProgress } from 'spunky'
 import { injectIntl } from 'react-intl'
 
 import LoginNep2 from './LoginNep2'
-import withLoadingProp from '../../hocs/withLoadingProp'
-import withFailureNotification from '../../hocs/withFailureNotification'
-import pureStrategy from '../../hocs/helpers/pureStrategy'
-import { nep2LoginActions } from '../../actions/authActions'
 import withCameraAvailability from '../../hocs/withCameraAvailability'
 import withSettingsContext from '../../hocs/withSettingsContext'
-
-const mapActionsToProps = actions => ({
-  loginNep2: ({ passphrase, encryptedWIF, chain }) =>
-    actions.call({ passphrase, encryptedWIF, chain }),
-})
+import withAuthData from '../../hocs/withAuthData'
 
 export default compose(
-  withActions(nep2LoginActions, mapActionsToProps),
-  withLoadingProp(nep2LoginActions, { strategy: pureStrategy }),
-  withFailureNotification(nep2LoginActions),
-  withProgress(nep2LoginActions),
   withCameraAvailability,
   injectIntl,
-)(withSettingsContext(LoginNep2))
+  withAuthData,
+  withSettingsContext,
+)(LoginNep2)

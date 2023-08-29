@@ -26,6 +26,6 @@ export default compose(
     mapDispatchToProps,
   ),
   withRouter,
-  withAuthData(),
+  withAuthData,
   withNetworkData(),
 )(ApproveConnection)

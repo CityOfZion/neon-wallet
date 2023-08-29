@@ -31,5 +31,5 @@ export default compose(
   ),
   injectIntl,
   withNetworkData(),
-  withAuthData(),
+  withAuthData,
 )(TransferNftModal)

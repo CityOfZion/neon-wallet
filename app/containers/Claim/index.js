@@ -28,7 +28,7 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps,
   ),
-  withAuthData(),
+  withAuthData,
   withBalancesData(),
   withData(claimsActions, mapClaimsDataToProps),
   injectIntl,

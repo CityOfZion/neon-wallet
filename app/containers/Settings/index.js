@@ -64,7 +64,7 @@ export default compose(
     mapDispatchToProps,
   ),
   withNetworkData(),
-  withAuthData(),
+  withAuthData,
 
   withRecall(accountActions, ['net']),
   withActions(accountActions, mapAccountActionsToProps),

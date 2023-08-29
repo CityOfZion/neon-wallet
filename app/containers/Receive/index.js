@@ -77,7 +77,7 @@ export default compose(
   withBalancesData(mapBalanceDataToProps),
   withPricesData(mapPricesDataToProps),
   withNetworkData(),
-  withAuthData(),
+  withAuthData,
   withLoadingProp(balancesActions),
   withSuccessNotification(
     balancesActions,

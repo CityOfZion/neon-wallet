@@ -40,4 +40,5 @@ export default compose(
   }),
   withPricesData(mapPriceDataToProps),
   withData(priceHistoryActions, mapPriceHistoryDataToProps),
-)(withSettingsContext(PriceHistoryPanel))
+  withSettingsContext,
+)(PriceHistoryPanel)

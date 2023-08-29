@@ -21,4 +21,6 @@ export default compose(
     null,
     mapDispatchToProps,
   ),
-)(withSettingsContext(injectIntl(CreateImportWalletForm)))
+  withSettingsContext,
+  injectIntl,
+)(CreateImportWalletForm)

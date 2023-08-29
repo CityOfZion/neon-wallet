@@ -24,7 +24,7 @@ const mapAccountActionsToProps = (actions, props) => ({
 })
 
 export default compose(
-  withAuthData(),
+  withAuthData,
   withNetworkData(),
   withActions(networkActions, mapActionsToProps),
   withActions(accountActions, mapAccountActionsToProps),

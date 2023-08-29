@@ -23,4 +23,5 @@ export default compose(
     mapDispatchToProps,
   ),
   withLoadingProp(authActions, { strategy: pureStrategy }),
-)(withSettingsContext(Home))
+  withSettingsContext,
+)(Home)

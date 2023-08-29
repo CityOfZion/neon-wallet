@@ -18,7 +18,7 @@ const mapSaveNodeActionsToProps = actions => ({
 
 export default compose(
   withNetworkData(),
-  withAuthData(),
+  withAuthData,
   withActions(networkActions, mapActionsToProps),
   withActions(nodeStorageActions, mapSaveNodeActionsToProps),
 )(NetworkSwitchModal)

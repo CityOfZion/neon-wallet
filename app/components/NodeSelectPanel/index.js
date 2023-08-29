@@ -53,7 +53,7 @@ const mapSaveNodeActionsToProps = actions => ({
 })
 
 export default compose(
-  withAuthData(),
+  withAuthData,
   withNetworkData(),
   withCall(nodeNetworkActions),
   withActions(nodeNetworkActions, mapNodesActionsToProps),

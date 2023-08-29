@@ -1,8 +1,17 @@
 // @flow
-import { withData } from 'spunky'
+import React, { type ComponentType } from 'react'
+import { useStore } from 'zustand'
 
-import balancesActions from '../actions/balancesActions'
+import { useBalancesStore } from '../actions-migrated/balances'
 
-export default function withBalancesData(mapBalancesDataToProps: Function) {
-  return withData(balancesActions, mapBalancesDataToProps)
+function withBalancesData(mapDataToProps?: Function): Function {
+  return function WithBalancesData(WrappedComponent: ComponentType<any>) {
+    return function WithBalancesDataWrapper(props: any) {
+      const { balances, loading } = useStore(useBalancesStore)
+      const data = mapDataToProps ? mapDataToProps(balances) : balances
+      return <WrappedComponent {...props} {...data} />
+    }
+  }
 }
+
+export default withBalancesData

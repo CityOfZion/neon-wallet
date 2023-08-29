@@ -29,4 +29,5 @@ export default compose(
   ),
   withRouter,
   injectIntl,
-)(withSettingsContext(ContactsPanel))
+  withSettingsContext,
+)(ContactsPanel)

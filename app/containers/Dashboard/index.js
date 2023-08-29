@@ -41,12 +41,13 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps,
   ),
+  withAuthData,
 
   // Expose function for polling & reloading account related data.
-  withAuthData(),
   withNetworkData(),
   withInitialCall(dashboardActions),
   withReset(accountActions, ['networkId']),
   withActions(accountActions, mapAccountActionsToProps),
   withData(internetConnectionPromptPresented),
+  withAuthData,
 )(withSettingsContext(Dashboard))

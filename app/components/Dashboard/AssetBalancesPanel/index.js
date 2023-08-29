@@ -20,19 +20,26 @@ import withAuthData from '../../../hocs/withAuthData'
 import { ASSETS } from '../../../core/constants'
 import { toBigNumber } from '../../../core/math'
 import withSettingsContext from '../../../hocs/withSettingsContext'
+import pricesActions from '../../../actions/pricesActions'
 
 const mapBalanceDataToProps = balances => ({
-  NEO: balances.NEO,
-  GAS: balances.GAS,
+  NEO: balances?.NEO,
+  GAS: balances?.GAS,
   tokenBalances: values(omit(balances, 'NEO', 'GAS')),
 })
 
-const mapPricesDataToProps = ({ NEO, GAS }) => ({
-  neoPrice: NEO,
-  gasPrice: GAS,
+const mapPricesDataToProps = prices => ({
+  neoPrice: prices?.NEO,
+  gasPrice: prices?.GAS,
 })
 
 const mapPriceChangeDataToProps = (prices: Object) => {
+  if (!prices) {
+    return {
+      neoPriceChange: toBigNumber(0),
+      gasPriceChange: toBigNumber(0),
+    }
+  }
   const oldNeo = toBigNumber(get(prices, `[${ASSETS.NEO}][0].close`, 0))
   const newNeo = toBigNumber(
     get(prices, `[${ASSETS.NEO}][${prices[ASSETS.NEO].length - 1}].close`, 0),
@@ -61,7 +68,7 @@ export default compose(
   // Fetch price & balance data based based upon the selected currency.
   // Reload data with the currency changes.
   withNetworkData(),
-  withAuthData(),
+  withAuthData,
   withProgressPanel(assetBalancesPanelActions, {
     title: <FormattedMessage id="dashboardAssetsPanelLabel" />,
   }),
@@ -70,18 +77,19 @@ export default compose(
   withData(priceHistoryActions, mapPriceChangeDataToProps),
 
   // Expose data & functionality needed for `refresh` action.
-  withActions(balancesActions, mapBalancesActionsToProps),
-  withLoadingProp(balancesActions),
-  withSuccessNotification(
-    balancesActions,
-    'notifications.success.receivedBlockchainInfo',
-    {},
-    true,
-  ),
-  withFailureNotification(
-    balancesActions,
-    'notifications.failure.blockchainInfoFailure',
-    {},
-    true,
-  ),
-)(withSettingsContext(AssetBalancesPanel))
+  // withActions(balancesActions, mapBalancesActionsToProps),
+  withLoadingProp(pricesActions),
+  // withSuccessNotification(
+  //   balancesActions,
+  //   'notifications.success.receivedBlockchainInfo',
+  //   {},
+  //   true,
+  // ),
+  // withFailureNotification(
+  //   balancesActions,
+  //   'notifications.failure.blockchainInfoFailure',
+  //   {},
+  //   true,
+  // ),
+  withSettingsContext,
+)(AssetBalancesPanel)

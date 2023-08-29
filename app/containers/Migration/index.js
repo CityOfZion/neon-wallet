@@ -43,6 +43,6 @@ export default compose(
   ),
   withActions(newMigrationWalletActions, mapNewWalletActionsToProps),
   withActions(logoutActions, mapLogoutActionsToProps),
-  withAuthData(),
+  withAuthData,
   withData(newMigrationWalletActions),
 )(Migration)

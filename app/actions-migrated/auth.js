@@ -7,13 +7,12 @@ import { noop } from 'lodash-es'
 import dns from 'dns'
 
 import { bindArgsFromN } from '../util/bindHelpers'
-import { resetBalanceState } from './balancesActions'
 
-import { upgradeNEP6AddAddresses } from '../core/account'
 import { validatePassphraseLength } from '../core/wallet'
 import { legacySignWithLedger } from '../ledger/neonLedger'
 import { signWithLedger } from '../ledger/n3NeonLedger'
 import { getSettings } from '../context/settings/SettingsContext'
+import useNotificationsStore from './notifications'
 
 type WifLoginProps = {
   wif: string,
@@ -47,6 +46,11 @@ type AccountType = ?{
   encryptedWIF?: string,
 }
 
+type AllLoginProps = WifLoginProps &
+  WatchOnlyLoginProps &
+  LedgerLoginProps &
+  Nep2LoginProps
+
 export const checkForInternetConnectivity = (): Promise<boolean> =>
   new Promise(resolve => {
     dns.resolve('google.com', 'A', err => {
@@ -57,7 +61,9 @@ export const checkForInternetConnectivity = (): Promise<boolean> =>
     })
   })
 
-async function loginWithWif({ wif }) {
+export async function loginWithWif({
+  wif,
+}: WifLoginProps): Promise<AccountType> {
   if (!wallet.isWIF(wif) && !wallet.isPrivateKey(wif)) {
     throw new Error('Invalid private key entered')
   }
@@ -72,7 +78,9 @@ async function loginWithWif({ wif }) {
   }
 }
 
-async function loginWithN3Wif({ wif }) {
+export async function loginWithN3Wif({
+  wif,
+}: WifLoginProps): Promise<AccountType> {
   if (!n3Wallet.isWIF(wif) && !n3Wallet.isPrivateKey(wif)) {
     throw new Error('Invalid private key entered')
   }
@@ -87,7 +95,10 @@ async function loginWithN3Wif({ wif }) {
   }
 }
 
-async function loginWatchOnly({ address, chain }) {
+export async function loginWatchOnly({
+  address,
+  chain,
+}: WatchOnlyLoginProps): Promise<AccountType> {
   if (chain === 'neo3') {
     if (!n3Wallet.isAddress(address)) {
       throw new Error('Invalid public key entered')
@@ -114,23 +125,23 @@ async function loginWatchOnly({ address, chain }) {
   }
 }
 
-export async function nep2Login({ passphrase, encryptedWIF, chain }) {
+export async function nep2Login({
+  passphrase,
+  encryptedWIF,
+  chain,
+}: Nep2LoginProps): Promise<AccountType> {
   if (chain === 'neo3') {
     if (!validatePassphraseLength(passphrase)) {
       throw new Error('Passphrase too short')
     }
-
     if (!n3Wallet.isNEP2(encryptedWIF)) {
       throw new Error('Invalid encrypted key entered')
     }
-
     const wif = await n3Wallet.decrypt(encryptedWIF, passphrase)
     const account = new n3Wallet.Account(wif)
-
     // TODO: offline signing flow for n3 totally unsupported
     // const hasInternetConnectivity = await checkForInternetConnectivity()
     const hasInternetConnectivity = true
-
     return {
       wif: account.WIF,
       publicKey: account.publicKey,
@@ -140,22 +151,15 @@ export async function nep2Login({ passphrase, encryptedWIF, chain }) {
       encryptedWIF,
     }
   }
-
   if (!validatePassphraseLength(passphrase)) {
     throw new Error('Passphrase too short')
   }
-
   if (!wallet.isNEP2(encryptedWIF)) {
     throw new Error('Invalid encrypted key entered')
   }
-
   const wif = await wallet.decryptAsync(encryptedWIF, passphrase)
   const account = new wallet.Account(wif)
-
-  // await upgradeNEP6AddAddresses(encryptedWIF, wif)
-
   const hasInternetConnectivity = await checkForInternetConnectivity()
-
   return {
     wif: account.WIF,
     publicKey: account.publicKey,
@@ -166,7 +170,10 @@ export async function nep2Login({ passphrase, encryptedWIF, chain }) {
   }
 }
 
-export async function ledgerLogin({ publicKey, account }) {
+export async function ledgerLogin({
+  publicKey,
+  account,
+}: LedgerLoginProps): Promise<AccountType> {
   const { chain } = await getSettings()
   const wlt = chain === 'neo3' ? n3Wallet : wallet
   const publicKeyEncoded = wlt.getPublicKeyEncoded(publicKey)
@@ -182,16 +189,92 @@ export async function ledgerLogin({ publicKey, account }) {
   }
 }
 
-const useAuthStore = create(set => ({
-  account: null,
-  login: async loginProps => {},
-  n3Login: async loginProps => {},
+export const AUTH_LOGIN_TYPES = {
+  WIF: 'WIF',
+  WATCH: 'WATCH',
+  LEDGER: 'LEDGER',
+  NEP2: 'NEP2',
+}
+
+export const DEFAULT_ACCOUNT_STATE = {
+  address: '',
+  wif: '',
+  publicKey: '',
+  signingFunction: noop,
+  isHardwareLogin: false,
+  isWatchOnly: false,
+  hasInternetConnectivity: false,
+}
+
+export const useAuthStore = create(set => ({
+  account: {
+    ...DEFAULT_ACCOUNT_STATE,
+  },
+  login: async (data: AllLoginProps, loginType: string) => {
+    try {
+      let account
+      switch (loginType) {
+        case AUTH_LOGIN_TYPES.WIF:
+          account = await loginWithWif(data)
+          break
+        case AUTH_LOGIN_TYPES.WATCH:
+          account = await loginWatchOnly(data)
+          break
+        case AUTH_LOGIN_TYPES.LEDGER:
+          account = await ledgerLogin(data)
+          break
+        case AUTH_LOGIN_TYPES.NEP2:
+          account = await nep2Login(data)
+          break
+        default:
+          throw new Error('Invalid login type')
+      }
+      set(() => ({
+        account,
+      }))
+    } catch (e) {
+      console.error(e)
+      useNotificationsStore.getState().showErrorNotification({
+        message: e.message,
+      })
+    }
+  },
+  n3Login: async (data: AllLoginProps, loginType: string) => {
+    try {
+      let account
+      console.log('logging in', data, loginType)
+      switch (loginType) {
+        case AUTH_LOGIN_TYPES.WIF:
+          account = await loginWithN3Wif(data)
+          break
+        case AUTH_LOGIN_TYPES.WATCH:
+          account = await loginWatchOnly(data)
+          break
+        case AUTH_LOGIN_TYPES.LEDGER:
+          account = await ledgerLogin(data)
+          break
+        case AUTH_LOGIN_TYPES.NEP2:
+          account = await nep2Login(data)
+          break
+        default:
+          throw new Error('Invalid login type')
+      }
+      console.log({ account })
+      set(() => ({
+        account,
+      }))
+    } catch (e) {
+      console.error(e)
+      useNotificationsStore.getState().showErrorNotification({
+        message: e.message,
+      })
+    }
+  },
   logout: () => {
-    // Your logout logic here
+    set(() => ({
+      account: {
+        ...DEFAULT_ACCOUNT_STATE,
+      },
+    }))
   },
 }))
-
-export const useAuth = () => {
-  const { account, login, logout } = useAuthStore()
-  return { account, login, logout }
-}

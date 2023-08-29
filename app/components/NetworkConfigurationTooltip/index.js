@@ -38,6 +38,6 @@ export default compose(
   withNetworkData(),
   withCall(nodeStorageActions),
   withData(nodeStorageActions, mapSelectedNodeDataToProps),
-  withAuthData(),
   injectIntl,
+  withAuthData,
 )(NetworkConfigurationTooltip)

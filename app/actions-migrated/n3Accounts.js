@@ -6,7 +6,6 @@ import { getStorage, setStorage } from '../core/storage'
 import { DEFAULT_WALLET } from '../core/constants'
 import { Account } from '../core/schemas'
 import { walletHasKey, walletHasLabel } from './accounts'
-import { use } from 'chai'
 
 const STORAGE_KEY = 'n3UserWallet'
 

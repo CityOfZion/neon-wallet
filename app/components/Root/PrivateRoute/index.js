@@ -1,19 +1,20 @@
 // @flow
-import { compose, mapProps } from 'recompose'
+import React from 'react'
+import { compose } from 'recompose'
 import { withRouter } from 'react-router-dom'
-import { withProgress, progressValues } from 'spunky'
-import { omit } from 'lodash-es'
 
 import PrivateRoute from './PrivateRoute'
-import authActions from '../../../actions/authActions'
+import { useAuthStore } from '../../../actions-migrated/auth'
 
-const { LOADED } = progressValues
+function withAuthenticatedBoolean(WrappedComponent: React$ComponentType<any>) {
+  return function EnhancedComponent(props: any) {
+    const { account } = useAuthStore()
+    console.log({ account })
+    return <WrappedComponent {...props} authenticated={!!account.address} />
+  }
+}
 
 export default compose(
   withRouter,
-  withProgress(authActions, { propName: 'progress' }),
-  mapProps(props => ({
-    ...omit(props, 'progress'),
-    authenticated: props.progress === LOADED,
-  })),
+  withAuthenticatedBoolean,
 )(PrivateRoute)

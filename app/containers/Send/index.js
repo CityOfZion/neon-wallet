@@ -83,7 +83,7 @@ export default compose(
   withBalancesData(mapBalanceDataToProps),
   withPricesData(mapPricesDataToProps),
   withNetworkData(),
-  withAuthData(),
+  withAuthData,
   withSuccessNotification(
     balancesActions,
     'notifications.success.receivedBlockchainInfo',
