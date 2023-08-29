@@ -86,7 +86,7 @@ const VerifyMessage = ({
         ])}
       >
         <img src={session.peer.metadata.icons[0]} />
-        <h3>{session.peer.metadata.name} wants you to verify a message</h3>
+        <h3>{session.peer.metadata.name} asks for authentication</h3>
 
         {isHardwareLogin && (
           <DialogueBox
