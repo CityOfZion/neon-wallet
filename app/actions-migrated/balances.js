@@ -434,11 +434,13 @@ async function getN3Balances({ net, address }: Props): Promise<Object> {
   }
 }
 
+const DEFAULT_BALANCE_STATE = {
+  NEO: 0,
+  GAS: 0,
+}
+
 export const useBalancesStore = create(set => ({
-  balances: {
-    NEO: 0,
-    GAS: 0,
-  },
+  balances: { ...DEFAULT_BALANCE_STATE },
   loading: false,
   getBalances: async ({ net, address, tokens }) => {
     set(() => ({ loading: true }))
@@ -447,8 +449,9 @@ export const useBalancesStore = create(set => ({
       chain === 'neo3'
         ? await getN3Balances({ net, address, tokens })
         : await getBalances({ net, address, tokens })
-
-    console.log({ balances })
     set(() => ({ balances, loading: false }))
+  },
+  resetBalances: () => {
+    set(() => ({ balances: { ...DEFAULT_BALANCE_STATE } }))
   },
 }))
