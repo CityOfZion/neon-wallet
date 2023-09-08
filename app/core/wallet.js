@@ -88,7 +88,6 @@ export const validateTransactionsBeforeSending = (
 ) => {
   const getValidationError = sendEntry => {
     const balance = obtainBalance(balances, sendEntry.symbol)
-    debugger
     return validateTransactionBeforeSending(balance, sendEntry)
   }
 

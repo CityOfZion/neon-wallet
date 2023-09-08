@@ -87,7 +87,6 @@ export const buildTransferScript = (
 
     scriptBuilder.emitAppCall(scriptHash, 'transfer', args)
   })
-  debugger
   return scriptBuilder.str
 }
 
@@ -100,15 +99,15 @@ const makeRequest = (
   // because neon-js will also mutate this same object by reference
   // eslint-disable-next-line no-param-reassign
   config.intents = buildIntents(sendEntries)
-  const provider = new N2.api.neoCli.instance(config.url)
-  config.api = provider
+  const apiProvider = new N2.api.neoCli.instance(config.url)
+  config.api = apiProvider
   if (script === '') {
     if (config.net === 'TestNet') {
       // eslint-disable-next-line
 
       return N2.api.sendAsset(config)
     }
-    return api.sendAsset(config)
+    return N2.api.sendAsset(config)
   }
   // eslint-disable-next-line no-param-reassign
   config.script = script
@@ -327,7 +326,6 @@ export const sendTransaction = ({
   const publicKey = getPublicKey(state)
   const isHardwareSend = getIsHardwareLogin(state)
   const { tokens } = state.spunky.settings.data
-  debugger
   return chain === 'neo3'
     ? new Promise(async (resolve, reject) => {
         try {
@@ -536,6 +534,8 @@ export const sendTransaction = ({
             config.tokensBalanceMap,
           )
 
+          console.log({ script })
+
           if (isWatchOnly) {
             config.intents = buildIntents(sendEntries)
             config.script = script
@@ -552,6 +552,7 @@ export const sendTransaction = ({
 
             return resolve(config)
           }
+
           const { response } = await makeRequest(sendEntries, config, script)
 
           if (!response.result) {
@@ -580,16 +581,16 @@ export const sendTransaction = ({
           const hash = get(config, 'tx.hash')
 
           if (!isWatchOnly) {
-            // dispatch(
-            //   addPendingTransaction.call({
-            //     address: config.address,
-            //     tx: {
-            //       hash,
-            //       sendEntries,
-            //     },
-            //     net,
-            //   }),
-            // )
+            dispatch(
+              addPendingTransaction.call({
+                address: config.address,
+                tx: {
+                  hash,
+                  sendEntries,
+                },
+                net,
+              }),
+            )
           }
         }
       })

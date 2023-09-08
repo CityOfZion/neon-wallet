@@ -103,7 +103,8 @@ export default function Transaction(props: Props) {
 
   function renderAbstract(type: string, isN3?: boolean) {
     const { isPending, address } = props
-    const { time, label, amount, isNetworkFee, to, from, image } = props.tx
+    const { time, label, amount, isNetworkFee, to, from, image } =
+      props.tx || {}
     const contactTo = findContact(to)
     const contactFrom = from && findContact(from)
     const contactToExists = contactTo !== to
