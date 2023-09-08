@@ -99,6 +99,7 @@ const makeRequest = (
   // because neon-js will also mutate this same object by reference
   // eslint-disable-next-line no-param-reassign
   config.intents = buildIntents(sendEntries)
+  // eslint-disable-next-line
   const apiProvider = new N2.api.neoCli.instance(config.url)
   config.api = apiProvider
   if (script === '') {
