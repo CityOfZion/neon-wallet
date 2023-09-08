@@ -534,8 +534,6 @@ export const sendTransaction = ({
             config.tokensBalanceMap,
           )
 
-          console.log({ script })
-
           if (isWatchOnly) {
             config.intents = buildIntents(sendEntries)
             config.script = script

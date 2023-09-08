@@ -344,8 +344,6 @@ async function getBalances({ net, address, isRetry = false, chain }: Props) {
   resetAudioTrigger()
   inMemoryNetwork = net
   // $FlowFixMe
-
-  console.log(extend({}, ...parsedTokenBalances, ...parsedAssets))
   return extend({}, ...parsedTokenBalances, ...parsedAssets)
 }
 
