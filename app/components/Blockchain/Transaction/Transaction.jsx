@@ -49,14 +49,7 @@ type Props = {
 }
 
 export default function Transaction(props: Props) {
-  const {
-    tx: { type },
-    chain,
-    className,
-    isPending,
-    renderN2Tx,
-    address,
-  } = props
+  const { tx, chain, className, isPending, renderN2Tx, address } = props
 
   const { contacts } = useContactsContext()
 
@@ -150,7 +143,7 @@ export default function Transaction(props: Props) {
       )
     }
 
-    switch (type) {
+    switch (tx?.type) {
       case TX_TYPES.CLAIM:
         return <ClaimAbstract {...abstractProps} />
       case TX_TYPES.SEND:
@@ -217,7 +210,7 @@ export default function Transaction(props: Props) {
     <div className={classNames(styles.transactionContainer, className)}>
       {chain === 'neo3' && !renderN2Tx
         ? renderAbstractN3()
-        : renderAbstract(type)}
+        : renderAbstract(tx?.type)}
       {!isPending && (
         <Button
           className={styles.transactionHistoryButton}

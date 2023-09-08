@@ -279,42 +279,30 @@ async function getBalances({ net, address, isRetry = false, chain }: Props) {
     }
   })
 
-  // asset balances
-  const assetBalances = await api
-    .getBalanceFrom({ net, address }, api.neoscan)
-    .catch(e => console.error(e))
-
-  const testnetBalances = await axios.get(
-    `https://dora.coz.io/api/v1/neo2/testnet/get_balance/${address}`,
+  const assetBalances = {}
+  const mainnetBalances = await axios.get(
+    `https://dora.coz.io/api/v1/neo2/mainnet/get_balance/${address}`,
   )
-  const parsedTestNetBalances = {}
 
-  testnetBalances.data.balance.forEach(token => {
-    parsedTestNetBalances[token.asset_symbol || token.symbol] = {
+  mainnetBalances.data.balance.forEach(token => {
+    assetBalances[token.asset_symbol || token.symbol] = {
       balance: token.amount,
       hash: token.asset_hash,
     }
   })
-
-  const assets =
-    net === 'MainNet'
-      ? get(assetBalances, 'balance.assets', {})
-      : parsedTestNetBalances
-
-  // The API doesn't always return NEO or GAS keys if, for example, the address only has one asset
-  // eslint-disable-next-line
-  const neoBalance = assets.NEO
-    ? net === 'MainNet'
-      ? assets.NEO.balance.toString()
-      : assets.NEO.balance
-    : '0'
-  // eslint-disable-next-line
-  const gasBalance = assets.GAS
-    ? net === 'MainNet'
-      ? assets.GAS.balance.round(COIN_DECIMAL_LENGTH).toString()
-      : assets.GAS.balance
-    : '0'
-
+  const testnetBalances = await axios.get(
+    `https://dora.coz.io/api/v1/neo2/testnet/get_balance/${address}`,
+  )
+  const parsedTestNetBalances = {}
+  testnetBalances.data.balance.forEach(token => {
+    parsedTestNetBalances[token.asset] = {
+      balance: token.amount,
+      hash: token.asset_hash,
+    }
+  })
+  const assets = net === 'MainNet' ? assetBalances : parsedTestNetBalances
+  const neoBalance = assets?.NEO?.balance ?? '0'
+  const gasBalance = assets.GAS?.balance ?? '0'
   const parsedAssets = [
     { [ASSETS.NEO]: neoBalance },
     { [ASSETS.GAS]: gasBalance },
@@ -356,6 +344,8 @@ async function getBalances({ net, address, isRetry = false, chain }: Props) {
   resetAudioTrigger()
   inMemoryNetwork = net
   // $FlowFixMe
+
+  console.log(extend({}, ...parsedTokenBalances, ...parsedAssets))
   return extend({}, ...parsedTokenBalances, ...parsedAssets)
 }
 

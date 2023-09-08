@@ -42,7 +42,6 @@ declare type ExplorerType = $Values<Explorer>
 
 declare type Explorer = {
   NEO_TRACKER: string,
-  NEO_SCAN: string,
   ANT_CHAIN: string,
 }
 
