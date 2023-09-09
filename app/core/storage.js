@@ -8,7 +8,7 @@ const set = promisify(storage.set, storage)
 const ENCRYPTED_FILES_WHITELIST = ['address']
 
 export const setStorage = async (key, value, encrypt = false) => {
-  const path = await ipcRenderer.invoke('getStoragePath')
+  const path = await ipcRenderer?.invoke('getStoragePath')
   storage.setDataPath(path)
   const encryptedValue = await ipcRenderer.invoke(
     'safeStorageEncrypt',
@@ -18,7 +18,7 @@ export const setStorage = async (key, value, encrypt = false) => {
 }
 
 export const getStorage = async key => {
-  const path = await ipcRenderer.invoke('getStoragePath')
+  const path = await ipcRenderer?.invoke('getStoragePath')
   storage.setDataPath(path)
   const value = await get(key)
   const encryptionIsWhitelisted = !!ENCRYPTED_FILES_WHITELIST.find(fileName =>
@@ -34,7 +34,10 @@ export const getStorage = async key => {
   }
   // Only encrypted values get stored as strings
   if (typeof value === 'string' && encryptionIsWhitelisted) {
-    const decryptedValue = await ipcRenderer.invoke('safeStorageDecrypt', value)
+    const decryptedValue = await ipcRenderer?.invoke(
+      'safeStorageDecrypt',
+      value,
+    )
     return JSON.parse(decryptedValue)
   }
 

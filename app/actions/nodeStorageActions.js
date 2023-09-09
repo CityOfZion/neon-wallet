@@ -140,6 +140,7 @@ export const getRPCEndpoint = async (
         error,
       },
     )
+    // TODO: update this fallback, neoscan is deprecated and this will not work
     const endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
     return endpoint
   } finally {

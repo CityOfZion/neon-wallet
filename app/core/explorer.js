@@ -4,7 +4,7 @@ import { EXPLORERS, DEPRECATED_EXPLORERS } from './constants'
 import { isMainNetwork } from './networks'
 
 const { ANT_CHAIN, DORA, NEOTUBE } = EXPLORERS
-const { NEO_SCAN, NEO_TRACKER } = DEPRECATED_EXPLORERS
+const { NEO_TRACKER } = DEPRECATED_EXPLORERS
 
 export const getExplorerBaseURL = (
   networkId: string,
@@ -16,9 +16,6 @@ export const getExplorerBaseURL = (
       return isMainNet
         ? 'https://neotracker.io'
         : 'https://testnet.neotracker.io'
-    }
-    case NEO_SCAN: {
-      return isMainNet ? 'https://neoscan.io' : 'https://neoscan-testnet.io'
     }
     case ANT_CHAIN: {
       return isMainNet ? 'http://antcha.in' : 'http://testnet.antcha.in'
@@ -45,8 +42,6 @@ export const getExplorerTxLink = (
   switch (explorer) {
     case NEO_TRACKER:
       return `${baseURL}/tx/${txId}`
-    case NEO_SCAN:
-      return `${baseURL}/transaction/${txId}`
     case ANT_CHAIN:
       return `${baseURL}/tx/hash/0x${txId}`
     case NEOTUBE:
@@ -72,8 +67,6 @@ export const getExplorerAddressLink = (
   switch (explorer) {
     case NEO_TRACKER:
       return `${baseURL}/address/${address}`
-    case NEO_SCAN:
-      return `${baseURL}/address/${address}/1`
     case ANT_CHAIN:
       return `${baseURL}/address/info/${address}`
     case NEOTUBE:
@@ -96,8 +89,6 @@ export const getExplorerAssetLink = (
   const baseURL = getExplorerBaseURL(networkId, explorer)
   switch (explorer) {
     case NEO_TRACKER:
-    case NEO_SCAN:
-      return `${baseURL}/asset/${assetId}`
     case ANT_CHAIN:
       return `${baseURL}/assets/hash/${assetId}`
     case DORA:

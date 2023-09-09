@@ -51,7 +51,6 @@ export const EXPLORERS = {
 
 export const DEPRECATED_EXPLORERS = {
   NEO_TRACKER: 'Neotracker',
-  NEO_SCAN: 'Neoscan',
 }
 
 export const LANGUAGES = {

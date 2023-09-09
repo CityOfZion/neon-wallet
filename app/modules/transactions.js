@@ -87,7 +87,6 @@ export const buildTransferScript = (
 
     scriptBuilder.emitAppCall(scriptHash, 'transfer', args)
   })
-
   return scriptBuilder.str
 }
 
@@ -100,21 +99,22 @@ const makeRequest = (
   // because neon-js will also mutate this same object by reference
   // eslint-disable-next-line no-param-reassign
   config.intents = buildIntents(sendEntries)
-
+  // eslint-disable-next-line
+  const apiProvider = new N2.api.neoCli.instance(config.url)
+  config.api = apiProvider
   if (script === '') {
     if (config.net === 'TestNet') {
       // eslint-disable-next-line
-      const provider = new N2.api.neoCli.instance(config.url)
-      config.api = provider
+
       return N2.api.sendAsset(config)
     }
-    return api.sendAsset(config, api.neoscan)
+    return N2.api.sendAsset(config)
   }
   // eslint-disable-next-line no-param-reassign
   config.script = script
   // eslint-disable-next-line no-param-reassign
   config.gas = 0
-  return api.doInvoke(config, api.neoscan)
+  return api.doInvoke(config)
 }
 
 export const generateBalanceInfo = (
@@ -476,26 +476,35 @@ export const sendTransaction = ({
         }
 
         if (net === 'MainNet') {
-          const balanceResults = await api
-            .getBalanceFrom({ net, address: fromAddress }, api.neoscan)
-            .catch(e => {
-              // indicates that neo scan is down and that api.sendAsset and api.doInvoke
-              // will fail unless balances are supplied
-              console.error(e)
-              config.balance = generateBalanceInfo(
-                tokensBalanceMap,
-                fromAddress,
-                net,
-              )
-            })
-          config.balance = balanceResults.balance
+          const mainnetBalances = await axios.get(
+            `https://dora.coz.io/api/v1/neo2/mainnet/get_balance/${fromAddress}`,
+          )
+          const parsedMainnetBalances = {}
+          mainnetBalances.data.balance.forEach(token => {
+            parsedMainnetBalances[token.asset_symbol || token.symbol] = {
+              name: token.asset_symbol || token.symbol,
+              balance: token.amount,
+              unspent: token.unspent,
+            }
+          })
+          const Balance = new wallet.Balance({ address: fromAddress, net })
+          Object.values(parsedMainnetBalances).forEach(
+            // $FlowFixMe
+            ({ name, balance, unspent }) => {
+              if (name === 'GAS' || name === 'NEO') {
+                Balance.addAsset(name, { balance, unspent })
+              } else {
+                Balance.addToken(name, balance)
+              }
+            },
+          )
+          config.balance = Balance
         }
         if (net === 'TestNet') {
           const testnetBalances = await axios.get(
             `https://dora.coz.io/api/v1/neo2/testnet/get_balance/${fromAddress}`,
           )
           const parsedTestNetBalances = {}
-
           testnetBalances.data.balance.forEach(token => {
             parsedTestNetBalances[token.asset_symbol || token.symbol] = {
               name: token.asset_symbol || token.symbol,
@@ -503,9 +512,7 @@ export const sendTransaction = ({
               unspent: token.unspent,
             }
           })
-
           const Balance = new wallet.Balance({ address: fromAddress, net })
-
           Object.values(parsedTestNetBalances).forEach(
             // $FlowFixMe
             ({ name, balance, unspent }) => {
@@ -516,7 +523,6 @@ export const sendTransaction = ({
               }
             },
           )
-
           config.balance = Balance
         }
 
@@ -545,6 +551,7 @@ export const sendTransaction = ({
 
             return resolve(config)
           }
+
           const { response } = await makeRequest(sendEntries, config, script)
 
           if (!response.result) {
