@@ -101,7 +101,7 @@ const makeRequest = (
   config.api = apiProvider
   config.script = script
   config.gas = !script ? 0 : undefined
-  return script ? N2.api.doInvoke(config) : N2.api.sendAsset(config)
+  return script ? api.doInvoke(config) : api.sendAsset(config)
 }
 
 export const generateBalanceInfo = (

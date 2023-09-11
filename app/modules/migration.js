@@ -1,5 +1,6 @@
 // @flow
 import { keyBy } from 'lodash-es'
+import { api } from '@cityofzion/neon-js-legacy'
 
 import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 import { addPendingTransaction } from '../actions/pendingTransactionActions'
@@ -57,7 +58,7 @@ export const performMigration = ({
         isHardwareSend ? migrationAddress : wif,
       )
       const FROM_ACCOUNT = new N2.wallet.Account(
-        isHardwareSend ? fromAddress : wif,
+        isHardwareSend ? publicKey : wif,
       )
 
       let endpoint = await getNode(net)
@@ -207,7 +208,7 @@ export const performMigration = ({
 
       if (isHardwareSend) {
         if (script === '') {
-          c = await N2.api.sendAsset(c).catch(e => {
+          c = await api.sendAsset(c).catch(e => {
             console.error({ e })
             if (e.message === 'this.str.substr is not a function') {
               return null
@@ -231,7 +232,7 @@ export const performMigration = ({
             return reject()
           })
         } else {
-          c = await N2.api.doInvoke(c).catch(e => {
+          c = await api.doInvoke(c).catch(e => {
             console.error({ e })
             if (e.message === 'this.str.substr is not a function') {
               return null
