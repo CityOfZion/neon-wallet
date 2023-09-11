@@ -95,26 +95,13 @@ const makeRequest = (
   config: Object,
   script: string,
 ) => {
-  // NOTE: We purposefully mutate the contents of config
-  // because neon-js will also mutate this same object by reference
-  // eslint-disable-next-line no-param-reassign
   config.intents = buildIntents(sendEntries)
   // eslint-disable-next-line
   const apiProvider = new N2.api.neoCli.instance(config.url)
   config.api = apiProvider
-  if (script === '') {
-    if (config.net === 'TestNet') {
-      // eslint-disable-next-line
-
-      return N2.api.sendAsset(config)
-    }
-    return N2.api.sendAsset(config)
-  }
-  // eslint-disable-next-line no-param-reassign
   config.script = script
-  // eslint-disable-next-line no-param-reassign
-  config.gas = 0
-  return api.doInvoke(config)
+  config.gas = !script ? 0 : undefined
+  return script ? N2.api.doInvoke(config) : N2.api.sendAsset(config)
 }
 
 export const generateBalanceInfo = (
@@ -458,12 +445,16 @@ export const sendTransaction = ({
           )
         }
 
+        const ledgerAccount = new N2.wallet.Account(publicKey)
+
         const config = {
           net,
           tokensBalanceMap,
           address: fromAddress,
           publicKey,
-          privateKey: new wallet.Account(wif).privateKey,
+          privateKey: isHardwareSend
+            ? null
+            : new wallet.Account(wif).privateKey,
           signingFunction: isHardwareSend ? signingFunction : null,
           fees,
           url,
@@ -472,7 +463,7 @@ export const sendTransaction = ({
           intents: undefined,
           script: undefined,
           gas: undefined,
-          account: new wallet.Account(wif),
+          account: isHardwareSend ? ledgerAccount : new wallet.Account(wif),
         }
 
         if (net === 'MainNet') {

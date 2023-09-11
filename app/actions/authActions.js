@@ -13,6 +13,8 @@ import { validatePassphraseLength } from '../core/wallet'
 import { legacySignWithLedger } from '../ledger/neonLedger'
 import { signWithLedger } from '../ledger/n3NeonLedger'
 
+const N2 = require('@cityofzion/neon-js-legacy-latest')
+
 type WifLoginProps = {
   wif: string,
 }
@@ -195,7 +197,7 @@ export const ledgerLoginActions = createActions(
     AccountType,
   > => {
     const { chain } = await getSettings()
-    const wlt = chain === 'neo3' ? n3Wallet : wallet
+    const wlt = chain === 'neo3' ? n3Wallet : N2.wallet
     const publicKeyEncoded = wlt.getPublicKeyEncoded(publicKey)
     const walletAccount = new wlt.Account(publicKeyEncoded)
     const hasInternetConnectivity = await checkForInternetConnectivity()
