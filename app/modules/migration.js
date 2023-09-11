@@ -157,7 +157,7 @@ export const performMigration = ({
           autoDismiss: 0,
         }),
       )
-      debugger
+
       if (isHardwareSend) {
         dispatch(
           showInfoNotification({
