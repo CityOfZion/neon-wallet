@@ -4,8 +4,6 @@ import { withActions } from 'spunky'
 import RefreshButton from './RefreshButton'
 
 import accountActions from '../../../actions/accountActions'
-import withLoadingProp from '../../../hocs/withLoadingProp'
-import balancesActions from '../../../actions/balancesActions'
 import withAuthData from '../../../hocs/withAuthData'
 import withNetworkData from '../../../hocs/withNetworkData'
 
@@ -22,5 +20,4 @@ export default compose(
   withAuthData,
   withNetworkData(),
   withActions(accountActions, mapAccountActionsToProps),
-  withLoadingProp(balancesActions),
 )(RefreshButton)

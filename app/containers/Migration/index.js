@@ -6,7 +6,6 @@ import { withActions, withData } from 'spunky'
 
 import withAuthData from '../../hocs/withAuthData'
 import { showModal, hideModal } from '../../modules/modal'
-import { logoutActions } from '../../actions/authActions'
 
 import Migration from './Migration'
 import newMigrationWalletActions from '../../actions/newMigrationWalletActions'
@@ -18,10 +17,6 @@ type Props = {
 type NewWalletProps = {
   newWalletCreated: Function,
 }
-
-const mapLogoutActionsToProps = (actions): Props => ({
-  logout: () => actions.call(),
-})
 
 const mapNewWalletActionsToProps = (actions): NewWalletProps => ({
   newWalletCreated: name => actions.call({ name }),
@@ -42,7 +37,6 @@ export default compose(
     mapDispatchToProps,
   ),
   withActions(newMigrationWalletActions, mapNewWalletActionsToProps),
-  withActions(logoutActions, mapLogoutActionsToProps),
   withAuthData,
   withData(newMigrationWalletActions),
 )(Migration)

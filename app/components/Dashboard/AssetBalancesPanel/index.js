@@ -1,20 +1,13 @@
 // @flow
-import React from 'react'
-import { FormattedMessage } from 'react-intl'
 import { compose } from 'recompose'
 import { values, omit, get } from 'lodash-es'
-import { withActions, withData } from 'spunky'
+import { withData } from 'spunky'
 
 import AssetBalancesPanel from './AssetBalancesPanel'
-import assetBalancesPanelActions from '../../../actions/assetBalancesPanelActions'
-import balancesActions from '../../../actions/balancesActions'
 import priceHistoryActions from '../../../actions/priceHistoryActions'
 import withBalancesData from '../../../hocs/withBalancesData'
 import withPricesData from '../../../hocs/withPricesData'
 import withLoadingProp from '../../../hocs/withLoadingProp'
-import withProgressPanel from '../../../hocs/withProgressPanel'
-import withSuccessNotification from '../../../hocs/withSuccessNotification'
-import withFailureNotification from '../../../hocs/withFailureNotification'
 import withNetworkData from '../../../hocs/withNetworkData'
 import withAuthData from '../../../hocs/withAuthData'
 import { ASSETS } from '../../../core/constants'
@@ -55,41 +48,14 @@ const mapPriceChangeDataToProps = (prices: Object) => {
   }
 }
 
-const mapBalancesActionsToProps = (actions: Object, props: Object) => ({
-  refresh: () =>
-    actions.call({
-      net: props.net,
-      address: props.address,
-      tokens: props.tokens,
-    }),
-})
-
 export default compose(
-  // Fetch price & balance data based based upon the selected currency.
-  // Reload data with the currency changes.
   withNetworkData(),
   withAuthData,
-  withProgressPanel(assetBalancesPanelActions, {
-    title: <FormattedMessage id="dashboardAssetsPanelLabel" />,
-  }),
   withPricesData(mapPricesDataToProps),
   withBalancesData(mapBalanceDataToProps),
   withData(priceHistoryActions, mapPriceChangeDataToProps),
-
   // Expose data & functionality needed for `refresh` action.
   // withActions(balancesActions, mapBalancesActionsToProps),
   withLoadingProp(pricesActions),
-  // withSuccessNotification(
-  //   balancesActions,
-  //   'notifications.success.receivedBlockchainInfo',
-  //   {},
-  //   true,
-  // ),
-  // withFailureNotification(
-  //   balancesActions,
-  //   'notifications.failure.blockchainInfoFailure',
-  //   {},
-  //   true,
-  // ),
   withSettingsContext,
 )(AssetBalancesPanel)

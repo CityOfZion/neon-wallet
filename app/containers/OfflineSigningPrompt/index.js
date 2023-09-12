@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux'
 
 import { showModal } from '../../modules/modal'
 import OfflineSigningPrompt from './OfflineSigningPrompt'
-import { logoutActions } from '../../actions/authActions'
 import { MODAL_TYPES } from '../../core/constants'
 import { internetConnectionPromptPresented } from '../../actions/internetConnectivityPromptActions'
 import withAuthData from '../../hocs/withAuthData'
@@ -30,10 +29,6 @@ const mapDispatchToProps = (dispatch: Function) =>
     dispatch,
   )
 
-const mapActionsToProps = (actions): Props => ({
-  logout: () => actions.call(),
-})
-
 const mapPromptActionsToProps = actions => ({
   promptHasBeenDisplayed: boolean => actions.call(boolean),
 })
@@ -43,7 +38,6 @@ export default compose(
     null,
     mapDispatchToProps,
   ),
-  withActions(logoutActions, mapActionsToProps),
   withActions(internetConnectionPromptPresented, mapPromptActionsToProps),
   withAuthData,
 )(withSettingsContext(OfflineSigningPrompt))

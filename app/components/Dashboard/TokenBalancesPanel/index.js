@@ -8,7 +8,6 @@ import { filter, cloneDeep } from 'lodash-es'
 import { withActions, withData } from 'spunky'
 
 import TokenBalancesPanel from './TokenBalancesPanel'
-import balancesActions from '../../../actions/balancesActions'
 import withNetworkData from '../../../hocs/withNetworkData'
 import withAuthData from '../../../hocs/withAuthData'
 import withBalancesData from '../../../hocs/withBalancesData'
@@ -17,7 +16,7 @@ import withProgressPanel from '../../../hocs/withProgressPanel'
 import { toBigNumber } from '../../../core/math'
 import pricesActions from '../../../actions/pricesActions'
 import { imageMap } from '../../../assets/nep5/png'
-import nftActions from '../../../actions/nftActions'
+// import nftActions from '../../../actions/nftActions'
 import withSettingsContext from '../../../hocs/withSettingsContext'
 
 const mapPricesDataToProps = prices => ({ prices })
@@ -81,13 +80,10 @@ export default compose(
   }),
   withBalancesData(mapBalanceDataToProps),
   withData(pricesActions, mapPricesDataToProps),
-  // expose data & functionality needed for `refresh` action
-  // withActions(balancesActions, mapBalancesActionsToProps),
-  // withLoadingProp(balancesActions),
-  withActions(nftActions, mapNftActionsToProps),
-  withLoadingProp(nftActions),
+  // withActions(nftActions, mapNftActionsToProps),
+  // withLoadingProp(nftActions),
 
-  withData(nftActions, mapNftDataToProps),
+  // withData(nftActions, mapNftDataToProps),
   injectIntl,
   withSettingsContext,
 )(TokenBalancesPanel)

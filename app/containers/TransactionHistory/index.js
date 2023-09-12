@@ -38,19 +38,19 @@ export default compose(
   ),
   withNetworkData(),
   withAuthData,
-  withLoadingProp(balancesActions),
-  withSuccessNotification(
-    balancesActions,
-    'notifications.success.receivedBlockchainInfo',
-    {},
-    true,
-  ),
-  withFailureNotification(
-    balancesActions,
-    'notifications.failure.blockchainInfoFailure',
-    {},
-    true,
-  ),
+  // withLoadingProp(balancesActions),
+  // withSuccessNotification(
+  //   balancesActions,
+  //   'notifications.success.receivedBlockchainInfo',
+  //   {},
+  //   true,
+  // ),
+  // withFailureNotification(
+  //   balancesActions,
+  //   'notifications.failure.blockchainInfoFailure',
+  //   {},
+  //   true,
+  // ),
   withCall(transactionHistoryActions),
   injectIntl,
 )(withSettingsContext(TransactionHistory))

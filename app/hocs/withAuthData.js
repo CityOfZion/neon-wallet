@@ -23,7 +23,11 @@ function withAuthData(
         loginNep2={data => {
           login(data, AUTH_LOGIN_TYPES.NEP2)
         }}
+        loginLedger={data => login(data, AUTH_LOGIN_TYPES.LEDGER)}
         logout={handleLogout}
+        loginWithPrivateKey={data => login(data, AUTH_LOGIN_TYPES.WIF)}
+        loginWithN3PrivateKey={data => n3Login(data, AUTH_LOGIN_TYPES.WIF)}
+        watchOnlyLogin={data => login(data, AUTH_LOGIN_TYPES.WATCH)}
       />
     )
   }

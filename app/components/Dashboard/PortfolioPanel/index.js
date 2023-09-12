@@ -6,10 +6,10 @@ import { pickBy, pick, omit, reduce, map } from 'lodash-es'
 import { FormattedMessage } from 'react-intl'
 
 import PortfolioPanel from './PortfolioPanel'
-import portfolioPanelActions from '../../../actions/portfolioPanelActions'
+// import portfolioPanelActions from '../../../actions/portfolioPanelActions'
 import pricesActions from '../../../actions/pricesActions'
 import withBalancesData from '../../../hocs/withBalancesData'
-import withProgressPanel from '../../../hocs/withProgressPanel'
+// import withProgressPanel from '../../../hocs/withProgressPanel'
 import { getTokenBalancesMap } from '../../../core/wallet'
 import { toNumber, toBigNumber } from '../../../core/math'
 import { ASSETS } from '../../../core/constants'
@@ -52,9 +52,9 @@ const mapSortedPortfolioBalanceProps = ({ prices, balances, total }) => ({
 })
 
 export default compose(
-  withProgressPanel(portfolioPanelActions, {
-    title: <FormattedMessage id="dashboardValueLabel" />,
-  }),
+  // withProgressPanel(portfolioPanelActions, {
+  //   title: <FormattedMessage id="dashboardValueLabel" />,
+  // }),
   withData(pricesActions, mapPricesDataToProps),
   withBalancesData(mapBalancesDataToProps),
   withProps(mapTotalPortfolioValueToProps),

@@ -14,15 +14,13 @@ import FramelessNavigation from '../../components/FramelessNavigation'
 import { parseQuery } from '../../core/formatters'
 import withSettingsContext from '../../hocs/withSettingsContext'
 import { useSettingsContext } from '../../context/settings/SettingsContext'
+import useNotificationsStore from '../../actions-migrated/notifications'
 
 const ipc = require('electron').ipcRenderer
 
 type Props = {
   children: React$Node,
   address: string,
-  checkVersion: Function,
-  showErrorNotification: Function,
-  showInfoNotification: Function,
   location: Object,
   store: any,
   history: any,
@@ -42,37 +40,14 @@ const routesWithSideBar = [
   ROUTES.NFT,
 ]
 
-const App = ({
-  children,
-  address,
-  location,
-  checkVersion,
-  showErrorNotification,
-  store,
-  history,
-  showInfoNotification,
-}: Props) => {
-  console.log({ address })
+const App = ({ children, address, location, store, history }: Props) => {
+  console.log({ history })
   const { requests, sessions, disconnect } = useWalletConnectWallet()
   const [decodedDeeplinkUri, setDecodedDeeplinkUri] = useState(null)
+  const { showInfoNotification } = useNotificationsStore()
   const {
     settings: { theme },
   } = useSettingsContext()
-
-  useEffect(() => {
-    async function handleUpgrade() {
-      checkVersion()
-      // try {
-      //   await upgradeUserWalletNEP6()
-      // } catch (error) {
-      //   console.log({ error })
-      //   showErrorNotification({
-      //     message: `Error upgrading legacy wallet: ${error.message}`,
-      //   })
-      // }
-    }
-    handleUpgrade()
-  }, [])
 
   useEffect(() => {
     const listener = async (_event, uri) => {
@@ -125,7 +100,7 @@ const App = ({
       ipc.invoke('restore')
 
       history[
-        history.location.pathname === ROUTES.DAPP_REQUEST ? 'replace' : 'push'
+        history?.location?.pathname === ROUTES.DAPP_REQUEST ? 'replace' : 'push'
       ]({
         pathname: ROUTES.DAPP_REQUEST,
         state: { request, session },
@@ -155,7 +130,6 @@ const App = ({
   useEffect(
     () => {
       if (address) {
-        console.log('routing to dashboard')
         history.push(ROUTES.DASHBOARD)
       }
     },
@@ -167,7 +141,7 @@ const App = ({
       <div style={themes[theme]} className={styles.container}>
         <Notifications />
         {address &&
-          routesWithSideBar.includes(location.pathname) && (
+          routesWithSideBar.includes(location?.pathname) && (
             <Sidebar store={store} theme={theme} className={styles.sidebar} />
           )}
         <div className={styles.wrapper}>

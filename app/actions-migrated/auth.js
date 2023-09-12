@@ -242,7 +242,6 @@ export const useAuthStore = create(set => ({
   n3Login: async (data: AllLoginProps, loginType: string) => {
     try {
       let account
-      console.log('logging in', data, loginType)
       switch (loginType) {
         case AUTH_LOGIN_TYPES.WIF:
           account = await loginWithN3Wif(data)
@@ -259,7 +258,6 @@ export const useAuthStore = create(set => ({
         default:
           throw new Error('Invalid login type')
       }
-      console.log({ account })
       set(() => ({
         account,
       }))

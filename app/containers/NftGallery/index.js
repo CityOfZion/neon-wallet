@@ -8,12 +8,11 @@ import withLoadingProp from '../../hocs/withLoadingProp'
 import NftGallery from './NftGallery'
 
 import withAuthData from '../../hocs/withAuthData'
-import nftGalleryActions from '../../actions/nftGalleryActions'
+// import nftGalleryActions from '../../actions/nftGalleryActions'
 import withNetworkData from '../../hocs/withNetworkData'
 import { showModal } from '../../modules/modal'
 import { showSuccessNotification } from '../../modules/notifications'
 import withSuccessNotification from '../../hocs/withSuccessNotification'
-import dashboardActions from '../../actions/dashboardActions'
 
 const mapNFTGalleryActionsToProps = actions => ({
   fetchAddtionalNFTData: (address, page, results) =>
@@ -27,15 +26,15 @@ export default compose(
     null,
     null,
   ),
-  withData(nftGalleryActions),
-  withLoadingProp(nftGalleryActions),
-  withActions(nftGalleryActions, mapNFTGalleryActionsToProps),
+  // withData(nftGalleryActions),
+  // withLoadingProp(nftGalleryActions),
+  // withActions(nftGalleryActions, mapNFTGalleryActionsToProps),
   withAuthData,
   withNetworkData(),
-  withSuccessNotification(
-    nftGalleryActions,
-    'notifications.success.receivedBlockchainInfo',
-    {},
-    true,
-  ),
+  // withSuccessNotification(
+  //   nftGalleryActions,
+  //   'notifications.success.receivedBlockchainInfo',
+  //   {},
+  //   true,
+  // ),
 )(NftGallery)

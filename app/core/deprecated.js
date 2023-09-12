@@ -1,13 +1,14 @@
 // @flow
 import { get, omit, pick } from 'lodash-es'
 
-import { ID as AUTH_ID } from '../actions/authActions'
 import { ID as BALANCES_ID } from '../actions/balancesActions'
 import { ID as NETWORK_ID } from '../actions/networkActions'
 import { ASSETS } from './constants'
 import { findNetwork } from './networks'
 
 const PREFIX = 'spunky'
+
+const AUTH_ID = 'auth'
 
 // TODO: Module functions that inspect state such as `doClaimNotify` should be refactored into
 //       higher-order components that expose function props for performing these actions.  Data that

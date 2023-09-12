@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators({ doGasClaim }, dispatch)
 
 const mapClaimsDataToProps = claims => ({
-  claimAmount: claims.total,
+  claimAmount: claims?.total ?? 0,
 })
 
 export default compose(

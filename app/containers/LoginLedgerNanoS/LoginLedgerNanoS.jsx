@@ -13,13 +13,13 @@ import LoginIcon from '../../assets/icons/login.svg'
 import ConfirmIcon from '../../assets/icons/confirm.svg'
 import RefreshIcon from '../../assets/icons/refresh.svg'
 import styles from '../Home/Home.scss'
-import { getPublicKeys, MESSAGES } from '../../ledger/neonLedger'
+import { getDeviceInfo, getPublicKeys, MESSAGES } from '../../ledger/neonLedger'
 import {
+  getStartInfo,
   getPublicKeys as n3GetPublicKeys,
   MESSAGES as N3MESSAGES,
 } from '../../ledger/n3NeonLedger'
-import DialogueBox from '../../components/DialogueBox'
-import WarningIcon from '../../assets/icons/warning.svg'
+import { getSettings } from '../../context/settings/SettingsContext'
 
 const LEDGER_CONNECTION_STAGES = {
   NOT_CONNECTED: 1,
@@ -35,11 +35,17 @@ type LedgerConnectionStage = $Values<typeof LEDGER_CONNECTION_STAGES>
 
 type LedgerPublicKey = { account: number, key: string }
 
+async function connect() {
+  const { chain } = await getSettings()
+  const { deviceInfo, publicKey } =
+    chain === 'neo3' ? await getStartInfo() : await getDeviceInfo()
+  return { deviceInfo, publicKey }
+}
+
 type Props = {
   progress: string,
   publicKey: LedgerPublicKey,
-  login: Function,
-  connect: (chain: string) => void,
+  loginLedger: Function,
   error: ?string,
   chain: string,
   isMigration?: boolean,
@@ -83,11 +89,8 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
     this.setPolling(this.props.chain)
   }
 
-  setPolling = (chain: string) => {
-    this.intervalId = setInterval(
-      () => this.props.connect(chain),
-      POLL_FREQUENCY_MS,
-    )
+  setPolling = () => {
+    this.intervalId = setInterval(() => connect(), POLL_FREQUENCY_MS)
   }
 
   componentWillReceiveProps(nextProps: Props) {
@@ -363,7 +366,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
         publicKey => addressOption.value === publicKey.key,
       )
       if (keyData) {
-        this.props.login(keyData)
+        this.props.loginLedger(keyData)
       }
     }
   }
