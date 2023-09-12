@@ -68,24 +68,29 @@ export const ContactsContextProvider = ({
     setStorage(STORAGE_KEY, contacts)
 
   async function fetchPotentialNameServiceAddresses(contacts: Contacts) {
-    const NeoBlockChainService = new BSNeo3()
-    const newContacts = {}
-    // eslint-disable-next-line guard-for-in
-    for (const contactName in contacts) {
-      const contactInfo = contacts[contactName]
-      const newContactInfo = []
-      for (const contact of contactInfo) {
-        const { address, chain } = contact
-        let parsedAddress
-        if (address.includes('.neo')) {
-          const results = await NeoBlockChainService.getOwnerOfNNS(address)
-          parsedAddress = results
+    try {
+      const NeoBlockChainService = new BSNeo3()
+      const newContacts = {}
+      // eslint-disable-next-line guard-for-in
+      for (const contactName in contacts) {
+        const contactInfo = contacts[contactName]
+        const newContactInfo = []
+        for (const contact of contactInfo) {
+          const { address, chain } = contact
+          let parsedAddress
+          if (address.includes('.neo')) {
+            const results = await NeoBlockChainService.getOwnerOfNNS(address)
+            parsedAddress = results
+          }
+          newContactInfo.push({ address, chain, parsedAddress })
         }
-        newContactInfo.push({ address, chain, parsedAddress })
+        newContacts[contactName] = newContactInfo
       }
-      newContacts[contactName] = newContactInfo
+      setContacts(newContacts)
+    } catch (e) {
+      console.error(e)
+      setContacts(contacts)
     }
-    setContacts(newContacts)
   }
 
   const updateContacts = async (contactName: string, data: ContactInfo[]) => {
