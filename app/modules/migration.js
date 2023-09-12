@@ -1,5 +1,4 @@
 // @flow
-import axios from 'axios'
 import { keyBy } from 'lodash-es'
 import { api } from '@cityofzion/neon-js-legacy'
 
@@ -59,7 +58,7 @@ export const performMigration = ({
         isHardwareSend ? migrationAddress : wif,
       )
       const FROM_ACCOUNT = new N2.wallet.Account(
-        isHardwareSend ? fromAddress : wif,
+        isHardwareSend ? publicKey : wif,
       )
 
       let endpoint = await getNode(net)
@@ -209,7 +208,7 @@ export const performMigration = ({
 
       if (isHardwareSend) {
         if (script === '') {
-          c = await api.sendAsset(c, api.neoscan).catch(e => {
+          c = await api.sendAsset(c).catch(e => {
             console.error({ e })
             if (e.message === 'this.str.substr is not a function') {
               return null
@@ -233,7 +232,7 @@ export const performMigration = ({
             return reject()
           })
         } else {
-          c = await api.doInvoke(c, api.neoscan).catch(e => {
+          c = await api.doInvoke(c).catch(e => {
             console.error({ e })
             if (e.message === 'this.str.substr is not a function') {
               return null

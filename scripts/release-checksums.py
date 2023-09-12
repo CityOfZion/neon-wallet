@@ -2,6 +2,7 @@ import os
 import hashlib
 import subprocess
 import requests
+from tqdm import tqdm
 
 # This python script will download any release of neon-wallet and generate
 # the checksums for each file. The checksums will be copied to your clipboard for pasting into

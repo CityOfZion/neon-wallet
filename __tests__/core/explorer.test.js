@@ -46,22 +46,6 @@ describe('explorer tests', () => {
       expect(getExplorerTxLink(networkId, explorer, txId)).toEqual(expectedUrl)
     })
 
-    test('NeoScan mainnet explorer test', () => {
-      const networkId = MAIN_NETWORK_ID
-      const explorer = DEPRECATED_EXPLORERS.NEO_SCAN
-      const expectedUrl = `https://neoscan.io/transaction/${txId}`
-
-      expect(getExplorerTxLink(networkId, explorer, txId)).toEqual(expectedUrl)
-    })
-
-    test('NeoScan testnet explorer test', () => {
-      const networkId = TEST_NETWORK_ID
-      const explorer = DEPRECATED_EXPLORERS.NEO_SCAN
-      const expectedUrl = `https://neoscan-testnet.io/transaction/${txId}`
-
-      expect(getExplorerTxLink(networkId, explorer, txId)).toEqual(expectedUrl)
-    })
-
     test('AntChain mainnet explorer test', () => {
       const networkId = MAIN_NETWORK_ID
       const explorer = EXPLORERS.ANT_CHAIN
@@ -127,26 +111,6 @@ describe('explorer tests', () => {
       const networkId = TEST_NETWORK_ID
       const explorer = DEPRECATED_EXPLORERS.NEO_TRACKER
       const expectedUrl = `https://testnet.neotracker.io/address/${address}`
-
-      expect(getExplorerAddressLink(networkId, explorer, address)).toEqual(
-        expectedUrl,
-      )
-    })
-
-    test('NeoScan mainnet explorer test', () => {
-      const networkId = MAIN_NETWORK_ID
-      const explorer = DEPRECATED_EXPLORERS.NEO_SCAN
-      const expectedUrl = `https://neoscan.io/address/${address}/1`
-
-      expect(getExplorerAddressLink(networkId, explorer, address)).toEqual(
-        expectedUrl,
-      )
-    })
-
-    test('NeoScan testnet explorer test', () => {
-      const networkId = TEST_NETWORK_ID
-      const explorer = DEPRECATED_EXPLORERS.NEO_SCAN
-      const expectedUrl = `https://neoscan-testnet.io/address/${address}/1`
 
       expect(getExplorerAddressLink(networkId, explorer, address)).toEqual(
         expectedUrl,

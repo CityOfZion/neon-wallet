@@ -95,7 +95,6 @@ export default ({ store }: { store: any }) => (
       <PrivateRoute exact path={ROUTES.ADD_CONTACT} component={AddContact} />
       <PrivateRoute exact path={ROUTES.EDIT_CONTACT} component={AddContact} />
       <PrivateRoute exact path={ROUTES.SEND} component={Send} />
-
       <PrivateRoute exact path={ROUTES.SEND_ADDRESS} component={Send} />
       <PrivateRoute exact path={ROUTES.ENCRYPT} component={Encrypt} />
       <PrivateRoute exact path={ROUTES.NODE_SELECT} component={NodeSelect} />
