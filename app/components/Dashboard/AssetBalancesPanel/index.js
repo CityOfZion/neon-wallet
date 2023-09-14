@@ -1,19 +1,16 @@
 // @flow
 import { compose } from 'recompose'
-import { values, omit, get } from 'lodash-es'
-import { withData } from 'spunky'
+import { values, omit, get, isEmpty } from 'lodash-es'
 
 import AssetBalancesPanel from './AssetBalancesPanel'
-import priceHistoryActions from '../../../actions/priceHistoryActions'
 import withBalancesData from '../../../hocs/withBalancesData'
 import withPricesData from '../../../hocs/withPricesData'
-import withLoadingProp from '../../../hocs/withLoadingProp'
 import withNetworkData from '../../../hocs/withNetworkData'
 import withAuthData from '../../../hocs/withAuthData'
 import { ASSETS } from '../../../core/constants'
 import { toBigNumber } from '../../../core/math'
 import withSettingsContext from '../../../hocs/withSettingsContext'
-import pricesActions from '../../../actions/pricesActions'
+import withPriceHistoryData from '../../../hocs/withPriceHistoryData'
 
 const mapBalanceDataToProps = balances => ({
   NEO: balances?.NEO,
@@ -27,7 +24,7 @@ const mapPricesDataToProps = prices => ({
 })
 
 const mapPriceChangeDataToProps = (prices: Object) => {
-  if (!prices) {
+  if (isEmpty(prices)) {
     return {
       neoPriceChange: toBigNumber(0),
       gasPriceChange: toBigNumber(0),
@@ -53,9 +50,6 @@ export default compose(
   withAuthData,
   withPricesData(mapPricesDataToProps),
   withBalancesData(mapBalanceDataToProps),
-  withData(priceHistoryActions, mapPriceChangeDataToProps),
-  // Expose data & functionality needed for `refresh` action.
-  // withActions(balancesActions, mapBalancesActionsToProps),
-  withLoadingProp(pricesActions),
+  withPriceHistoryData(mapPriceChangeDataToProps),
   withSettingsContext,
 )(AssetBalancesPanel)

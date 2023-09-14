@@ -1,8 +1,8 @@
 // @flow
 import { NeoLegacyREST, NeoRest } from '@cityofzion/dora-ts/dist/api'
-import { createActions } from 'spunky'
 import { rpc as n3Rpc, sc, u } from '@cityofzion/neon-js'
 import axios from 'axios'
+import { create } from 'zustand'
 
 import { TX_TYPES } from '../core/constants'
 import {
@@ -11,13 +11,7 @@ import {
 } from '../util/findAndReturnTokenInfo'
 import { getSettings } from '../context/settings/SettingsContext'
 import { toBigNumber } from '../core/math'
-import { getNode, getRPCEndpoint } from './nodeStorageActions'
-
-type Props = {
-  net: string,
-  address: string,
-  shouldIncrementPagination: boolean,
-}
+import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 
 async function fetchMissingImageInfo(scriptHash, tokenId) {
   const url = `https://api.ghostmarket.io/api/v2/assets?Chain=n3&Contract=${scriptHash}&TokenIds%5B%5D=${tokenId}`
@@ -191,52 +185,48 @@ export async function computeN3Activity(
   return results
 }
 
-export const ID = 'transactionHistory'
+const transactionHistoryStore = create((set, get) => ({
+  entries: [],
+  count: 0,
+  page: 1,
+  async fetchTransactions({ net, address, shouldIncrementPagination = false }) {
+    try {
+      // const { net, address, shouldIncrementPagination, chain } = get()
+      const { chain } = await getSettings()
 
-// TODO: Refactor to use immutable data types!
-// hold entries in memory for infinite scroll
-let entries = []
-let page = 1
-export default createActions(
-  ID,
-  ({
-    net,
-    address,
-    shouldIncrementPagination = false,
-  }: Props = {}) => async () => {
-    const { chain } = await getSettings()
-
-    // If refresh action dispatched reset pagination
-    // to grab the most recent abstracts
-    if (!shouldIncrementPagination) {
-      page = 1
+      // If refresh action dispatched reset pagination
+      // to grab the most recent abstracts
+      if (!shouldIncrementPagination) {
+        set({ page: 1 })
+      }
+      let parsedEntries = []
+      let count = 0
+      if (chain === 'neo3') {
+        const network = net === 'MainNet' ? 'mainnet' : 'testnet'
+        const data = await NeoRest.addressTXFull(address, get().page, network)
+        count = data.totalCount
+        parsedEntries = await computeN3Activity(data, address, net)
+      } else {
+        const network = net === 'MainNet' ? 'mainnet' : 'testnet'
+        const data = await NeoLegacyREST.getAddressAbstracts(
+          address,
+          get().page,
+          network,
+        )
+        count = data.total_entries
+        parsedEntries = await parseAbstractData(data.entries, address, net)
+      }
+      set(state => ({
+        entries: shouldIncrementPagination
+          ? [...state.entries, ...parsedEntries]
+          : parsedEntries,
+        count,
+        page: state.page + 1,
+      }))
+    } catch (e) {
+      console.error(e)
     }
-
-    let parsedEntries = []
-    let count = 0
-
-    if (chain === 'neo3') {
-      const network = net === 'MainNet' ? 'mainnet' : 'testnet'
-      const data = await NeoRest.addressTXFull(address, page, network)
-      count = data.totalCount
-      parsedEntries = await computeN3Activity(data, address, net)
-    } else {
-      const network = net === 'MainNet' ? 'mainnet' : 'testnet'
-      const data = await NeoLegacyREST.getAddressAbstracts(
-        address,
-        page,
-        network,
-      )
-      count = data.total_entries
-      parsedEntries = await parseAbstractData(data.entries, address, net)
-    }
-    page += 1
-    if (shouldIncrementPagination) {
-      if (page === 1) entries = []
-      entries.push(...parsedEntries)
-      return { entries, count }
-    }
-    entries = [...parsedEntries]
-    return { entries, count }
   },
-)
+}))
+
+export default transactionHistoryStore

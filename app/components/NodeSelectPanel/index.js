@@ -8,7 +8,7 @@ import withNetworkData from '../../hocs/withNetworkData'
 import withAuthData from '../../hocs/withAuthData'
 import NodeSelectPanel from './NodeSelectPanel'
 import nodeNetworkActions from '../../actions/nodeNetworkActions'
-import accountActions from '../../actions/accountActions'
+// import accountActions from '../../actions/accountActions'
 import nodeStorageActions from '../../actions/nodeStorageActions'
 import withSettingsContext from '../../hocs/withSettingsContext'
 
@@ -60,7 +60,7 @@ export default compose(
   withActions(nodeStorageActions, mapSaveNodeActionsToProps),
   withData(nodeNetworkActions, mapNodesDataToProps),
   withData(nodeStorageActions, mapSelectedNodeDataToProps),
-  withRecall(accountActions, ['selectedNode']),
+  // withRecall(accountActions, ['selectedNode']),
   withLoadingProp(nodeNetworkActions),
   injectIntl,
 )(withSettingsContext(NodeSelectPanel))

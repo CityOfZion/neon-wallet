@@ -1,16 +1,28 @@
 // @flow
-import { compose } from 'recompose'
-import { withData, withReset } from 'spunky'
+import React, { useEffect, type ComponentType } from 'react'
+import { useStore } from 'zustand'
 
-// import withCurrencyData from './withCurrencyData'
-import withInitialCall from './withInitialCall'
-import pricesActions from '../actions/pricesActions'
+import usePricesStore from '../actions-migrated/prices'
+import { getSettings } from '../context/settings/SettingsContext'
 
-export default function withPricesData(mapPricesDataToProps: Function | void) {
-  return compose(
-    // withCurrencyData('currencyCode'),
-    withInitialCall(pricesActions),
-    withReset(pricesActions, ['currencyCode']),
-    withData(pricesActions, mapPricesDataToProps),
-  )
+function withPricesData(mapDataToProps?: Function): Function {
+  return function WithPricesData(WrappedComponent: ComponentType<any>) {
+    return function WithPricesDataWrapper(props: any) {
+      const { prices, getPrices, getPricesFromFlamingo } = useStore(
+        usePricesStore,
+      )
+      const data = mapDataToProps ? mapDataToProps(prices, props) : prices
+      useEffect(() => {
+        async function handleFetchPrices() {
+          const { chain } = await getSettings()
+          if (chain === 'neo3') return getPricesFromFlamingo()
+          return getPrices()
+        }
+        handleFetchPrices()
+      }, [])
+      return <WrappedComponent {...props} {...data} />
+    }
+  }
 }
+
+export default withPricesData

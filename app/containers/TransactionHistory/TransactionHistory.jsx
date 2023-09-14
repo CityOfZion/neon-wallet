@@ -16,7 +16,7 @@ import PanelHeaderButton from '../../components/PanelHeaderButton/PanelHeaderBut
 import {
   computeN3Activity,
   parseAbstractData,
-} from '../../actions/transactionHistoryActions'
+} from '../../actions-migrated/transactionHistory'
 
 const { ipcRenderer, app } = require('electron')
 

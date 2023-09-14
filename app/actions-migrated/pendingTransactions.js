@@ -1,11 +1,11 @@
 // @flow
-import { createActions } from 'spunky'
 import Neon, { rpc } from '@cityofzion/neon-js-legacy'
 import { isEmpty } from 'lodash-es'
+import { create } from 'zustand'
 
 import { toBigNumber } from '../core/math'
 import { getStorage, setStorage } from '../core/storage'
-import { getNode, getRPCEndpoint } from './nodeStorageActions'
+import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 import {
   findAndReturnTokenInfo,
   getImageBySymbol,
@@ -179,19 +179,14 @@ export const fetchTransactionInfo = async (
   return []
 }
 
-export const getPendingTransactionsFromStorage = createActions(
-  ID,
-  () => async () => {
-    const pendingTransactions = await getPendingTransactions()
-    return pendingTransactions
+const pendingTransactionsStore = create((set, get) => ({
+  transactions: [],
+  getPendingTransactions: async ({ address, net }) => {
+    const transactions = await getPendingTransactions()
+    const results = await fetchTransactionInfo(transactions, address, net)
+    set({ transactions: results })
   },
-)
-
-export const addPendingTransaction = createActions(
-  ID,
-  ({ address, tx, net }) => async (): Promise<
-    Array<ParsedPendingTransaction>,
-  > => {
+  addPendingTransaction: async ({ address, tx, net }) => {
     const transactions = await getPendingTransactions()
     if (
       Array.isArray(transactions[address]) &&
@@ -202,14 +197,9 @@ export const addPendingTransaction = createActions(
       transactions[address] = [tx]
     }
     await setPendingTransactions(transactions)
-    return fetchTransactionInfo(transactions, address, net)
+    const results = await fetchTransactionInfo(transactions, address, net)
+    set({ transactions: results })
   },
-)
+}))
 
-export const getPendingTransactionInfo = createActions(
-  ID,
-  ({ address, net }) => async (): Promise<Array<Object>> => {
-    const transactions = await getPendingTransactions()
-    return fetchTransactionInfo(transactions, address, net)
-  },
-)
+export default pendingTransactionsStore

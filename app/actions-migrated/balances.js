@@ -3,7 +3,6 @@ import { create } from 'zustand'
 import { api, u, rpc, sc, wallet } from '@cityofzion/neon-js-legacy'
 import { rpc as n3Rpc } from '@cityofzion/neon-js'
 import { extend, isEmpty, get } from 'lodash-es'
-import { createActions } from 'spunky'
 import { Howl } from 'howler'
 import axios from 'axios'
 

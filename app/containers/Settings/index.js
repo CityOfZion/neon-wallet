@@ -14,7 +14,7 @@ import { showModal } from '../../modules/modal'
 import networkActions from '../../actions/networkActions'
 import withNetworkData from '../../hocs/withNetworkData'
 import nodeStorageActions from '../../actions/nodeStorageActions'
-import accountActions from '../../actions/accountActions'
+// import accountActions from '../../actions/accountActions'
 import { getNetworks } from '../../core/networks'
 import withAuthData from '../../hocs/withAuthData'
 import withAccountsData from '../../hocs/withAccountsData'
@@ -66,8 +66,8 @@ export default compose(
   withNetworkData(),
   withAuthData,
 
-  withRecall(accountActions, ['net']),
-  withActions(accountActions, mapAccountActionsToProps),
+  // withRecall(accountActions, ['net']),
+  // withActions(accountActions, mapAccountActionsToProps),
   withActions(networkActions, mapNetworkActionsToProps),
   withActions(nodeStorageActions, mapSaveNodeActionsToProps),
 )(withAccountsData(Settings))

@@ -1,12 +1,15 @@
 // @flow
 import React, { Component } from 'react'
 import { FormattedMessage, IntlShape } from 'react-intl'
+import { api } from '@cityofzion/neon-js-legacy-latest'
+import { rpc as n3Rpc, u as n3U } from '@cityofzion/neon-js'
 
 import Button from '../../components/Button'
 import Tooltip from '../../components/Tooltip'
 import { formatGAS } from '../../core/formatters'
 import { toBigNumber } from '../../core/math'
 import ClaimIcon from '../../assets/icons/claim.svg'
+import { getNode, getRPCEndpoint } from '../../actions/nodeStorageActions'
 
 type Props = {
   className: ?string,
@@ -19,12 +22,23 @@ type Props = {
   chain: string,
 }
 
-export default class Claim extends Component<Props> {
+type State = {
+  claimAmount: string,
+}
+
+export default class Claim extends Component<Props, State> {
   intervalId: ?number
 
+  state = {
+    claimAmount: 0,
+  }
+
   render() {
-    const { className, claimAmount, isWatchOnly, chain } = this.props
+    const { className, isWatchOnly, chain } = this.props
+    const { claimAmount } = this.state
     const disabled = this.isDisabled()
+
+    // console.log('claimAmount', { disabled })
 
     return (
       <div>
@@ -50,28 +64,112 @@ export default class Claim extends Component<Props> {
     )
   }
 
+  // let endpoint = await getNode(net)
+  // if (!endpoint) {
+  //   endpoint = await getRPCEndpoint(net)
+  // }
+
+  // if (chain === 'neo2') {
+  //   const unclaimed = await api.neoCli.getMaxClaimAmount(endpoint, address)
+  //   return { total: unclaimed.toRawNumber().toString() }
+  // }
+
+  // const rpcClient = new n3Rpc.RPCClient(endpoint)
+  // try {
+  //   const query = {
+  //     method: 'getunclaimedgas',
+  //     params: [address],
+  //   }
+
+  //   const response = await rpcClient.execute(new n3Rpc.Query(query))
+
+  //   const { unclaimed } = response
+
+  //   return {
+  //     total: n3U.BigInteger.fromNumber(unclaimed).toDecimal(8),
+  //   }
+  // } catch (e) {
+  //   console.error(e)
+  //   return { total: '0' }
+  // }
+
+  async componentDidMount() {
+    const { chain, net, address } = this.props
+    let endpoint = await getNode(net)
+    if (!endpoint) {
+      endpoint = await getRPCEndpoint(net)
+    }
+
+    if (chain === 'neo2') {
+      const unclaimed = await api.neoCli.getMaxClaimAmount(endpoint, address)
+      console.log({ unclaimed })
+      // console.log({ unclaimed })
+      // return { total: unclaimed.toRawNumber().toString() }
+      return this.setState({ claimAmount: unclaimed.toRawNumber().toString() })
+    }
+
+    const rpcClient = new n3Rpc.RPCClient(endpoint)
+    try {
+      const query = {
+        method: 'getunclaimedgas',
+        params: [address],
+      }
+
+      const response = await rpcClient.execute(new n3Rpc.Query(query))
+
+      const { unclaimed } = response
+
+      console.log({ unclaimed })
+
+      return this.setState({
+        claimAmount:
+          unclaimed === '0'
+            ? 0
+            : n3U.BigInteger.fromNumber(unclaimed).toDecimal(8),
+      })
+    } catch (e) {
+      console.error(e)
+      return this.setState({ claimAmount: 0 })
+      // return { total: '0' }
+    }
+  }
+
   handleClaim = () => {
     const { chain } = this.props
     this.props.doGasClaim(chain)
   }
 
   isDisabled = () => {
-    const {
-      claimAmount,
-      disableClaimButton,
-      isWatchOnly,
-      chain,
-      GAS,
-    } = this.props
+    const { disableClaimButton, isWatchOnly, chain, GAS } = this.props
+    const { claimAmount } = this.state
+    // console.log('claimAmount', { chain })
     if (chain === 'neo3') {
       return (
-        disableClaimButton || toBigNumber(GAS).lt(0.01120527) || isWatchOnly
+        disableClaimButton ||
+        toBigNumber(GAS).lt(0.01120527) ||
+        isWatchOnly ||
+        !claimAmount
       )
     }
-    return disableClaimButton || toBigNumber(claimAmount).eq(0) || isWatchOnly
+    // debugger
+    // console.log({ claimAmount })
+
+    // console.log(
+    //   'claimAmount',
+    //   disableClaimButton ||
+    //     toBigNumber(claimAmount).eq(0) ||
+    //     isWatchOnly ||
+    //     claimAmount === '0',
+    // )
+    return (
+      disableClaimButton ||
+      toBigNumber(claimAmount).eq(0) ||
+      isWatchOnly ||
+      !claimAmount
+    )
   }
 
-  getFormattedAmount = () => formatGAS(this.props.claimAmount)
+  getFormattedAmount = () => formatGAS(this.state.claimAmount)
 
   tooltipText = (
     isWatchOnly?: boolean,

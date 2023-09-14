@@ -41,7 +41,6 @@ const routesWithSideBar = [
 ]
 
 const App = ({ children, address, location, store, history }: Props) => {
-  console.log({ history })
   const { requests, sessions, disconnect } = useWalletConnectWallet()
   const [decodedDeeplinkUri, setDecodedDeeplinkUri] = useState(null)
   const { showInfoNotification } = useNotificationsStore()

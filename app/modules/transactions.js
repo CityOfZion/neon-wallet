@@ -8,7 +8,7 @@ import {
   rpc as n3Rpc,
   tx,
 } from '@cityofzion/neon-js'
-import { flatMap, keyBy, isEmpty, get } from 'lodash-es'
+import { flatMap, keyBy, isEmpty, get, omit } from 'lodash-es'
 import axios from 'axios'
 
 import {
@@ -33,7 +33,11 @@ import {
 } from '../core/wallet'
 import { toNumber } from '../core/math'
 import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
-import { addPendingTransaction } from '../actions/pendingTransactionActions'
+import pendingTransactionsStore from '../actions-migrated/pendingTransactions'
+import { useBalancesStore } from '../actions-migrated/balances'
+import { ASSETS } from '../core/constants'
+import { useAuthStore } from '../actions-migrated/auth'
+import { getDefaultTokens } from '../core/nep5'
 
 const N2 = require('@cityofzion/neon-js-legacy-latest')
 
@@ -220,10 +224,22 @@ export const calculateN3Fees = ({
     try {
       const state = getState()
       const net = getNetwork(state)
-      const wif = getWIF(state)
+      // const wif = getWIF(state)
+      // console.log({w})
+      const wif = useAuthStore.getState().account.wif
+      console.log({ wif })
+
       const FROM_ACCOUNT = new n3Wallet.Account(wif)
-      const tokenBalances = getTokenBalances(state)
+      // const tokenBalances = getTokenBalances(state)
+
+      const balances = useBalancesStore.getState().balances
+
+      const tokenBalances = omit(balances, ASSETS.NEO, ASSETS.GAS)
+      console.log({ tokenBalances })
+
       const tokensBalanceMap = keyBy(tokenBalances, 'symbol')
+      // const chain = 'neo3'
+      // const tokens = await getDefaultTokens('neo3')
 
       let endpoint = await getNode(net)
       if (!endpoint) {
@@ -306,15 +322,25 @@ export const sendTransaction = ({
   tokens: Array<TokenItemType>,
 }) => (dispatch: DispatchType, getState: GetStateType): Promise<*> => {
   const state = getState()
-  const wif = getWIF(state)
-  const fromAddress = getAddress(state)
+  // const wif = getWIF(state)
+  // const fromAddress = getAddress(state)
+
+  const { wif, address: fromAddress } = useAuthStore.getState().account
+
   const net = getNetwork(state)
-  const tokenBalances = getTokenBalances(state)
+  // const tokenBalances = getTokenBalances(state)
+  // const tokensBalanceMap = keyBy(tokenBalances, 'symbol')
+  // const balances = {
+  //   ...getAssetBalances(state),
+  //   ...getTokenBalancesMap(tokenBalances),
+  // }
+
+  const { balances } = useBalancesStore.getState()
+  const tokenBalances = omit(balances, ASSETS.NEO, ASSETS.GAS)
   const tokensBalanceMap = keyBy(tokenBalances, 'symbol')
-  const balances = {
-    ...getAssetBalances(state),
-    ...getTokenBalancesMap(tokenBalances),
-  }
+  // const chain = 'neo3'
+  // const neo3Tokens = await getDefaultTokens('neo3')
+
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
   const isHardwareSend = getIsHardwareLogin(state)
@@ -398,17 +424,15 @@ export const sendTransaction = ({
           )
 
           if (!isWatchOnly) {
-            dispatch(
-              addPendingTransaction.call({
-                address: CONFIG.account.address,
-                tx: {
-                  hash: results,
-                  txid: results,
-                  sendEntries,
-                },
-                net,
-              }),
-            )
+            pendingTransactionsStore.getState().addPendingTransaction({
+              address: CONFIG.account.address,
+              tx: {
+                hash: results,
+                txid: results,
+                sendEntries,
+              },
+              net,
+            })
           }
           return resolve({ txid: results })
         } catch (e) {
@@ -576,16 +600,14 @@ export const sendTransaction = ({
           const hash = get(config, 'tx.hash')
 
           if (!isWatchOnly) {
-            dispatch(
-              addPendingTransaction.call({
-                address: config.address,
-                tx: {
-                  hash,
-                  sendEntries,
-                },
-                net,
-              }),
-            )
+            pendingTransactionsStore.getState().addPendingTransaction({
+              address: config.address,
+              tx: {
+                hash,
+                sendEntries,
+              },
+              net,
+            })
           }
         }
       })

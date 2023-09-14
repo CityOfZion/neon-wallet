@@ -106,15 +106,17 @@ export default class TokenBalancesPanel extends React.Component<Props, State> {
   }
 
   formatPrice = (ticker: string): string => {
-    const { prices, currency } = this.props
-    const { symbol } = CURRENCIES[currency]
-    let currPriceOfToken
-    if (prices) currPriceOfToken = prices[ticker]
-    if (!currPriceOfToken) return PRICE_UNAVAILABLE
-    if (currPriceOfToken < 1.0) {
-      return `${symbol}${toFixedDecimals(currPriceOfToken, 4)}`
+    if (CURRENCIES[this.props.currency]) {
+      const { prices, currency } = this.props
+      const { symbol } = CURRENCIES[currency]
+      let currPriceOfToken
+      if (prices) currPriceOfToken = prices[ticker]
+      if (!currPriceOfToken) return PRICE_UNAVAILABLE
+      if (currPriceOfToken < 1.0) {
+        return `${symbol}${toFixedDecimals(currPriceOfToken, 4)}`
+      }
+      return `${symbol}${toFixedDecimals(currPriceOfToken, 2)}`
     }
-    return `${symbol}${toFixedDecimals(currPriceOfToken, 2)}`
   }
 
   sortByValueInPortfolio = (

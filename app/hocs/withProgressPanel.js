@@ -7,7 +7,6 @@ import {
 } from 'spunky'
 
 import LoadingPanel from '../components/LoadingPanel'
-import FailedPanel from '../components/FailedPanel'
 
 const { LOADING, FAILED } = progressValues
 
@@ -20,9 +19,6 @@ export default function withProgressPanel(
   { title, strategy = recentlyCompletedStrategy, ...options } = {},
 ) {
   const Loading = withProps({ title })(LoadingPanel)
-  const Failed = withProps(props => ({ title, onRetry: props.onRetry }))(
-    FailedPanel,
-  )
 
   return compose(
     withActions(actions, mapActionsToProps),
@@ -30,7 +26,6 @@ export default function withProgressPanel(
       actions,
       {
         [LOADING]: Loading,
-        [FAILED]: Failed,
       },
       {
         strategy,

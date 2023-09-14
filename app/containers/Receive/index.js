@@ -13,10 +13,6 @@ import withNetworkData from '../../hocs/withNetworkData'
 import withAuthData from '../../hocs/withAuthData'
 import withBalancesData from '../../hocs/withBalancesData'
 
-import withLoadingProp from '../../hocs/withLoadingProp'
-import balancesActions from '../../actions/balancesActions'
-import withSuccessNotification from '../../hocs/withSuccessNotification'
-import withFailureNotification from '../../hocs/withFailureNotification'
 import { MODAL_TYPES } from '../../core/constants'
 import withSettingsContext from '../../hocs/withSettingsContext'
 import withAccountsData from '../../hocs/withAccountsData'
@@ -78,17 +74,6 @@ export default compose(
   withPricesData(mapPricesDataToProps),
   withNetworkData(),
   withAuthData,
-  withLoadingProp(balancesActions),
-  withSuccessNotification(
-    balancesActions,
-    'notifications.success.receivedBlockchainInfo',
-    {},
-    true,
-  ),
-  withFailureNotification(
-    balancesActions,
-    'notifications.failure.blockchainInfoFailure',
-    {},
-    true,
-  ),
-)(withAccountsData(withSettingsContext(Receive)))
+  withAccountsData,
+  withSettingsContext,
+)(Receive)

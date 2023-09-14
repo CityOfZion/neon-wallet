@@ -82,7 +82,9 @@ export default class PortfolioBreakdownChart extends React.Component<Props> {
     price: number,
     formatter: Function = formatThousands,
   ): string => {
-    const { symbol } = CURRENCIES[this.props.currency]
-    return `${symbol}${formatter(price)}`
+    if (CURRENCIES[this.props.currency]) {
+      const { symbol } = CURRENCIES[this.props.currency]
+      return `${symbol}${formatter(price)}`
+    }
   }
 }

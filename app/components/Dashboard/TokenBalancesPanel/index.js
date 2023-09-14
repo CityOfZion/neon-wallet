@@ -1,23 +1,19 @@
 // @flow
 import React from 'react'
 import { compose } from 'recompose'
-import { FormattedMessage, injectIntl } from 'react-intl'
+import { injectIntl } from 'react-intl'
 
 // $FlowFixMe
 import { filter, cloneDeep } from 'lodash-es'
-import { withActions, withData } from 'spunky'
 
 import TokenBalancesPanel from './TokenBalancesPanel'
 import withNetworkData from '../../../hocs/withNetworkData'
 import withAuthData from '../../../hocs/withAuthData'
 import withBalancesData from '../../../hocs/withBalancesData'
-import withLoadingProp from '../../../hocs/withLoadingProp'
-import withProgressPanel from '../../../hocs/withProgressPanel'
 import { toBigNumber } from '../../../core/math'
-import pricesActions from '../../../actions/pricesActions'
 import { imageMap } from '../../../assets/nep5/png'
-// import nftActions from '../../../actions/nftActions'
 import withSettingsContext from '../../../hocs/withSettingsContext'
+import withPricesData from '../../../hocs/withPricesData'
 
 const mapPricesDataToProps = prices => ({ prices })
 const mapNftDataToProps = nft => ({ nft })
@@ -75,11 +71,12 @@ const mapNftActionsToProps = (actions, props) => ({
 export default compose(
   withNetworkData(),
   withAuthData,
-  withProgressPanel(pricesActions, {
-    title: <FormattedMessage id="dashboardBalancePanelLabel" />,
-  }),
+  // withProgressPanel(pricesActions, {
+  //   title: <FormattedMessage id="dashboardBalancePanelLabel" />,
+  // }),
   withBalancesData(mapBalanceDataToProps),
-  withData(pricesActions, mapPricesDataToProps),
+  withPricesData(mapPricesDataToProps),
+  // withData(pricesActions, mapPricesDataToProps),
   // withActions(nftActions, mapNftActionsToProps),
   // withLoadingProp(nftActions),
 

@@ -6,7 +6,7 @@ import { Center, Box } from '@chakra-ui/react'
 
 import Transactions from './Transactions'
 import Panel from '../../Panel'
-import { pruneConfirmedOrStaleTransaction } from '../../../actions/pendingTransactionActions'
+import { pruneConfirmedOrStaleTransaction } from '../../../actions-migrated/pendingTransactions'
 import styles from './TransactionHistoryPanel.scss'
 import Button from '../../Button'
 import Loader from '../../Loader'
@@ -35,6 +35,10 @@ export default class TransactionHistory extends React.Component<Props> {
   }
 
   componentDidMount() {
+    this.props.fetchTransactions({
+      net: this.props.net,
+      address: this.props.address,
+    })
     this.addPolling()
   }
 
@@ -84,7 +88,12 @@ export default class TransactionHistory extends React.Component<Props> {
             </Box>
 
             <Button
-              onClick={handleFetchAdditionalTxData}
+              onClick={() =>
+                handleFetchAdditionalTxData({
+                  net: this.props.net,
+                  address: this.props.address,
+                })
+              }
               primary
               disabled={transactions.length === count}
               className={styles.loadMoreButton}
@@ -104,8 +113,14 @@ export default class TransactionHistory extends React.Component<Props> {
   addPolling = () => {
     const { showSuccessNotification } = this.props
     this.transactionDataInterval = setInterval(async () => {
-      await this.props.handleGetPendingTransactionInfo()
-      this.props.handleRefreshTxData()
+      await this.props.handleGetPendingTransactionInfo({
+        net: this.props.net,
+        address: this.props.address,
+      })
+      this.props.handleRefreshTxData({
+        net: this.props.net,
+        address: this.props.address,
+      })
       showSuccessNotification({
         message: 'Received latest transaction information.',
       })

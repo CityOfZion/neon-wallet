@@ -48,7 +48,8 @@ const DEFAULT_SETTINGS: () => Promise<Settings> = async () => ({
 export const getSettings = async (): Promise<Settings> => {
   const defaults = await DEFAULT_SETTINGS()
   const settings = await getStorage(STORAGE_KEY)
-  const tokens = uniqBy(
+
+  const neoLegacyTokens = uniqBy(
     [
       ...defaults.tokens,
       ...(settings.tokens
@@ -59,7 +60,13 @@ export const getSettings = async (): Promise<Settings> => {
     ],
     token => [token.networkId, token.scriptHash].join('-'),
   )
-  return { ...defaults, ...settings, tokens }
+  const N3Tokens = await getDefaultTokens('neo3')
+
+  return {
+    ...defaults,
+    ...settings,
+    tokens: settings.chain === 'neo2' ? neoLegacyTokens : N3Tokens,
+  }
 }
 
 export const updateSettings = async (values: Settings = {}) => {
@@ -69,6 +76,7 @@ export const updateSettings = async (values: Settings = {}) => {
     ...settings,
     ...values,
   }
+  // console.log({ chain })
   const parsedForLocalStorage = cloneDeep(newSettings)
   if (chain === 'neo2') {
     const tokensForStorage = [

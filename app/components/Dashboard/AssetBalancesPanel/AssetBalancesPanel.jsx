@@ -128,8 +128,10 @@ export default class AssetBalancesPanel extends React.Component<Props> {
   )
 
   getFormattedFiatBalance = (value: number): string => {
-    const { symbol } = CURRENCIES[this.props.currency]
-    return `${symbol}${formatFiat(value)}`
+    if (CURRENCIES[this.props.currency]) {
+      const { symbol } = CURRENCIES[this.props.currency]
+      return `${symbol}${formatFiat(value)}`
+    }
   }
 
   getFormattedPriceChange = (priceChange: BigNumber): string =>

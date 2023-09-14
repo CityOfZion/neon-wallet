@@ -3,7 +3,6 @@ import { keyBy } from 'lodash-es'
 import { api } from '@cityofzion/neon-js-legacy'
 
 import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
-import { addPendingTransaction } from '../actions/pendingTransactionActions'
 import {
   getAddress,
   getAssetBalances,
@@ -21,6 +20,7 @@ import {
 import { getTokenBalancesMap } from '../core/wallet'
 import { toBigNumber } from '../core/math'
 import { buildTransferScript } from './transactions'
+import pendingTransactionsStore from '../actions-migrated/pendingTransactions'
 
 const N2 = require('@cityofzion/neon-js-legacy-latest')
 const N3 = require('@cityofzion/neon-js')
@@ -272,27 +272,23 @@ export const performMigration = ({
 
         // $FlowFixMe
         if (CONFIG.tx.hash) {
-          dispatch(
-            addPendingTransaction.call({
-              address: CONFIG.account.address,
-              tx: {
-                hash: CONFIG.tx.hash,
-                sendEntries,
-              },
-              net,
-            }),
-          )
+          pendingTransactionsStore.getState().addPendingTransaction({
+            address: CONFIG.account.address,
+            tx: {
+              hash: CONFIG.tx.hash,
+              sendEntries,
+            },
+            net,
+          })
         } else {
-          dispatch(
-            addPendingTransaction.call({
-              address: c.account.address,
-              tx: {
-                hash: c.response.txid,
-                sendEntries,
-              },
-              net,
-            }),
-          )
+          pendingTransactionsStore.getState().addPendingTransaction({
+            address: c.account.address,
+            tx: {
+              hash: c.response.txid,
+              sendEntries,
+            },
+            net,
+          })
         }
 
         return resolve()

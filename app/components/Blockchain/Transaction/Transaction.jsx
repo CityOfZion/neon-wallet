@@ -166,23 +166,26 @@ export default function Transaction(props: Props) {
    */
   function renderAbstractN3() {
     const { isPending, tx } = props
-    const { time, type, sender } = tx
-    const txDate = renderTxDate(time || (tx.metadata && tx.metadata.time))
+    // const { time, type, sender } = tx
+
+    const txDate = renderTxDate(
+      tx?.time || (tx?.metadata && tx?.metadata?.time),
+    )
 
     const metadata = {
       txDate,
       isPending,
-      sender,
+      sender: tx?.sender,
       findContact,
       showAddContactModal: displayModal,
-      ...tx.metadata,
+      ...tx?.metadata,
     }
 
     if (isPending) {
-      return renderAbstract(type, true)
+      return renderAbstract(tx?.type, true)
     }
 
-    switch (type) {
+    switch (tx?.type) {
       case TX_TYPES.N3CONTRACTINVOCATION:
         return <N3ContractInvocationAbstract {...metadata} />
       case TX_TYPES.N3NEP17TRANSFER:
@@ -201,7 +204,7 @@ export default function Transaction(props: Props) {
         return <N3ClaimAbstract {...metadata} />
       default:
         console.warn('renderTxTypeIcon() invoked with an invalid argument!', {
-          type,
+          type: tx?.type,
         })
         return null
     }

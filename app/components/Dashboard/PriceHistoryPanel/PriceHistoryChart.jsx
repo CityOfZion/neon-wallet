@@ -143,8 +143,10 @@ export default class PriceHistoryChart extends React.Component<Props, State> {
   }
 
   formatPrice = (price: number, formatter: Function = formatFiat): string => {
-    const { symbol } = CURRENCIES[this.props.currency]
-    return formatter ? `${symbol}${formatter(price)}` : `${symbol}${price}`
+    if (CURRENCIES[this.props.currency]) {
+      const { symbol } = CURRENCIES[this.props.currency]
+      return formatter ? `${symbol}${formatter(price)}` : `${symbol}${price}`
+    }
   }
 
   formatDate = (timestamp: number): string =>

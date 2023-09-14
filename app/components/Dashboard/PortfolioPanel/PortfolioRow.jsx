@@ -48,8 +48,10 @@ export default class PortfolioRow extends React.Component<Props> {
   }
 
   formatPrice = (price: number): string => {
-    const { symbol } = CURRENCIES[this.props.currency]
-    return `${symbol}${formatThousands(price)}`
+    if (CURRENCIES[this.props.currency]) {
+      const { symbol } = CURRENCIES[this.props.currency]
+      return `${symbol}${formatThousands(price)}`
+    }
   }
 
   processBalance = (balance: string) => {

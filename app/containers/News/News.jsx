@@ -2,6 +2,7 @@
 import React from 'react'
 import moment from 'moment'
 import { FormattedMessage } from 'react-intl'
+import Parser from 'rss-parser'
 
 import Panel from '../../components/Panel'
 import HeaderBar from '../../components/HeaderBar'
@@ -12,6 +13,12 @@ import Button from '../../components/Button'
 const electron = require('electron')
 
 type Props = {
+  networkId: string,
+  net: string,
+}
+
+type State = {
+  currentPage: number,
   feed: {
     items: Array<{
       content: string,
@@ -22,21 +29,42 @@ type Props = {
     }>,
   },
   loading: boolean,
-  networkId: string,
-  net: string,
 }
 
-type State = {
-  currentPage: number,
+// // @flow
+
+// import Parser from 'rss-parser'
+// import { createActions } from 'spunky'
+
+const parser = new Parser()
+
+// export const ID = 'news'
+
+function parseNewsFeedXML() {
+  return parser.parseURL('https://neonewstoday.com/feed/')
 }
+
+// export default createActions(ID, () => async (): Promise<any> => {
+//   const feed = await parseNewsFeedXML()
+//   return { feed }
+// })
 
 export default class News extends React.Component<Props, State> {
   state = {
     currentPage: 1,
+    feed: { items: [] },
+    loading: false,
+  }
+
+  async componentDidMount() {
+    this.setState({ loading: true })
+    const feed = await parseNewsFeedXML()
+    console.log({ feed })
+    this.setState({ feed, loading: false })
   }
 
   render() {
-    const { loading } = this.props
+    const { loading } = this.state
     return (
       <div className={styles.newsContainer}>
         <HeaderBar
@@ -74,7 +102,7 @@ export default class News extends React.Component<Props, State> {
   }
 
   parseItems = () => {
-    const { items } = this.props.feed
+    const { items } = this.state.feed
     const imgTagRegex = new RegExp('<s*img[^>]*>(.*?)')
 
     const imageHrefFromImgTags = img =>

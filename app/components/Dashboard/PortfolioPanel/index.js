@@ -1,19 +1,15 @@
 // @flow
 import React from 'react'
 import { compose, withProps } from 'recompose'
-import { withData } from 'spunky'
 import { pickBy, pick, omit, reduce, map } from 'lodash-es'
-import { FormattedMessage } from 'react-intl'
 
 import PortfolioPanel from './PortfolioPanel'
-// import portfolioPanelActions from '../../../actions/portfolioPanelActions'
-import pricesActions from '../../../actions/pricesActions'
 import withBalancesData from '../../../hocs/withBalancesData'
-// import withProgressPanel from '../../../hocs/withProgressPanel'
 import { getTokenBalancesMap } from '../../../core/wallet'
 import { toNumber, toBigNumber } from '../../../core/math'
 import { ASSETS } from '../../../core/constants'
 import withSettingsContext from '../../../hocs/withSettingsContext'
+import withPricesData from '../../../hocs/withPricesData'
 
 const removeEmptyBalances = balances =>
   pickBy(balances, balance => toBigNumber(balance).gt(0))
@@ -27,15 +23,18 @@ const mapBalancesDataToProps = balances => ({
   }),
 })
 
-const mapTotalPortfolioValueToProps = ({ prices, balances }) => ({
-  // $FlowFixMe
-  total: reduce(
-    balances,
-    (result, balance, symbol) =>
-      result + toNumber(balance) * (prices[symbol] || 0),
-    0,
-  ),
-})
+const mapTotalPortfolioValueToProps = ({ prices, balances }) =>
+  prices
+    ? {
+        // $FlowFixMe
+        total: reduce(
+          balances,
+          (result, balance, symbol) =>
+            result + toNumber(balance) * (prices[symbol] || 0),
+          0,
+        ),
+      }
+    : { total: 0 }
 
 // sort balances by highest value and return only top 5
 const mapSortedPortfolioBalanceProps = ({ prices, balances, total }) => ({
@@ -52,10 +51,7 @@ const mapSortedPortfolioBalanceProps = ({ prices, balances, total }) => ({
 })
 
 export default compose(
-  // withProgressPanel(portfolioPanelActions, {
-  //   title: <FormattedMessage id="dashboardValueLabel" />,
-  // }),
-  withData(pricesActions, mapPricesDataToProps),
+  withPricesData(mapPricesDataToProps),
   withBalancesData(mapBalancesDataToProps),
   withProps(mapTotalPortfolioValueToProps),
   withProps(mapSortedPortfolioBalanceProps),

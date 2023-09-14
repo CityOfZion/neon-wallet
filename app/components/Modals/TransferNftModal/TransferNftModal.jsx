@@ -13,9 +13,10 @@ import N3Fees from '../../Send/N3Fees'
 import BaseModal from '../BaseModal'
 import styles from './TransferNftModal.scss'
 import { getNode, getRPCEndpoint } from '../../../actions/nodeStorageActions'
-import { addPendingTransaction } from '../../../actions/pendingTransactionActions'
+
 import { useContactsContext } from '../../../context/contacts/ContactsContext'
 import { MODAL_TYPES } from '../../../core/constants'
+import pendingTransactionsStore from '../../../actions-migrated/pendingTransactions'
 
 type Props = {
   hideModal: () => any,
@@ -200,18 +201,29 @@ export default function TransferNftModal(props: Props) {
         hideNotification(notificationId)
       }
 
-      dispatch(
-        addPendingTransaction.call({
-          address,
-          net,
-          tx: {
-            hash,
-            sendEntries: [
-              { amount: 1, address, contractHash: contract, symbol: 'N/A' },
-            ],
-          },
-        }),
-      )
+      // dispatch(
+      //   addPendingTransaction.call({
+      //     address,
+      //     net,
+      //     tx: {
+      //       hash,
+      //       sendEntries: [
+      //         { amount: 1, address, contractHash: contract, symbol: 'N/A' },
+      //       ],
+      //     },
+      //   }),
+      // )
+
+      pendingTransactionsStore.getState().addPendingTransaction({
+        address,
+        net,
+        tx: {
+          hash,
+          sendEntries: [
+            { amount: 1, address, contractHash: contract, symbol: 'N/A' },
+          ],
+        },
+      })
 
       showSuccessNotification({
         message: 'Transaction pending! Your NFT will be transferred shortly.',

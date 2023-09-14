@@ -18,4 +18,5 @@ const mapPricesDataToProps = ({ GAS }) => ({
 export default compose(
   withPricesData(mapPricesDataToProps),
   withBalancesData(mapBalanceDataToProps),
-)(withSettingsContext(N3Fees))
+  withSettingsContext,
+)(N3Fees)

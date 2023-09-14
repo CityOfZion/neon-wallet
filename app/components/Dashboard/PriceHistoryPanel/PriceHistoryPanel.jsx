@@ -42,6 +42,7 @@ type Props = {
   staticPrice: number,
   setAsset: Function,
   setDuration: Function,
+  getPriceHistory: Funnction,
   priceKey: string,
 }
 
@@ -120,6 +121,11 @@ export default class PriceHistoryPanel extends React.Component<Props> {
 
   handleChangeDuration = (selected: DurationSelectOption) => {
     this.props.setDuration(selected.value)
+    this.props.getPriceHistory({
+      duration: selected.value,
+      currency: this.props.currency,
+    })
+    // this.props.setDuration(selected.value)
   }
 
   getDuration = (): ?DurationSelectOption =>
@@ -138,6 +144,7 @@ export default class PriceHistoryPanel extends React.Component<Props> {
 
   renderLatestPrice = () => {
     const { staticPrice } = this.props
+    console.log({ staticPrice })
     return (
       <div className={styles.currentPrice}>
         {this.formatPrice(staticPrice, formatFiat)}
@@ -149,10 +156,12 @@ export default class PriceHistoryPanel extends React.Component<Props> {
     price: number,
     formatter: Function = formatThousands,
   ): string => {
-    const { symbol } = CURRENCIES[this.props.currency]
-    return `${symbol || CURRENCIES[DEFAULT_CURRENCY_CODE].symbol}${formatter(
-      price,
-    )}`
+    if (CURRENCIES[this.props.currency]) {
+      const { symbol } = CURRENCIES[this.props.currency]
+      return `${symbol || CURRENCIES[DEFAULT_CURRENCY_CODE].symbol}${formatter(
+        price,
+      )}`
+    }
   }
 
   renderPriceChange = () => {

@@ -22,18 +22,6 @@ const actionCreators = {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(actionCreators, dispatch)
 
-const mapAccountsDataToProps = accounts => ({
-  accounts,
-})
-
-const mapAccountsActionsToProps = actions => ({
-  setAccounts: accounts => actions.call(accounts),
-})
-
-const mapN3AccountsActionsToProps = actions => ({
-  setN3Accounts: accounts => actions.call(accounts),
-})
-
 export default compose(
   connect(
     null,
