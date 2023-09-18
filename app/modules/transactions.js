@@ -33,6 +33,7 @@ import {
 import { toNumber } from '../core/math'
 import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 import { addPendingTransaction } from '../actions/pendingTransactionActions'
+import { getSettings } from '../actions/settingsActions'
 
 const N2 = require('@cityofzion/neon-js-legacy-latest')
 
@@ -219,6 +220,7 @@ const buildNep17IntentsFromEntries = (
 ) =>
   sendEntries.map(entry => {
     const { address, amount, symbol } = entry
+
     const token = tokens.find(
       // eslint-disable-next-line eqeqeq
       t => t.networkId == 2 && t.symbol === symbol,
@@ -250,7 +252,7 @@ export const calculateN3Fees = ({
       const FROM_ACCOUNT = new n3Wallet.Account(wif)
       const tokenBalances = getTokenBalances(state)
       const tokensBalanceMap = keyBy(tokenBalances, 'symbol')
-      const { tokens } = state.spunky.settings.data
+      const { tokens } = await getSettings()
 
       let endpoint = await getNode(net)
       if (!endpoint) {
