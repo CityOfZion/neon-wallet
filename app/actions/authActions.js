@@ -200,7 +200,6 @@ export const ledgerLoginActions = createActions(
     const wallet = chain === 'neo3' ? n3Wallet : N2.wallet
     const publicKeyEncoded = wallet.getPublicKeyEncoded(publicKey)
     const walletAccount = new wallet.Account(publicKey)
-    console.log({ walletAccount, publicKey, account, publicKeyEncoded })
     const hasInternetConnectivity = await checkForInternetConnectivity()
     const signFunc = chain === 'neo3' ? signWithLedger : legacySignWithLedger
 

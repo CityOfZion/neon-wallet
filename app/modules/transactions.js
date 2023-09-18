@@ -447,8 +447,6 @@ export const sendTransaction = ({
           url = await getRPCEndpoint(net)
         }
 
-        debugger
-
         const rejectTransaction = (message: string) =>
           dispatch(showErrorNotification({ message }))
 

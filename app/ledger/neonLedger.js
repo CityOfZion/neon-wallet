@@ -315,7 +315,6 @@ export const legacySignWithLedger = async (
 ): Promise<string> => {
   const ledger = await NeonLedger.init()
   try {
-    console.log({ unsignedTx, publicKeyEncoded, acct })
     const data =
       typeof unsignedTx !== 'string'
         ? tx.serializeTransaction(unsignedTx, false)
@@ -326,7 +325,6 @@ export const legacySignWithLedger = async (
     )
     const txObj = tx.deserializeTransaction(data)
 
-    console.log({ txObj })
     txObj.scripts.push({ invocationScript, verificationScript })
     return tx.serializeTransaction(txObj)
   } finally {
