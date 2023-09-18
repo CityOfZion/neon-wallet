@@ -2097,6 +2097,16 @@
   resolved "https://registry.yarnpkg.com/@cityofzion/neo3-invoker/-/neo3-invoker-1.4.0.tgz#00fff375a47d73d406e9d5ba47868bbd4cbe894f"
   integrity sha512-BOqJA2e6Kq3QPL/kaMYEjpPCeh9fdKTzRjEi9oIxi0MY5B7nj4rhAVl4l2A06jGNboi+VhToo/gJ/ZVzW/GaeQ==
 
+"@cityofzion/neo3-invoker@1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neo3-invoker/-/neo3-invoker-1.4.1.tgz#70b617dd73574682f6e3f0b775ab8df2120e49e1"
+  integrity sha512-2BNSQRydNuGZi7wam/kdvCoTw8m3wq1zbC6QBkkS9maRO/gliLEgDj0hjBazaP+slqtwR8DMdQsgbonJ9oIYEA==
+
+"@cityofzion/neo3-invoker@1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neo3-invoker/-/neo3-invoker-1.5.1.tgz#13a0f448aac13afa305a806a724fd0a4764915f0"
+  integrity sha512-P1w9Ajxa3S5lT+cvsjF/ZDpZFuvvg3e/bVC87PBbpD+FysVFsONlZCIomevkSV4LnzCgrxDQ00KzmYOiNHvWcg==
+
 "@cityofzion/neo3-invoker@1.5.2":
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/@cityofzion/neo3-invoker/-/neo3-invoker-1.5.2.tgz#0ebf58f8cd74d3b4977aa4cf0efb1b96548b866f"
@@ -2106,6 +2116,21 @@
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/@cityofzion/neo3-parser/-/neo3-parser-1.6.0.tgz#154d60baa6e6c541321f0d1fa796b38f6bed6aa3"
   integrity sha512-K+j3qaZEuq1cxit+fFziwAAc0hMQTdACbtllU1HUKJZ89dw7z/FY3Bmg12cyZ8tXuiktCloXvUT0Mg/IzoYqdg==
+
+"@cityofzion/neo3-parser@1.6.5":
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neo3-parser/-/neo3-parser-1.6.5.tgz#3744cb18c6ed310604d8bd15ac6286cfe84ec01b"
+  integrity sha512-0pv+odXwLA0X661f4UJZO7HErkt/2KZ22M9lHd98OAUT99M22i+XBaGrK2GqbLuzVAvoOEW73kSyhhz6Z9uUYg==
+
+"@cityofzion/neo3-signer@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neo3-signer/-/neo3-signer-1.1.0.tgz#3fa81977e1778b6acc863c85788a0525ecc4c21a"
+  integrity sha512-mUJNF5gOuX1aGdbuOwZ+nke03y2GavzYwnti8dr8kzm6lNbn5npLsy4vSHxfgS+gt+TYEeZTtnlf87QkjkEiNQ==
+
+"@cityofzion/neo3-signer@1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neo3-signer/-/neo3-signer-1.1.1.tgz#f3435578ec73a6ba170aaa108418dbb0ba17aa85"
+  integrity sha512-f0JtZajh+brWzXTAp8O9HgM6uLRTHnj6SIGdT/sb9UYHXBd2zB/phrAd9SDJ+tvUFSz7D6Jrek/crCUIaka0Fg==
 
 "@cityofzion/neon-api@^4.9.0":
   version "4.9.0"
@@ -2138,22 +2163,6 @@
     loglevel "1.8.0"
     loglevel-plugin-prefix "0.8.4"
     scrypt-js "3.0.1"
-
-"@cityofzion/neon-core@5.5.1", "@cityofzion/neon-core@^5.5.1":
-  version "5.5.1"
-  resolved "https://registry.yarnpkg.com/@cityofzion/neon-core/-/neon-core-5.5.1.tgz#80ee2caeef5e1e65dcd98a2a77b7eee4d12d8801"
-  integrity sha512-cqJ+RYTdUVoUl2e3I5bqgAvYFuqGd2M8lmgUgH/+kf0zS0b8EuKwliauJ2EA56fudwaXtCmmHZTfRBFs+RJ2vw==
-  dependencies:
-    bn.js "5.2.1"
-    bs58 "5.0.0"
-    buffer "6.0.3"
-    cross-fetch "^3.1.5"
-    crypto-js "4.1.1"
-    elliptic "6.5.4"
-    ethereum-cryptography "2.0.0"
-    lodash "4.17.21"
-    loglevel "1.8.1"
-    loglevel-plugin-prefix "0.8.4"
 
 "@cityofzion/neon-core@^4.9.0":
   version "4.9.0"
@@ -2193,28 +2202,6 @@
     loglevel "1.8.1"
     loglevel-plugin-prefix "0.8.4"
 
-"@cityofzion/neon-dappkit-types@0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@cityofzion/neon-dappkit-types/-/neon-dappkit-types-0.0.5.tgz#97abeacf09971bc318e864871549f5a00545bc09"
-  integrity sha512-SRjmfzgI1aNhXdKby4gRrJBveFeSAdttSaLwNfQ/Xq19VwM2NOf2NATg7wDrtTY4sQLKwCyPjPaAePZwKLP8Xw==
-
-"@cityofzion/neon-dappkit-types@0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@cityofzion/neon-dappkit-types/-/neon-dappkit-types-0.0.6.tgz#0f3f596a72e4fef4c0442a0c35689b70093593b8"
-  integrity sha512-Q4tkH5SFQhdRBf+tky8H0oCu2BNPALlwadENWsFLgbd5U6LhsAKZtU7mEh/3dQ9v4jq2ll2ZW9Aab+ntXXgOVg==
-
-"@cityofzion/neon-dappkit@0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@cityofzion/neon-dappkit/-/neon-dappkit-0.0.6.tgz#f4f430b5c4eed1d32b014cd28d5149053c0d21bf"
-  integrity sha512-LiuT8oqDvQ7pHWBMncpXyvdBDQ+mxrEGTjU+xZTKEdw+tKGLcLM2wuPi4HrP4n+3EBRGQmKXihmsgYLxYFHmWQ==
-  dependencies:
-    "@cityofzion/neon-core" "5.5.1"
-    "@cityofzion/neon-dappkit-types" "0.0.6"
-    "@cityofzion/neon-js" "5.5.1"
-    crypto-js "^4.1.1"
-    elliptic "^6.5.4"
-    randombytes "^2.1.0"
-
 "@cityofzion/neon-invoker@1.4.0":
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@cityofzion/neon-invoker/-/neon-invoker-1.4.0.tgz#a3177ad66c4b84bb57228418f5c451bc901c1549"
@@ -2223,6 +2210,16 @@
     "@cityofzion/neo3-invoker" "1.4.0"
     "@cityofzion/neon-core" "^5.3.0"
     "@cityofzion/neon-js" "^5.3.0"
+
+"@cityofzion/neon-invoker@1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neon-invoker/-/neon-invoker-1.5.1.tgz#ba849357b54b717d4b741a8c48f4c6e64a84fe45"
+  integrity sha512-71eUsYTSm9MzuZcrNspzak+CQ2s4XHQAqNV+M++rwCCSSKqxMWb8GKuLGAI7muEBZv4l8a19PSlbMASWDfegKA==
+  dependencies:
+    "@cityofzion/neo3-invoker" "1.5.1"
+    "@cityofzion/neon-core" "5.3.0"
+    "@cityofzion/neon-js" "5.3.0"
+    chai "~4.3.7"
 
 "@cityofzion/neon-invoker@1.5.2":
   version "1.5.2"
@@ -2271,14 +2268,6 @@
     "@cityofzion/neon-api" "^5.2.2"
     "@cityofzion/neon-core" "^5.3.0"
 
-"@cityofzion/neon-js@5.5.1":
-  version "5.5.1"
-  resolved "https://registry.yarnpkg.com/@cityofzion/neon-js/-/neon-js-5.5.1.tgz#635b1737c539c7c9fd83f421c7d817315d55baca"
-  integrity sha512-iCoE5PGKy3Kj36dR3aevkVOKK4yB1Mq/0WEUQzrzMkGOGBNJXa2+cTtmSi39tDkgxSHibvS77S5oZ6QGIXMCdg==
-  dependencies:
-    "@cityofzion/neon-api" "^5.4.0"
-    "@cityofzion/neon-core" "^5.5.1"
-
 "@cityofzion/neon-js@^5.4.0":
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/@cityofzion/neon-js/-/neon-js-5.4.0.tgz#44d8cade7628dfa6c6a49241eef84016f07369a8"
@@ -2310,35 +2299,60 @@
     "@cityofzion/neo3-parser" "1.6.0"
     "@cityofzion/neon-js" "^5.3.0"
 
-"@cityofzion/wallet-connect-sdk-core@2.6.0":
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/@cityofzion/wallet-connect-sdk-core/-/wallet-connect-sdk-core-2.6.0.tgz#4f8e6fc4f2599cc30d92521194bce616dfc3b44d"
-  integrity sha512-CJn9kK3ILEbSg4qh7RdJVV1PWgM2v7BquSREkQfD+YFsUkdsHMeJzuPzrrC93q+hTlNKSwOpdVDLhlKs92fvoA==
+"@cityofzion/neon-parser@1.6.5":
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neon-parser/-/neon-parser-1.6.5.tgz#8a246630609e25553d2ecb717cb514508006e4c8"
+  integrity sha512-ekSHeYJdbf+07+X3gK2AS1LVT4xyxBBfgJmgENYbaVjIXQrGHAyZUy+vA9vocR5hJ3ABPjYoa4a5lCqWrQv0Iw==
   dependencies:
+    "@cityofzion/neo3-parser" "1.6.5"
     "@cityofzion/neon-core" "5.3.0"
-    "@cityofzion/neon-dappkit-types" "0.0.5"
+    "@cityofzion/neon-js" "5.3.0"
+
+"@cityofzion/neon-signer@1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neon-signer/-/neon-signer-1.1.1.tgz#5c779c02825ce19c4f060d8e23b7c998891ee2c7"
+  integrity sha512-lOQF9B1XsGwkkHbUuSprWfE+HOhlgbLdoLQeFpvnqmb4NA806wWXxbAgRKN4Xt1SLu7Z8MioM4JOVBxXVooO4Q==
+  dependencies:
+    "@cityofzion/neo3-signer" "1.1.1"
+    "@cityofzion/neon-core" "5.3.0"
+    "@cityofzion/neon-js" "5.3.0"
+    randombytes "^2.1.0"
+
+"@cityofzion/wallet-connect-sdk-core@2.5.4":
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/@cityofzion/wallet-connect-sdk-core/-/wallet-connect-sdk-core-2.5.4.tgz#ab0c5faac76770dd4d4877141973052bf8a5d961"
+  integrity sha512-vPkwpRuPsrJ0sIGvPkbKQmVgqESpGIR2BnNatCZoBZr0k5mTi66ji+CqZi68/mbIh01AIOs0Mdg9MnXCHkmhBA==
+  dependencies:
+    "@cityofzion/neo3-invoker" "1.4.1"
+    "@cityofzion/neo3-signer" "1.1.0"
+    "@cityofzion/neon-core" "5.3.0"
     "@walletconnect/sign-client" "2.0.0-rc.3"
     "@walletconnect/types" "2.0.0-rc.3"
 
-"@cityofzion/wallet-connect-sdk-wallet-core@2.6.1":
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/@cityofzion/wallet-connect-sdk-wallet-core/-/wallet-connect-sdk-wallet-core-2.6.1.tgz#a47c70f7ed0a168be2985fca09a0d5a988365aed"
-  integrity sha512-HFz9bSZcT7UexyX++F181q3rB4TZUxDlFxC0EN2d2ja6LCmXmvn+wy5Fl5Kayccy0ikOdzvt7oLRRaLP6OSpSg==
+"@cityofzion/wallet-connect-sdk-wallet-core@2.5.4":
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/@cityofzion/wallet-connect-sdk-wallet-core/-/wallet-connect-sdk-wallet-core-2.5.4.tgz#b4c5b5a358b09e5ad4f2f89cc556a59c918c5d75"
+  integrity sha512-+G5CCtzBdFgCbCpDWn0Tk32qP1d4WMqEgxATGcLCWNV/G8mM35wXDXLcQ5B2NrGZtZ/4p1INhhXmViOZ5kbxkg==
   dependencies:
-    "@cityofzion/neon-core" "5.5.1"
-    "@cityofzion/neon-dappkit" "0.0.6"
-    "@cityofzion/neon-js" "5.5.1"
-    "@cityofzion/wallet-connect-sdk-core" "2.6.0"
+    "@cityofzion/neo3-invoker" "1.5.1"
+    "@cityofzion/neo3-parser" "1.6.5"
+    "@cityofzion/neo3-signer" "1.1.1"
+    "@cityofzion/neon-core" "5.3.0"
+    "@cityofzion/neon-invoker" "1.5.1"
+    "@cityofzion/neon-js" "5.3.0"
+    "@cityofzion/neon-parser" "1.6.5"
+    "@cityofzion/neon-signer" "1.1.1"
+    "@cityofzion/wallet-connect-sdk-core" "2.5.4"
     "@walletconnect/sign-client" "2.7.3"
     "@walletconnect/types" "2.7.3"
     moment "^2.29.4"
 
-"@cityofzion/wallet-connect-sdk-wallet-react@2.6.1":
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/@cityofzion/wallet-connect-sdk-wallet-react/-/wallet-connect-sdk-wallet-react-2.6.1.tgz#286281cdd27f2bb85812792ee5fd66df0563884b"
-  integrity sha512-upTbu1aDiDzCxIVdI7u2NDsPg761bibqQ+taQz1SCsQ8e2JeZrGkQL9SY4E2Qa08E213fOwfR/ZiUarQOXjTWQ==
+"@cityofzion/wallet-connect-sdk-wallet-react@2.5.4":
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/@cityofzion/wallet-connect-sdk-wallet-react/-/wallet-connect-sdk-wallet-react-2.5.4.tgz#65e39a70ba263fe83ce763ff26e2dbee6cd488dc"
+  integrity sha512-ZMXpEEf6FgqqApOtAvP8eOmCT/1TPp+BO0tXLNxJC6NMcZ1MAWxO+m7ED0M9BKbSKAp06SO9JZfF17gEDCODYQ==
   dependencies:
-    "@cityofzion/wallet-connect-sdk-wallet-core" "2.6.1"
+    "@cityofzion/wallet-connect-sdk-wallet-core" "2.5.4"
 
 "@concordance/react@^1.0.0":
   version "1.0.0"
@@ -6876,7 +6890,7 @@ crypto-js@4.0.0:
   resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.0.0.tgz#2904ab2677a9d042856a2ea2ef80de92e4a36dcc"
   integrity sha512-bzHZN8Pn+gS7DQA6n+iUmBfl0hO5DJq++QP3U6uTucDtk/0iGpXd/Gg7CGR0p8tJhofJyaKoWBuJI4eAO00BBg==
 
-crypto-js@4.1.1, crypto-js@^4.1.1:
+crypto-js@4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.1.1.tgz#9e485bcf03521041bd85844786b83fb7619736cf"
   integrity sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==
@@ -7921,7 +7935,7 @@ elliptic@6.4.1:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
-elliptic@6.5.4, elliptic@^6.5.3, elliptic@^6.5.4:
+elliptic@6.5.4, elliptic@^6.5.3:
   version "6.5.4"
   resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.4.tgz#da37cebd31e79a1367e941b592ed1fbebd58abbb"
   integrity sha512-iLhC6ULemrljPZb+QutR5TQGB+pdW6KGD5RSegS+8sorOZT+rdQFbsQFJgvN3eRqNALqJer4oQ16YvJHlU8hzQ==
