@@ -60,7 +60,7 @@ export const buildIntents = (sendEntries: Array<SendEntryType>) => {
   const assetEntries = extractAssets(sendEntries)
   // $FlowFixMe
   return flatMap(assetEntries, ({ address, amount, symbol }) =>
-    api.makeIntent({ [symbol]: toNumber(amount) }, address),
+    N2.api.makeIntent({ [symbol]: toNumber(amount) }, address),
   )
 }
 
@@ -90,18 +90,48 @@ export const buildTransferScript = (
   return scriptBuilder.str
 }
 
-const makeRequest = (
+const makeRequest = async (
   sendEntries: Array<SendEntryType>,
   config: Object,
   script: string,
+  isHardwareSend?: boolean,
 ) => {
   config.intents = buildIntents(sendEntries)
+
   // eslint-disable-next-line
   const apiProvider = new N2.api.neoCli.instance(config.url)
   config.api = apiProvider
   config.script = script
-  config.gas = !script ? 0 : undefined
-  return script ? api.doInvoke(config) : api.sendAsset(config)
+  config.gas = !script ? undefined : 0
+
+  config = await N2.api.fillSigningFunction(config)
+  config = await N2.api.fillUrl(config)
+  config = await N2.api.fillBalance(config)
+
+  if (isHardwareSend) {
+    if (script) {
+      return api.doInvoke(config).catch(e => {
+        if (e.message === 'this.str.substr is not a function') {
+          return {
+            response: {
+              result: true,
+            },
+          }
+        }
+      })
+    }
+    config = await N2.api.createContractTx(config)
+    return api.sendAsset(config).catch(e => {
+      if (e.message === 'this.str.substr is not a function') {
+        return {
+          response: {
+            result: true,
+          },
+        }
+      }
+    })
+  }
+  return script ? N2.api.doInvoke(config) : N2.api.sendAsset(config)
 }
 
 export const generateBalanceInfo = (
@@ -417,6 +447,8 @@ export const sendTransaction = ({
           url = await getRPCEndpoint(net)
         }
 
+        debugger
+
         const rejectTransaction = (message: string) =>
           dispatch(showErrorNotification({ message }))
 
@@ -543,9 +575,14 @@ export const sendTransaction = ({
             return resolve(config)
           }
 
-          const { response } = await makeRequest(sendEntries, config, script)
+          const { response } = await makeRequest(
+            sendEntries,
+            config,
+            script,
+            isHardwareSend,
+          )
 
-          if (!response.result) {
+          if (!response?.result) {
             throw new Error('Rejected by RPC server.')
           }
 
@@ -555,7 +592,7 @@ export const sendTransaction = ({
                 'Transaction pending! Your balance will automatically update when the blockchain has processed it.',
             }),
           )
-          return resolve(response)
+          return resolve(config)
         } catch (err) {
           console.error({ err })
           return checkConfigForFees(config)
@@ -569,7 +606,6 @@ export const sendTransaction = ({
             })
         } finally {
           const hash = get(config, 'tx.hash')
-
           if (!isWatchOnly) {
             dispatch(
               addPendingTransaction.call({

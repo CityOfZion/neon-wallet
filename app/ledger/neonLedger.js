@@ -8,6 +8,8 @@ import * as n3ledger from '@cityofzion/neon-ledger-next'
 import asyncWrap from '../core/asyncHelper'
 import { BIP44_PATH } from '../core/constants'
 
+const N2 = require('@cityofzion/neon-js-legacy-latest')
+
 const VALID_STATUS = 0x9000
 const MSG_TOO_BIG = 0x6d08
 const APP_CLOSED = 0x6e00
@@ -313,15 +315,18 @@ export const legacySignWithLedger = async (
 ): Promise<string> => {
   const ledger = await NeonLedger.init()
   try {
+    console.log({ unsignedTx, publicKeyEncoded, acct })
     const data =
       typeof unsignedTx !== 'string'
         ? tx.serializeTransaction(unsignedTx, false)
         : unsignedTx
     const invocationScript = `40${await ledger.getSignature(data, acct)}`
-    const verificationScript = wallet.getVerificationScriptFromPublicKey(
+    const verificationScript = N2.wallet.getVerificationScriptFromPublicKey(
       publicKeyEncoded,
     )
     const txObj = tx.deserializeTransaction(data)
+
+    console.log({ txObj })
     txObj.scripts.push({ invocationScript, verificationScript })
     return tx.serializeTransaction(txObj)
   } finally {
