@@ -197,14 +197,14 @@ export const ledgerLoginActions = createActions(
     AccountType,
   > => {
     const { chain } = await getSettings()
-    const wallet = chain === 'neo3' ? n3Wallet : N2.wallet
-    const publicKeyEncoded = wallet.getPublicKeyEncoded(publicKey)
-    const walletAccount = new wallet.Account(publicKey)
+    const wlt = chain === 'neo3' ? n3Wallet : N2.wallet
+    const publicKeyEncoded = wlt.getPublicKeyEncoded(publicKey)
+    const walletAccount = new wlt.Account(publicKeyEncoded)
     const hasInternetConnectivity = await checkForInternetConnectivity()
     const signFunc = chain === 'neo3' ? signWithLedger : legacySignWithLedger
 
     return {
-      publicKey: publicKeyEncoded,
+      publicKey,
       address: walletAccount.address,
       signingFunction: bindArgsFromN(signFunc, 3, account),
       isHardwareLogin: true,
