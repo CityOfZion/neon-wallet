@@ -46,6 +46,8 @@ export const getSettings = async (): Promise<Settings> => {
 
   const settings = await getStorage(STORAGE_KEY)
 
+  const { chain } = settings
+
   const tokens = uniqBy(
     [
       ...defaults.tokens,
@@ -58,12 +60,18 @@ export const getSettings = async (): Promise<Settings> => {
     token => [token.networkId, token.scriptHash].join('-'),
   )
 
-  return { ...defaults, ...settings, tokens }
+  const nextSettings = { ...defaults, ...settings, tokens }
+  const picked = await pick(nextSettings, keys(await DEFAULT_SETTINGS()))
+  if (chain === 'neo3') {
+    picked.tokens = await getDefaultTokens('neo3')
+  }
+  return picked
 }
 
 export const updateSettings = async (values: Settings = {}) => {
   const settings = await getSettings()
   const { chain } = values
+
   const newSettings = {
     ...settings,
     ...values,
@@ -92,13 +100,4 @@ export const updateSettingsActions = createActions(
   (values: Settings = {}) => (): Promise<Settings> => updateSettings(values),
 )
 
-export default createActions(ID, () => async (): Promise<Settings> => {
-  const settings = await getSettings()
-  const { chain } = settings
-
-  const picked = await pick(settings, keys(await DEFAULT_SETTINGS()))
-  if (chain === 'neo3') {
-    picked.tokens = await getDefaultTokens('neo3')
-  }
-  return picked
-})
+export default createActions(ID, () => (): Promise<Settings> => getSettings())

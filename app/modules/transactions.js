@@ -33,6 +33,7 @@ import {
 import { toNumber } from '../core/math'
 import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 import { addPendingTransaction } from '../actions/pendingTransactionActions'
+import { getSettings } from '../actions/settingsActions'
 
 const N2 = require('@cityofzion/neon-js-legacy-latest')
 
@@ -60,7 +61,7 @@ export const buildIntents = (sendEntries: Array<SendEntryType>) => {
   const assetEntries = extractAssets(sendEntries)
   // $FlowFixMe
   return flatMap(assetEntries, ({ address, amount, symbol }) =>
-    api.makeIntent({ [symbol]: toNumber(amount) }, address),
+    N2.api.makeIntent({ [symbol]: toNumber(amount) }, address),
   )
 }
 
@@ -90,18 +91,48 @@ export const buildTransferScript = (
   return scriptBuilder.str
 }
 
-const makeRequest = (
+const makeRequest = async (
   sendEntries: Array<SendEntryType>,
   config: Object,
   script: string,
+  isHardwareSend?: boolean,
 ) => {
   config.intents = buildIntents(sendEntries)
+
   // eslint-disable-next-line
   const apiProvider = new N2.api.neoCli.instance(config.url)
   config.api = apiProvider
   config.script = script
-  config.gas = !script ? 0 : undefined
-  return script ? api.doInvoke(config) : api.sendAsset(config)
+  config.gas = !script ? undefined : 0
+
+  config = await N2.api.fillSigningFunction(config)
+  config = await N2.api.fillUrl(config)
+  config = await N2.api.fillBalance(config)
+
+  if (isHardwareSend) {
+    if (script) {
+      return api.doInvoke(config).catch(e => {
+        if (e.message === 'this.str.substr is not a function') {
+          return {
+            response: {
+              result: true,
+            },
+          }
+        }
+      })
+    }
+    config = await N2.api.createContractTx(config)
+    return api.sendAsset(config).catch(e => {
+      if (e.message === 'this.str.substr is not a function') {
+        return {
+          response: {
+            result: true,
+          },
+        }
+      }
+    })
+  }
+  return script ? N2.api.doInvoke(config) : N2.api.sendAsset(config)
 }
 
 export const generateBalanceInfo = (
@@ -189,9 +220,10 @@ const buildNep17IntentsFromEntries = (
 ) =>
   sendEntries.map(entry => {
     const { address, amount, symbol } = entry
+
     const token = tokens.find(
       // eslint-disable-next-line eqeqeq
-      t => t.networkId == 2 && t.symbol === symbol,
+      t => Number(t?.networkId) == 2 && t?.symbol === symbol,
     )
     const contractHash = token
       ? token.scriptHash
@@ -220,69 +252,73 @@ export const calculateN3Fees = ({
       const FROM_ACCOUNT = new n3Wallet.Account(wif)
       const tokenBalances = getTokenBalances(state)
       const tokensBalanceMap = keyBy(tokenBalances, 'symbol')
-      const { tokens } = state.spunky.settings.data
+      const settings = await getSettings()
+      const tokens = settings?.tokens ?? []
 
-      let endpoint = await getNode(net)
-      if (!endpoint) {
-        endpoint = await getRPCEndpoint(net)
-      }
-      const client = new n3Rpc.NeoServerRpcClient(endpoint)
-
-      const intents = buildNep17IntentsFromEntries(
-        sendEntries,
-        tokens,
-        tokensBalanceMap,
-        { account: FROM_ACCOUNT },
-      )
-
-      const txBuilder = new n3Api.TransactionBuilder()
-      for (const intent of intents) {
-        if (intent.decimalAmt) {
-          const [tokenInfo] = await n3Api.getTokenInfos(
-            [intent.contractHash],
-            client,
-          )
-          const amt = n3U.BigInteger.fromDecimal(
-            intent.decimalAmt,
-            tokenInfo.decimals,
-          )
-          txBuilder.addNep17Transfer(
-            intent.from,
-            intent.to,
-            intent.contractHash,
-            amt,
-          )
+      if (tokens.length) {
+        let endpoint = await getNode(net)
+        if (!endpoint) {
+          endpoint = await getRPCEndpoint(net)
         }
+        const client = new n3Rpc.NeoServerRpcClient(endpoint)
+
+        const intents = buildNep17IntentsFromEntries(
+          sendEntries,
+          tokens,
+          tokensBalanceMap,
+          { account: FROM_ACCOUNT },
+        )
+
+        const txBuilder = new n3Api.TransactionBuilder()
+        for (const intent of intents) {
+          if (intent.decimalAmt) {
+            const [tokenInfo] = await n3Api.getTokenInfos(
+              [intent.contractHash],
+              client,
+            )
+            const amt = n3U.BigInteger.fromDecimal(
+              intent.decimalAmt,
+              tokenInfo.decimals,
+            )
+            txBuilder.addNep17Transfer(
+              intent.from,
+              intent.to,
+              intent.contractHash,
+              amt,
+            )
+          }
+        }
+        const {
+          feePerByte,
+          executionFeeFactor,
+        } = await n3Api.getFeeInformation(client)
+
+        const txn = txBuilder.build()
+
+        const networkFee = await n3Api.calculateNetworkFee(
+          txn,
+          feePerByte,
+          executionFeeFactor,
+        )
+
+        const invokeFunctionResponse = await client.invokeScript(
+          n3U.HexString.fromHex(txn.script),
+          [
+            {
+              account: FROM_ACCOUNT.scriptHash,
+              scopes: tx.WitnessScope.CalledByEntry,
+            },
+          ],
+        )
+        const requiredSystemFee = n3U.BigInteger.fromNumber(
+          invokeFunctionResponse.gasconsumed,
+        )
+
+        return resolve({
+          systemFee: requiredSystemFee.toDecimal(8),
+          networkFee: networkFee.toDecimal(8),
+        })
       }
-      const { feePerByte, executionFeeFactor } = await n3Api.getFeeInformation(
-        client,
-      )
-
-      const txn = txBuilder.build()
-
-      const networkFee = await n3Api.calculateNetworkFee(
-        txn,
-        feePerByte,
-        executionFeeFactor,
-      )
-
-      const invokeFunctionResponse = await client.invokeScript(
-        n3U.HexString.fromHex(txn.script),
-        [
-          {
-            account: FROM_ACCOUNT.scriptHash,
-            scopes: tx.WitnessScope.CalledByEntry,
-          },
-        ],
-      )
-      const requiredSystemFee = n3U.BigInteger.fromNumber(
-        invokeFunctionResponse.gasconsumed,
-      )
-
-      return resolve({
-        systemFee: requiredSystemFee.toDecimal(8),
-        networkFee: networkFee.toDecimal(8),
-      })
     } catch (e) {
       console.error(e)
       reject(e)
@@ -543,9 +579,14 @@ export const sendTransaction = ({
             return resolve(config)
           }
 
-          const { response } = await makeRequest(sendEntries, config, script)
+          const { response } = await makeRequest(
+            sendEntries,
+            config,
+            script,
+            isHardwareSend,
+          )
 
-          if (!response.result) {
+          if (!response?.result) {
             throw new Error('Rejected by RPC server.')
           }
 
@@ -555,7 +596,7 @@ export const sendTransaction = ({
                 'Transaction pending! Your balance will automatically update when the blockchain has processed it.',
             }),
           )
-          return resolve(response)
+          return resolve(config)
         } catch (err) {
           console.error({ err })
           return checkConfigForFees(config)
@@ -569,7 +610,6 @@ export const sendTransaction = ({
             })
         } finally {
           const hash = get(config, 'tx.hash')
-
           if (!isWatchOnly) {
             dispatch(
               addPendingTransaction.call({
