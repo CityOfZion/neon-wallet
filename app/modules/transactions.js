@@ -223,7 +223,7 @@ const buildNep17IntentsFromEntries = (
 
     const token = tokens.find(
       // eslint-disable-next-line eqeqeq
-      t => t.networkId == 2 && t.symbol === symbol,
+      t => Number(t?.networkId) == 2 && t?.symbol === symbol,
     )
     const contractHash = token
       ? token.scriptHash
@@ -252,69 +252,73 @@ export const calculateN3Fees = ({
       const FROM_ACCOUNT = new n3Wallet.Account(wif)
       const tokenBalances = getTokenBalances(state)
       const tokensBalanceMap = keyBy(tokenBalances, 'symbol')
-      const { tokens } = await getSettings()
+      const settings = await getSettings()
+      const tokens = settings?.tokens ?? []
 
-      let endpoint = await getNode(net)
-      if (!endpoint) {
-        endpoint = await getRPCEndpoint(net)
-      }
-      const client = new n3Rpc.NeoServerRpcClient(endpoint)
-
-      const intents = buildNep17IntentsFromEntries(
-        sendEntries,
-        tokens,
-        tokensBalanceMap,
-        { account: FROM_ACCOUNT },
-      )
-
-      const txBuilder = new n3Api.TransactionBuilder()
-      for (const intent of intents) {
-        if (intent.decimalAmt) {
-          const [tokenInfo] = await n3Api.getTokenInfos(
-            [intent.contractHash],
-            client,
-          )
-          const amt = n3U.BigInteger.fromDecimal(
-            intent.decimalAmt,
-            tokenInfo.decimals,
-          )
-          txBuilder.addNep17Transfer(
-            intent.from,
-            intent.to,
-            intent.contractHash,
-            amt,
-          )
+      if (tokens.length) {
+        let endpoint = await getNode(net)
+        if (!endpoint) {
+          endpoint = await getRPCEndpoint(net)
         }
+        const client = new n3Rpc.NeoServerRpcClient(endpoint)
+
+        const intents = buildNep17IntentsFromEntries(
+          sendEntries,
+          tokens,
+          tokensBalanceMap,
+          { account: FROM_ACCOUNT },
+        )
+
+        const txBuilder = new n3Api.TransactionBuilder()
+        for (const intent of intents) {
+          if (intent.decimalAmt) {
+            const [tokenInfo] = await n3Api.getTokenInfos(
+              [intent.contractHash],
+              client,
+            )
+            const amt = n3U.BigInteger.fromDecimal(
+              intent.decimalAmt,
+              tokenInfo.decimals,
+            )
+            txBuilder.addNep17Transfer(
+              intent.from,
+              intent.to,
+              intent.contractHash,
+              amt,
+            )
+          }
+        }
+        const {
+          feePerByte,
+          executionFeeFactor,
+        } = await n3Api.getFeeInformation(client)
+
+        const txn = txBuilder.build()
+
+        const networkFee = await n3Api.calculateNetworkFee(
+          txn,
+          feePerByte,
+          executionFeeFactor,
+        )
+
+        const invokeFunctionResponse = await client.invokeScript(
+          n3U.HexString.fromHex(txn.script),
+          [
+            {
+              account: FROM_ACCOUNT.scriptHash,
+              scopes: tx.WitnessScope.CalledByEntry,
+            },
+          ],
+        )
+        const requiredSystemFee = n3U.BigInteger.fromNumber(
+          invokeFunctionResponse.gasconsumed,
+        )
+
+        return resolve({
+          systemFee: requiredSystemFee.toDecimal(8),
+          networkFee: networkFee.toDecimal(8),
+        })
       }
-      const { feePerByte, executionFeeFactor } = await n3Api.getFeeInformation(
-        client,
-      )
-
-      const txn = txBuilder.build()
-
-      const networkFee = await n3Api.calculateNetworkFee(
-        txn,
-        feePerByte,
-        executionFeeFactor,
-      )
-
-      const invokeFunctionResponse = await client.invokeScript(
-        n3U.HexString.fromHex(txn.script),
-        [
-          {
-            account: FROM_ACCOUNT.scriptHash,
-            scopes: tx.WitnessScope.CalledByEntry,
-          },
-        ],
-      )
-      const requiredSystemFee = n3U.BigInteger.fromNumber(
-        invokeFunctionResponse.gasconsumed,
-      )
-
-      return resolve({
-        systemFee: requiredSystemFee.toDecimal(8),
-        networkFee: networkFee.toDecimal(8),
-      })
     } catch (e) {
       console.error(e)
       reject(e)
