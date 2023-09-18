@@ -100,6 +100,4 @@ export const updateSettingsActions = createActions(
   (values: Settings = {}) => (): Promise<Settings> => updateSettings(values),
 )
 
-export default createActions(ID, () => async (): Promise<Settings> => {
-  return getSettings()
-})
+export default createActions(ID, () => (): Promise<Settings> => getSettings())
