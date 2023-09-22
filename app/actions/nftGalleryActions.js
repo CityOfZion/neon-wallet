@@ -23,14 +23,14 @@ export type NftGalleryItem = {
 
 export type NftGalleryResults = {
   results: NftGalleryItem[],
-  count: number,
   page: number,
+  hasMore: boolean,
 }
 
 const DEFAULT_NFT_GALLERY_RESULTS = (previousResults?: NftGalleryItem[]) => ({
   results: previousResults ?? [],
   page: 0,
-  count: 0,
+  hasMore: false,
 })
 
 export async function parseGhostMarketResults({
@@ -49,9 +49,9 @@ export async function parseGhostMarketResults({
       `https://api.ghostmarket.io/api/v2/assets?chain=n3&owners[]=${address}&size=${SIZE}&page=${page}&getTotal=true`,
     )
 
-    const { assets, total: count } = response?.data
+    const { assets, next } = response?.data
 
-    if (!assets || !assets.length || !count)
+    if (!assets || !assets.length)
       return DEFAULT_NFT_GALLERY_RESULTS(previousResults)
 
     const results = assets.map(
@@ -70,7 +70,11 @@ export async function parseGhostMarketResults({
       }),
     )
 
-    return { results: previousResults.concat(results), page, count }
+    return {
+      results: previousResults.concat(results),
+      page,
+      hasMore: !!next && assets.length === SIZE,
+    }
   } catch (e) {
     console.error('An error occurred fetching data for NFT gallery', { e })
     return DEFAULT_NFT_GALLERY_RESULTS(previousResults)
