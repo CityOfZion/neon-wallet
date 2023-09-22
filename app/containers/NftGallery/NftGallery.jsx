@@ -25,10 +25,9 @@ type Props = {
   networkId: string,
   net: string,
   page: number,
-  // count: number,
+  count: number,
   isWatchOnly: boolean,
   showModal: (type: string, props: any) => any,
-  hasMore: boolean,
 }
 
 export function NFT({
@@ -119,7 +118,7 @@ export default function NFTGallery({
   loading,
   page,
   fetchAddtionalNFTData,
-  hasMore,
+  count,
   isWatchOnly,
   showModal,
 }: Props) {
@@ -207,7 +206,7 @@ export default function NFTGallery({
                   )
                 })}
 
-                {hasMore && (
+                {count !== results.length && (
                   <div className={styles.loadMoreButton}>
                     <Button
                       onClick={() =>
