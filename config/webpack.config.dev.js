@@ -82,13 +82,6 @@ module.exports = {
         },
       },
       {
-        test: /(@cityofzion\/wallet-connect-sdk-wallet-core\/node_modules).*\.(ts|js)x?$/,
-        loader: 'babel-loader',
-        options: {
-          presets: [['@babel/preset-env', { targets: 'defaults' }]],
-        },
-      },
-      {
         test: /(@cityofzion\/neon-invoker).*\.(ts|js)x?$/,
         loader: 'babel-loader',
         options: {
