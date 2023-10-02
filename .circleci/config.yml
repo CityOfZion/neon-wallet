@@ -85,9 +85,7 @@ jobs:
       size: "medium"
     steps:
       - checkout
-      - node/install:
-          install-yarn: true
-          node-version: '16.20'
+      - run: choco install nodejs-16.20.1
       - run: node --version
       - run: npm install --global --production windows-build-tools --vs2015
       - run: npm config set msvs_version 2015 -g
