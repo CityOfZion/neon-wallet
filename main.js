@@ -14,6 +14,11 @@ const path = require('path')
 const url = require('url')
 const { autoUpdater } = require('electron-updater')
 const log = require('electron-log')
+const electronDevToolsInstaller = require('electron-devtools-installer')
+
+const installExtension = electronDevToolsInstaller.default
+const REACT_DEVELOPER_TOOLS = electronDevToolsInstaller.REACT_DEVELOPER_TOOLS
+const REDUX_DEVTOOLS = electronDevToolsInstaller.REDUX_DEVTOOLS
 
 const port = process.env.PORT || 3000
 
@@ -55,14 +60,16 @@ app.on('open-url', (_event, url) => {
   mainWindow.webContents.send('link', url)
 })
 
-// adapted from https://github.com/chentsulin/electron-react-boilerplate
-const installExtensions = () => {
-  const installer = require('electron-devtools-installer') // eslint-disable-line import/no-extraneous-dependencies
-  const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS']
-
-  return Promise.all(
-    extensions.map(name => installer.default(installer[name])),
-  ).catch(console.error)
+async function installExtensions() {
+  const extensions = [REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS]
+  const promises = extensions.map(extension =>
+    installExtension(extension)
+      // eslint-disable-next-line
+      .then(name => console.log(`Added Extension:  ${name}`))
+      // eslint-disable-next-line
+      .catch(err => console.log('An error occurred: ', err)),
+  )
+  await Promise.all(promises)
 }
 
 app.on('ready', () => {
@@ -80,9 +87,10 @@ app.on('ready', () => {
       titleBarStyle: 'hidden',
       frame: false,
       show: false,
-      icon: path.join(__dirname, 'icons/png/64x64.png'),
       contextIsolation: true,
+      sandbox: false,
       webPreferences: {
+        sandbox: false,
         enableRemoteModule: true,
         contextIsolation: false,
         allowRunningInsecureContent: false,
@@ -207,7 +215,9 @@ app.on('ready', () => {
   })
 
   if (process.env.NODE_ENV === 'development') {
-    installExtensions().then(() => onAppReady())
+    app.whenReady().then(() => {
+      installExtensions().then(() => onAppReady())
+    })
   } else {
     onAppReady()
   }
