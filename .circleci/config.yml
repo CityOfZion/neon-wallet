@@ -64,6 +64,7 @@ jobs:
           destination: build
 
   build_macos:
+    no_output_timeout: 20m
     macos:
       xcode: "14.0.0"
     steps:
