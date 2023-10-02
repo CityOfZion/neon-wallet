@@ -4,6 +4,7 @@
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",
   "homepage": "https://github.com/CityOfZion/neon-wallet",
+  "author": "Maxwell Lasky <mlasky46@gmail.com> (https://github.com/comountainclimber)",
   "scripts": {
     "audit:fix": "npm_config_yes=true npx yarn-audit-fix",
     "postinstall": "electron-builder install-app-deps",
