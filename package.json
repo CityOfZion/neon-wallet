@@ -4,6 +4,7 @@
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",
   "homepage": "https://github.com/CityOfZion/neon-wallet",
+  "author": "Maxwell Lasky <mlasky46@gmail.com> (https://github.com/comountainclimber)",
   "scripts": {
     "audit:fix": "npm_config_yes=true npx yarn-audit-fix",
     "postinstall": "electron-builder install-app-deps",
@@ -139,6 +140,7 @@
     "dotenv-cli": "^4.0.0",
     "ecc-jsbn": "0.2.0",
     "electron-context-menu": "0.9.1",
+    "electron-devtools-installer": "3.2.0",
     "electron-json-storage": "4.6.0",
     "electron-log": "^4.2.4",
     "electron-save-file": "1.0.2",
@@ -230,7 +232,6 @@
     "electron": "26.2.1",
     "electron-builder": "23.3.3",
     "electron-builder-notarize": "^1.2.0",
-    "electron-devtools-installer": "3.2.0",
     "electron-packager": "15.5.0",
     "electron-rebuild": "^3.2.9",
     "enzyme": "3.7.0",
