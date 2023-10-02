@@ -87,7 +87,6 @@ app.on('ready', () => {
       titleBarStyle: 'hidden',
       frame: false,
       show: false,
-      icon: path.join(__dirname, 'icons/png/64x64.png'),
       contextIsolation: true,
       sandbox: false,
       webPreferences: {

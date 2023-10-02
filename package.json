@@ -6,6 +6,7 @@
   "homepage": "https://github.com/CityOfZion/neon-wallet",
   "author": "Ethan Fast <ejhfast@gmail.com> (https://github.com/Ejhfast)",
   "scripts": {
+    "audit:fix": "npm_config_yes=true npx yarn-audit-fix",
     "postinstall": "electron-builder install-app-deps",
     "start": "cross-env NODE_ENV=production electron .",
     "assets": "cross-env NODE_ENV=production webpack --config ./config/webpack.config.prod --progress",
