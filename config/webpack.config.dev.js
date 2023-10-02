@@ -50,6 +50,8 @@ module.exports = {
   },
   node: {
     __dirname: false,
+    fs: 'empty',
+    global: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -68,38 +70,17 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /@?(@walletconnect).*\.(ts|js)x?$/,
-        loader: 'babel-loader',
-        options: {
-          presets: [['@babel/preset-env', { targets: 'defaults' }]],
-        },
-      },
-      {
-        test: /(@cityofzion\/blockchain-service|@cityofzion\/bs-neo3\/node_modules).*\.(ts|js)x?$/,
-        loader: 'babel-loader',
-        options: {
-          presets: [['@babel/preset-env', { targets: 'defaults' }]],
-        },
-      },
-      {
-        test: /(@cityofzion\/wallet-connect-sdk-wallet-core\/node_modules).*\.(ts|js)x?$/,
-        loader: 'babel-loader',
-        options: {
-          presets: [['@babel/preset-env', { targets: 'defaults' }]],
-        },
-      },
-      {
-        test: /(@cityofzion\/neon-invoker).*\.(ts|js)x?$/,
-        loader: 'babel-loader',
-        options: {
-          presets: [['@babel/preset-env', { targets: 'defaults' }]],
-        },
-      },
-      {
-        test: /(@cityofzion\/neon-parser).*\.(ts|js)x?$/,
-        loader: 'babel-loader',
-        options: {
-          presets: [['@babel/preset-env', { targets: 'defaults' }]],
+        test: /\.m?js$/,
+        include: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [['@babel/preset-env', { targets: 'defaults' }]],
+            plugins: [
+              '@babel/plugin-proposal-nullish-coalescing-operator',
+              '@babel/plugin-proposal-optional-chaining',
+            ],
+          },
         },
       },
       {

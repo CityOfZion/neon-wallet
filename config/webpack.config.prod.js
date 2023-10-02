@@ -68,20 +68,18 @@ module.exports = {
   ],
   module: {
     rules: [
-      // Must be added to support syntax used in several of the wallet
-      // connect dependencies => https://github.com/WalletConnect/walletconnect-monorepo/issues/1349
       {
-        test: /@?(@walletconnect).*\.(ts|js)x?$/,
-        loader: 'babel-loader',
-        options: {
-          presets: [['@babel/preset-env', { targets: 'defaults' }]],
-        },
-      },
-      {
-        test: /(@cityofzion[\\/](neon-parser|neon-invoker|blockchain-service|bs-neo3|wallet-connect-sdk-wallet-core)|neon-parser[\\/]node_modules|neon-invoker[\\/]node_modules|blockchain-service[\\/]node_modules|bs-neo3[\\/]node_modules|wallet-connect-sdk-wallet-core[\\/]node_modules).*\.(ts|js)x?$/,
-        loader: 'babel-loader',
-        options: {
-          presets: [['@babel/preset-env', { targets: 'defaults' }]],
+        test: /\.m?js$/,
+        include: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [['@babel/preset-env', { targets: 'defaults' }]],
+            plugins: [
+              '@babel/plugin-proposal-nullish-coalescing-operator',
+              '@babel/plugin-proposal-optional-chaining',
+            ],
+          },
         },
       },
       {
