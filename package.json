@@ -229,7 +229,7 @@
     "babel-plugin-module-resolver": "3.1.1",
     "cross-env": "5.1.1",
     "css-loader": "4.2.0",
-    "electron": "26.2.1",
+    "electron": "26.2.4",
     "electron-builder": "23.3.3",
     "electron-builder-notarize": "^1.2.0",
     "electron-packager": "15.5.0",
