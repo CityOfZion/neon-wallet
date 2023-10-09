@@ -288,7 +288,10 @@
     "decompress-zip": "^0.2.2",
     "https-proxy-agent": "^2.2.3",
     "node-abi": "^3.47.0",
-    "better-sqlite3": "8.7.0"
+    "better-sqlite3": "8.7.0",
+    "@ledgerhq/hw-transport": "6.27.2",
+    "@ledgerhq/logs": "6.10.0",
+    "@ledgerhq/errors": "6.10.1"
   },
   "jest": {
     "moduleNameMapper": {
