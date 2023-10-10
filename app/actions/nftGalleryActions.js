@@ -54,8 +54,8 @@ export async function parseGhostMarketResults({
     if (!assets || !assets.length)
       return DEFAULT_NFT_GALLERY_RESULTS(previousResults)
 
-    const results = assets.map(
-      ({ metadata, collection, contract, tokenId }) => ({
+    const results = assets
+      .map(({ metadata, collection, contract, tokenId }) => ({
         metadata: {
           description: metadata.description,
           mediaUri: metadata.mediaUri,
@@ -67,8 +67,8 @@ export async function parseGhostMarketResults({
         collection: {
           name: collection.name,
         },
-      }),
-    )
+      }))
+      .filter(asset => !asset.metadata.mediaType.includes('webp'))
 
     return {
       results: previousResults.concat(results),
