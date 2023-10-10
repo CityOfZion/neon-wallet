@@ -139,8 +139,10 @@ export async function computeN3Activity(
                 item.notifications[0]?.state[3]?.value,
               )
 
-              if (imageResults?.data?.assets?.length) {
-                image = imageResults.data.assets[0].metadata.mediaUri
+              const result = imageResults?.data?.assets[0]
+
+              if (result && result.metadata.mediaType.includes('webp')) {
+                image = result.metadata.mediaUri
               }
             }
             break
@@ -150,7 +152,7 @@ export async function computeN3Activity(
         // check for gas claim
         if (
           invocation.metadata.scripthash ===
-            '0xef4073a0f2b305a38ec4050e4d3d28bc40ea63f5' &&
+          '0xef4073a0f2b305a38ec4050e4d3d28bc40ea63f5' &&
           invocation.metadata.amount === 0
         ) {
           invocation.type = 'CLAIM'
