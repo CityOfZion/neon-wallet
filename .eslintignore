@@ -1,4 +1,5 @@
-app/flow-typed/*
-app/translations/*
-dist/*
-__tests__/*
+node_modules
+dist
+out
+.gitignore
+.env
