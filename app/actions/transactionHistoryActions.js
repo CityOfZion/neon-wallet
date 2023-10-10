@@ -152,7 +152,7 @@ export async function computeN3Activity(
         // check for gas claim
         if (
           invocation.metadata.scripthash ===
-          '0xef4073a0f2b305a38ec4050e4d3d28bc40ea63f5' &&
+            '0xef4073a0f2b305a38ec4050e4d3d28bc40ea63f5' &&
           invocation.metadata.amount === 0
         ) {
           invocation.type = 'CLAIM'
