@@ -120,7 +120,7 @@
     "@cityofzion/neon-js-legacy": "npm:@cityofzion/neon-js@3.11.9",
     "@cityofzion/neon-js-legacy-latest": "npm:@cityofzion/neon-js@4.9.0",
     "@cityofzion/neon-ledger-next": "npm:@cityofzion/neon-ledger@5.0.0-next.14",
-    "@cityofzion/wallet-connect-sdk-wallet-react": "2.5.4",
+    "@cityofzion/wallet-connect-sdk-wallet-react": "3.0.1",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@formatjs/intl-pluralrules": "^1.5.2",
@@ -136,6 +136,7 @@
     "cleave.js": "1.0.7",
     "compare-versions": "3.1.0",
     "coveralls": "3.0.11",
+    "crypto-browserify": "^3.12.0",
     "dotenv-cli": "^4.0.0",
     "ecc-jsbn": "0.2.0",
     "electron-context-menu": "0.9.1",
@@ -225,7 +226,7 @@
     "babel-eslint": "10.1.0",
     "babel-jest": "^23.4.2",
     "babel-loader": "8.2.5",
-    "babel-plugin-module-resolver": "3.1.1",
+    "babel-plugin-module-resolver": "^5.0.0",
     "cross-env": "5.1.1",
     "css-loader": "4.2.0",
     "electron": "19.0.8",
@@ -294,7 +295,8 @@
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.(svg)$": "<rootDir>/__mocks__/svgMock.js",
       "\\.(css|less|sass|scss)$": "identity-obj-proxy",
-      "^lodash-es$": "lodash"
+      "^lodash-es$": "lodash",
+      "^node:crypto$": "<rootDir>/node_modules/crypto-browserify"
     },
     "testPathIgnorePatterns": [
       "__tests__/testHelpers.js",
