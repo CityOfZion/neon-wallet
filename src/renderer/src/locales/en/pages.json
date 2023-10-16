@@ -1,0 +1,7 @@
+{
+  "welcome": {
+    "title": "Welcome to Neon Wallet",
+    "createWalletButtonLabel": "Create a new wallet",
+    "setupSecurityButtonLabel": "Set up security"
+  }
+}

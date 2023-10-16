@@ -5,36 +5,36 @@
 @font-face {
   font-family: 'SofiaPro-Light';
   font-weight: lighter;
-  src: url('../assets/fonts/sofiapro-light-webfont.woff') format('woff');
+  src: url('../fonts/sofiapro-light-webfont.woff') format('woff');
 }
 
 @font-face {
   font-family: 'SofiaPro';
-  src: url('../assets/fonts/sofiapro-regular-webfont.woff') format('woff');
+  src: url('../fonts/sofiapro-regular-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'SofiaPro';
-  src: url('../assets/fonts/sofiapro-regularitalic-webfont.woff') format('woff');
+  src: url('../fonts/sofiapro-regularitalic-webfont.woff') format('woff');
   font-style: italic;
 }
 
 @font-face {
   font-family: 'SofiaPro-Medium';
-  src: url('../assets/fonts/sofiapro-medium-webfont.woff') format('woff');
+  src: url('../fonts/sofiapro-medium-webfont.woff') format('woff');
   font-style: normal;
 }
 
 @font-face {
   font-family: 'SofiaPro-SemiBold';
-  src: url('../assets/fonts/sofiapro-semibold-webfont.woff') format('woff');
+  src: url('../fonts/sofiapro-semibold-webfont.woff') format('woff');
   font-style: normal;
 }
 
 @font-face {
   font-family: 'SofiaPro-Bold';
   font-weight: bolder;
-  src: url('../assets/fonts/sofiapro-bold-webfont.woff') format('woff');
+  src: url('../fonts/sofiapro-bold-webfont.woff') format('woff');
 }
