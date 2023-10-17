@@ -23,34 +23,36 @@ export type NftGalleryItem = {
 
 export type NftGalleryResults = {
   results: NftGalleryItem[],
-  page: number,
+  cursor?: string,
   hasMore: boolean,
+}
+
+function buildGhostMaketUrl(address: string, size: number, cursor?: string) {
+  const resultCursor = cursor ? `&cursor=${cursor}` : ''
+  const url = `https://api.ghostmarket.io/api/v2/assets?chain=n3&owners[]=${address}&size=${size}${resultCursor}`
+  return url
 }
 
 const DEFAULT_NFT_GALLERY_RESULTS = (previousResults?: NftGalleryItem[]) => ({
   results: previousResults ?? [],
-  page: 0,
   hasMore: false,
 })
 
 export async function parseGhostMarketResults({
   address,
-  page = 1,
   previousResults = [],
+  cursor,
 }: {
   address: string,
-  page: number,
+  cursor?: string,
   previousResults: NftGalleryItem[],
 }): Promise<NftGalleryResults> {
   try {
-    const SIZE = 8
+    const size = 6
 
-    const response = await axios.get(
-      `https://api.ghostmarket.io/api/v2/assets?chain=n3&owners[]=${address}&size=${SIZE}&page=${page}&getTotal=true`,
-    )
+    const response = await axios.get(buildGhostMaketUrl(address, size, cursor))
 
     const { assets, next } = response?.data
-
     if (!assets || !assets.length)
       return DEFAULT_NFT_GALLERY_RESULTS(previousResults)
 
@@ -72,8 +74,8 @@ export async function parseGhostMarketResults({
 
     return {
       results: previousResults.concat(results),
-      page,
-      hasMore: !!next && assets.length === SIZE,
+      next,
+      hasMore: !!next && assets.length === size,
     }
   } catch (e) {
     console.error('An error occurred fetching data for NFT gallery', { e })
@@ -83,12 +85,12 @@ export async function parseGhostMarketResults({
 
 export default createActions(
   ID,
-  ({ address, page, previousResults }) => async (): Promise<
+  ({ address, cursor, previousResults }) => async (): Promise<
     NftGalleryResults,
   > => {
     switch (true) {
       case NFT_PROVIDER === GHOST_MARKET:
-        return parseGhostMarketResults({ address, page, previousResults })
+        return parseGhostMarketResults({ address, cursor, previousResults })
 
       default:
         return parseGhostMarketResults(address)
