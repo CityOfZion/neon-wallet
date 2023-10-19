@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { MdLockOutline, MdStarOutline } from 'react-icons/md'
 import { Button } from '@renderer/components/Button'
+import { Link } from '@renderer/components/Link'
 import { WelcomeLayout } from '@renderer/layouts/Welcome'
 
 import { WelcomeCard } from './WelcomeCard'
@@ -29,8 +30,13 @@ export const WelcomePage = () => {
       </ul>
 
       <div className="flex gap-x-5 ">
-        <Button label={t('setupSecurityButtonLabel')} leftIcon={<MdLockOutline />} variant="contained" />
-        <Button label={t('createWalletButtonLabel')} leftIcon={<MdStarOutline />} variant="outlined" />
+        <Link
+          to="/security-setup"
+          label={t('setupSecurityButtonLabel')}
+          leftIcon={<MdLockOutline />}
+          variant="contained"
+        />
+        <Button label={t('skipSecurityButtonLabel')} leftIcon={<MdStarOutline />} variant="outlined" />
       </div>
     </WelcomeLayout>
   )
