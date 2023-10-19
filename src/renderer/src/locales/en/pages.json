@@ -28,5 +28,9 @@
     "buttonPrintLabel": "Print backup",
     "buttonContinueLabel": "Open your new wallet",
     "firstWalletName": "My First Wallet"
+  },
+  "portfolio": {
+    "title": "Portfolio",
+    "buttonRefreshLabel": "Refresh"
   }
 }
