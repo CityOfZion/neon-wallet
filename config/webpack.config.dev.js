@@ -103,6 +103,13 @@ module.exports = {
         },
       },
       {
+        test: /(@cityofzion\/neon-dappkit).*\.(ts|js)x?$/,
+        loader: 'babel-loader',
+        options: {
+          presets: [['@babel/preset-env', { targets: 'defaults' }]],
+        },
+      },
+      {
         test: /\.jsx?$/,
         use: {
           loader: 'babel-loader',

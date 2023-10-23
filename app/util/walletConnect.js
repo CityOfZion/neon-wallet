@@ -183,12 +183,14 @@ export const walletConnectOptions: TOptions = {
     'getWalletInfo',
     'getNetworkVersion',
     'traverseIterator',
+    'calculateFee',
   ],
   autoAcceptMethods: [
     'testInvoke',
     'getWalletInfo',
     'getNetworkVersion',
     'traverseIterator',
+    'calculateFee',
   ],
   adapter: new WalletConnectNeonAdapter(),
 }

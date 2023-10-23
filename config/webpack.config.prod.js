@@ -78,7 +78,7 @@ module.exports = {
         },
       },
       {
-        test: /(@cityofzion[\\/](neon-parser|neon-invoker|blockchain-service|bs-neo3|wallet-connect-sdk-wallet-core)|neon-parser[\\/]node_modules|neon-invoker[\\/]node_modules|blockchain-service[\\/]node_modules|bs-neo3[\\/]node_modules|wallet-connect-sdk-wallet-core[\\/]node_modules).*\.(ts|js)x?$/,
+        test: /(@cityofzion[\\/](neon-parser|neon-invoker|blockchain-service|bs-neo3|wallet-connect-sdk-wallet-core)|neon-parser|neon-dappkit[\\/]node_modules|neon-invoker[\\/]node_modules|blockchain-service[\\/]node_modules|bs-neo3[\\/]node_modules|wallet-connect-sdk-wallet-core[\\/]node_modules).*\.(ts|js)x?$/,
         loader: 'babel-loader',
         options: {
           presets: [['@babel/preset-env', { targets: 'defaults' }]],
