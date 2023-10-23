@@ -14,6 +14,7 @@ import ErrorBoundary from '../../components/ErrorBoundaries/Main'
 import FramelessNavigation from '../../components/FramelessNavigation'
 import { parseQuery } from '../../core/formatters'
 import withSettingsContext from '../../hocs/withSettingsContext'
+import { getInformationFromSession } from '../../util/walletConnect'
 
 const ipc = require('electron').ipcRenderer
 
@@ -133,18 +134,17 @@ const App = ({
 
   useEffect(
     () => {
-      const disconnectAllDaps = async () => {
-        await Promise.all(sessions.map(session => disconnect(session)))
-        ipc.send('closed')
-      }
+      if (!address || !sessions.length) return
 
-      ipc.on('quit', disconnectAllDaps)
+      const [{ address: connectedAddress }] = getInformationFromSession(
+        sessions[0],
+      )
 
-      return () => {
-        ipc.off('quit', disconnectAllDaps)
+      if (connectedAddress !== address) {
+        Promise.all(sessions.map(session => disconnect(session)))
       }
     },
-    [sessions, disconnect],
+    [address],
   )
 
   return (
