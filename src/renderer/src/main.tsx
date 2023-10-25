@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 
-import { setupI18n } from './libs/i18next'
+import { setupI18n } from './setup/i18next'
 import { App } from './App'
 
 import './assets/css/index.css'

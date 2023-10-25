@@ -3,12 +3,21 @@ module.exports = {
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
+    'plugin:react-hooks/recommended',
     '@electron-toolkit/eslint-config-ts/recommended',
     '@electron-toolkit/eslint-config-prettier',
     'plugin:@tanstack/eslint-plugin-query/recommended',
   ],
   plugins: ['@tanstack/query', 'simple-import-sort'],
   rules: {
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        varsIgnorePattern: '^_',
+        argsIgnorePattern: '^_',
+      },
+    ],
     '@tanstack/query/exhaustive-deps': 'error',
     '@tanstack/query/prefer-query-object-syntax': 'error',
     'simple-import-sort/exports': 'error',

@@ -19,7 +19,8 @@
     "build:win": "npm run build && electron-builder --win --config",
     "build:mac": "electron-vite build && electron-builder --mac --config",
     "build:linux": "electron-vite build && electron-builder --linux --config",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "i18next:interfaces": "i18next-resources-for-ts interface -i src/renderer/src/locales/en -o src/renderer/src/@types/i18next-resources.d.ts"
   },
   "dependencies": {
     "@cityofzion/blockchain-service": "0.7.1",
@@ -34,11 +35,16 @@
     "dotenv": "^16.3.1",
     "electron-updater": "^6.1.1",
     "i18next": "^23.5.1",
+    "i18next-resources-for-ts": "^1.3.3",
+    "jspdf": "^2.5.1",
+    "react-hook-form": "^7.47.0",
     "react-i18next": "^13.3.0",
     "react-icons": "^4.11.0",
     "react-redux": "^8.1.2",
     "react-router-dom": "^6.15.0",
+    "react-to-print": "^2.14.15",
     "redux-persist": "^6.0.0",
+    "uuid": "^9.0.1",
     "vite-plugin-node-polyfills": "^0.14.0"
   },
   "devDependencies": {
@@ -49,6 +55,7 @@
     "@types/node": "^20.6.0",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
+    "@types/uuid": "^9.0.6",
     "@vitejs/plugin-react": "^4.0.4",
     "autoprefixer": "^10.4.15",
     "electron": "^27.0.0",
@@ -56,6 +63,7 @@
     "electron-vite": "^1.0.27",
     "eslint": "^8.47.0",
     "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "husky": "^8.0.0",
     "lint-staged": "^14.0.1",

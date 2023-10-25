@@ -1,0 +1,13 @@
+{
+  "general": {
+    "continue": "Continue"
+  },
+  "wallet": {
+    "firstWalletName": "My First Wallet",
+    "firstWalletNameBackupFile": "My First Wallet Backup",
+    "firstWalletNameBackupFileTitle": "YOUR MNEMONIC PHRASE:"
+  },
+  "account": {
+    "defaultName": "Account {{accountNumber}}"
+  }
+}
