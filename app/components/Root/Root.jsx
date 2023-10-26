@@ -8,7 +8,7 @@ import { WalletConnectWalletProvider } from '@cityofzion/wallet-connect-sdk-wall
 import { SettingsContextProvider } from '../../context/settings/SettingsContext'
 import IntlWrapper from './IntlWrapper'
 import Routes from './Routes'
-import { ContactsContextProvider } from '../../context/contacts/ContactsContext'
+import ContactsContextProvider from '../../context/contacts'
 import { walletConnectOptions } from '../../util/walletConnect'
 
 type Props = {

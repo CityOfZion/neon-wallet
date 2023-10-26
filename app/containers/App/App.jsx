@@ -147,6 +147,16 @@ const App = ({
     [address],
   )
 
+  useEffect(() => {
+    const listener = () => ipc.send('closed')
+
+    ipc.on('quit', listener)
+
+    return () => {
+      ipc.off('quit', listener)
+    }
+  }, [])
+
   return (
     <ErrorBoundary>
       <div style={themes[theme]} className={styles.container}>
