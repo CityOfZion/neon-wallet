@@ -2,7 +2,11 @@
 import React, { useContext, useEffect } from 'react'
 import { BSNeo3 } from '@cityofzion/bs-neo3'
 
+import { shell } from 'electron'
 import { getStorage, setStorage } from '../../core/storage'
+
+import style from './ContactsContext.scss'
+import { COZ_DISCORD_LINK } from '../../core/constants'
 
 export type ContactInfo = {
   address: string,
@@ -36,32 +40,61 @@ export const useContactsContext = () => useContext(ContactsContext)
 
 export const ContactsContextProvider = ({
   children,
+  showErrorNotification,
 }: {
   children: React$Node,
+  showErrorNotification: Function,
 }) => {
   const [contacts, setContacts] = React.useState({})
 
   const getContacts = async (): Promise<Contacts> => {
-    const contacts = await getStorage(STORAGE_KEY)
-    const deprecatedLegacyContacts = await getStorage(DEPRECATED_STORAGE_KEY)
-    const deprecatedN3Contacts = await getStorage(DEPRECATED_N3_STORAGE_KEY)
-    // transform the deprecated contacts into the new format
-    const newContacts = {}
-    // eslint-disable-next-line guard-for-in
-    for (const contactName in deprecatedLegacyContacts) {
-      const contactAddress = deprecatedLegacyContacts[contactName]
-      if (typeof contactAddress === 'string') {
-        newContacts[contactName] = [{ address: contactAddress, chain: 'neo2' }]
+    try {
+      const contacts = await getStorage(STORAGE_KEY)
+      const deprecatedLegacyContacts = await getStorage(DEPRECATED_STORAGE_KEY)
+      const deprecatedN3Contacts = await getStorage(DEPRECATED_N3_STORAGE_KEY)
+      // transform the deprecated contacts into the new format
+      const newContacts = {}
+      // eslint-disable-next-line guard-for-in
+      for (const contactName in deprecatedLegacyContacts) {
+        const contactAddress = deprecatedLegacyContacts[contactName]
+        if (typeof contactAddress === 'string') {
+          newContacts[contactName] = [
+            { address: contactAddress, chain: 'neo2' },
+          ]
+        }
       }
-    }
-    // eslint-disable-next-line guard-for-in
-    for (const contactName in deprecatedN3Contacts) {
-      const contactAddress = deprecatedN3Contacts[contactName]
-      if (typeof contactAddress === 'string') {
-        newContacts[contactName] = [{ address: contactAddress, chain: 'neo3' }]
+      // eslint-disable-next-line guard-for-in
+      for (const contactName in deprecatedN3Contacts) {
+        const contactAddress = deprecatedN3Contacts[contactName]
+        if (typeof contactAddress === 'string') {
+          newContacts[contactName] = [
+            { address: contactAddress, chain: 'neo3' },
+          ]
+        }
       }
+      return { ...contacts, ...newContacts }
+    } catch (error) {
+      setTimeout(() => {
+        showErrorNotification({
+          message: (
+            <div className={style.notification}>
+              <p>Error decrypting your contacts. Please contact us on</p>
+              <a
+                onClick={event => {
+                  event.stopPropagation()
+                  shell.openExternal(COZ_DISCORD_LINK)
+                }}
+              >
+                discord
+              </a>
+            </div>
+          ),
+          autoDismiss: 60 * 5,
+          dismissible: false,
+        })
+      }, 1000)
+      throw error
     }
-    return { ...contacts, ...newContacts }
   }
 
   const saveContacts = async (contacts: Contacts): Promise<any> =>

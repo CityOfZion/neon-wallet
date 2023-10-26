@@ -26,7 +26,7 @@ const overrideStyles = (theme: string) => ({
       marginBottom: '10px',
       display: 'flex',
       alignItems: 'center',
-      paddingLeft: '60px',
+      paddingLeft: '25px',
       paddingRight: '50px',
       borderRadius: '4px',
       color: '#FFF',

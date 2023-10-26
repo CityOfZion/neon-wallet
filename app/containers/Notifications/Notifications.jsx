@@ -35,34 +35,41 @@ class Notifications extends Component<Props> {
 
       difference(notificationIds, systemNotificationsIds).forEach(
         notificationId => {
+          const notification = notifications.find(
+            notification => notification.id === notificationId,
+          )
+          if (!notification) return
+
           this.rnsRef.addNotification({
+            ...notification,
             children: (
-              <div
-                className={classNames(
-                  style.icon,
-                  'notification-hidden',
-                  'notification-visible',
-                )}
-              >
+              <div className={classNames(style.container)}>
                 <div
                   className={classNames(
+                    style.icon,
                     {
-                      [style.warnIcon]: notifications[0].level === 'warning',
+                      [style.warnIcon]: notification.level === 'warning',
                     },
-                    { [style.errorIcon]: notifications[0].level === 'error' },
+                    { [style.errorIcon]: notification.level === 'error' },
                     {
-                      [style.successIcon]: notifications[0].level === 'success',
+                      [style.successIcon]: notification.level === 'success',
                     },
                   )}
                 >
-                  {this.renderIcon(notifications[0].level)}
+                  {this.renderIcon(notification.level)}
                 </div>
+
+                {typeof notification.message === 'string' ? (
+                  <div className={style.message}>
+                    <p>{notification.message}</p>
+                  </div>
+                ) : (
+                  notification.message
+                )}
               </div>
             ),
             uid: notificationId,
-            ...notifications.find(
-              notification => notification.id === notificationId,
-            ),
+            message: undefined,
             onRemove: () => {
               hideNotification(notificationId)
             },

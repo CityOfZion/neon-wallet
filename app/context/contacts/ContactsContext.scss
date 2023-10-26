@@ -1,0 +1,9 @@
+.notification {
+  display: flex;
+  align-items: center;
+  margin: 0 0 0 6px;
+
+  > a {
+    margin-left: 4px;
+  }
+}
