@@ -6,11 +6,7 @@
   },
   "securitySetup": {
     "title": "Welcome to Neon Wallet",
-    "steps": [
-      "Create Password",
-      "Confirm Password",
-      "Complete"
-    ]
+    "steps": ["Create Password", "Confirm Password", "Complete"]
   },
   "securitySetupStep1": {
     "formTitle": "Please create a password to secure your wallet",
@@ -32,5 +28,12 @@
   "portfolio": {
     "title": "Portfolio",
     "buttonRefreshLabel": "Refresh"
+  },
+  "login": {
+    "title": "Welcome to Neon Wallet",
+    "loginPassword": "Login Password",
+    "passwordPlaceholder": "Please enter your password",
+    "buttonLoginLabel": "Login",
+    "invalidPassword": "Invalid password"
   }
 }

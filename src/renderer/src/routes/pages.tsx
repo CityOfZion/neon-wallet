@@ -1,4 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom'
+import { PrivateRoute } from '@renderer/components/PrivateRoute'
+import { LoginPage } from '@renderer/pages/Login'
 import { PortfolioPage } from '@renderer/pages/Portfolio'
 import { SecuritySetupPage } from '@renderer/pages/SecuritySetup'
 import { SecuritySetupStep1Page } from '@renderer/pages/SecuritySetup/SecuritySetupStep1'
@@ -7,7 +9,14 @@ import { SecuritySetupStep3Page } from '@renderer/pages/SecuritySetup/SecuritySe
 import { WelcomePage } from '@renderer/pages/Welcome'
 
 export const pageRouter = createBrowserRouter([
-  { path: '/', element: <PortfolioPage /> },
+  {
+    path: '/',
+    element: (
+      <PrivateRoute>
+        <PortfolioPage />
+      </PrivateRoute>
+    ),
+  },
   { path: '/welcome', element: <WelcomePage /> },
   {
     path: '/security-setup',
@@ -26,5 +35,9 @@ export const pageRouter = createBrowserRouter([
         element: <SecuritySetupStep3Page />,
       },
     ],
+  },
+  {
+    path: '/login',
+    element: <LoginPage />,
   },
 ])
