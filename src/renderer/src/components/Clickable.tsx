@@ -15,10 +15,10 @@ const Outline = ({ leftIcon, label, disabled, ...props }: TClickableProps) => {
     <div
       {...props}
       className={twMerge(
-        'flex items-center w-full h-12  border rounded py-3 px-5 gap-x-2.5 cursor-pointer  transition-colors',
+        'flex items-center w-full h-12 border rounded py-3 px-5 gap-x-2.5 cursor-pointer  transition-colors',
         disabled
           ? 'border-gray-100/50 text-gray-100/50 cursor-not-allowed'
-          : 'text-neon border-neon hover:bg-gray-200/15',
+          : 'text-neon border-neon hover:bg-gray-mid/15',
         props.className
       )}
     >

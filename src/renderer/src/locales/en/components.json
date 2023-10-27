@@ -1,0 +1,17 @@
+{
+  "sidebar": {
+    "portfolio": "Portfolio",
+    "wallets": "Wallets",
+    "settings": "Settings",
+    "logout": "Logout",
+    "send": "Send",
+    "receive": "Receive",
+    "nfts": "NFTs",
+    "contacts": "Contacts",
+    "news": "News",
+    "mobile": "Mobile app",
+    "link": {
+      "isNew": "New"
+    }
+  }
+}

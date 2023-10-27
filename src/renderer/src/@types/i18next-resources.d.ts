@@ -12,6 +12,23 @@ interface Resources {
       defaultName: 'Account {{accountNumber}}'
     }
   }
+  components: {
+    sidebar: {
+      portfolio: 'Portfolio'
+      wallets: 'Wallets'
+      settings: 'Settings'
+      logout: 'Logout'
+      send: 'Send'
+      receive: 'Receive'
+      nfts: 'NFTs'
+      contacts: 'Contacts'
+      news: 'News'
+      mobile: 'Mobile app'
+      link: {
+        isNew: 'New'
+      }
+    }
+  }
   pages: {
     welcome: {
       title: 'Welcome to Neon Wallet'
@@ -38,6 +55,10 @@ interface Resources {
       buttonPrintLabel: 'Print backup'
       buttonContinueLabel: 'Open your new wallet'
       firstWalletName: 'My First Wallet'
+    }
+    portfolio: {
+      title: 'Portfolio'
+      buttonRefreshLabel: 'Refresh'
     }
   }
 }
