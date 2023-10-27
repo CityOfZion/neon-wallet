@@ -13,5 +13,10 @@
     "link": {
       "isNew": "New"
     }
+  },
+  "walletSelect": {
+    "title": "Wallets",
+    "placeholder": "Select a wallet...",
+    "createWalletButtonLabel": "Create New wallet"
   }
 }

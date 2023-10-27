@@ -1,0 +1,29 @@
+<svg width="29" height="34" viewBox="0 0 29 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d_200_1355)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M3 4.67059C3 3.74795 3.74795 3 4.67059 3H16.8097C17.4953 3 18.1642 3.21064 18.7261 3.60342L22.5716 6.29161C23.4667 6.91738 24 7.94079 24 9.033V27.3294C24 28.252 23.252 29 22.3294 29H4.67059C3.74795 29 3 28.252 3 27.3294V4.67059Z" fill="#3C4C56"/>
+</g>
+<g filter="url(#filter1_i_200_1355)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M3 20.8105H13.6847C14.3119 20.8105 14.8204 21.319 14.8204 21.9463V21.9463C14.8204 22.5736 14.3119 23.082 13.6847 23.082H3" fill="#00DDB4"/>
+</g>
+<defs>
+<filter id="filter0_d_200_1355" x="0" y="0" width="29" height="34" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dx="1" dy="1"/>
+<feGaussianBlur stdDeviation="2"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.136111 0 0 0 0 0.146296 0 0 0 0 0.166667 0 0 0 1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_200_1355"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_200_1355" result="shape"/>
+</filter>
+<filter id="filter1_i_200_1355" x="3" y="20.8105" width="11.8204" height="2.77148" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="0.5"/>
+<feGaussianBlur stdDeviation="0.25"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"/>
+<feBlend mode="normal" in2="shape" result="effect1_innerShadow_200_1355"/>
+</filter>
+</defs>
+</svg>

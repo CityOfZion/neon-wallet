@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
-import { useDispatch } from 'react-redux'
 import { TBlockchainServiceKey } from '@renderer/@types/blockchain'
 import { TWalletType } from '@renderer/@types/store'
+import { accountColorsKeys } from '@renderer/constants/blockchain'
 import { UtilsHelper } from '@renderer/helpers/UtilsHelper'
 import { accountReducerActions } from '@renderer/store/account/AccountReducer'
 import { selectBsAggregator } from '@renderer/store/blockchain/SelectorBlockchain'
@@ -12,7 +12,7 @@ import { Account } from '../store/account/Account'
 import { selectAccounts } from '../store/account/SelectorAccount'
 import { Wallet } from '../store/wallet/Wallet'
 
-import useSelectorRef from './useSelectorRef'
+import { useAppDispatch, useAppSelectorRef } from './useRedux'
 
 export type TAccountToImport = {
   address: string
@@ -36,21 +36,11 @@ export type TWalletToCreate = {
   mnemonic?: string
 }
 
-const accountColors = {
-  0: '#00ddb4',
-  1: '#22b1ff',
-  2: '#7c4bfe',
-  3: '#d355e7',
-  4: '#fe872f',
-  5: '#fedd5b',
-  6: '#91abbc',
-}
-
 export function useBlockchainActions() {
-  const dispatch = useDispatch()
-  const accounts = useSelectorRef(selectAccounts)
-  const bsAggregator = useSelectorRef(selectBsAggregator)
-  const encryptedPassword = useSelectorRef(state => state.settings.encryptedPassword)
+  const dispatch = useAppDispatch()
+  const accounts = useAppSelectorRef(selectAccounts)
+  const bsAggregator = useAppSelectorRef(selectBsAggregator)
+  const encryptedPassword = useAppSelectorRef(state => state.settings.encryptedPassword)
 
   const createWallet = useCallback(
     async ({ name, walletType, mnemonic }: TWalletToCreate) => {
@@ -97,7 +87,7 @@ export function useBlockchainActions() {
         idWallet: wallet.id,
         name,
         blockchain,
-        backgroundColor: accountColors[UtilsHelper.getRandomNumber(6)],
+        backgroundColor: accountColorsKeys[UtilsHelper.getRandomNumber(6)],
         address: generatedAccount.address,
         accountType: wallet.walletType,
         encryptedKey,
@@ -123,7 +113,7 @@ export function useBlockchainActions() {
         idWallet: wallet.id,
         name: name ?? `Account`,
         blockchain,
-        backgroundColor: accountColors[UtilsHelper.getRandomNumber(6)],
+        backgroundColor: accountColorsKeys[UtilsHelper.getRandomNumber(6)],
         address,
         accountType: type,
         encryptedKey,

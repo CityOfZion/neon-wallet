@@ -28,6 +28,11 @@ interface Resources {
         isNew: 'New'
       }
     }
+    walletSelect: {
+      title: 'Wallets'
+      placeholder: 'Select a wallet...'
+      createWalletButtonLabel: 'Create New wallet'
+    }
   }
   pages: {
     welcome: {
@@ -66,6 +71,17 @@ interface Resources {
       passwordPlaceholder: 'Please enter your password'
       buttonLoginLabel: 'Login'
       invalidPassword: 'Invalid password'
+    }
+    wallets: {
+      title: 'Wallets'
+      addAccountButtonLabel: 'Add Account'
+      editWalletButtonLabel: 'Edit Wallet'
+      reorderAccountsButtonLabel: 'Reorder Accounts'
+      buttonRefreshLabel: 'Refresh'
+      addWatchAccountButtonLabel: 'Add Watch'
+      importButtonLabel: 'Import'
+      newWalletButtonLabel: 'New Wallet'
+      manageButtonLabel: 'Manage'
     }
   }
 }

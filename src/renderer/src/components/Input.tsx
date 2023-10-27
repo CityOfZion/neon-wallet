@@ -1,6 +1,6 @@
 import { forwardRef, useState } from 'react'
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md'
-import { twMerge } from 'tailwind-merge'
+import { StyleHelper } from '@renderer/helpers/StyleHelper'
 
 import { IconButton } from './IconButton'
 
@@ -20,11 +20,14 @@ export const Input = forwardRef<HTMLInputElement, TProps>(
     }
 
     return (
-      <div className={twMerge('relative w-full', containerClassName)}>
+      <div className={StyleHelper.mergeStyles('relative w-full', containerClassName)}>
         <input
-          className={twMerge(
+          className={StyleHelper.mergeStyles(
             'h-12 rounded bg-asphalt ring-2 ring-transparent w-full px-5 py-2 outline-none text-sm font-medium placeholder:text-white text-neon',
-            errorMessage ? 'ring-magenta' : 'focus:ring-neon',
+            {
+              'ring-magenta': !!errorMessage,
+              'focus:ring-neon': !errorMessage,
+            },
             className
           )}
           type={realType}

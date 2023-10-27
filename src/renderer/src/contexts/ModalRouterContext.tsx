@@ -1,7 +1,7 @@
 import { createContext, useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { THistory, TModalRouterContextValue, TModalRouterProviderProps } from '@renderer/@types/modal'
-import { twMerge } from 'tailwind-merge'
+import { StyleHelper } from '@renderer/helpers/StyleHelper'
 
 type ModalProps = {
   children: React.ReactNode
@@ -40,7 +40,7 @@ const Modal = ({ children, onClose, history }: ModalProps) => {
 
   return (
     <div
-      className={twMerge(
+      className={StyleHelper.mergeStyles(
         'fixed left-0 top-0 w-screen h-screen flex justify-end bg-gray-black/50 backdrop-blur-sm',
         className
       )}

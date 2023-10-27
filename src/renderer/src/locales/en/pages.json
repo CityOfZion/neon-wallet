@@ -6,7 +6,11 @@
   },
   "securitySetup": {
     "title": "Welcome to Neon Wallet",
-    "steps": ["Create Password", "Confirm Password", "Complete"]
+    "steps": [
+      "Create Password",
+      "Confirm Password",
+      "Complete"
+    ]
   },
   "securitySetupStep1": {
     "formTitle": "Please create a password to secure your wallet",
@@ -35,5 +39,16 @@
     "passwordPlaceholder": "Please enter your password",
     "buttonLoginLabel": "Login",
     "invalidPassword": "Invalid password"
+  },
+  "wallets": {
+    "title": "Wallets",
+    "addAccountButtonLabel": "Add Account",
+    "editWalletButtonLabel": "Edit Wallet",
+    "reorderAccountsButtonLabel": "Reorder Accounts",
+    "buttonRefreshLabel": "Refresh",
+    "addWatchAccountButtonLabel": "Add Watch",
+    "importButtonLabel": "Import",
+    "newWalletButtonLabel": "New Wallet",
+    "manageButtonLabel": "Manage"
   }
 }

@@ -1,33 +1,40 @@
-import { ComponentProps } from 'react'
+import { ComponentProps, ReactNode } from 'react'
 import { Sidebar } from '@renderer/components/Sidebar'
-import { twMerge } from 'tailwind-merge'
+import { StyleHelper } from '@renderer/helpers/StyleHelper'
 
-type Props = {
-  children?: React.ReactNode
-  title: string | JSX.Element
+export type TMainLayoutProps = {
+  children?: ReactNode
+  heading: JSX.Element | string
   rightComponent?: JSX.Element
   contentClassName?: string
+  headerClassName?: string
 } & ComponentProps<'div'>
 
 export const MainLayout = ({
-  title,
+  heading,
   children,
   contentClassName,
+  headerClassName,
   className,
   rightComponent,
   ...props
-}: Props): JSX.Element => {
+}: TMainLayoutProps): JSX.Element => {
   return (
-    <div className={twMerge('flex', className)} {...props}>
+    <div className={StyleHelper.mergeStyles('flex', className)} {...props}>
       <Sidebar />
       <div className="flex-grow flex flex-col bg-asphalt text-white px-7 py-4">
-        <header className="border-b border-b-gray-mid/30 h-12 flex justify-between items-center pb-4">
-          {typeof title === 'string' ? <h1 className="text-sm font-bold">{title}</h1> : title}
+        <header
+          className={StyleHelper.mergeStyles(
+            'border-b border-b-gray-200/30 min-h-12 flex justify-between items-center pb-4',
+            headerClassName
+          )}
+        >
+          {typeof heading === 'string' ? <h1 className="text-sm font-bold">{heading}</h1> : heading}
 
           {rightComponent}
         </header>
 
-        <main className={twMerge('flex flex-col flex-grow py-5', contentClassName)}>{children}</main>
+        <main className={StyleHelper.mergeStyles('flex flex-col flex-grow pt-5', contentClassName)}>{children}</main>
       </div>
     </div>
   )

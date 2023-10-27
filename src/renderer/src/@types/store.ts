@@ -33,3 +33,4 @@ export interface ISettingsState {
 }
 
 export type RootState = ReturnType<typeof RootStore.reducers>
+export type AppDispatch = typeof RootStore.store.dispatch
