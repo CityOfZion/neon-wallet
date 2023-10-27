@@ -6,6 +6,9 @@ import { ROUTES } from '../../core/constants'
 import InvokeFunction from '../../components/DappRequest/InvokeFunction'
 import VerifyMessage from '../../components/DappRequest/VerifyMessage'
 import SignMessage from '../../components/DappRequest/SignMessage'
+import Encrypt from '../../components/DappRequest/Encrypt'
+import Decrypt from '../../components/DappRequest/Decrypt'
+import DecryptFromArray from '../../components/DappRequest/DecryptFromArray'
 
 type Props = {
   history: any,
@@ -16,6 +19,9 @@ const componentsByMethod: { [key: string]: any } = {
   invokeFunction: InvokeFunction,
   signMessage: SignMessage,
   verifyMessage: VerifyMessage,
+  encrypt: Encrypt,
+  decrypt: Decrypt,
+  decryptFromArray: DecryptFromArray,
 }
 
 const DappRequest = ({ history, showErrorNotification }: Props) => {

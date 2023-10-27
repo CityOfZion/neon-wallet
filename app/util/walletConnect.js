@@ -184,6 +184,9 @@ export const walletConnectOptions: TOptions = {
     'getNetworkVersion',
     'traverseIterator',
     'calculateFee',
+    'encrypt',
+    'decrypt',
+    'decryptFromArray',
   ],
   autoAcceptMethods: [
     'testInvoke',

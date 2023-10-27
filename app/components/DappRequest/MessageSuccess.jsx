@@ -9,30 +9,32 @@ import CheckMarkIcon from '../../assets/icons/confirm-circle.svg'
 
 type Props = {
   isVerify: boolean,
+  text?: string,
 }
 
-const MessageSuccess = ({ isVerify }: Props) => (
-  <FullHeightPanel
-    headerText="Wallet Connect"
-    renderCloseButton={() => <CloseButton routeTo={ROUTES.DASHBOARD} />}
-    renderHeaderIcon={() => (
-      <div>
-        <WallletConnect />
+const MessageSuccess = ({ isVerify, text }: Props) => {
+  const message =
+    text ??
+    `You have successfully ${!isVerify ? 'signed' : 'verified'} the message!`
+  return (
+    <FullHeightPanel
+      headerText="Wallet Connect"
+      renderCloseButton={() => <CloseButton routeTo={ROUTES.DASHBOARD} />}
+      renderHeaderIcon={() => (
+        <div>
+          <WallletConnect />
+        </div>
+      )}
+      renderInstructions={false}
+    >
+      <div className={styles.txSuccessContainer}>
+        <CheckMarkIcon />
+        <h3>{message}</h3>
+        <br />
+        <br />
       </div>
-    )}
-    renderInstructions={false}
-  >
-    <div className={styles.txSuccessContainer}>
-      <CheckMarkIcon />
-      <h3>
-        You have successfully
-        {!isVerify ? ' signed ' : ' verified '}
-        the message!
-      </h3>
-      <br />
-      <br />
-    </div>
-  </FullHeightPanel>
-)
+    </FullHeightPanel>
+  )
+}
 
 export default MessageSuccess
