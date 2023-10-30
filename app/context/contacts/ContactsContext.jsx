@@ -90,7 +90,6 @@ export const ContactsContextProvider = ({
             </div>
           ),
           autoDismiss: 60 * 5,
-          dismissible: false,
         })
       }, 1000)
       throw error
