@@ -29,7 +29,7 @@ type Props = {
   showErrorNotification: ({ message: string }) => any,
 }
 
-const VerifyMessage = ({
+const DecryptFromArray = ({
   request,
   session,
   isHardwareLogin,
@@ -66,7 +66,7 @@ const VerifyMessage = ({
   if (loading) return <ConnectionLoader />
 
   return success ? (
-    <MessageSuccess text="You have successfully verified your message" />
+    <MessageSuccess text="You have successfully decrypted your messages" />
   ) : (
     <FullHeightPanel
       headerText="Wallet Connect"
@@ -87,7 +87,7 @@ const VerifyMessage = ({
         ])}
       >
         <img src={session.peer.metadata.icons[0]} />
-        <h3>{session.peer.metadata.name} wants you to verify a message</h3>
+        <h3>{session.peer.metadata.name} wants you to decrypt a message</h3>
 
         {isHardwareLogin && (
           <DialogueBox
@@ -101,45 +101,43 @@ const VerifyMessage = ({
             renderText={() => (
               <div>
                 You can view the message below however, the N3 ledger app does
-                not currently support message signing/verification.
+                not currently support decrypt.
               </div>
             )}
             className={styles.warningDialogue}
           />
         )}
-
         <div className={styles.connectionDetails}>
-          <div
-            className={styles.details}
-            style={{ margin: '12px 0', padding: '12px' }}
-          >
-            <div>
-              {!isEmpty(request.params.request.params) &&
-                Object.entries(request.params.request.params).map(
-                  ([key, value]) => (
-                    <div key={key}>
-                      <div
-                        className={classNames([
-                          styles.detailsLabel,
-                          styles.detailRow,
-                        ])}
-                      >
-                        <label>{key}</label>
-                      </div>
-                      <div
-                        className={styles.methodParameter}
-                        style={{
-                          wordBreak: 'break-all',
-                          fontSize: 12,
-                        }}
-                      >
-                        {JSON.stringify(value)}
-                      </div>
+          {request.params.request.params.map(decryptArrayData => (
+            <div
+              className={styles.details}
+              style={{ margin: '12px 0', padding: '12px' }}
+            >
+              <div>
+                {Object.entries(decryptArrayData[0]).map(([key, value]) => (
+                  <div key={key}>
+                    <div
+                      className={classNames([
+                        styles.detailsLabel,
+                        styles.detailRow,
+                      ])}
+                    >
+                      <label>{key}</label>
                     </div>
-                  ),
-                )}
+                    <div
+                      className={styles.methodParameter}
+                      style={{
+                        wordBreak: 'break-all',
+                        fontSize: 12,
+                      }}
+                    >
+                      {JSON.stringify(value)}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          ))}
         </div>
 
         {!isHardwareLogin && (
@@ -157,4 +155,4 @@ const VerifyMessage = ({
   )
 }
 
-export default VerifyMessage
+export default DecryptFromArray

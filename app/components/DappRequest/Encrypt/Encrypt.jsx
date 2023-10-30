@@ -1,7 +1,6 @@
 // @flow
 import React, { useState } from 'react'
 import classNames from 'classnames'
-import { isEmpty } from 'lodash-es'
 
 import {
   useWalletConnectWallet,
@@ -29,7 +28,7 @@ type Props = {
   showErrorNotification: ({ message: string }) => any,
 }
 
-const VerifyMessage = ({
+const Encrypt = ({
   request,
   session,
   isHardwareLogin,
@@ -66,7 +65,7 @@ const VerifyMessage = ({
   if (loading) return <ConnectionLoader />
 
   return success ? (
-    <MessageSuccess text="You have successfully verified your message" />
+    <MessageSuccess text="You have successfully encrypted your message" />
   ) : (
     <FullHeightPanel
       headerText="Wallet Connect"
@@ -87,7 +86,7 @@ const VerifyMessage = ({
         ])}
       >
         <img src={session.peer.metadata.icons[0]} />
-        <h3>{session.peer.metadata.name} wants you to verify a message</h3>
+        <h3>{session.peer.metadata.name} asks for authentication</h3>
 
         {isHardwareLogin && (
           <DialogueBox
@@ -101,7 +100,7 @@ const VerifyMessage = ({
             renderText={() => (
               <div>
                 You can view the message below however, the N3 ledger app does
-                not currently support message signing/verification.
+                not currently support encrypt method.
               </div>
             )}
             className={styles.warningDialogue}
@@ -113,31 +112,15 @@ const VerifyMessage = ({
             className={styles.details}
             style={{ margin: '12px 0', padding: '12px' }}
           >
-            <div>
-              {!isEmpty(request.params.request.params) &&
-                Object.entries(request.params.request.params).map(
-                  ([key, value]) => (
-                    <div key={key}>
-                      <div
-                        className={classNames([
-                          styles.detailsLabel,
-                          styles.detailRow,
-                        ])}
-                      >
-                        <label>{key}</label>
-                      </div>
-                      <div
-                        className={styles.methodParameter}
-                        style={{
-                          wordBreak: 'break-all',
-                          fontSize: 12,
-                        }}
-                      >
-                        {JSON.stringify(value)}
-                      </div>
-                    </div>
-                  ),
-                )}
+            <div
+              className={styles.detailsLabel}
+              style={{ marginBottom: '6px' }}
+            >
+              <label>Encrypt</label>
+            </div>
+            <div className={styles.wcMessageContents}>
+              {request.params.request.params[0]}
+              {JSON.stringify(request.params.request.params)}
             </div>
           </div>
         </div>
@@ -157,4 +140,4 @@ const VerifyMessage = ({
   )
 }
 
-export default VerifyMessage
+export default Encrypt

@@ -29,7 +29,7 @@ type Props = {
   showErrorNotification: ({ message: string }) => any,
 }
 
-const VerifyMessage = ({
+const Decrypt = ({
   request,
   session,
   isHardwareLogin,
@@ -66,7 +66,7 @@ const VerifyMessage = ({
   if (loading) return <ConnectionLoader />
 
   return success ? (
-    <MessageSuccess text="You have successfully verified your message" />
+    <MessageSuccess text="You have successfully decrypted your message" />
   ) : (
     <FullHeightPanel
       headerText="Wallet Connect"
@@ -87,7 +87,7 @@ const VerifyMessage = ({
         ])}
       >
         <img src={session.peer.metadata.icons[0]} />
-        <h3>{session.peer.metadata.name} wants you to verify a message</h3>
+        <h3>{session.peer.metadata.name} wants you to decrypt a message</h3>
 
         {isHardwareLogin && (
           <DialogueBox
@@ -101,7 +101,7 @@ const VerifyMessage = ({
             renderText={() => (
               <div>
                 You can view the message below however, the N3 ledger app does
-                not currently support message signing/verification.
+                not currently support decrypt.
               </div>
             )}
             className={styles.warningDialogue}
@@ -115,7 +115,7 @@ const VerifyMessage = ({
           >
             <div>
               {!isEmpty(request.params.request.params) &&
-                Object.entries(request.params.request.params).map(
+                Object.entries(request.params.request.params[0]).map(
                   ([key, value]) => (
                     <div key={key}>
                       <div
@@ -157,4 +157,4 @@ const VerifyMessage = ({
   )
 }
 
-export default VerifyMessage
+export default Decrypt

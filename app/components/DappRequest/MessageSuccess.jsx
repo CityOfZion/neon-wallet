@@ -8,10 +8,10 @@ import styles from '../../containers/ConnectDapp/styles.scss'
 import CheckMarkIcon from '../../assets/icons/confirm-circle.svg'
 
 type Props = {
-  isVerify: boolean,
+  text: string,
 }
 
-const MessageSuccess = ({ isVerify }: Props) => (
+const MessageSuccess = ({ text }: Props) => (
   <FullHeightPanel
     headerText="Wallet Connect"
     renderCloseButton={() => <CloseButton routeTo={ROUTES.DASHBOARD} />}
@@ -24,11 +24,7 @@ const MessageSuccess = ({ isVerify }: Props) => (
   >
     <div className={styles.txSuccessContainer}>
       <CheckMarkIcon />
-      <h3>
-        You have successfully
-        {!isVerify ? ' signed ' : ' verified '}
-        the message!
-      </h3>
+      <h3>{text}</h3>
       <br />
       <br />
     </div>
