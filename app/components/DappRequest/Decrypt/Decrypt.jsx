@@ -66,7 +66,7 @@ const Decrypt = ({
   if (loading) return <ConnectionLoader />
 
   return success ? (
-    <MessageSuccess isVerify />
+    <MessageSuccess text="You have successfully decrypted your message" />
   ) : (
     <FullHeightPanel
       headerText="Wallet Connect"

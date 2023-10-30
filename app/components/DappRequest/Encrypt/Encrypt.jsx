@@ -65,10 +65,7 @@ const Encrypt = ({
   if (loading) return <ConnectionLoader />
 
   return success ? (
-    <MessageSuccess
-      text="You have successfully encrypted your text"
-      isVerify={false}
-    />
+    <MessageSuccess text="You have successfully encrypted your message" />
   ) : (
     <FullHeightPanel
       headerText="Wallet Connect"

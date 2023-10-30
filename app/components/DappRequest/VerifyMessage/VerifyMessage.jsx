@@ -66,7 +66,7 @@ const VerifyMessage = ({
   if (loading) return <ConnectionLoader />
 
   return success ? (
-    <MessageSuccess isVerify />
+    <MessageSuccess text="You have successfully verified your message" />
   ) : (
     <FullHeightPanel
       headerText="Wallet Connect"
