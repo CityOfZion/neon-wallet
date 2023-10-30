@@ -1,7 +1,7 @@
 // @flow
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
-import { withCall, withData, withActions } from 'spunky'
+import { withData, withActions } from 'spunky'
 
 import withLoadingProp from '../../hocs/withLoadingProp'
 
@@ -13,11 +13,10 @@ import withNetworkData from '../../hocs/withNetworkData'
 import { showModal } from '../../modules/modal'
 import { showSuccessNotification } from '../../modules/notifications'
 import withSuccessNotification from '../../hocs/withSuccessNotification'
-import dashboardActions from '../../actions/dashboardActions'
 
 const mapNFTGalleryActionsToProps = actions => ({
-  fetchAddtionalNFTData: (address, page, results) =>
-    actions.call({ address, page, previousResults: results }),
+  fetchAddtionalNFTData: (address, results, cursor) =>
+    actions.call({ address, cursor, previousResults: results }),
   showModal,
   showSuccessNotification,
 })

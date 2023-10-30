@@ -18,13 +18,17 @@ const { TRANSFER_NFT } = MODAL_TYPES
 const electron = require('electron')
 
 type Props = {
-  fetchAddtionalNFTData: (address: string, page: number, results: Object) => [],
+  fetchAddtionalNFTData: (
+    address: string,
+    results: Object,
+    cursor?: string,
+  ) => [],
   results: Object,
   address: string,
   loading: boolean,
   networkId: string,
   net: string,
-  page: number,
+  next?: string,
   // count: number,
   isWatchOnly: boolean,
   showModal: (type: string, props: any) => any,
@@ -117,7 +121,7 @@ export default function NFTGallery({
   address,
   results,
   loading,
-  page,
+  next,
   fetchAddtionalNFTData,
   hasMore,
   isWatchOnly,
@@ -211,7 +215,7 @@ export default function NFTGallery({
                   <div className={styles.loadMoreButton}>
                     <Button
                       onClick={() =>
-                        fetchAddtionalNFTData(address, page + 1, results)
+                        fetchAddtionalNFTData(address, results, next)
                       }
                       primary
                       disabled={loading}
