@@ -10,7 +10,7 @@ export const WelcomePage = () => {
   const { t } = useTranslation('pages', { keyPrefix: 'welcome' })
 
   return (
-    <WelcomeLayout title={t('title')} bigger>
+    <WelcomeLayout heading={t('title')} bigger>
       <ul className="flex gap-x-12 mt-14 flex-grow ">
         <li>
           <WelcomeCard />

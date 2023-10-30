@@ -1,18 +1,13 @@
 import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { useDispatch } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { ReactComponent as LoginIcon } from '@renderer/assets/images/loginIcon.svg'
 import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
-import { UtilsHelper } from '@renderer/helpers/UtilsHelper'
-import useSelectorRef from '@renderer/hooks/useSelectorRef'
+import { useAppDispatch, useAppSelectorRef } from '@renderer/hooks/useRedux'
 import { WelcomeLayout } from '@renderer/layouts/Welcome'
-import { selectAccounts } from '@renderer/store/account/SelectorAccount'
-import { selectBsAggregator } from '@renderer/store/blockchain/SelectorBlockchain'
 import { settingsReducerActions } from '@renderer/store/settings/SettingsReducer'
-import { selectWallets } from '@renderer/store/wallet/SelectorWallet'
 
 type TFormData = {
   password: string
@@ -22,11 +17,8 @@ export const LoginPage = () => {
   const { t } = useTranslation('pages', { keyPrefix: 'login' })
   const form = useForm<TFormData>()
   const location = useLocation()
-  const wallets = useSelectorRef(selectWallets)
-  const accounts = useSelectorRef(selectAccounts)
-  const bsAggregator = useSelectorRef(selectBsAggregator)
-  const isFirstTimeRef = useSelectorRef(state => state.settings.isFirstTime)
-  const dispatch = useDispatch()
+  const isFirstTimeRef = useAppSelectorRef(state => state.settings.isFirstTime)
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
   const hasSomeError = Object.keys(form.formState.errors).length > 0
@@ -44,25 +36,7 @@ export const LoginPage = () => {
     }
 
     try {
-      const encryptedPassword = await window.api.encryptBasedOS(data.password)
-
-      const walletPromises = wallets.current.map(async wallet => {
-        if (!wallet.encryptedMnemonic) return
-        const mnemonic = await window.api.decryptBasedEncryptedSecret(wallet.encryptedMnemonic, encryptedPassword)
-        const isMnemonicValid = UtilsHelper.isMnemonic(mnemonic)
-        if (!isMnemonicValid) throw new Error()
-      })
-
-      const accountPromises = accounts.current.map(async account => {
-        if (!account.encryptedKey) return
-        const key = await window.api.decryptBasedEncryptedSecret(account.encryptedKey, encryptedPassword)
-        const service = bsAggregator.current.blockchainServicesByName[account.blockchain]
-        const isKeyValid = service.validateKey(key)
-        if (!isKeyValid) throw new Error()
-      })
-
-      await Promise.all([...walletPromises, ...accountPromises])
-      dispatch(settingsReducerActions.setEncryptedPassword(encryptedPassword))
+      await dispatch(settingsReducerActions.login({ password: data.password })).unwrap()
       navigate(location.state.from ?? '/')
     } catch {
       form.setError('password', { message: t('invalidPassword') })
@@ -70,7 +44,7 @@ export const LoginPage = () => {
   }
 
   return (
-    <WelcomeLayout title={t('title')}>
+    <WelcomeLayout heading={t('title')}>
       <form
         className="w-full flex-grow flex flex-col justify-between mt-12 items-center"
         onSubmit={form.handleSubmit(handleSubmit)}

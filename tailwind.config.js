@@ -40,6 +40,7 @@ module.exports = {
         800: '#293139', // darker
         700: '#333D46', // dark
         600: '#42525C', // dark_mid
+        400: '#91abbc',
         200: '#818D95', // mid
         100: '#B0C0C8', //light
       },
@@ -47,6 +48,9 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['SofiaPro', 'sans-serif'],
+      },
+      backdropBlur: {
+        md: '10px',
       },
       opacity: {
         15: '0.15',

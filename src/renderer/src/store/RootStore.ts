@@ -23,14 +23,13 @@ export class RootStore {
 
   static store = configureStore({
     reducer: RootStore.reducers,
-    middleware: getDefaultMiddleware => [
-      ...getDefaultMiddleware({
+    middleware: getDefaultMiddleware =>
+      getDefaultMiddleware({
         serializableCheck: {
           ignoredPaths: ['blockchain.bsAggregator'],
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
       }),
-    ],
   })
 
   static persistor = persistStore(RootStore.store)

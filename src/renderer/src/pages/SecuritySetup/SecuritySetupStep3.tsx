@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MdDownload, MdOutlinePrint } from 'react-icons/md'
-import { useDispatch } from 'react-redux'
 import { useReactToPrint } from 'react-to-print'
 import { generateMnemonic } from '@cityofzion/bs-asteroid-sdk'
 import { Button } from '@renderer/components/Button'
 import { Link } from '@renderer/components/Link'
 import { useBlockchainActions } from '@renderer/hooks/useBlockchainActions'
+import { useAppDispatch } from '@renderer/hooks/useRedux'
 import { settingsReducerActions } from '@renderer/store/settings/SettingsReducer'
 import jsPDF from 'jspdf'
 
@@ -21,7 +21,7 @@ export const SecuritySetupStep3Page = () => {
   const wordsRef = useRef<string[]>()
   const alreadyPopulatedRef = useRef(false)
   const printElementRef = useRef<HTMLDivElement>(null)
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const handlePrint = useReactToPrint({
     content: () => printElementRef.current,

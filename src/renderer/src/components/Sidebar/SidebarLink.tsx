@@ -1,7 +1,7 @@
 import { cloneElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
-import { twMerge } from 'tailwind-merge'
+import { StyleHelper } from '@renderer/helpers/StyleHelper'
 
 type Props = {
   icon: JSX.Element
@@ -11,7 +11,7 @@ type Props = {
   isNew?: boolean
 }
 
-export const Link = ({ icon, title, to, disabled, isNew }: Props): JSX.Element => {
+export const SidebarLink = ({ icon, title, to, disabled, isNew }: Props): JSX.Element => {
   const { t } = useTranslation('components', { keyPrefix: 'sidebar.link' })
 
   const handleClick: React.MouseEventHandler<HTMLAnchorElement> = event => {
@@ -25,13 +25,14 @@ export const Link = ({ icon, title, to, disabled, isNew }: Props): JSX.Element =
         to={to}
         onClick={handleClick}
         className={({ isActive }) => {
-          return twMerge(
-            'group text-white text-2xs flex flex-col justify-center items-center gap-1 py-2.5 w-full transition-color relative',
-            isActive
-              ? 'border-l-[3px] border-l-neon bg-asphalt shadow-inner-md pr-[3px]'
-              : disabled
-              ? 'bg-transparent opacity-40 cursor-not-allowed'
-              : 'bg-transparent cursor-pointer opacity-60 hover:border-l-neon hover:border-l-[3px] hover:pr-[3px] hover:bg-asphalt hover:shadow-inner-md  hover:opacity-100'
+          return StyleHelper.mergeStyles(
+            'group text-white text-2xs flex flex-col justify-center items-center gap-1 py-2.5 w-full transition-colors relative',
+            {
+              'border-l-[3px] border-l-neon bg-asphalt shadow-inner-md pr-[3px]': isActive,
+              'bg-transparent opacity-40 cursor-not-allowed': !isActive && disabled,
+              'bg-transparent cursor-pointer opacity-60 hover:border-l-neon hover:border-l-[3px] hover:pr-[3px] hover:bg-asphalt hover:shadow-inner-md  hover:opacity-100':
+                !isActive && !disabled,
+            }
           )
         }}
       >

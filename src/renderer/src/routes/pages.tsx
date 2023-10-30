@@ -6,6 +6,7 @@ import { SecuritySetupPage } from '@renderer/pages/SecuritySetup'
 import { SecuritySetupStep1Page } from '@renderer/pages/SecuritySetup/SecuritySetupStep1'
 import { SecuritySetupStep2Page } from '@renderer/pages/SecuritySetup/SecuritySetupStep2'
 import { SecuritySetupStep3Page } from '@renderer/pages/SecuritySetup/SecuritySetupStep3'
+import { WalletsPage } from '@renderer/pages/Wallets'
 import { WelcomePage } from '@renderer/pages/Welcome'
 
 export const pageRouter = createBrowserRouter([
@@ -14,6 +15,14 @@ export const pageRouter = createBrowserRouter([
     element: (
       <PrivateRoute>
         <PortfolioPage />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: '/wallets',
+    element: (
+      <PrivateRoute>
+        <WalletsPage />
       </PrivateRoute>
     ),
   },

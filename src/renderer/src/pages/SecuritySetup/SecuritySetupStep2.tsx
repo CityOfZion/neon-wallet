@@ -1,9 +1,9 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { useDispatch } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
+import { useAppDispatch } from '@renderer/hooks/useRedux'
 import { settingsReducerActions } from '@renderer/store/settings/SettingsReducer'
 
 type TFormData = {
@@ -16,7 +16,7 @@ export const SecuritySetupStep2Page = () => {
   const { t } = useTranslation('pages', { keyPrefix: 'securitySetupStep2' })
   const { t: commonT } = useTranslation('common')
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const hasSomeError = Object.keys(form.formState.errors).length > 0
 

@@ -10,14 +10,22 @@ import {
   TbStepOut,
   TbUsers,
 } from 'react-icons/tb'
+import { useAppDispatch } from '@renderer/hooks/useRedux'
+import { settingsReducerActions } from '@renderer/store/settings/SettingsReducer'
 
 import { ReactComponent as NeonLogoIcon } from '../../assets/images/neon-wallet-compact.svg'
 import { ReactComponent as WalletIcon } from '../../assets/images/wallet-icon.svg'
 
-import { Link } from './Link'
+import { SidebarButton } from './SidebarButton'
+import { SidebarLink } from './SidebarLink'
 
 export const Sidebar = (): JSX.Element => {
   const { t } = useTranslation('components', { keyPrefix: 'sidebar' })
+  const dispatch = useAppDispatch()
+
+  const handleLogout = () => {
+    dispatch(settingsReducerActions.logout())
+  }
 
   return (
     <aside className="bg-gray-800 h-screen w-[64px] min-w-[64px] flex flex-col">
@@ -28,18 +36,18 @@ export const Sidebar = (): JSX.Element => {
       <nav className="flex-grow">
         <ul className="flex flex-col justify-between h-full">
           <div>
-            <Link to="/" title={t('portfolio')} icon={<TbHome2 />} />
-            <Link to="/wallets" title={t('wallets')} disabled icon={<WalletIcon />} />
-            <Link to="/send" title={t('send')} disabled icon={<TbStepOut />} />
-            <Link to="/receive" title={t('receive')} disabled icon={<TbStepInto />} />
-            <Link to="/nfts" title={t('nfts')} disabled icon={<TbDiamond />} />
-            <Link to="/news" title={t('news')} disabled icon={<TbNews />} />
-            <Link to="/contacts" title={t('contacts')} disabled icon={<TbUsers />} />
-            <Link to="/settings" title={t('settings')} disabled icon={<TbSettings />} />
-            <Link to="/mobile" title={t('mobile')} disabled isNew icon={<TbDeviceMobile />} />
+            <SidebarLink to="/" title={t('portfolio')} icon={<TbHome2 />} />
+            <SidebarLink to="/wallets" title={t('wallets')} icon={<WalletIcon />} />
+            <SidebarLink to="/send" title={t('send')} disabled icon={<TbStepOut />} />
+            <SidebarLink to="/receive" title={t('receive')} disabled icon={<TbStepInto />} />
+            <SidebarLink to="/nfts" title={t('nfts')} disabled icon={<TbDiamond />} />
+            <SidebarLink to="/news" title={t('news')} disabled icon={<TbNews />} />
+            <SidebarLink to="/contacts" title={t('contacts')} disabled icon={<TbUsers />} />
+            <SidebarLink to="/settings" title={t('settings')} disabled icon={<TbSettings />} />
+            <SidebarLink to="/mobile" title={t('mobile')} disabled isNew icon={<TbDeviceMobile />} />
           </div>
 
-          <Link to="/login" title={t('logout')} disabled icon={<TbDoorExit />} />
+          <SidebarButton onClick={handleLogout} title={t('logout')} icon={<TbDoorExit />} />
         </ul>
       </nav>
     </aside>

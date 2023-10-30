@@ -10,7 +10,7 @@ export const SecuritySetupPage = () => {
   const currentStep = match ? Number(match.params.currentStep) : 1
 
   return (
-    <WelcomeLayout title={t('title')} withBackButton={currentStep !== undefined && currentStep < 3}>
+    <WelcomeLayout heading={t('title')} withBackButton={currentStep !== undefined && currentStep < 3}>
       <Stepper steps={t('steps', { returnObjects: true })} className="my-14" currentStep={currentStep} />
 
       <Outlet />
