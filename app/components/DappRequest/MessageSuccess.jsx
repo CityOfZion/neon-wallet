@@ -11,26 +11,24 @@ type Props = {
   text: string,
 }
 
-const MessageSuccess = ({ text }: Props) => {
-  return (
-    <FullHeightPanel
-      headerText="Wallet Connect"
-      renderCloseButton={() => <CloseButton routeTo={ROUTES.DASHBOARD} />}
-      renderHeaderIcon={() => (
-        <div>
-          <WallletConnect />
-        </div>
-      )}
-      renderInstructions={false}
-    >
-      <div className={styles.txSuccessContainer}>
-        <CheckMarkIcon />
-        <h3>{text}</h3>
-        <br />
-        <br />
+const MessageSuccess = ({ text }: Props) => (
+  <FullHeightPanel
+    headerText="Wallet Connect"
+    renderCloseButton={() => <CloseButton routeTo={ROUTES.DASHBOARD} />}
+    renderHeaderIcon={() => (
+      <div>
+        <WallletConnect />
       </div>
-    </FullHeightPanel>
-  )
-}
+    )}
+    renderInstructions={false}
+  >
+    <div className={styles.txSuccessContainer}>
+      <CheckMarkIcon />
+      <h3>{text}</h3>
+      <br />
+      <br />
+    </div>
+  </FullHeightPanel>
+)
 
 export default MessageSuccess
