@@ -60,6 +60,13 @@ interface Resources {
       title: 'Portfolio'
       buttonRefreshLabel: 'Refresh'
     }
+    login: {
+      title: 'Welcome to Neon Wallet'
+      loginPassword: 'Login Password'
+      passwordPlaceholder: 'Please enter your password'
+      buttonLoginLabel: 'Login'
+      invalidPassword: 'Invalid password'
+    }
   }
 }
 
