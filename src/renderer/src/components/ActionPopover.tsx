@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import * as RadixPopover from '@radix-ui/react-popover'
 
 import { Button } from './Button'
@@ -21,19 +21,19 @@ export const ActionPopover = ({ children, actions }: TProps) => {
 
   return (
     <RadixPopover.Root open={open} onOpenChange={setOpen}>
-      <RadixPopover.Trigger>{children}</RadixPopover.Trigger>
+      <RadixPopover.Trigger asChild>{children}</RadixPopover.Trigger>
       <RadixPopover.Portal>
         <RadixPopover.Content className="relative" side="right" align="center" sideOffset={20}>
           <div className="bg-gray-900/50 flex flex-col rounded backdrop-blur-md border-l-4 border-l-neon overflow-hidden">
             {actions.map(({ iconFilled = true, label, icon, onClick }, index) => (
-              <>
+              <Fragment key={index}>
                 <Button
                   clickableProps={{ className: 'border-none rounded-none text-left h-10' }}
                   label={label}
                   variant="outlined"
                   flat
                   leftIcon={icon}
-                  iconFilled={iconFilled}
+                  leftIconFilled={iconFilled}
                   onClick={() => handleClick(onClick)}
                 />
 
@@ -42,7 +42,7 @@ export const ActionPopover = ({ children, actions }: TProps) => {
                     <Separator className="h-0.5" />
                   </div>
                 )}
-              </>
+              </Fragment>
             ))}
           </div>
 

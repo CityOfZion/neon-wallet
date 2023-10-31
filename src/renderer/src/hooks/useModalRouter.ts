@@ -1,10 +1,23 @@
-import { useContext } from 'react'
+import { useCallback, useContext } from 'react'
 import { THistory } from '@renderer/@types/modal'
-import { ModalRouterContext } from '@renderer/contexts/ModalRouter'
+import { ModalRouterContext } from '@renderer/contexts/ModalRouterContext'
 
 export const useModalNavigate = () => {
-  const { navigate } = useContext(ModalRouterContext)
-  return navigate
+  const { navigate: modalNavigate } = useContext(ModalRouterContext)
+
+  const modalNavigateWrapper = useCallback(
+    (name: string | number, options?: Omit<THistory, 'name'> | undefined) => {
+      return () => {
+        modalNavigate(name, options)
+      }
+    },
+    [modalNavigate]
+  )
+
+  return {
+    modalNavigate,
+    modalNavigateWrapper,
+  }
 }
 
 export const useModalLocation = (): THistory | undefined => {

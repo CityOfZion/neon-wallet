@@ -1,22 +1,64 @@
 import { cloneElement } from 'react'
+import { TbLoader2 } from 'react-icons/tb'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
 
 export type TCustomClickableProps = {
   label: string
   leftIcon?: JSX.Element
+  rightIcon?: JSX.Element
   variant?: 'outlined' | 'contained'
   disabled?: boolean
+  loading?: boolean
   flat?: boolean
-  iconFilled?: boolean
+  leftIconFilled?: boolean
+  rightIconFilled?: boolean
 }
 
 export type TClickableProps = TCustomClickableProps & React.ComponentProps<'div'>
 
-const Outline = ({ leftIcon, label, disabled = false, iconFilled = true, flat = false, ...props }: TClickableProps) => {
+type TLoadingProps = {
+  flat?: boolean
+}
+
+const Loading = ({ flat }: TLoadingProps) => {
+  return (
+    <div className="flex justify-center w-full">
+      <TbLoader2 className={StyleHelper.mergeStyles('animate-spin', { 'w-6 h-6': !flat, 'w-5 h-5': flat })} />
+    </div>
+  )
+}
+
+const Outline = ({
+  leftIcon,
+  label,
+  disabled = false,
+  leftIconFilled = true,
+  rightIconFilled = true,
+  flat = false,
+  rightIcon,
+  loading = false,
+  ...props
+}: TClickableProps) => {
+  const { className: leftIconClassName = '', ...leftIconProps } = leftIcon ? leftIcon.props : {}
+  const { className: rightIconClassName = '', ...rightIconProps } = rightIcon ? rightIcon.props : {}
+
+  const buildIconClassName = (className: string, filled: boolean) => {
+    return StyleHelper.mergeStyles(
+      ' object-contain ',
+      {
+        'w-6 h-6': !flat,
+        'w-5 h-5': flat,
+        'fill-neon group-aria-[disabled=true]:fill-gray-100/50': filled,
+        'stroke-neon group-aria-[disabled=true]:stroke-gray-100/50': !filled,
+      },
+      className
+    )
+  }
+
   return (
     <div
       {...props}
-      aria-disabled={disabled}
+      aria-disabled={disabled ?? loading}
       className={StyleHelper.mergeStyles(
         'group flex items-center w-full border text-center rounded py-3 px-5 gap-x-2.5 cursor-pointer transition-colors aria-[disabled=false]:text-neon aria-[disabled=false]:border-neon aria-[disabled=false]:hover:bg-gray-200/15 aria-[disabled=true]:border-gray-100/50 aria-[disabled=true]:text-gray-100/50 aria-[disabled=true]:cursor-not-allowed',
         { 'h-12 text-sm': !flat },
@@ -24,37 +66,59 @@ const Outline = ({ leftIcon, label, disabled = false, iconFilled = true, flat = 
         props.className
       )}
     >
-      {leftIcon &&
-        cloneElement(leftIcon, {
-          className: StyleHelper.mergeStyles(
-            ' object-contain ',
-            {
-              'w-6 h-6': !flat,
-              'w-5 h-5': flat,
-              'fill-neon group-aria-[disabled=true]:fill-gray-100/50': iconFilled,
-              'stroke-neon group-aria-[disabled=true]:stroke-gray-100/50': !iconFilled,
-            },
-            leftIcon.props.className
-          ),
-          ...leftIcon.props,
-        })}
+      {!loading ? (
+        <>
+          {leftIcon &&
+            cloneElement(leftIcon, {
+              className: buildIconClassName(leftIconClassName, leftIconFilled),
+              ...leftIconProps,
+            })}
 
-      <span className="flex-grow font-medium whitespace-nowrap">{label}</span>
+          <span className="flex-grow font-medium whitespace-nowrap">{label}</span>
+
+          {rightIcon &&
+            cloneElement(rightIcon, {
+              className: buildIconClassName(rightIconClassName, rightIconFilled),
+              ...rightIconProps,
+            })}
+        </>
+      ) : (
+        <Loading flat={flat} />
+      )}
     </div>
   )
 }
 
 const Contained = ({
   leftIcon,
+  rightIcon,
   label,
   disabled = false,
-  iconFilled = true,
+  leftIconFilled = true,
+  rightIconFilled = true,
+  loading = false,
   flat = false,
   ...props
 }: TClickableProps) => {
+  const { className: leftIconClassName = '', ...leftIconProps } = leftIcon ? leftIcon.props : {}
+  const { className: rightIconClassName = '', ...rightIconProps } = rightIcon ? rightIcon.props : {}
+
+  const buildIconClassName = (className: string, filled: boolean) => {
+    return StyleHelper.mergeStyles(
+      'object-contain ',
+      {
+        'w-6 h-6': !flat,
+        'w-5 h-5': flat,
+        'fill-neon group-aria-[disabled=true]:fill-gray-100/50': filled,
+        'stroke-neon group-aria-[disabled=true]:stroke-gray-100/50': !filled,
+      },
+      className
+    )
+  }
+
   return (
     <div
-      aria-disabled={disabled}
+      aria-disabled={disabled ?? loading}
       className={StyleHelper.mergeStyles(
         'flex items-center text-center w-full py-3 px-5 gap-x-2.5 transition-colors rounded',
         'aria-[disabled=true]:bg-gray-200/30 aria-[disabled=true]:text-gray-100/50 aria-[disabled=true]:cursor-not-allowed',
@@ -64,23 +128,25 @@ const Contained = ({
         props.className
       )}
     >
-      {leftIcon &&
-        cloneElement(leftIcon, {
-          className: StyleHelper.mergeStyles(
-            'object-contain ',
-            {
-              'w-6 h-6': !flat,
-              'w-5 h-5': flat,
-              'fill-neon group-aria-[disabled=true]:fill-gray-100/50': iconFilled,
-              'stroke-neon group-aria-[disabled=true]:stroke-gray-100/50': !iconFilled,
-            },
+      {!loading ? (
+        <>
+          {leftIcon &&
+            cloneElement(leftIcon, {
+              className: buildIconClassName(leftIconClassName, leftIconFilled),
+              ...leftIconProps,
+            })}
 
-            leftIcon.props.className
-          ),
-          ...leftIcon.props,
-        })}
+          <span className="flex-grow font-medium whitespace-nowrap">{label}</span>
 
-      <span className="flex-grow font-medium whitespace-nowrap">{label}</span>
+          {rightIcon &&
+            cloneElement(rightIcon, {
+              className: buildIconClassName(rightIconClassName, rightIconFilled),
+              ...rightIconProps,
+            })}
+        </>
+      ) : (
+        <Loading flat={flat} />
+      )}
     </div>
   )
 }

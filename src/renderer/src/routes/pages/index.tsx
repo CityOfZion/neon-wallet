@@ -1,14 +1,14 @@
 import { createBrowserRouter } from 'react-router-dom'
 import { PrivateRoute } from '@renderer/components/PrivateRoute'
-import { LoginPage } from '@renderer/pages/Login'
-import { PortfolioPage } from '@renderer/pages/Portfolio'
-import { SecuritySetupPage } from '@renderer/pages/SecuritySetup'
-import { SecuritySetupStep1Page } from '@renderer/pages/SecuritySetup/SecuritySetupStep1'
-import { SecuritySetupStep2Page } from '@renderer/pages/SecuritySetup/SecuritySetupStep2'
-import { SecuritySetupStep3Page } from '@renderer/pages/SecuritySetup/SecuritySetupStep3'
-import { WalletsPage } from '@renderer/pages/Wallets'
-import { WelcomePage } from '@renderer/pages/Welcome'
 
+import { SecuritySetupStep1Page } from './SecuritySetup/SecuritySetupStep1'
+import { SecuritySetupStep2Page } from './SecuritySetup/SecuritySetupStep2'
+import { SecuritySetupStep3Page } from './SecuritySetup/SecuritySetupStep3'
+import { LoginPage } from './Login'
+import { PortfolioPage } from './Portfolio'
+import { SecuritySetupPage } from './SecuritySetup'
+import { WalletsPage } from './Wallets'
+import { WelcomePage } from './Welcome'
 export const pageRouter = createBrowserRouter([
   {
     path: '/',

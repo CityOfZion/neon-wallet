@@ -34,6 +34,20 @@ interface Resources {
       createWalletButtonLabel: 'Create New wallet'
     }
   }
+  modals: {
+    import: {
+      title: 'Import'
+      subtitle: 'IMPORT'
+      description: 'Enter an address, encrypted key or private key'
+      inputPlaceholder: 'Please ender an address or key...'
+      buttonContinueLabel: 'Continue'
+      errors: {
+        invalid: 'Invalid text'
+        empty: 'Please enter some text'
+        allAddressesAlreadyImported: 'All addresses are already imported'
+      }
+    }
+  }
   pages: {
     welcome: {
       title: 'Welcome to Neon Wallet'
