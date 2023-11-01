@@ -27,6 +27,7 @@ import { ASSETS } from '../core/constants'
 import { FIVE_MINUTES_MS } from '../core/time'
 import poll from '../util/poll'
 import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
+import { getSettings } from '../actions/settingsActions'
 
 // Constants
 export const DISABLE_CLAIM = 'DISABLE_CLAIM'
@@ -208,7 +209,7 @@ export const doGasClaim = () => async (
   const signingFunction = getSigningFunction(state)
   const isHardwareClaim = getIsHardwareLogin(state)
   const wif = getWIF(state)
-  const { chain } = state.spunky.settings.data
+  const { chain } = await getSettings()
 
   dispatch(disableClaim(true))
 

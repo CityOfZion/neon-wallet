@@ -4,18 +4,19 @@ import { rpc as n3Rpc, u as n3U } from '@cityofzion/neon-js'
 import { createActions } from 'spunky'
 
 import { getNode, getRPCEndpoint } from './nodeStorageActions'
+import { getSettings } from './settingsActions'
 
 type Props = {
   net: string,
   address: string,
-  chain: string,
 }
 
 export const ID = 'claims'
 
 export default createActions(
   ID,
-  ({ net, address, chain }: Props = {}) => async (): Promise<*> => {
+  ({ net, address }: Props = {}) => async (): Promise<*> => {
+    const { chain } = await getSettings()
     let endpoint = await getNode(net)
     if (!endpoint) {
       endpoint = await getRPCEndpoint(net)
