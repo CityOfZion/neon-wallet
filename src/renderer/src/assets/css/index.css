@@ -3,15 +3,16 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'SofiaPro-Light';
-  font-weight: lighter;
+  font-family: 'SofiaPro';
+  font-weight: 300;
+  font-style: normal;
   src: url('../fonts/sofiapro-light-webfont.woff') format('woff');
 }
 
 @font-face {
   font-family: 'SofiaPro';
   src: url('../fonts/sofiapro-regular-webfont.woff') format('woff');
-  font-weight: normal;
+  font-weight: 400;
   font-style: normal;
 }
 
@@ -19,22 +20,26 @@
   font-family: 'SofiaPro';
   src: url('../fonts/sofiapro-regularitalic-webfont.woff') format('woff');
   font-style: italic;
+  font-weight: 400;
 }
 
 @font-face {
-  font-family: 'SofiaPro-Medium';
+  font-family: 'SofiaPro';
   src: url('../fonts/sofiapro-medium-webfont.woff') format('woff');
   font-style: normal;
+  font-weight: 500;
 }
 
 @font-face {
-  font-family: 'SofiaPro-SemiBold';
+  font-family: 'SofiaPro';
   src: url('../fonts/sofiapro-semibold-webfont.woff') format('woff');
   font-style: normal;
+  font-weight: 600;
 }
 
 @font-face {
-  font-family: 'SofiaPro-Bold';
-  font-weight: bolder;
+  font-family: 'SofiaPro';
+  font-weight: 700;
+  font-style: normal;
   src: url('../fonts/sofiapro-bold-webfont.woff') format('woff');
 }

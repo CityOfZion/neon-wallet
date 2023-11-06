@@ -9,6 +9,7 @@ import { Separator } from '@renderer/components/Separator'
 import { WalletCard } from '@renderer/components/WalletCard'
 import { WalletSelect } from '@renderer/components/WalletSelect'
 import { useBalancesAndExchange } from '@renderer/hooks/useBalancesAndExchange'
+import { useModalNavigate } from '@renderer/hooks/useModalRouter'
 import { useAppSelector } from '@renderer/hooks/useRedux'
 import { PortfolioLayout } from '@renderer/layouts/Portfolio'
 import { selectAccounts } from '@renderer/store/account/SelectorAccount'
@@ -22,6 +23,7 @@ export const WalletsPage = () => {
   const wallets = useAppSelector(selectWallets)
   const accounts = useAppSelector(selectAccounts)
   const balanceExchange = useBalancesAndExchange(accounts)
+  const { modalNavigateWrapper } = useModalNavigate()
 
   const [selectedWallet, setSelectedWallet] = useState<Wallet | undefined>(wallets[0])
 
@@ -39,7 +41,13 @@ export const WalletsPage = () => {
         <div className="flex gap-x-2">
           <IconButton icon={<TbMenuDeep />} filled={false} size="md" text={t('manageButtonLabel')} disabled />
           <IconButton icon={<MdAdd />} size="md" text={t('newWalletButtonLabel')} disabled />
-          <IconButton icon={<TbFileImport />} filled={false} size="md" text={t('importButtonLabel')} disabled />
+          <IconButton
+            icon={<TbFileImport />}
+            filled={false}
+            size="md"
+            text={t('importButtonLabel')}
+            onClick={modalNavigateWrapper('import')}
+          />
           <IconButton icon={<TbEyePlus />} filled={false} size="md" text={t('addWatchAccountButtonLabel')} disabled />
           <IconButton icon={<TbRefresh />} filled={false} size="md" text={t('buttonRefreshLabel')} disabled />
         </div>

@@ -23,7 +23,7 @@ export const Input = forwardRef<HTMLInputElement, TProps>(
       <div className={StyleHelper.mergeStyles('relative w-full', containerClassName)}>
         <input
           className={StyleHelper.mergeStyles(
-            'h-12 rounded bg-asphalt ring-2 ring-transparent w-full px-5 py-2 outline-none text-sm font-medium placeholder:text-white text-neon',
+            'h-12 rounded bg-asphalt ring-2 ring-transparent w-full px-5 py-2 outline-none text-sm font-medium placeholder:text-white/50 text-neon',
             {
               'ring-magenta': !!errorMessage,
               'focus:ring-neon': !errorMessage,
@@ -44,7 +44,7 @@ export const Input = forwardRef<HTMLInputElement, TProps>(
           />
         )}
 
-        <span className="text-xs text-magenta">{errorMessage}</span>
+        {errorMessage && <span className="block mt-1 text-xs text-magenta">{errorMessage}</span>}
       </div>
     )
   }
