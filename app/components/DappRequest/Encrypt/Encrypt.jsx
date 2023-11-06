@@ -120,7 +120,6 @@ const Encrypt = ({
             </div>
             <div className={styles.wcMessageContents}>
               {request.params.request.params[0]}
-              {JSON.stringify(request.params.request.params)}
             </div>
           </div>
         </div>
