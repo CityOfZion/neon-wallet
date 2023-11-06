@@ -4,6 +4,7 @@ import { createActions } from 'spunky'
 import { rpc as n3Rpc, sc, u, wallet } from '@cityofzion/neon-js'
 import axios from 'axios'
 
+import { AddressTXFullResponse } from '@cityofzion/dora-ts/dist/interfaces/api/neo'
 import { TX_TYPES, NOTIF_TYPES } from '../core/constants'
 import {
   getImageBySymbol,
@@ -78,7 +79,6 @@ export async function parseAbstractData(
   }
   return results
 }
-
 
 /**
  * Handles NEP-17 notifications for the Neo N3 network including special formats
@@ -199,7 +199,7 @@ async function handleArbitraryNotification(
  * @returns {Promise<[]>}
  */
 export async function computeN3Activity(
-  data: Object,
+  data: AddressTXFullResponse,
   currentUserAddress: string,
   net: string,
 ) {
@@ -213,6 +213,7 @@ export async function computeN3Activity(
       }
 
       if (
+        notification !== undefined &&
         notification.state.value.length === 3 &&
         notification.event_name === 'Transfer'
       ) {
@@ -223,6 +224,7 @@ export async function computeN3Activity(
           net,
         )
       } else if (
+        notification !== undefined &&
         notification.state.value.length === 4 &&
         notification.event_name === 'Transfer'
       ) {

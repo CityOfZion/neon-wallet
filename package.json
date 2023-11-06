@@ -4,7 +4,7 @@
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",
   "homepage": "https://github.com/CityOfZion/neon-wallet",
-  "author": "Ethan Fast <ejhfast@gmail.com> (https://github.com/Ejhfast)",
+  "author": "COZ <contact@coz.io> (https://github.com/CityOfZion)",
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
     "start": "cross-env NODE_ENV=production electron .",
