@@ -1,12 +1,12 @@
 // @flow
-import React from 'react'
+import React, { Fragment } from 'react'
 import type { Node } from 'react'
 import { FormattedMessage } from 'react-intl'
 import moment from 'moment'
 import { isEmpty } from 'lodash-es'
 import classNames from 'classnames'
 
-import { TX_TYPES } from '../../../core/constants'
+import { NOTIF_TYPES, TX_TYPES } from '../../../core/constants'
 import Button from '../../Button'
 import PendingAbstract from './PendingAbstract'
 import ClaimAbstract from './ClaimAbstract'
@@ -14,7 +14,7 @@ import SendAbstract from './SendAbstract'
 import ReceiveAbstract from './ReceiveAbstract'
 import N3VoteAbstract from './N3VoteAbstract'
 import N3NEP17SendAbstract from './N3NEP17SendAbstract'
-import N3NEP17ReceiveAbstract from './N3NEP17ReceiveAbstract'
+import N3NEP17TransferAbstract from './N3NEP17TransferAbstract'
 import N3ContractInvocationAbstract from './N3ContractInvocationAbstract'
 import N3ClaimAbstract from './N3ClaimAbstract'
 import InfoIcon from '../../../assets/icons/info.svg'
@@ -25,6 +25,9 @@ import N3NEP11ReceiveAbstract from './N3NEP11ReceiveAbstract'
 import N3NEP11SendAbstract from './N3NEP11SendAbstract'
 import N3PendingAbstract from './N3PendingAbstract'
 import { useContactsContext } from '../../../context/contacts/ContactsContext'
+import SendIcon from '../../../assets/icons/send-tx.svg'
+import CopyToClipboard from '../../CopyToClipboard'
+import ContactsAdd from '../../../assets/icons/contacts-add.svg'
 
 type Props = {
   address: string,
@@ -164,49 +167,73 @@ export default function Transaction(props: Props) {
    * Builds a contract invocation object.
    * @returns {null|*}
    */
-  function renderAbstractN3() {
-    const { isPending, tx } = props
-    const { time, type, sender } = tx
-    const txDate = renderTxDate(time || (tx.metadata && tx.metadata.time))
+
+  function renderAbstractN3(notification, i) {
+    const { isPending } = props.tx
 
     const metadata = {
-      txDate,
-      isPending,
-      sender,
       findContact,
       showAddContactModal: displayModal,
-      ...tx.metadata,
+      notification,
     }
 
+    console.log('abstract', isPending, notification)
+    // TODO - check this
     if (isPending) {
-      return renderAbstract(type, true)
+      return renderAbstract(notification.type, true)
     }
 
-    switch (type) {
-      case TX_TYPES.N3CONTRACTINVOCATION:
-        return <N3ContractInvocationAbstract {...metadata} />
-      case TX_TYPES.N3NEP17TRANSFER:
-        if (address === tx.metadata.to) {
-          return <N3NEP17ReceiveAbstract {...metadata} />
-        }
-        return <N3NEP17SendAbstract {...metadata} />
-      case TX_TYPES.N3NEP11TRANSFER:
-        if (address === tx.metadata.to) {
-          return <N3NEP11ReceiveAbstract {...metadata} />
-        }
-        return <N3NEP11SendAbstract {...metadata} />
-      case TX_TYPES.N3VOTE:
-        return <N3VoteAbstract {...metadata} />
-      case TX_TYPES.CLAIM:
-        return <N3ClaimAbstract {...metadata} />
+    switch (notification.type) {
+      case NOTIF_TYPES.NEP17Transfer:
+        return <N3NEP17TransferAbstract {...metadata} key={i} />
+      case NOTIF_TYPES.NEP11Transfer:
+        return null
+      case NOTIF_TYPES.VOTE:
+        return null
+      case NOTIF_TYPES.CONTRACT_INVOCATION:
+        return null
       default:
         console.warn('renderTxTypeIcon() invoked with an invalid argument!', {
-          type,
+          notification,
         })
         return null
     }
   }
 
+  function renderTXHeader() {
+    const { hash, block, time } = props.tx
+    const timestamp = renderTxDate(time)
+    return (
+      <div className={classNames(styles.transactionHeader)}>
+        <div>TX ID: {hash}</div>
+        <div>{timestamp}</div>
+      </div>
+    )
+  }
+
+  function renderTXFooter() {
+    const { hash, invocations, notifications, netfee, sysfee } = props.tx
+    const { isPending } = props
+    return (
+      <div className={classNames(styles.transactionFooter)}>
+        <div className={classNames(styles.statistic)}>Invocations: {invocations.length}</div>
+        <div className={classNames(styles.statistic)}>Notifications: {notifications.length}</div>
+        <div className={classNames(styles.statistic)}>Network Fee: {netfee}</div>
+        <div className={classNames(styles.statistic)}>System Fee: {sysfee}</div>
+      </div>
+    )
+  }
+
+  return (
+    <div className={classNames(styles.transactionContainer, className)}>
+      {renderTXHeader()}
+      {tx.notifications.map((notification, i) =>
+        renderAbstractN3(notification, i),
+      )}
+      {renderTXFooter()}
+    </div>
+  )
+  /*
   return (
     <div className={classNames(styles.transactionContainer, className)}>
       {chain === 'neo3' && !renderN2Tx
@@ -223,4 +250,6 @@ export default function Transaction(props: Props) {
       )}
     </div>
   )
+
+   */
 }

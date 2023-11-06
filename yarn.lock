@@ -2085,12 +2085,12 @@
   dependencies:
     axios "^0.21.1"
 
-"@cityofzion/dora-ts@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@cityofzion/dora-ts/-/dora-ts-0.0.9.tgz#4147ced0af40f3fee66971efacc681860092ebc1"
-  integrity sha512-w0pkyLE89QeOSqWDWI55YkTN2+kvpqcj6ZMVbxnR7fEFxOmwZ2iGAsiHvEoKmecfn5ukYNtad9KayK4pLX5EGA==
+"@cityofzion/dora-ts@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@cityofzion/dora-ts/-/dora-ts-0.2.0.tgz#8aaed3669f6edce8fd91c2dba0832d9bffb885b3"
+  integrity sha512-vdpwpiR601B4VKiwGFugJnBdnD3p8DYzJT9VyWgBW4e0HSlJWYuGrcPFJbDG9IKEG+nvw7Q3+Z4Dqwfa+5w8IQ==
   dependencies:
-    axios "^0.21.1"
+    axios "^1.4.0"
 
 "@cityofzion/neo3-invoker@1.4.0":
   version "1.4.0"
@@ -4660,6 +4660,15 @@ axios@^0.21.1:
   integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
   dependencies:
     follow-redirects "^1.14.0"
+
+axios@^1.4.0:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.5.1.tgz#11fbaa11fc35f431193a9564109c88c1f27b585f"
+  integrity sha512-Q28iYCWzNHjAm+yEAot5QaAMxhMghWLFVf7rRdwhUI+c2jix2DUXjAHXVi+s1ibs3mjPO/cCgbA++3BjD0vP/A==
+  dependencies:
+    follow-redirects "^1.15.0"
+    form-data "^4.0.0"
+    proxy-from-env "^1.1.0"
 
 axobject-query@^2.0.2:
   version "2.2.0"

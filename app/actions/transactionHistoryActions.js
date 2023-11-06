@@ -1,10 +1,10 @@
 // @flow
 import { NeoLegacyREST, NeoRest } from '@cityofzion/dora-ts/dist/api'
 import { createActions } from 'spunky'
-import { rpc as n3Rpc, sc, u } from '@cityofzion/neon-js'
+import { rpc as n3Rpc, sc, u, wallet } from '@cityofzion/neon-js'
 import axios from 'axios'
 
-import { TX_TYPES } from '../core/constants'
+import { TX_TYPES, NOTIF_TYPES } from '../core/constants'
 import {
   getImageBySymbol,
   findAndReturnTokenInfo,
@@ -79,9 +79,120 @@ export async function parseAbstractData(
   return results
 }
 
+
+/**
+ * Handles NEP-17 notifications for the Neo N3 network including special formats
+ * like MINT and ClAIM.
+ * @param address
+ * @param notification
+ * @param net
+ * @returns {Promise<*>}
+ */
+async function handleNEP17Transfer(address, notification, net) {
+  notification.type = NOTIF_TYPES.NEP17Transfer
+
+  const from = notification.state.value[0].value
+    ? wallet.getAddressFromScriptHash(
+        u.reverseHex(u.base642hex(notification.state.value[0].value)),
+      )
+    : undefined
+  notification.parsed = {
+    from,
+    to: wallet.getAddressFromScriptHash(
+      u.reverseHex(u.base642hex(notification.state.value[1].value)),
+    ),
+    amount: parseInt(notification.state.value[2].value, 10),
+  }
+  // identify the transfer vector; Was it a mint, claim, or transfer?
+  if (
+    notification.contract === '0xef4073a0f2b305a38ec4050e4d3d28bc40ea63f5' &&
+    notification.amount === 0
+  ) {
+    notification.vector = TX_TYPES.CLAIM
+  } else if (!notification.parsed.from) {
+    notification.vector = TX_TYPES.MINT
+  } else {
+    notification.vector =
+      notification.parsed.from === address ? TX_TYPES.SEND : TX_TYPES.RECEIVE
+  }
+
+  // get the token info
+  notification.token = await findAndReturnTokenInfo(notification.contract, net)
+  return notification
+}
+
+/**
+ * Handles NEP-11 notifications for the Neo N3 network
+ * @param address
+ * @param notification
+ * @param net
+ * @returns {Promise<void>}
+ */
+async function handleNEP11Transfer(address, notification, net) {
+  notification.type = NOTIF_TYPES.NEP11Transfer
+
+  // TODO - the code commented here is the previous nep-11 parsing code and
+  //  needs to be re-implemented
+  /*
+  notification.metadata.tokenName = Buffer.from(
+    notification.metadata.token_id,
+    'hex',
+  ).toString()
+
+  assets = await new n3Rpc.RPCClient(endpoint).invokeFunction(
+    notification.metadata.scripthash,
+    'properties',
+    [sc.ContractParam.string(notification.metadata.tokenName)],
+  )
+
+  if (assets.stack.length) {
+    assets.stack[0].value.some(property => {
+      const key = u.HexString.fromBase64(property.key.value).toAscii()
+      if (key === 'image') {
+        image = u.HexString.fromBase64(property.value.value).toAscii()
+        return true
+      }
+      return false
+    })
+  } else {
+    // if for some reason getting the image directly from the contract fails
+    // use the ghost market API
+    const imageResults = await fetchMissingImageInfo(
+      notification.contract,
+      notification.state[3]?.value,
+    )
+
+    const result = imageResults?.data?.assets[0]
+
+    if (result && result.metadata.mediaType.includes('webp')) {
+      image = result.metadata.mediaUri
+    }
+  }
+  break
+
+   */
+}
+
+/**
+ * Handles notifications which do not have special designations (i.e NEP-17)
+ * @param currentUserAddress
+ * @param notification
+ * @param net
+ * @returns {Promise<*>}
+ */
+async function handleArbitraryNotification(
+  currentUserAddress,
+  notification,
+  net,
+) {
+  return notification
+}
+
 /**
  * Parses a raw request for an address' history into a format usable by the
- * activity components.
+ * activity components. Each transaction can have multiple events so this method's
+ * purpose is to parse each event, but retain the grouping within the transactions
+ * so they can be properly communicated to the user.
  * @param data
  * @param currentUserAddress
  * @param net
@@ -95,100 +206,49 @@ export async function computeN3Activity(
   const results = []
   if (!data.items) return results
   for (const item of data.items) {
-    const unresolved = item.invocations.map(async invocation => {
-      let image
-      let assets
+    const unresolved = item.notifications.map(async notification => {
       let endpoint = await getNode(net)
       if (!endpoint) {
         endpoint = await getRPCEndpoint(net)
       }
 
-      try {
-        switch (invocation.type) {
-          case 'nep17_transfer':
-            image = getImageBySymbol(invocation.metadata.symbol)
-            break
-          case 'nep11_transfer':
-            invocation.metadata.time = item.time
-
-            invocation.metadata.tokenName = Buffer.from(
-              invocation.metadata.token_id,
-              'hex',
-            ).toString()
-
-            assets = await new n3Rpc.RPCClient(endpoint).invokeFunction(
-              invocation.metadata.scripthash,
-              'properties',
-              [sc.ContractParam.string(invocation.metadata.tokenName)],
-            )
-
-            if (assets.stack.length) {
-              assets.stack[0].value.some(property => {
-                const key = u.HexString.fromBase64(property.key.value).toAscii()
-                if (key === 'image') {
-                  image = u.HexString.fromBase64(property.value.value).toAscii()
-                  return true
-                }
-                return false
-              })
-            } else {
-              // if for some reason getting the image directly from the contract fails
-              // use the ghost market API
-              const imageResults = await fetchMissingImageInfo(
-                invocation.metadata.scripthash,
-                item.notifications[0]?.state[3]?.value,
-              )
-
-              const result = imageResults?.data?.assets[0]
-
-              if (result && result.metadata.mediaType.includes('webp')) {
-                image = result.metadata.mediaUri
-              }
-            }
-            break
-          default:
-            break
-        }
-        // check for gas claim
-        if (
-          invocation.metadata.scripthash ===
-            '0xef4073a0f2b305a38ec4050e4d3d28bc40ea63f5' &&
-          invocation.metadata.amount === 0
-        ) {
-          invocation.type = 'CLAIM'
-          invocation.metadata.summary = `GAS Claim to ${invocation.metadata.to}`
-          invocation.metadata.symbol = 'GAS'
-          image = getImageBySymbol(invocation.metadata.symbol)
-          invocation.metadata.amount =
-            Number(item.transfers[1]?.amount) / 10 ** 8
-        }
-        // flatten the invocations into individual events to support existing components
-        invocation.metadata.image = image
-        invocation.hash = item.hash
-        invocation.sender = item.sender
-        invocation.sysfee = item.sysfee
-        invocation.netfee = item.netfee
-        invocation.block = item.block
-        invocation.time = item.time
-        invocation.vmstate = item.vmstate
-
-        if (
-          invocation.metadata.scripthash !==
-          '0xef4073a0f2b305a38ec4050e4d3d28bc40ea63f5'
-        ) {
-          // BUG: this will display incorrect data if the token does not have
-          // 8 decimals but this is a compromise to reduce network request overhead.
-          invocation.metadata.amount = toBigNumber(
-            (invocation.metadata.amount /= 10 ** 8),
-          ).toString()
-        }
-      } catch (e) {
-        console.warn('invocation error:', invocation, e)
+      if (
+        notification.state.value.length === 3 &&
+        notification.event_name === 'Transfer'
+      ) {
+        // If the event was a NEP-17 transfer
+        notification = await handleNEP17Transfer(
+          currentUserAddress,
+          notification,
+          net,
+        )
+      } else if (
+        notification.state.value.length === 4 &&
+        notification.event_name === 'Transfer'
+      ) {
+        // If the event was a NEP-11 transfer
+        notification = await handleNEP11Transfer(
+          currentUserAddress,
+          notification,
+          net,
+        )
+      } else {
+        notification = await handleArbitraryNotification(
+          currentUserAddress,
+          notification,
+          net,
+        )
       }
-      return invocation
+
+      return notification
     })
     item.invocations = await Promise.all(unresolved)
-    results.push(...item.invocations)
+
+    // fees are in GAS which has 8 decimals
+    item.netfee /= 10 ** 8
+    item.sysfee /= 10 ** 8
+
+    results.push(item)
   }
   return results
 }

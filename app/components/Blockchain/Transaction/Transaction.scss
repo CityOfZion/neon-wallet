@@ -10,7 +10,8 @@
   width: 200px;
   min-width: 200px;
   font-size: 14px;
-  text-align: center;
+  text-align: right;
+  padding-right: 10px;
 }
 
 .pendingTxDate {
@@ -21,12 +22,10 @@
 }
 
 .txLabelContainer {
-  font-size: 14px;
-  display: flex;
+  width: 150px;
   text-align: center;
-  width: 75px;
-  flex-direction: column;
-  align-items: center;
+  font-weight: 400;
+  font-size: 14px;
 
   img {
     max-height: 25px;
@@ -88,11 +87,12 @@
 }
 
 .txTransferContainerN3 {
-  width: 200px;
+  width: 300px;
   text-align: center;
   align-items: center;
   display: flex;
   font-size: 14px;
+  margin-left: 20px;
   justify-content: space-between;
 }
 
@@ -180,9 +180,19 @@
 }
 
 .transactionContainer {
-  display: flex;
+  //display: flex;
+  //align-items: center;
+  //justify-content: space-evenly;
+  width: 100%;
+  margin-right: 30px;
+  button[disabled] {
+    background: transparent !important;
+    opacity: 0.3;
+  }
+}
+
+.transactionContainerN3 {
   align-items: center;
-  justify-content: space-evenly;
   width: 100%;
 
   button[disabled] {
@@ -191,15 +201,27 @@
   }
 }
 
-.transactionContainerN3 {
+.transactionHeader {
+  @extend .transactionContainer;
   display: flex;
-  align-items: center;
-  width: 100%;
+  //width: 100%;
+  justify-content: space-between;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
 
-  button[disabled] {
-    background: transparent !important;
-    opacity: 0.3;
-  }
+.transactionFooter {
+  @extend .transactionContainer;
+  display: flex;
+  //width: 100%;
+  justify-content: space-between;
+  margin-left: 20px;
+  //margin-right: 20px;
+  margin-top: 10px;
+  margin-bottom:20px;
+  font-size: 14px;
+  border-top: solid;
 }
 
 .abstractContainer {
@@ -210,9 +232,11 @@
 
 .abstractContainerN3 {
   @extend .transactionContainer;
-  justify-content: flex-start;
-  margin: 0 60px 0 10px;
-  width: 300px;
+  display: flex;
+  justify-content: space-between;
+  //justify-content: flex-start;
+  margin: 10px 60px 0 10px;
+  //width: 300px;
 }
 
 .invocationTransaction {
@@ -220,8 +244,9 @@
 }
 
 .transactionHistoryButton {
-  max-width: 100px;
-  min-width: 100px;
+  width: 10px;
+  max-width: 25px;
+  min-width: 25px;
   background: transparent !important;
 
   svg {
@@ -398,4 +423,11 @@
   margin-bottom: 5px;
   min-width: 50px;
   margin-left: 10px;
+}
+
+.statistic {
+  display: inline-block;
+  margin: 5px;
+  padding: 2px;
+  //background: var(--base-text);
 }

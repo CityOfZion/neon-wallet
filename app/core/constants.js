@@ -201,10 +201,18 @@ export const TX_TYPES = {
   SEND: 'SEND',
   RECEIVE: 'RECEIVE',
   CLAIM: 'CLAIM',
+  MINT: 'MINT',
   N3VOTE: 'vote',
   N3NEP17TRANSFER: 'nep17_transfer',
   N3NEP11TRANSFER: 'nep11_transfer',
   N3CONTRACTINVOCATION: 'contract_invocation',
+}
+
+export const NOTIF_TYPES = {
+  NEP17Transfer:       'nep17_transfer',
+  NEP11Transfer:       'nep11_transfer',
+  CONTRACT_INVOCATION: 'contract_invocation',
+  VOTE:                'vote'
 }
 
 export const MAIN_NETWORK_ID = '1'
