@@ -1,27 +1,133 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { TbMenu } from 'react-icons/tb'
+import { DndContext, DragEndEvent } from '@dnd-kit/core'
+import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 import { UseMultipleBalanceAndExchangeResult } from '@renderer/@types/query'
+import { IAccountState, IWalletState } from '@renderer/@types/store'
 import { AccountCard } from '@renderer/components/AccountCard'
+import { Button } from '@renderer/components/Button'
 import { Separator } from '@renderer/components/Separator'
-import { useAppSelector } from '@renderer/hooks/useRedux'
-import { selectAccountsByWalletId } from '@renderer/store/account/SelectorAccount'
-import { Wallet } from '@renderer/store/wallet/Wallet'
+import { StyleHelper } from '@renderer/helpers/StyleHelper'
+import { UtilsHelper } from '@renderer/helpers/UtilsHelper'
+import { useAccountsByWalletIdSelector } from '@renderer/hooks/useAccountSelector'
 
 type TProps = {
-  selectedWallet: Wallet
+  isReordering: boolean
+  onReorderSave?: (orderList: string[]) => void
+  onReorderCancel?: () => void
+  selectedWallet: IWalletState
   balanceExchange: UseMultipleBalanceAndExchangeResult
 }
 
-export const AccountList = ({ selectedWallet, balanceExchange }: TProps) => {
-  const selectedAccounts = useAppSelector(selectAccountsByWalletId(selectedWallet.id))
+type TAccountItemProps = {
+  account: IAccountState
+  balanceExchange: UseMultipleBalanceAndExchangeResult
+  isReordering: boolean
+}
+
+const AccountItem = ({ account, balanceExchange, isReordering }: TAccountItemProps) => {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: account.address })
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  }
 
   return (
-    <div>
-      {selectedAccounts.map(account => (
-        <Fragment key={account.address}>
-          <Separator />
-          <AccountCard account={account} balanceExchange={balanceExchange} />
-        </Fragment>
-      ))}
-    </div>
+    <Fragment>
+      <Separator />
+      <li ref={setNodeRef} style={style}>
+        <AccountCard
+          account={account}
+          balanceExchange={balanceExchange}
+          noHover={isReordering}
+          rightComponent={isReordering ? <TbMenu className="stroke-neon" /> : undefined}
+          className={StyleHelper.mergeStyles({
+            'cursor-grabbing': isDragging,
+            'cursor-grab': isReordering && !isDragging,
+          })}
+          {...attributes}
+          {...listeners}
+        />
+      </li>
+    </Fragment>
+  )
+}
+
+export const AccountList = ({
+  selectedWallet,
+  balanceExchange,
+  isReordering,
+  onReorderCancel,
+  onReorderSave,
+}: TProps) => {
+  const { t } = useTranslation('pages', { keyPrefix: 'wallets' })
+  const { accountsByWalletId } = useAccountsByWalletIdSelector(selectedWallet.id)
+  const orderedAccountsAddresses = useMemo(() => {
+    return UtilsHelper.orderBy(accountsByWalletId, 'order', 'asc').map(account => account.address)
+  }, [accountsByWalletId])
+
+  const [items, setItems] = useState<string[]>([])
+  const itemsAccounts = useMemo(() => {
+    return UtilsHelper.mapFiltered(items, item => accountsByWalletId.find(account => account.address === item))
+  }, [accountsByWalletId, items])
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    if (!event.over || event.active.id === event.over.id) return
+    const activeId = event.active.id as string
+    const overId = event.over.id as string
+    setItems(lastArray => UtilsHelper.arrayMove(lastArray, items.indexOf(activeId), items.indexOf(overId)))
+  }
+
+  const handleReorderCancel = () => {
+    setItems(orderedAccountsAddresses)
+    onReorderCancel?.()
+  }
+
+  const handleReorderSave = () => {
+    onReorderSave?.(items)
+  }
+
+  useEffect(() => {
+    setItems(orderedAccountsAddresses)
+  }, [orderedAccountsAddresses])
+
+  return (
+    <DndContext onDragEnd={handleDragEnd}>
+      <SortableContext items={items} strategy={verticalListSortingStrategy} disabled={!isReordering}>
+        <ul>
+          {itemsAccounts.map(account => (
+            <AccountItem
+              key={account?.address}
+              account={account}
+              balanceExchange={balanceExchange}
+              isReordering={isReordering}
+            />
+          ))}
+        </ul>
+
+        {isReordering && (
+          <div className="flex justify-between px-3 gap-x-3 mt-4">
+            <Button
+              label={t('reorder.cancelButtonLabel')}
+              variant="outlined"
+              flat
+              className="w-full"
+              colorSchema="gray"
+              onClick={handleReorderCancel}
+            />
+            <Button
+              label={t('reorder.saveButtonLabel')}
+              variant="outlined"
+              flat
+              className="w-full"
+              onClick={handleReorderSave}
+            />
+          </div>
+        )}
+      </SortableContext>
+    </DndContext>
   )
 }

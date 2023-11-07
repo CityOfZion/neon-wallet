@@ -2,30 +2,42 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MdAdd, MdMoreHoriz } from 'react-icons/md'
 import { TbEyePlus, TbFileImport, TbMenuDeep, TbPencil, TbRefresh, TbRepeat } from 'react-icons/tb'
+import { IWalletState } from '@renderer/@types/store'
 import { ActionPopover } from '@renderer/components/ActionPopover'
 import { Button } from '@renderer/components/Button'
 import { IconButton } from '@renderer/components/IconButton'
 import { Separator } from '@renderer/components/Separator'
 import { WalletCard } from '@renderer/components/WalletCard'
 import { WalletSelect } from '@renderer/components/WalletSelect'
+import { useAccountsSelector } from '@renderer/hooks/useAccountSelector'
 import { useBalancesAndExchange } from '@renderer/hooks/useBalancesAndExchange'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
-import { useAppSelector } from '@renderer/hooks/useRedux'
+import { useAppDispatch } from '@renderer/hooks/useRedux'
+import { useWalletsSelector } from '@renderer/hooks/useWalletSelector'
 import { PortfolioLayout } from '@renderer/layouts/Portfolio'
-import { selectAccounts } from '@renderer/store/account/SelectorAccount'
-import { selectWallets } from '@renderer/store/wallet/SelectorWallet'
-import { Wallet } from '@renderer/store/wallet/Wallet'
+import { accountReducerActions } from '@renderer/store/reducers/AccountReducer'
 
 import { AccountList } from './AccountList'
 
 export const WalletsPage = () => {
   const { t } = useTranslation('pages', { keyPrefix: 'wallets' })
-  const wallets = useAppSelector(selectWallets)
-  const accounts = useAppSelector(selectAccounts)
+  const { wallets } = useWalletsSelector()
+  const { accounts } = useAccountsSelector()
+  const dispatch = useAppDispatch()
   const balanceExchange = useBalancesAndExchange(accounts)
   const { modalNavigateWrapper } = useModalNavigate()
 
-  const [selectedWallet, setSelectedWallet] = useState<Wallet | undefined>(wallets[0])
+  const [selectedWallet, setSelectedWallet] = useState<IWalletState | undefined>(wallets[0])
+  const [isReordering, setIsReordering] = useState(false)
+
+  const handleReorderSave = (accountsOrder: string[]) => {
+    dispatch(accountReducerActions.reorderAccounts(accountsOrder))
+    setIsReordering(false)
+  }
+
+  const handleReorderCancel = () => {
+    setIsReordering(false)
+  }
 
   return (
     <PortfolioLayout
@@ -35,6 +47,7 @@ export const WalletsPage = () => {
           wallets={wallets}
           selected={selectedWallet}
           onSelect={setSelectedWallet}
+          disabled={isReordering}
         />
       }
       rightComponent={
@@ -63,17 +76,28 @@ export const WalletsPage = () => {
             <ActionPopover
               actions={[
                 { icon: <TbPencil />, iconFilled: false, label: t('editWalletButtonLabel') },
-                { icon: <TbRepeat />, iconFilled: false, label: t('reorderAccountsButtonLabel') },
+                {
+                  icon: <TbRepeat />,
+                  iconFilled: false,
+                  label: t('reorderAccountsButtonLabel'),
+                  onClick: () => setIsReordering(true),
+                },
               ]}
             >
-              <IconButton icon={<MdMoreHoriz />} size="md" />
+              <IconButton icon={<MdMoreHoriz />} size="md" disabled={isReordering} />
             </ActionPopover>
           </header>
 
           <main className="flex-grow">
             <Separator />
             <WalletCard wallet={selectedWallet} alwaysActive iconWithAccounts balanceExchange={balanceExchange} />
-            <AccountList selectedWallet={selectedWallet} balanceExchange={balanceExchange} />
+            <AccountList
+              selectedWallet={selectedWallet}
+              balanceExchange={balanceExchange}
+              isReordering={isReordering}
+              onReorderCancel={handleReorderCancel}
+              onReorderSave={handleReorderSave}
+            />
           </main>
 
           <footer className="px-4 pb-6">

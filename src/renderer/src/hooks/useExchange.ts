@@ -1,18 +1,17 @@
 import { useCallback, useState } from 'react'
 import { TokenPricesResponse } from '@cityofzion/blockchain-service'
 import { MultiExchange, UseExchangeResult } from '@renderer/@types/query'
-import { selectBsAggregator } from '@renderer/store/blockchain/SelectorBlockchain'
 import { useQuery, UseQueryOptions } from '@tanstack/react-query'
 import lodash from 'lodash'
 
-import { useAppSelector } from './useRedux'
+import { useBsAggregatorSelector } from './useBlockchainSelector'
 
 type ExchangeInfoByKey = Record<string, TokenPricesResponse[]>
 
 export function useExchange(
   queryOptions?: Omit<UseQueryOptions<MultiExchange, unknown, MultiExchange, string[]>, 'queryKey' | 'queryFn'>
 ): UseExchangeResult {
-  const bsAggregator = useAppSelector(selectBsAggregator)
+  const { bsAggregator } = useBsAggregatorSelector()
 
   const fetchExchanges = useCallback(async (): Promise<MultiExchange> => {
     const promises = bsAggregator.blockchainServices.map(

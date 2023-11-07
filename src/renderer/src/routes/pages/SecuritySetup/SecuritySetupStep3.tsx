@@ -7,7 +7,7 @@ import { Button } from '@renderer/components/Button'
 import { Link } from '@renderer/components/Link'
 import { useBlockchainActions } from '@renderer/hooks/useBlockchainActions'
 import { useAppDispatch } from '@renderer/hooks/useRedux'
-import { settingsReducerActions } from '@renderer/store/settings/SettingsReducer'
+import { settingsReducerActions } from '@renderer/store/reducers/SettingsReducer'
 import jsPDF from 'jspdf'
 
 export const SecuritySetupStep3Page = () => {

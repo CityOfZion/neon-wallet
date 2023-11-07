@@ -1,19 +1,27 @@
-import { useMemo } from 'react'
+import { ComponentProps, ReactNode, useMemo } from 'react'
 import { UseMultipleBalanceAndExchangeResult } from '@renderer/@types/query'
+import { IAccountState } from '@renderer/@types/store'
 import { BalanceHelper } from '@renderer/helpers/BalanceHelper'
 import { FilterHelper } from '@renderer/helpers/FilterHelper'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
-import { Account } from '@renderer/store/account/Account'
 
 import { AccountIcon } from './AccountIcon'
 
 type TProps = {
-  alwaysActive?: boolean
+  rightComponent?: ReactNode
   balanceExchange: UseMultipleBalanceAndExchangeResult
-  account: Account
-}
+  account: IAccountState
+  noHover?: boolean
+} & ComponentProps<'div'>
 
-export const AccountCard = ({ alwaysActive = false, balanceExchange, account }: TProps) => {
+export const AccountCard = ({
+  balanceExchange,
+  account,
+  noHover = false,
+  className,
+  rightComponent,
+  ...props
+}: TProps) => {
   const totalTokensBalances = useMemo(
     () =>
       BalanceHelper.calculateTotalBalances(balanceExchange.balance.data, balanceExchange.exchange.data, [
@@ -26,25 +34,30 @@ export const AccountCard = ({ alwaysActive = false, balanceExchange, account }: 
 
   return (
     <div
-      className={StyleHelper.mergeStyles('flex items-center gap-x-1 text-on-surface py-2 pr-3 pl-2 border-l-4', {
-        'border-l-neon bg-gray-900/50': alwaysActive,
-        'transition-colors border-l-transparent hover:border-l-neon hover:bg-gray-900/50 cursor-pointer ':
-          !alwaysActive,
-      })}
+      className={StyleHelper.mergeStyles(
+        'flex items-center gap-x-1 text-on-surface py-2 pr-3 pl-2 border-l-4 border-l-transparent cursor-pointer',
+        {
+          'transition-colors hover:border-l-neon hover:bg-gray-900/50': !noHover,
+        },
+        className
+      )}
+      {...props}
     >
       <AccountIcon account={account} />
 
-      <div className="flex justify-between flex-grow">
+      <div className="flex justify-between items-center flex-grow">
         <div className="flex flex-col flex-grow">
           <p className="text-xs text-gray-100">{account.name}</p>
           <span className="text-sm text-white">{formattedTotalTokensBalances}</span>
         </div>
 
-        <div className="flex flex-col justify-between">
-          {/* TODO: REPLACE THE MOCKED DATA WHEN THERE IS A SOLUTION FOR BALANCE VARIATION. Task link: https://app.clickup.com/t/86a197p77 */}
-          <p className="text-xs text-gray-100">24h</p>
-          <span className="text-sm text-neon">+5%</span>
-        </div>
+        {rightComponent ?? (
+          <div className="flex flex-col justify-between">
+            {/* TODO: REPLACE THE MOCKED DATA WHEN THERE IS A SOLUTION FOR BALANCE VARIATION. Task link: https://app.clickup.com/t/86a197p77 */}
+            <p className="text-xs text-gray-100">24h</p>
+            <span className="text-sm text-neon">+5%</span>
+          </div>
+        )}
       </div>
     </div>
   )

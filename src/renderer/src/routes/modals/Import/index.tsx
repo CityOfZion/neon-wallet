@@ -3,17 +3,15 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { MdChevronRight } from 'react-icons/md'
 import { TbFileImport } from 'react-icons/tb'
-import { useSelector } from 'react-redux'
-import { TBlockchainServiceKey } from '@renderer/@types/blockchain'
+import { TBlockchainServiceKey, TImportAccountsParam } from '@renderer/@types/blockchain'
 import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
 import { UtilsHelper } from '@renderer/helpers/UtilsHelper'
-import { TAccountToImport, useBlockchainActions } from '@renderer/hooks/useBlockchainActions'
+import { useAccountsSelector } from '@renderer/hooks/useAccountSelector'
+import { useBlockchainActions } from '@renderer/hooks/useBlockchainActions'
+import { useBsAggregatorSelector } from '@renderer/hooks/useBlockchainSelector'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
-import { useAppSelectorRef } from '@renderer/hooks/useRedux'
 import { ModalLayout } from '@renderer/layouts/Modal'
-import { selectAccounts } from '@renderer/store/account/SelectorAccount'
-import { selectBsAggregator } from '@renderer/store/blockchain/SelectorBlockchain'
 
 type TFormData = {
   text: string
@@ -29,11 +27,12 @@ type TFunctionsByInputTypes = Record<
 
 export const ImportModal = () => {
   const form = useForm<TFormData>()
-  const bsAggregator = useSelector(selectBsAggregator)
+  const { bsAggregator } = useBsAggregatorSelector()
   const blockchainActions = useBlockchainActions()
-  const accountsRef = useAppSelectorRef(selectAccounts)
+  const { accountsRef } = useAccountsSelector()
   const { modalNavigate } = useModalNavigate()
   const { t } = useTranslation('modals', { keyPrefix: 'import' })
+  const { t: commomT } = useTranslation('common', { keyPrefix: 'wallet' })
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -59,20 +58,19 @@ export const ImportModal = () => {
     if (!addresses.length) throw new Error(t('errors.allAddressesAlreadyImported'))
 
     const wallet = await blockchainActions.createWallet({
-      name: 'test',
+      name: commomT('importedName'),
       walletType: 'legacy',
       mnemonic: undefined,
     })
 
-    const accountsToImport = addresses.map<TAccountToImport>(({ address, blockchain }) => ({
+    const accountsToImport: TImportAccountsParam['accounts'] = addresses.map(({ address, blockchain }) => ({
       address,
       blockchain,
       key,
       type: 'legacy',
-      wallet,
     }))
 
-    await blockchainActions.importAccounts(accountsToImport)
+    await blockchainActions.importAccounts({ wallet, accounts: accountsToImport })
   }
 
   const functionByInputTypes: TFunctionsByInputTypes = {

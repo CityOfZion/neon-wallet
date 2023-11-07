@@ -2,10 +2,10 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
-import AccountReducer, { accountReducerName } from './account/AccountReducer'
-import BlockchainReducer from './blockchain/BlockchainReducer'
-import SettingsReducer, { settingsReducerName } from './settings/SettingsReducer'
-import WalletReducer, { walletReducerName } from './wallet/WalletReducer'
+import AccountReducer, { accountReducerName } from './reducers/AccountReducer'
+import BlockchainReducer from './reducers/BlockchainReducer'
+import SettingsReducer, { settingsReducerName } from './reducers/SettingsReducer'
+import WalletReducer, { walletReducerName } from './reducers/WalletReducer'
 
 const persistedWalletReducer = persistReducer({ key: walletReducerName, storage }, WalletReducer)
 const persistedAccountReducer = persistReducer({ key: accountReducerName, storage }, AccountReducer)

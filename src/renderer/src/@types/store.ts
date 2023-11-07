@@ -11,6 +11,7 @@ export interface IAccountState {
   backgroundColor: string
   blockchain: TBlockchainServiceKey
   encryptedKey?: string
+  order: number
 }
 
 export interface IBlockchainState {

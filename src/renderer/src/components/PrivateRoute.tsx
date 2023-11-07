@@ -1,10 +1,11 @@
 import { Navigate, useLocation } from 'react-router-dom'
 import { RootState } from '@renderer/@types/store'
 import { useAppSelector } from '@renderer/hooks/useRedux'
+import { useEncryptedPasswordSelector } from '@renderer/hooks/useSettingsSelector'
 
 export const PrivateRoute = ({ children }) => {
-  const securityType = useAppSelector((state: RootState) => state.settings.securityType)
-  const encryptedPassword = useAppSelector((state: RootState) => state.settings.encryptedPassword)
+  const { value: securityType } = useAppSelector((state: RootState) => state.settings.securityType)
+  const { encryptedPassword } = useEncryptedPasswordSelector()
 
   const location = useLocation()
 

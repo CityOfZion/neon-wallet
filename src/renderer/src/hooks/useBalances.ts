@@ -8,10 +8,9 @@ import {
   UseMultipleBalancesResult,
   UseUniqueBalancesResult,
 } from '@renderer/@types/query'
-import { selectBsAggregator } from '@renderer/store/blockchain/SelectorBlockchain'
 import { QueryKey, useQueries, UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
 
-import { useAppSelector } from './useRedux'
+import { useBsAggregatorSelector } from './useBlockchainSelector'
 
 export function useBalances(params: UseBalancesParams[], queryOptions?: BaseOptions<Balance>): UseMultipleBalancesResult
 
@@ -27,7 +26,7 @@ export function useBalances(
   queryOptions?: BaseOptions<Balance>
 ): UseBalancesResult {
   const [isRefetchingByUser, setIsRefetchingByUser] = useState(false)
-  const bsAggregator = useAppSelector(selectBsAggregator)
+  const { bsAggregator } = useBsAggregatorSelector()
 
   const fetchBalance = useCallback(
     async (address: string, blockchain: TBlockchainServiceKey): Promise<Balance> => {

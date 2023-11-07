@@ -5,9 +5,9 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { ReactComponent as LoginIcon } from '@renderer/assets/images/loginIcon.svg'
 import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
-import { useAppDispatch, useAppSelectorRef } from '@renderer/hooks/useRedux'
+import { useAppDispatch, useAppSelector } from '@renderer/hooks/useRedux'
 import { WelcomeLayout } from '@renderer/layouts/Welcome'
-import { settingsReducerActions } from '@renderer/store/settings/SettingsReducer'
+import { settingsReducerActions } from '@renderer/store/reducers/SettingsReducer'
 
 type TFormData = {
   password: string
@@ -17,7 +17,7 @@ export const LoginPage = () => {
   const { t } = useTranslation('pages', { keyPrefix: 'login' })
   const form = useForm<TFormData>()
   const location = useLocation()
-  const isFirstTimeRef = useAppSelectorRef(state => state.settings.isFirstTime)
+  const { ref: isFirstTimeRef } = useAppSelector(state => state.settings.isFirstTime)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 

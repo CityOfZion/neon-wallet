@@ -1,32 +1,31 @@
 import { useMemo } from 'react'
 import { UseMultipleBalanceAndExchangeResult } from '@renderer/@types/query'
+import { IWalletState } from '@renderer/@types/store'
 import { BalanceHelper } from '@renderer/helpers/BalanceHelper'
 import { FilterHelper } from '@renderer/helpers/FilterHelper'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
-import { useAppSelector } from '@renderer/hooks/useRedux'
-import { selectAccountsByWalletId } from '@renderer/store/account/SelectorAccount'
-import { Wallet } from '@renderer/store/wallet/Wallet'
+import { useAccountsByWalletIdSelector } from '@renderer/hooks/useAccountSelector'
 
 import { WalletIcon } from './WalletIcon'
 
 type TProps = {
   alwaysActive?: boolean
   balanceExchange: UseMultipleBalanceAndExchangeResult
-  wallet: Wallet
+  wallet: IWalletState
   iconWithAccounts?: boolean
 }
 
 export const WalletCard = ({ alwaysActive = false, balanceExchange, wallet, iconWithAccounts }: TProps) => {
-  const accounts = useAppSelector(selectAccountsByWalletId(wallet.id))
+  const { accountsByWalletId } = useAccountsByWalletIdSelector(wallet.id)
 
   const totalTokensBalances = useMemo(
     () =>
       BalanceHelper.calculateTotalBalances(
         balanceExchange.balance.data,
         balanceExchange.exchange.data,
-        accounts.map(account => account.address)
+        accountsByWalletId.map(account => account.address)
       ),
-    [balanceExchange, accounts]
+    [balanceExchange, accountsByWalletId]
   )
 
   const formattedTotalTokensBalances = useMemo(() => FilterHelper.currency(totalTokensBalances), [totalTokensBalances])

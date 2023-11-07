@@ -1,18 +1,17 @@
 import { TAccountColorKey } from '@renderer/@types/blockchain'
-import { useAppSelector } from '@renderer/hooks/useRedux'
-import { selectAccountsByWalletId } from '@renderer/store/account/SelectorAccount'
-import { Wallet } from '@renderer/store/wallet/Wallet'
+import { IWalletState } from '@renderer/@types/store'
+import { useAccountsByWalletIdSelector } from '@renderer/hooks/useAccountSelector'
 
 import { ReactComponent as FrontImage } from '../assets/images/wallet-icon-front.svg'
 import { ReactComponent as FrontHorizImage } from '../assets/images/wallet-icon-front-horiz.svg'
 
 type TProps = {
-  wallet: Wallet
+  wallet: IWalletState
   withAccounts?: boolean
 }
 
 export const WalletIcon = ({ wallet, withAccounts }: TProps) => {
-  const accounts = useAppSelector(selectAccountsByWalletId(wallet.id))
+  const { accountsByWalletId } = useAccountsByWalletIdSelector(wallet.id)
 
   const colorsByKeys: Record<TAccountColorKey, string> = {
     blue: 'bg-blue',
@@ -23,7 +22,7 @@ export const WalletIcon = ({ wallet, withAccounts }: TProps) => {
 
   return withAccounts ? (
     <div className="relative w-[2.25rem] h-[2.25rem] min-w-[2rem] min-h-[2.25rem] top-3">
-      {accounts
+      {accountsByWalletId
         .filter((_account, index) => index < 3)
         .map((account, index, array) => (
           <div
@@ -33,7 +32,7 @@ export const WalletIcon = ({ wallet, withAccounts }: TProps) => {
             }`}
             style={{
               opacity: 1 - 0.2 * (array.length - index),
-              top: `-${0.125 * (array.length - index)}rem`,
+              top: `-${0.15 * (array.length - index)}rem`,
             }}
           />
         ))}
