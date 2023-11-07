@@ -9,6 +9,7 @@ import SignMessage from '../../components/DappRequest/SignMessage'
 import Encrypt from '../../components/DappRequest/Encrypt'
 import Decrypt from '../../components/DappRequest/Decrypt'
 import DecryptFromArray from '../../components/DappRequest/DecryptFromArray'
+import SignTransaction from '../../components/DappRequest/SignTransaction'
 
 type Props = {
   history: any,
@@ -22,6 +23,7 @@ const componentsByMethod: { [key: string]: any } = {
   encrypt: Encrypt,
   decrypt: Decrypt,
   decryptFromArray: DecryptFromArray,
+  signTransaction: SignTransaction,
 }
 
 const DappRequest = ({ history, showErrorNotification }: Props) => {

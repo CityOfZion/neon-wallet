@@ -9,7 +9,7 @@ import {
   TSession,
   TSessionRequest,
 } from '@cityofzion/wallet-connect-sdk-wallet-react'
-import { NeonInvoker } from '@cityofzion/neon-invoker'
+import { NeonInvoker } from '@cityofzion/neon-dappkit'
 import ConnectionLoader from '../../ConnectDapp/ConnectionLoader'
 import { ROUTES, WITNESS_SCOPE } from '../../../core/constants'
 import CloseButton from '../../CloseButton'
@@ -25,7 +25,7 @@ import Info from '../../../assets/icons/info.svg'
 
 import { getNode, getRPCEndpoint } from '../../../actions/nodeStorageActions'
 import Invocation from '../components/Invocation'
-import InvokeResult from './InvokeResult'
+import MessageSuccess from '../MessageSuccess'
 
 const electron = require('electron')
 
@@ -42,7 +42,7 @@ type Props = {
   net: string,
 }
 
-const InvokeFunction = ({
+const SignTransaction = ({
   request,
   session,
   isHardwareLogin,
@@ -59,8 +59,7 @@ const InvokeFunction = ({
   const { rejectRequest, approveRequest } = useWalletConnectWallet()
   const [loading, setLoading] = useState(false)
   const [fee, setFee] = useState()
-  const [transactionHash, setTransactionHash] = useState()
-  const [errorMessage, setErrorMessage] = useState()
+  const [success, setSuccess] = useState(false)
 
   const handleCalculateFee = useCallback(
     async () => {
@@ -92,7 +91,7 @@ const InvokeFunction = ({
         setLoading(false)
       }
     },
-    [publicKey, net, requestParams, showInfoNotification],
+    [net, publicKey, requestParams, showInfoNotification],
   )
 
   const reject = () => {
@@ -117,14 +116,12 @@ const InvokeFunction = ({
       }
 
       const { result } = await approveRequest(request)
-
+      console.warn(result)
       if (notificationId) {
         hideNotification(notificationId)
       }
 
-      setTransactionHash(result)
-    } catch (error) {
-      setErrorMessage(error.message)
+      setSuccess(true)
     } finally {
       setLoading(false)
     }
@@ -137,13 +134,10 @@ const InvokeFunction = ({
     [handleCalculateFee],
   )
 
-  return loading ? (
+  return loading && !success ? (
     <ConnectionLoader />
-  ) : transactionHash || errorMessage ? (
-    <InvokeResult
-      transactionHash={transactionHash}
-      errorMessage={errorMessage}
-    />
+  ) : success ? (
+    <MessageSuccess text="You have successfully signed your transaction" />
   ) : (
     <FullHeightPanel
       headerText="Wallet Connect"
@@ -265,4 +259,4 @@ const InvokeFunction = ({
   )
 }
 
-export default InvokeFunction
+export default SignTransaction

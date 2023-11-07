@@ -187,6 +187,7 @@ export const walletConnectOptions: TOptions = {
     'encrypt',
     'decryptFromArray',
     'calculateFee',
+    'signTransaction',
   ],
   autoAcceptMethods: [
     'testInvoke',
