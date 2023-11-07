@@ -47,16 +47,16 @@ export const WalletSelect = ({ wallets, selected, onSelect, balanceExchange, dis
       <RadixSelect.Trigger
         aria-disabled={disabled}
         className={StyleHelper.mergeStyles(
-          'flex items-center w-[11.625rem] min-w-[11.625rem] py-1.5 px-2.5 transition-colors outline-none rounded aria-[disabled=false]:hover:bg-gray-200/15 aria-[disabled=true]:opacity-50 aria-[disabled=true]:cursor-not-allowed',
+          'flex items-center w-[11.625rem] min-w-[11.625rem] py-1.5 px-2.5 transition-colors outline-none rounded aria-[disabled=false]:hover:bg-gray-300/15 aria-[disabled=true]:opacity-50 aria-[disabled=true]:cursor-not-allowed',
           {
             'bg-gray-800 rounded-b-none': open,
-            'hover:bg-gray-200/15': !disabled,
+            'hover:bg-gray-300/15': !disabled,
             '': disabled,
           }
         )}
       >
         <div className="flex flex-col pointer-events-none w-full text-left">
-          <span className="text-xs text-gray-200 ">{t('title')}</span>
+          <span className="text-xs text-gray-300 ">{t('title')}</span>
           <span className="text-sm text-white">{selected ? selected.name : t('placeholder')}</span>
         </div>
         <RadixSelect.Icon>

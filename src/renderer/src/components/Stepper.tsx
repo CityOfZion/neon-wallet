@@ -19,7 +19,7 @@ export const Stepper = ({ steps, currentStep = 1, className, ...props }: TProps)
                   'w-6 h-6  rounded-full flex items-center justify-center text-sm font-bold transition-colors',
                   {
                     'bg-neon text-asphalt': fixedIndex <= currentStep,
-                    'bg-gray-900 text-gray-200': fixedIndex > currentStep,
+                    'bg-gray-900 text-gray-300': fixedIndex > currentStep,
                   }
                 )}
               >
@@ -29,7 +29,7 @@ export const Stepper = ({ steps, currentStep = 1, className, ...props }: TProps)
               <span
                 className={StyleHelper.mergeStyles(' text-center text-xs transition-colors', {
                   'text-neon': fixedIndex <= currentStep,
-                  'text-gray-200': fixedIndex > currentStep,
+                  'text-gray-300': fixedIndex > currentStep,
                 })}
               >
                 {step}

@@ -48,6 +48,12 @@ interface Resources {
         allAddressesAlreadyImported: 'All addresses are already imported'
       }
     }
+    editWallet: {
+      title: 'Edit Wallet'
+      inputPlaceholder: 'Enter your wallet name...'
+      saveButtonLabel: 'Save'
+      cancelButtonLabel: 'Cancel'
+    }
   }
   pages: {
     welcome: {

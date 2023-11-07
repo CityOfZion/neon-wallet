@@ -108,7 +108,7 @@ export const ImportModal = () => {
 
   return (
     <ModalLayout heading={t('title')} headingIcon={<TbFileImport />} headingIconFilled={false}>
-      <p className="text-gray-200 uppercase font-bold">{t('subtitle')}</p>
+      <p className="text-gray-300 uppercase font-bold">{t('subtitle')}</p>
       <p className="text-sm mr-">{t('description')}</p>
 
       <form className="mt-10" onSubmit={form.handleSubmit(handleSubmit)}>

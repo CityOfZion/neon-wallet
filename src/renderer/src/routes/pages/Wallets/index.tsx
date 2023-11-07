@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MdAdd, MdMoreHoriz } from 'react-icons/md'
 import { TbEyePlus, TbFileImport, TbMenuDeep, TbPencil, TbRefresh, TbRepeat } from 'react-icons/tb'
@@ -39,6 +39,19 @@ export const WalletsPage = () => {
     setIsReordering(false)
   }
 
+  useEffect(() => {
+    setSelectedWallet(prev => {
+      if (prev) {
+        const updatedWallet = wallets.find(wallet => wallet.id === prev.id)
+        if (updatedWallet) {
+          return updatedWallet
+        }
+      }
+
+      return wallets[0]
+    })
+  }, [wallets])
+
   return (
     <PortfolioLayout
       heading={
@@ -75,7 +88,12 @@ export const WalletsPage = () => {
 
             <ActionPopover
               actions={[
-                { icon: <TbPencil />, iconFilled: false, label: t('editWalletButtonLabel') },
+                {
+                  icon: <TbPencil />,
+                  iconFilled: false,
+                  label: t('editWalletButtonLabel'),
+                  onClick: modalNavigateWrapper('edit-wallet', { state: { wallet: selectedWallet } }),
+                },
                 {
                   icon: <TbRepeat />,
                   iconFilled: false,

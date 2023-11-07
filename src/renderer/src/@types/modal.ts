@@ -1,8 +1,8 @@
 import { ComponentProps } from 'react'
 
-export type THistory = {
+export type THistory<T = undefined> = {
   name: string
-  state?: unknown
+  state: T extends undefined ? unknown | undefined : T
   props?: {
     closeOnOutsideClick?: boolean
     closeOnEsc?: boolean
