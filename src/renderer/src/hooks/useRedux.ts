@@ -1,20 +1,19 @@
 import type { MutableRefObject } from 'react'
 import { useRef } from 'react'
-import type { TypedUseSelectorHook } from 'react-redux'
-import { useDispatch, useSelector } from 'react-redux'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import type { AppDispatch, RootState } from '@renderer/@types/store'
 
 export const useAppDispatch: () => AppDispatch = useDispatch
 
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
-
-export function useAppSelectorRef<T = unknown>(selectHandler: (state: RootState) => T): MutableRefObject<T> {
+export function useAppSelector<T = unknown>(
+  selectHandler: (state: RootState) => T
+): { value: T; ref: MutableRefObject<T> } {
   const ref = useRef<T>()
 
-  useSelector(selectHandler, (_, next) => {
+  const value = useSelector(selectHandler, (old, next) => {
     ref.current = next
-    return true
+    return shallowEqual(old, next)
   })
 
-  return ref as MutableRefObject<T>
+  return { value, ref: ref as MutableRefObject<T> }
 }

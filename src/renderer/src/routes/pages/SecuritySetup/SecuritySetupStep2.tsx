@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
 import { useAppDispatch } from '@renderer/hooks/useRedux'
-import { settingsReducerActions } from '@renderer/store/settings/SettingsReducer'
+import { settingsReducerActions } from '@renderer/store/reducers/SettingsReducer'
 
 type TFormData = {
   confirmPassword: string

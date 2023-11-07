@@ -4,6 +4,7 @@ interface Resources {
       continue: 'Continue'
     }
     wallet: {
+      importedName: 'Imported Wallet'
       firstWalletName: 'My First Wallet'
       firstWalletNameBackupFile: 'My First Wallet Backup'
       firstWalletNameBackupFileTitle: 'YOUR MNEMONIC PHRASE:'
@@ -96,6 +97,10 @@ interface Resources {
       importButtonLabel: 'Import'
       newWalletButtonLabel: 'New Wallet'
       manageButtonLabel: 'Manage'
+      reorder: {
+        cancelButtonLabel: 'Cancel'
+        saveButtonLabel: 'Save'
+      }
     }
   }
 }

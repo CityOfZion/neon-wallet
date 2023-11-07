@@ -49,6 +49,10 @@
     "addWatchAccountButtonLabel": "Add Watch",
     "importButtonLabel": "Import",
     "newWalletButtonLabel": "New Wallet",
-    "manageButtonLabel": "Manage"
+    "manageButtonLabel": "Manage",
+    "reorder": {
+      "cancelButtonLabel": "Cancel",
+      "saveButtonLabel": "Save"
+    }
   }
 }

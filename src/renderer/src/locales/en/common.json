@@ -3,6 +3,7 @@
     "continue": "Continue"
   },
   "wallet": {
+    "importedName": "Imported Wallet",
     "firstWalletName": "My First Wallet",
     "firstWalletNameBackupFile": "My First Wallet Backup",
     "firstWalletNameBackupFileTitle": "YOUR MNEMONIC PHRASE:"

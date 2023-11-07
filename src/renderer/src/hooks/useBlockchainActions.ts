@@ -1,46 +1,24 @@
 import { useCallback } from 'react'
-import { TBlockchainServiceKey } from '@renderer/@types/blockchain'
-import { TWalletType } from '@renderer/@types/store'
+import { useTranslation } from 'react-i18next'
+import { TAccountToCreate, TAccountToImport, TImportAccountsParam, TWalletToCreate } from '@renderer/@types/blockchain'
+import { IAccountState, IWalletState } from '@renderer/@types/store'
 import { accountColorsKeys } from '@renderer/constants/blockchain'
 import { UtilsHelper } from '@renderer/helpers/UtilsHelper'
-import { accountReducerActions } from '@renderer/store/account/AccountReducer'
-import { selectBsAggregator } from '@renderer/store/blockchain/SelectorBlockchain'
-import { walletReducerActions } from '@renderer/store/wallet/WalletReducer'
+import { accountReducerActions } from '@renderer/store/reducers/AccountReducer'
+import { walletReducerActions } from '@renderer/store/reducers/WalletReducer'
 import * as uuid from 'uuid'
 
-import { Account } from '../store/account/Account'
-import { selectAccounts } from '../store/account/SelectorAccount'
-import { Wallet } from '../store/wallet/Wallet'
-
-import { useAppDispatch, useAppSelectorRef } from './useRedux'
-
-export type TAccountToImport = {
-  address: string
-  blockchain: TBlockchainServiceKey
-  wallet: Wallet
-  type: TWalletType
-  key?: string
-  name?: string
-}
-
-export type TAccountToCreate = {
-  wallet: Wallet
-  name: string
-  blockchain: TBlockchainServiceKey
-  index?: number
-}
-
-export type TWalletToCreate = {
-  name: string
-  walletType: TWalletType
-  mnemonic?: string
-}
+import { useAccountsSelector } from './useAccountSelector'
+import { useBsAggregatorSelector } from './useBlockchainSelector'
+import { useAppDispatch } from './useRedux'
+import { useEncryptedPasswordSelector } from './useSettingsSelector'
 
 export function useBlockchainActions() {
   const dispatch = useAppDispatch()
-  const accounts = useAppSelectorRef(selectAccounts)
-  const bsAggregator = useAppSelectorRef(selectBsAggregator)
-  const encryptedPassword = useAppSelectorRef(state => state.settings.encryptedPassword)
+  const { accountsRef } = useAccountsSelector()
+  const { bsAggregatorRef } = useBsAggregatorSelector()
+  const { encryptedPasswordRef } = useEncryptedPasswordSelector()
+  const { t } = useTranslation('common', { keyPrefix: 'account' })
 
   const createWallet = useCallback(
     async ({ name, walletType, mnemonic }: TWalletToCreate) => {
@@ -49,41 +27,49 @@ export function useBlockchainActions() {
       if (walletType === 'standard') {
         if (!mnemonic) throw new Error('Standard Wallet needs to have a security phrase')
 
-        encryptedMnemonic = await window.api.encryptBasedEncryptedSecret(mnemonic, encryptedPassword.current)
+        encryptedMnemonic = await window.api.encryptBasedEncryptedSecret(mnemonic, encryptedPasswordRef.current)
       }
 
       const id = uuid.v4()
 
-      const newWallet = new Wallet({
+      const newWallet: IWalletState = {
         name,
         walletType,
         id,
         encryptedMnemonic,
-      })
+      }
 
-      dispatch(walletReducerActions.saveWallet(newWallet.deserialize()))
+      dispatch(walletReducerActions.saveWallet(newWallet))
 
       return newWallet
     },
-    [dispatch, encryptedPassword]
+    [dispatch, encryptedPasswordRef]
   )
 
   const createAccount = useCallback(
-    async ({ blockchain, name, wallet, index }: TAccountToCreate) => {
+    async ({ blockchain, name, wallet }: TAccountToCreate) => {
       if (wallet.walletType !== 'standard' || !wallet.encryptedMnemonic) throw new Error('Problem to create account')
 
-      const mnemonic = await window.api.decryptBasedEncryptedSecret(wallet.encryptedMnemonic, encryptedPassword.current)
+      const mnemonic = await window.api.decryptBasedEncryptedSecret(
+        wallet.encryptedMnemonic,
+        encryptedPasswordRef.current
+      )
 
-      const accountIndex =
-        index ??
-        accounts.current.filter(account => account.idWallet === wallet.id && account.blockchain === blockchain).length
+      const generateIndex = accountsRef.current.filter(
+        account => account.idWallet === wallet.id && account.blockchain === blockchain
+      ).length
 
-      const service = bsAggregator.current.getBlockchainByName(blockchain)
-      const generatedAccount = service.generateAccountFromMnemonic(mnemonic, accountIndex)
+      const service = bsAggregatorRef.current.getBlockchainByName(blockchain)
+      const generatedAccount = service.generateAccountFromMnemonic(mnemonic, generateIndex)
 
-      const encryptedKey = await window.api.encryptBasedEncryptedSecret(generatedAccount.key, encryptedPassword.current)
+      const encryptedKey = await window.api.encryptBasedEncryptedSecret(
+        generatedAccount.key,
+        encryptedPasswordRef.current
+      )
 
-      const newAccount = new Account({
+      const order = accountsRef.current.filter(account => account.idWallet === wallet.id).length
+
+      const newAccount: IAccountState = {
         idWallet: wallet.id,
         name,
         blockchain,
@@ -91,47 +77,55 @@ export function useBlockchainActions() {
         address: generatedAccount.address,
         accountType: wallet.walletType,
         encryptedKey,
-      })
+        order,
+      }
 
-      dispatch(accountReducerActions.saveAccount(newAccount.deserialize()))
+      dispatch(accountReducerActions.saveAccount(newAccount))
 
       return newAccount
     },
-    [dispatch, accounts, bsAggregator, encryptedPassword]
+    [dispatch, accountsRef, bsAggregatorRef, encryptedPasswordRef]
   )
 
   const importAccount = useCallback(
-    async ({ address, blockchain, type, wallet, key, name }: TAccountToImport) => {
+    async ({ address, blockchain, type, wallet, key, name, order }: TAccountToImport) => {
       let encryptedKey: string | undefined
 
       if (type === 'standard' || type === 'legacy') {
         if (!key) throw new Error('Key not defined')
-        encryptedKey = await window.api.encryptBasedEncryptedSecret(key, encryptedPassword.current)
+        encryptedKey = await window.api.encryptBasedEncryptedSecret(key, encryptedPasswordRef.current)
       }
 
-      const newAccount = new Account({
+      const accountOrder = order ?? accountsRef.current.filter(account => account.idWallet === wallet.id).length
+
+      const newAccount: IAccountState = {
         idWallet: wallet.id,
-        name: name ?? `Account`,
+        name: name ?? t('defaultName', { accountNumber: accountOrder + 1 }),
         blockchain,
         backgroundColor: accountColorsKeys[UtilsHelper.getRandomNumber(6)],
         address,
         accountType: type,
         encryptedKey,
-      })
+        order: accountOrder,
+      }
 
-      dispatch(accountReducerActions.saveAccount(newAccount.deserialize()))
+      dispatch(accountReducerActions.saveAccount(newAccount))
       return newAccount
     },
-    [dispatch, encryptedPassword]
+    [dispatch, encryptedPasswordRef, accountsRef, t]
   )
 
   const importAccounts = useCallback(
-    async (accounts: TAccountToImport[]) => {
-      const promises = accounts.map(account => importAccount(account))
+    async ({ accounts: accountsToImport, wallet }: TImportAccountsParam) => {
+      const lastOrder = accountsRef.current.filter(account => account.idWallet === wallet.id).length
+
+      const promises = accountsToImport.map((account, index) =>
+        importAccount({ ...account, wallet, order: lastOrder + index })
+      )
 
       return await Promise.all(promises)
     },
-    [importAccount]
+    [importAccount, accountsRef]
   )
 
   return {

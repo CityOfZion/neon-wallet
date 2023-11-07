@@ -3,22 +3,23 @@ import { useTranslation } from 'react-i18next'
 import { MdExpandLess, MdExpandMore } from 'react-icons/md'
 import * as RadixSelect from '@radix-ui/react-select'
 import { UseMultipleBalanceAndExchangeResult } from '@renderer/@types/query'
+import { IWalletState } from '@renderer/@types/store'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
-import { Wallet } from '@renderer/store/wallet/Wallet'
 
 import { Button } from './Button'
 import { Separator } from './Separator'
 import { WalletCard } from './WalletCard'
 
 type TItemProps = {
-  wallet: Wallet
+  wallet: IWalletState
   balanceExchange: UseMultipleBalanceAndExchangeResult
 }
 
 type TProps = {
-  selected?: Wallet
-  onSelect?: (wallet: Wallet) => void
-  wallets: Wallet[]
+  selected?: IWalletState
+  disabled?: boolean
+  onSelect?: (wallet: IWalletState) => void
+  wallets: IWalletState[]
   balanceExchange: UseMultipleBalanceAndExchangeResult
 }
 
@@ -31,7 +32,7 @@ const Item = ({ wallet, balanceExchange }: TItemProps) => {
   )
 }
 
-export const WalletSelect = ({ wallets, selected, onSelect, balanceExchange }: TProps) => {
+export const WalletSelect = ({ wallets, selected, onSelect, balanceExchange, disabled }: TProps) => {
   const { t } = useTranslation('components', { keyPrefix: 'walletSelect' })
   const [open, setOpen] = useState(false)
 
@@ -42,12 +43,15 @@ export const WalletSelect = ({ wallets, selected, onSelect, balanceExchange }: T
   }
 
   return (
-    <RadixSelect.Root onOpenChange={setOpen} open={open} onValueChange={handleValueChange}>
+    <RadixSelect.Root onOpenChange={setOpen} open={open} onValueChange={handleValueChange} disabled={disabled}>
       <RadixSelect.Trigger
+        aria-disabled={disabled}
         className={StyleHelper.mergeStyles(
-          'flex items-center w-[11.625rem] min-w-[11.625rem] py-1.5 px-2.5 transition-colors outline-none rounded hover:bg-gray-200/15',
+          'flex items-center w-[11.625rem] min-w-[11.625rem] py-1.5 px-2.5 transition-colors outline-none rounded aria-[disabled=false]:hover:bg-gray-200/15 aria-[disabled=true]:opacity-50 aria-[disabled=true]:cursor-not-allowed',
           {
             'bg-gray-800 rounded-b-none': open,
+            'hover:bg-gray-200/15': !disabled,
+            '': disabled,
           }
         )}
       >

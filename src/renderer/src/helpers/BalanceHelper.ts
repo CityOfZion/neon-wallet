@@ -1,8 +1,7 @@
 import { TBlockchainServiceKey } from '@renderer/@types/blockchain'
 import { Balance, MultiExchange, TokenBalance } from '@renderer/@types/query'
+import { IAccountState } from '@renderer/@types/store'
 import { cloneDeep } from 'lodash'
-
-import { Account } from '../store/account/Account'
 
 export type BalanceConvertedToExchange = TokenBalance & {
   convertedAmount: number
@@ -85,7 +84,7 @@ export class BalanceHelper {
       : balances.tokensBalances
   }
 
-  static getBalanceByAccount(account: Account, balances?: Balance[]) {
+  static getBalanceByAccount(account: IAccountState, balances?: Balance[]) {
     if (!balances) return
 
     return balances.find(balance => balance.address === account.address)

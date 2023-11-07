@@ -21,4 +21,40 @@ export abstract class UtilsHelper {
     await Promise.all(promises)
     return results
   }
+
+  static arrayMove(array: any[], fromIndex: number, toIndex: number) {
+    const newArray = [...array]
+
+    const startIndex = fromIndex < 0 ? newArray.length + fromIndex : fromIndex
+
+    if (startIndex >= 0 && startIndex < newArray.length) {
+      const endIndex = toIndex < 0 ? newArray.length + toIndex : toIndex
+
+      const [item] = newArray.splice(fromIndex, 1)
+      newArray.splice(endIndex, 0, item)
+    }
+
+    return newArray
+  }
+
+  static mapFiltered<T, R>(array: T[], callback: (item: T) => R): Exclude<R, null | undefined>[] {
+    return array.map(callback).filter((item): item is Exclude<R, null | undefined> => item !== undefined)
+  }
+
+  static orderBy<T>(array: T[], field: keyof T, direction: 'asc' | 'desc' = 'asc') {
+    return array.sort((a, b) => {
+      const aValue = a[field]
+      const bValue = b[field]
+
+      if (aValue === bValue) {
+        return 0
+      }
+
+      if (direction === 'asc') {
+        return aValue > bValue ? 1 : -1
+      }
+
+      return aValue < bValue ? 1 : -1
+    })
+  }
 }

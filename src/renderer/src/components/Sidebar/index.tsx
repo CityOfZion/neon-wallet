@@ -11,7 +11,7 @@ import {
   TbUsers,
 } from 'react-icons/tb'
 import { useAppDispatch } from '@renderer/hooks/useRedux'
-import { settingsReducerActions } from '@renderer/store/settings/SettingsReducer'
+import { settingsReducerActions } from '@renderer/store/reducers/SettingsReducer'
 
 import { ReactComponent as NeonLogoIcon } from '../../assets/images/neon-wallet-compact.svg'
 import { ReactComponent as WalletIcon } from '../../assets/images/wallet-icon.svg'
