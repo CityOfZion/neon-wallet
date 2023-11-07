@@ -78,13 +78,21 @@ const handleBackup = async ({
   )
 }
 
-export const loadWalletRecovery = async (
+type loadWalletRecoveryParams = {
   showSuccessNotification: Object => any,
   showErrorNotification: Object => any,
   setAccounts: (Array<Object>) => any,
   setN3Accounts: (Array<Object>) => any,
   chain: string,
-) => {
+}
+
+export const loadWalletRecovery = async ({
+  chain,
+  setAccounts,
+  setN3Accounts,
+  showErrorNotification,
+  showSuccessNotification,
+}: loadWalletRecoveryParams) => {
   const { canceled, filePaths } = await ipcRenderer.invoke(
     'dialog',
     'showOpenDialog',
