@@ -7,6 +7,7 @@ import fs from 'fs'
 
 import { get } from 'lodash-es'
 import { useWalletConnectWallet } from '@cityofzion/wallet-connect-sdk-wallet-react'
+import moment from 'moment'
 import { getStorage } from '../../core/storage'
 import { recoverWallet } from '../../modules/generateWallet'
 import { useSettingsContext } from '../../context/settings/SettingsContext'
@@ -35,8 +36,47 @@ import Plus from '../../assets/icons/add.svg'
 import EditIcon from '../../assets/icons/edit.svg'
 import BlockExplorerIcon from '../../assets/icons/node-select.svg'
 import { ReleaseNotes } from '../../components/Modals/ReleaseNotesModal/ReleaseNotesModal'
+import { backupAccounts } from '../../core/backup'
 
 const { shell, ipcRenderer } = require('electron')
+
+const handleBackup = async ({
+  showErrorNotification,
+  showSuccessNotification,
+  chain,
+}: {
+  showErrorNotification: Object => any,
+  showSuccessNotification: Object => any,
+  chain: string,
+}) => {
+  const path = await ipcRenderer.invoke('getPath', 'documents')
+
+  const result = await ipcRenderer.invoke('dialog', 'showSaveDialog', {
+    defaultPath: `${path}/neon-wallet-backup-${chain}-${moment().unix()}.json`,
+    filters: [
+      {
+        extensions: ['json'],
+      },
+    ],
+  })
+
+  const fileName = result.filePath
+  if (!fileName) return
+  await backupAccounts(
+    fileName,
+    chain,
+    () => {
+      showSuccessNotification({
+        message: 'The file has been succesfully saved',
+      })
+    },
+    errorMsg => {
+      showErrorNotification({
+        message: `An error occurred creating the file: ${errorMsg}`,
+      })
+    },
+  )
+}
 
 export const loadWalletRecovery = async (
   showSuccessNotification: Object => any,
@@ -138,10 +178,20 @@ const SETTINGS_LINKS = {
   },
   RECOVER_WALLET: {
     label: 'Recover Wallet',
-    url: ROUTES.ENCRYPT,
     renderIcon: () => <TimeIcon />,
     onClick: loadWalletRecovery,
     renderTranslatedLabel: () => <FormattedMessage id="recoverWallet" />,
+  },
+}
+
+const SETTINGS_FEATURES = {
+  BACKUP: {
+    label: 'Backup Wallet',
+    renderIcon: () => <LockIcon />,
+    onClick: handleBackup,
+    renderTranslatedLabel: () => (
+      <FormattedMessage id="settingsBackUpLinkLabel" />
+    ),
   },
 }
 
@@ -303,6 +353,35 @@ export default function NewSettings({
                       {renderTranslatedLabel()}
                     </Box>
                   ),
+              )}
+            </Box>
+            <Box margin="12px 0" borderTop="solid thin #5c677f">
+              <Box marginTop="12px" />
+
+              {Object.values(SETTINGS_FEATURES).map(
+                /* $FlowFixMe */
+                ({ label, renderIcon, onClick, renderTranslatedLabel }) => (
+                  <Box
+                    cursor="pointer"
+                    className={styles.settingsTabWrapper}
+                    padding={12}
+                    key={label}
+                    display="flex"
+                    alignItems="center"
+                    onClick={() =>
+                      onClick({
+                        chain: settings?.chain,
+                        showSuccessNotification,
+                        showErrorNotification,
+                      })
+                    }
+                  >
+                    <Box mr="12px" className={styles.settingsIconContainer}>
+                      {renderIcon()}
+                    </Box>
+                    {renderTranslatedLabel()}
+                  </Box>
+                ),
               )}
             </Box>
           </Box>

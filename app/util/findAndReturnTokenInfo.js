@@ -1,5 +1,5 @@
 // @flow
-import { api, rpc } from '@cityofzion/neon-js-legacy'
+import { api } from '@cityofzion/neon-js-legacy'
 import N3Neon, { rpc as n3Rpc } from '@cityofzion/neon-js'
 
 import { imageMap } from '../assets/nep5/png'
