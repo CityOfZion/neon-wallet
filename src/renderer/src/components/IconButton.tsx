@@ -7,10 +7,11 @@ type TProps = {
   text?: string
   size?: 'sm' | 'md'
   compacted?: boolean
+  activated?: boolean
 } & ComponentProps<'button'>
 
 export const IconButton = forwardRef<HTMLButtonElement, TProps>(
-  ({ text, icon, size = 'sm', filled = true, compacted, ...props }, ref) => {
+  ({ text, icon, size = 'sm', filled = true, compacted, activated = false, ...props }, ref) => {
     const { className: iconClassName, ...iconProps } = icon.props
 
     return (
@@ -18,12 +19,14 @@ export const IconButton = forwardRef<HTMLButtonElement, TProps>(
         ref={ref}
         {...props}
         className={StyleHelper.mergeStyles(
-          'flex flex-col h-fit  justify-center items-center disabled:cursor-not-allowed flex-grow-0 hover:enabled:bg-gray-300/15 rounded transition-colors',
+          'flex flex-col h-fit  justify-center items-center disabled:cursor-not-allowed flex-grow-0 rounded transition-colors',
           {
             'py-1 px-2 gap-y-0.5': size === 'sm' && !compacted,
             'py-0.5 px-0.5 gap-y-0.5': size === 'sm' && compacted,
             'py-1.5 px-3 gap-y-1': size === 'md' && !compacted,
             'py-1 px-1 gap-y-1': size === 'md' && compacted,
+            'bg-gray-300/15': activated,
+            'hover:enabled:bg-gray-300/15': !activated,
           },
           props.className
         )}
