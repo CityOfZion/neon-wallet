@@ -519,7 +519,7 @@ export default class Send extends React.Component<Props, State> {
               <br />
               <small>
                 Most users should recieve their tokens on Neo N3 within 30
-                minutes, however some migrations may take up to 24 hours.{' '}
+                minutes, however some migrations may take up to 72 hours.{' '}
               </small>
             </div>
           ),
@@ -576,7 +576,7 @@ export default class Send extends React.Component<Props, State> {
               <br />
               <small>
                 Most users should recieve their tokens on Neo N3 within 30
-                minutes, however some migrations may take up to 24 hours.{' '}
+                minutes, however some migrations may take up to 72 hours.{' '}
               </small>
             </div>
           ),
