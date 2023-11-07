@@ -73,13 +73,13 @@ const IMPORT_OPTIONS = {
         <div
           className={styles.buttonContainer}
           onClick={() => {
-            loadWalletRecovery(
-              props.showSuccessNotification,
-              props.showErrorNotification,
-              props.setAccounts,
-              props.setN3Accounts,
-              props.chain,
-            )
+            loadWalletRecovery({
+              chain: props.chain,
+              setAccounts: props.setAccounts,
+              setN3Accounts: props.setN3Accounts,
+              showErrorNotification: props.showErrorNotification,
+              showSuccessNotification: props.showSuccessNotification,
+            })
           }}
         >
           <Button
