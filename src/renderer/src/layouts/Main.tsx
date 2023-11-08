@@ -25,7 +25,7 @@ export const MainLayout = ({
       <div className="flex-grow flex flex-col bg-asphalt text-white px-7 py-4">
         <header
           className={StyleHelper.mergeStyles(
-            'border-b border-b-gray-200/30 min-h-12 flex justify-between items-center pb-4',
+            'border-b border-b-gray-300/30 min-h-12 flex justify-between items-center pb-4',
             headerClassName
           )}
         >

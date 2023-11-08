@@ -21,7 +21,7 @@ module.exports = {
         DEFAULT: '#E75595',
       },
       blue: {
-        DEFAULT: '#22B1FF',
+        DEFAULT: '#47BEFF',
       },
       orange: {
         DEFAULT: '#FE872F',
@@ -41,7 +41,8 @@ module.exports = {
         700: '#333D46', // dark
         600: '#42525C', // dark_mid
         400: '#91abbc',
-        200: '#818D95', // mid
+        300: '#818D95', // mid
+        200: '#C5D0D5',
         100: '#B0C0C8', //light
       },
     },

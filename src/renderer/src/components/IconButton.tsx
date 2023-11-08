@@ -18,7 +18,7 @@ export const IconButton = forwardRef<HTMLButtonElement, TProps>(
         ref={ref}
         {...props}
         className={StyleHelper.mergeStyles(
-          'flex flex-col h-fit  justify-center items-center disabled:cursor-not-allowed flex-grow-0 hover:enabled:bg-gray-200/15 rounded transition-colors',
+          'flex flex-col h-fit  justify-center items-center disabled:cursor-not-allowed flex-grow-0 hover:enabled:bg-gray-300/15 rounded transition-colors',
           {
             'py-1 px-2 gap-y-0.5': size === 'sm' && !compacted,
             'py-0.5 px-0.5 gap-y-0.5': size === 'sm' && compacted,
@@ -34,14 +34,14 @@ export const IconButton = forwardRef<HTMLButtonElement, TProps>(
             {
               'w-4 h-4': size === 'sm',
               'w-6 h-6': size === 'md',
-              'fill-gray-200/50': filled,
-              'stroke-gray-200/50': !filled,
+              'fill-gray-300/50': filled,
+              'stroke-gray-300/50': !filled,
             },
             iconClassName
           ),
           ...iconProps,
         })}
-        {text && <span className="text-2xs text-gray-200 whitespace-nowrap">{text}</span>}
+        {text && <span className="text-2xs text-gray-300 whitespace-nowrap">{text}</span>}
       </button>
     )
   }

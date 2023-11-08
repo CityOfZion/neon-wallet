@@ -17,14 +17,14 @@ export const ModalLayout = ({ heading, children, headingIcon, headingIconFilled 
   const { modalNavigateWrapper } = useModalNavigate()
 
   return (
-    <div className="w-[18.75rem] bg-gray-800 h-full px-4 text-white text-xs">
+    <div className="w-[18.75rem] bg-gray-800 h-full px-4 text-white text-xs flex flex-col">
       <header className="flex justify-between items-center py-2.5">
         <div className="flex gap-x-2.5">
           {headingIcon &&
             cloneElement(headingIcon, {
               className: StyleHelper.mergeStyles('w-6 h-6', {
-                'fill-neon': headingIconFilled,
-                'stroke-neon': !headingIconFilled,
+                'fill-blue': headingIconFilled,
+                'stroke-blue': !headingIconFilled,
               }),
             })}
           <h2 className="text-sm">{heading}</h2>

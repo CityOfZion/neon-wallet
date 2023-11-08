@@ -37,7 +37,7 @@ export const SidebarLink = ({ icon, title, to, disabled, isNew }: Props): JSX.El
         }}
       >
         {cloneElement(icon, {
-          className: 'group-aria-[current=page]:stroke-white stroke-gray-200 object-contain w-6 h-6',
+          className: 'group-aria-[current=page]:stroke-white stroke-gray-300 object-contain w-6 h-6',
         })}
 
         {isNew && (

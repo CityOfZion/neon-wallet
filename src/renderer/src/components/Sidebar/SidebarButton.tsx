@@ -23,7 +23,7 @@ export const SidebarButton = ({ icon, title, onClick, disabled }: Props): JSX.El
         )}
       >
         {cloneElement(icon, {
-          className: 'stroke-gray-200 object-contain w-6 h-6',
+          className: 'stroke-gray-300 object-contain w-6 h-6',
         })}
 
         <span className="whitespace-nowrap">{title}</span>
