@@ -15,6 +15,7 @@ import PatchDark from '../../../assets/images/release-assets/patch-dark.svg'
 import N3SupportLight from '../../../assets/images/release-assets/n3_support_light.svg'
 import N3SupportDark from '../../../assets/images/release-assets/n3_support_dark.svg'
 
+import NeoNS from '../../../assets/images/release-assets/neons.svg'
 import MigrationLight from '../../../assets/images/release-assets/migration-light.svg'
 import MigrationDark from '../../../assets/images/release-assets/migration-dark.svg'
 import Ledger from '../../../assets/images/release-assets/ledger.svg'
@@ -31,6 +32,155 @@ type Props = {
 
 export const ReleaseNotes = ({ theme }: { theme: string }) => (
   <div className={styles.releaseNotesContents}>
+    <div className={styles.release}>
+      <div className={styles.releaseContent}>
+        <small className={styles.date}>Oct 11th 2023 </small>
+        <h3>Release v2.21.3</h3>
+
+        <p>
+          In this update you will find the following minor improvements:
+          <br />
+          <br />
+          <li>Several hot fixes for webp vulnerabilities</li>
+          <br />
+          View full details of this release on GitHub
+          <br />
+        </p>
+
+        <Github
+          onClick={() =>
+            electron.shell.openExternal(
+              'https://github.com/CityOfZion/neon-wallet/releases/tag/v2.21.3',
+            )
+          }
+        />
+      </div>
+      <div className={styles.marketingImage}>
+        {theme === 'Light' ? <PatchLight /> : <PatchDark />}
+      </div>
+    </div>
+
+    <div className={styles.release}>
+      <div className={styles.releaseContent}>
+        <small className={styles.date}>Sep 9th 2023 </small>
+        <h3>Release v2.20.6</h3>
+
+        <p>
+          In this update you will find the following minor improvements:
+          <br />
+          <br />
+          <li>Fixes legacy ledger transfers</li>
+          <br />
+          View full details of this release on GitHub
+          <br />
+        </p>
+
+        <Github
+          onClick={() =>
+            electron.shell.openExternal(
+              'https://github.com/CityOfZion/neon-wallet/releases/tag/v2.20.6',
+            )
+          }
+        />
+      </div>
+      <div className={styles.marketingImage}>
+        {theme === 'Light' ? <Ledger /> : <LedgerDark />}
+      </div>
+    </div>
+
+    <div className={styles.release}>
+      <div className={styles.releaseContent}>
+        <small className={styles.date}>Aug 8th 2023 </small>
+        <h3>Release v2.19.2</h3>
+
+        <p>
+          In this update you will find the following minor improvements:
+          <br />
+          <br />
+          <li>Improves contacts interface</li>
+          <li>Improves WalletConnect operability</li>
+          <li>Various minor bug fixes</li>
+          <li>Under the hood dependency updates</li>
+          <br />
+          View full details of this release on GitHub
+          <br />
+        </p>
+
+        <Github
+          onClick={() =>
+            electron.shell.openExternal(
+              'https://github.com/CityOfZion/neon-wallet/releases/tag/v2.19.2',
+            )
+          }
+        />
+      </div>
+      <div className={styles.marketingImage}>
+        {theme === 'Light' ? <PatchLight /> : <PatchDark />}
+      </div>
+    </div>
+
+    <div className={styles.release}>
+      <div className={styles.releaseContent}>
+        <small className={styles.date}>Jul 13th 2023 </small>
+        <h3>Release v2.18.0</h3>
+
+        <p>
+          In this update you will find the following minor improvements:
+          <br />
+          <br />
+          <li>NeoNS integration</li>
+          <li>WalletConnect deep linking to operate from a closed app state</li>
+          <li>Various minor bug fixes</li>
+          <li>Under the hood dependency updates</li>
+          <br />
+          View full details of this release on GitHub
+          <br />
+        </p>
+
+        <Github
+          onClick={() =>
+            electron.shell.openExternal(
+              'https://github.com/CityOfZion/neon-wallet/releases/tag/v2.18.0',
+            )
+          }
+        />
+      </div>
+      <div className={styles.marketingImage}>
+        {theme === 'Light' ? <NeoNS /> : <NeoNS />}
+      </div>
+    </div>
+
+    <div className={styles.release}>
+      <div className={styles.releaseContent}>
+        <small className={styles.date}>Mar 30th 2023 </small>
+        <h3>Release v2.17.1</h3>
+
+        <p>
+          In this update you will find the following minor improvements:
+          <br />
+          <br />
+          <li>Adds voter status to network configuration tooltip</li>
+          <li>Adds custom network support</li>
+          <li>Various minor bug fixes</li>
+          <li>Under the hood dependency updates</li>
+          <br />
+          View full details of this release on GitHub
+          <br />
+        </p>
+
+        <Github
+          onClick={() =>
+            electron.shell.openExternal(
+              'https://github.com/CityOfZion/neon-wallet/releases/tag/v2.17.1',
+            )
+          }
+        />
+      </div>
+      <div className={styles.marketingImage}>
+        {theme === 'Light' ? <PatchLight /> : <PatchDark />}
+      </div>
+    </div>
+
     <div className={styles.release}>
       <div className={styles.releaseContent}>
         <small className={styles.date}>Jan 18th 2023 </small>
