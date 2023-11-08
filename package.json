@@ -1,6 +1,6 @@
 {
   "name": "Neon",
-  "version": "2.23.0",
+  "version": "2.23.2",
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",
   "homepage": "https://github.com/CityOfZion/neon-wallet",
@@ -22,6 +22,7 @@
     "create-release:major": "node scripts/create-release.js major",
     "release": "yarn assets && yarn electron-builder --publish always",
     "release:mac": "yarn assets && yarn electron-builder --publish always --mac --x64 --arm64",
+    "build:win": "yarn assets && yarn electron-builder --win",
     "dist": "yarn assets && dotenv yarn electron-builder",
     "lint": "eslint -c .eslintrc ./app --ext .js,.jsx --ignore-pattern dist/",
     "lint-fix": "eslint -c .eslintrc ./app --ext .js,.jsx --fix --ignore-pattern dist/",
