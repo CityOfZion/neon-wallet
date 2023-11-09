@@ -75,6 +75,7 @@ const MISCELLANEOUS = {
   networkConfigTooltipPublicKey: 'KHÓA CÔNG KHAI:',
   networkConfigTooltipAddress: 'ĐỊA CHỈ:',
   networkConfigTooltipVotedNode: 'Bình chọn cho:',
+  networkConfigTooltipQuickVote: 'Quickvote',
 
   noOptionsMessage: 'Không có lựa chọn',
   isLoadingMessage: 'Đang tải...',

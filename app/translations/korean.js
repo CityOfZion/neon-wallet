@@ -62,6 +62,7 @@ const MISCELLANEOUS = {
   networkConfigTooltipPublicKey: '공개 키:',
   networkConfigTooltipAddress: '주소:',
   networkConfigTooltipVotedNode: '캐스트 투표:',
+  networkConfigTooltipQuickVote: 'Quickvote',
 
   noOptionsMessage: '옵션이 없습니다',
   isLoadingMessage: '불러오는 중...',

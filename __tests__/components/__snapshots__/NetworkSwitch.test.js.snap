@@ -141,6 +141,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
       "modifyDetails": "Modify Details",
       "networkConfigTooltipAddress": "ADDRESS:",
       "networkConfigTooltipPublicKey": "PUBLIC KEY:",
+      "networkConfigTooltipQuickVote": "QuickVote",
       "networkConfigTooltipUpdateSettings": "Update Settings",
       "networkConfigTooltipVotedNode": "VOTE CAST FOR:",
       "networkSettingsAutomatic": "AUTOMATIC",

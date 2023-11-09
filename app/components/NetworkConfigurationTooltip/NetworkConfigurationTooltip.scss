@@ -59,12 +59,26 @@
   word-break: break-word;
 }
 
+.votedNotedContainer {
+  display: flex;
+  margin: 6px 0 ;
+}
+
 .votedNodeInfo {
+  align-items: baseline;
+  width: 75%;
+  float: left;
+
+  span {
+    font-size: 12px;
+  }
+}
+
+.votedNodeInfoWatchOnly {
   display: flex;
   width: 100%;
   flex-direction: column;
   align-items: baseline;
-  margin: 6px 0 ;
 
   span {
     font-size: 12px;
@@ -82,6 +96,21 @@
 
   button {
     width: 250px;
+
+    span {
+      text-align: center;
+    }
+  }
+}
+
+.buttonContainerQuickVote {
+  justify-content: center;
+  float: right;
+  margin: 6px 0;
+
+  button {
+    width: 100px;
+    height: 30px;
 
     span {
       text-align: center;
