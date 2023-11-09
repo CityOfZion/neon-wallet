@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron'
 import storage from 'electron-json-storage'
 import promisify from 'es6-promisify'
+import fs from 'fs/promises'
 
 const get = promisify(storage.get, storage)
 const set = promisify(storage.set, storage)
@@ -34,6 +35,20 @@ export const getStorage = async key => {
   }
   // Only encrypted values get stored as strings
   if (typeof value === 'string' && encryptionIsWhitelisted) {
+    const multiChainName = 'multi-chain-address-book'
+    if (key === multiChainName) {
+      const stats = await fs.stat(path + "/" + multiChainName + ".json");
+      //There are some cases where an error occurs in decryption.
+      //To prevent showing a message to the user without content, check the file size first.
+      if (stats.size > 30) {
+        const decryptedValue = await ipcRenderer?.invoke(
+          'safeStorageDecrypt',
+          value,
+        )
+        return JSON.parse(decryptedValue)
+      }
+      return {}
+    }
     const decryptedValue = await ipcRenderer?.invoke(
       'safeStorageDecrypt',
       value,
