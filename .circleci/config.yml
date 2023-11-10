@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   win: circleci/windows@2.2.0
+  node-version: circleci/node@5.1.0
 
 references:
   container_config: &container_config
@@ -59,6 +60,10 @@ jobs:
       xcode: "14.0.0"
     steps:
       - checkout
+      - node/install:
+          install-yarn: true
+          node-version: '16.19.1'
+      - run: node --version
       - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1500000 --network-concurrency 1
       - run: npm --build-from-source install node-pre-gyp --force
       - run: yarn release:mac
