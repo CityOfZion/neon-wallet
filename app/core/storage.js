@@ -37,9 +37,9 @@ export const getStorage = async key => {
   if (typeof value === 'string' && encryptionIsWhitelisted) {
     const multiChainName = 'multi-chain-address-book'
     if (key === multiChainName) {
-      const stats = await fs.stat(path + "/" + multiChainName + ".json");
-      //There are some cases where an error occurs in decryption.
-      //To prevent showing a message to the user without content, check the file size first.
+      const stats = await fs.stat(`${path}/${multiChainName}.json`)
+      // There are some cases where an error occurs in decryption.
+      // To prevent showing a message to the user without content, check the file size first.
       if (stats.size > 30) {
         const decryptedValue = await ipcRenderer?.invoke(
           'safeStorageDecrypt',
