@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   win: circleci/windows@2.2.0
-  node-version: circleci/node@5.1.0
+  node: circleci/node@5.1.0
 
 references:
   container_config: &container_config
