@@ -20,13 +20,18 @@ import styles from './NetworkConfigurationTooltip.scss'
 import WarningIcon from '../../assets/icons/warning.svg'
 import { useSettingsContext } from '../../context/settings/SettingsContext'
 
+const electron = require('electron')
+
 type Props = {
   address: string,
   net: string,
   publicKey: string,
   selectedNode: string,
   intl: IntlShape,
+  isWatchOnly: boolean,
 }
+
+const QUICKVOTE_LINK = 'https://quickvote.coz.io/'
 
 export function renderNode(node: Array<any>) {
   if (node.length === 2) {
@@ -56,6 +61,7 @@ export default function NetworkConfigurationTooltip({
   intl,
   publicKey,
   selectedNode,
+  isWatchOnly,
 }: Props = {}) {
   const [node, setNode] = useState([])
   const {
@@ -103,16 +109,43 @@ export default function NetworkConfigurationTooltip({
             <div className={styles.addressLink}> {address}</div>
           </div>
 
-          {chain === 'neo3' && (
-            <div className={styles.votedNodeInfo}>
-              <span>
-                {intl.formatMessage({
-                  id: 'networkConfigTooltipVotedNode',
-                })}
-              </span>
-              {renderNode(node)}
-            </div>
-          )}
+          {chain === 'neo3' &&
+            !isWatchOnly && (
+              <div className={styles.votedNodeContainer}>
+                <div className={styles.votedNodeInfo}>
+                  <span>
+                    {intl.formatMessage({
+                      id: 'networkConfigTooltipVotedNode',
+                    })}
+                  </span>
+                  {renderNode(node)}
+                </div>
+                <div className={styles.buttonContainerQuickVote}>
+                  <Button
+                    shouldCenterButtonLabelText
+                    outline
+                    onClick={() => electron.shell.openExternal(QUICKVOTE_LINK)}
+                  >
+                    {intl.formatMessage({
+                      id: 'networkConfigTooltipQuickVote',
+                    })}
+                  </Button>
+                </div>
+              </div>
+            )}
+          {chain === 'neo3' &&
+            isWatchOnly && (
+              <div className={styles.votedNodeContainer}>
+                <div className={styles.votedNodeInfoWatchOnly}>
+                  <span>
+                    {intl.formatMessage({
+                      id: 'networkConfigTooltipVotedNode',
+                    })}
+                  </span>
+                  {renderNode(node)}
+                </div>
+              </div>
+            )}
           {publicKey && (
             <div className={styles.publicKeyInfo}>
               <span>

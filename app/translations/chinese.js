@@ -74,6 +74,7 @@ const MISCELLANEOUS = {
   networkConfigTooltipPublicKey: '公钥:',
   networkConfigTooltipAddress: '地址:',
   networkConfigTooltipVotedNode: '投票给：',
+  networkConfigTooltipQuickVote: 'Quickvote',
 
   noOptionsMessage: '没有选择',
   isLoadingMessage: '载入中...',
