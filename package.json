@@ -128,7 +128,7 @@
     "@ledgerhq/devices": "^7.0.0",
     "@ledgerhq/hw-transport-node-hid-noevents": "6.7.0",
     "@tippyjs/react": "^4.2.5",
-    "axios": "0.21.1",
+    "axios": "1.6.0",
     "axios-retry": "3.1.1",
     "bignumber.js": "5.0.0",
     "buffer": "5.0.8",
