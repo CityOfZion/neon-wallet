@@ -1,3 +1,4 @@
+import * as uuid from 'uuid'
 export abstract class UtilsHelper {
   static getRandomNumber(max: number) {
     return Math.floor(Math.random() * Math.floor(max))
@@ -56,5 +57,13 @@ export abstract class UtilsHelper {
 
       return aValue < bValue ? 1 : -1
     })
+  }
+
+  static copyToClipboard(text: string) {
+    navigator.clipboard.writeText(text)
+  }
+
+  static uuid() {
+    return uuid.v4()
   }
 }

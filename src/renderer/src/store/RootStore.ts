@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage'
 
 import AccountReducer, { accountReducerName } from './reducers/AccountReducer'
 import BlockchainReducer from './reducers/BlockchainReducer'
+import ContactReducer, { contactReducerName } from './reducers/ContactReducer'
 import SettingsReducer, { settingsReducerName } from './reducers/SettingsReducer'
 import WalletReducer, { walletReducerName } from './reducers/WalletReducer'
 
@@ -13,12 +14,14 @@ const persistedSettingsReducer = persistReducer(
   { key: settingsReducerName, storage, blacklist: ['encryptedPassword'] },
   SettingsReducer
 )
+const persistedContactReducer = persistReducer({ key: contactReducerName, storage }, ContactReducer)
 export class RootStore {
   static reducers = combineReducers({
     wallet: persistedWalletReducer,
     account: persistedAccountReducer,
     settings: persistedSettingsReducer,
     blockchain: BlockchainReducer,
+    contact: persistedContactReducer,
   })
 
   static store = configureStore({

@@ -28,5 +28,35 @@
     "inputPlaceholder": "Enter your wallet name...",
     "saveButtonLabel": "Save",
     "cancelButtonLabel": "Cancel"
+  },
+  "persistContactModal": {
+    "addContact": "Add Contact",
+    "editContact": "Edit Contact",
+    "invalidName": "Invalid name",
+    "emptyAddresses": "No address added",
+    "name": "NAME",
+    "enterAName": "Enter a name...",
+    "addresses": "ADDRESSES",
+    "enterPublicKeyOrNNS": "Enter a public key or NNS address..."
+  },
+  "addAddressStep1": {
+    "title": "Add Address",
+    "addToContact": "ADD TO CONTACT",
+    "selectBlockchain": "Select the desired blockchain for this account",
+    "search": "Search...",
+    "notFound": "Blockchain not found",
+    "errorNoBlockchainSelected": "No blockchain selected"
+  },
+  "addAddressStep2": {
+    "title": "Add Address",
+    "addToContact": "ADD TO CONTACT",
+    "enterNNSorPublicKey": "To add an account to this contact, enter an NNS address or public key",
+    "publicKeyComplete": "Public key complete!",
+    "invalidAddress": "Invalid Address"
+  },
+  "addAddressStep3": {
+    "title": "Add Address",
+    "addToContact": "Add to contact",
+    "subtext": "This address will be added to the above contact:"
   }
 }
