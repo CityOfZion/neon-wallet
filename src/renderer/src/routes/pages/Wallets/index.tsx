@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MdAdd, MdMoreHoriz } from 'react-icons/md'
 import { TbEyePlus, TbFileImport, TbMenuDeep, TbPencil, TbRefresh, TbRepeat } from 'react-icons/tb'
@@ -6,6 +6,7 @@ import { IWalletState } from '@renderer/@types/store'
 import { ActionPopover } from '@renderer/components/ActionPopover'
 import { Button } from '@renderer/components/Button'
 import { IconButton } from '@renderer/components/IconButton'
+import { PopOver } from '@renderer/components/PopOver'
 import { Separator } from '@renderer/components/Separator'
 import { WalletCard } from '@renderer/components/WalletCard'
 import { WalletSelect } from '@renderer/components/WalletSelect'
@@ -65,7 +66,29 @@ export const WalletsPage = () => {
       }
       rightComponent={
         <div className="flex gap-x-2">
-          <IconButton icon={<TbMenuDeep />} filled={false} size="md" text={t('manageButtonLabel')} disabled />
+          <PopOver
+            trigger={<IconButton icon={<TbMenuDeep />} filled={false} size="md" text={t('manageButtonLabel')} />}
+          >
+            {wallets.map((wallet, index) => (
+              <Fragment key={index}>
+                {index !== 0 && <Separator />}
+
+                <WalletCard
+                  wallet={wallet}
+                  noHover
+                  balanceExchange={balanceExchange}
+                  rightComponent={
+                    <IconButton
+                      icon={<TbPencil className={'stroke-neon w-5 h-5'} />}
+                      className={'ml-2 self-center '}
+                      onClick={modalNavigateWrapper('edit-wallet', { state: { wallet: wallet } })}
+                    />
+                  }
+                  className="pr-1"
+                />
+              </Fragment>
+            ))}
+          </PopOver>
           <IconButton icon={<MdAdd />} size="md" text={t('newWalletButtonLabel')} disabled />
           <IconButton
             icon={<TbFileImport />}
@@ -108,7 +131,7 @@ export const WalletsPage = () => {
 
           <main className="flex-grow">
             <Separator />
-            <WalletCard wallet={selectedWallet} alwaysActive iconWithAccounts balanceExchange={balanceExchange} />
+            <WalletCard wallet={selectedWallet} iconWithAccounts balanceExchange={balanceExchange} />
             <AccountList
               selectedWallet={selectedWallet}
               balanceExchange={balanceExchange}
