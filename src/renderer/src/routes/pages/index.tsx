@@ -4,6 +4,7 @@ import { PrivateRoute } from '@renderer/components/PrivateRoute'
 import { SecuritySetupStep1Page } from './SecuritySetup/SecuritySetupStep1'
 import { SecuritySetupStep2Page } from './SecuritySetup/SecuritySetupStep2'
 import { SecuritySetupStep3Page } from './SecuritySetup/SecuritySetupStep3'
+import { ContactsPage } from './Contacts'
 import { LoginPage } from './Login'
 import { PortfolioPage } from './Portfolio'
 import { SecuritySetupPage } from './SecuritySetup'
@@ -23,6 +24,14 @@ export const pageRouter = createBrowserRouter([
     element: (
       <PrivateRoute>
         <WalletsPage />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: '/contacts',
+    element: (
+      <PrivateRoute>
+        <ContactsPage />
       </PrivateRoute>
     ),
   },

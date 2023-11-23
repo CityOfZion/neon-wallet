@@ -33,5 +33,12 @@ export interface ISettingsState {
   securityType: TSecurityType
 }
 
+export type TContactAddress = { address: string; blockchain: TBlockchainServiceKey }
+export interface IContactState {
+  id: string
+  name: string
+  addresses: TContactAddress[]
+}
+
 export type RootState = ReturnType<typeof RootStore.reducers>
 export type AppDispatch = typeof RootStore.store.dispatch

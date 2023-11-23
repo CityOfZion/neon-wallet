@@ -2,6 +2,10 @@ interface Resources {
   common: {
     general: {
       continue: 'Continue'
+      next: 'Next'
+      save: 'Save'
+      edit: 'Edit'
+      cancel: 'Cancel'
     }
     wallet: {
       importedName: 'Imported Wallet'
@@ -12,6 +16,11 @@ interface Resources {
     }
     account: {
       defaultName: 'Account {{accountNumber}}'
+    }
+    blockchain: {
+      neo3: 'Neo'
+      neoLegacy: 'Neo Legacy'
+      ethereum: 'Ethereum'
     }
   }
   components: {
@@ -67,6 +76,36 @@ interface Resources {
       saveButtonLabel: 'Save'
       cancelButtonLabel: 'Cancel'
     }
+    persistContactModal: {
+      addContact: 'Add Contact'
+      editContact: 'Edit Contact'
+      invalidName: 'Invalid name'
+      emptyAddresses: 'No address added'
+      name: 'NAME'
+      enterAName: 'Enter a name...'
+      addresses: 'ADDRESSES'
+      enterPublicKeyOrNNS: 'Enter a public key or NNS address...'
+    }
+    addAddressStep1: {
+      title: 'Add Address'
+      addToContact: 'ADD TO CONTACT'
+      selectBlockchain: 'Select the desired blockchain for this account'
+      search: 'Search...'
+      notFound: 'Blockchain not found'
+      errorNoBlockchainSelected: 'No blockchain selected'
+    }
+    addAddressStep2: {
+      title: 'Add Address'
+      addToContact: 'ADD TO CONTACT'
+      enterNNSorPublicKey: 'To add an account to this contact, enter an NNS address or public key'
+      publicKeyComplete: 'Public key complete!'
+      invalidAddress: 'Invalid Address'
+    }
+    addAddressStep3: {
+      title: 'Add Address'
+      addToContact: 'Add to contact'
+      subtext: 'This address will be added to the above contact:'
+    }
   }
   pages: {
     welcome: {
@@ -119,6 +158,24 @@ interface Resources {
       reorder: {
         cancelButtonLabel: 'Cancel'
         saveButtonLabel: 'Save'
+      }
+    }
+    contacts: {
+      title: 'Contacts'
+      buttonAddContactLabel: 'Add Contact'
+      contactList: {
+        contacts: 'CONTACT'
+        myAccounts: 'MY ACCOUNTS'
+        search: 'Search'
+        notFound: 'No contacts found'
+        noContacts: 'No contacts'
+      }
+      addresses: 'Addresses'
+      edit: 'Edit'
+      addressTable: {
+        blockchain: 'BLOCKCHAIN'
+        address: 'ADDRESS'
+        sendAssets: 'Send assets'
       }
     }
   }

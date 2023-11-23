@@ -6,11 +6,7 @@
   },
   "securitySetup": {
     "title": "Welcome to Neon Wallet",
-    "steps": [
-      "Create Password",
-      "Confirm Password",
-      "Complete"
-    ]
+    "steps": ["Create Password", "Confirm Password", "Complete"]
   },
   "securitySetupStep1": {
     "formTitle": "Please create a password to secure your wallet",
@@ -53,6 +49,24 @@
     "reorder": {
       "cancelButtonLabel": "Cancel",
       "saveButtonLabel": "Save"
+    }
+  },
+  "contacts": {
+    "title": "Contacts",
+    "buttonAddContactLabel": "Add Contact",
+    "contactList": {
+      "contacts": "CONTACTS",
+      "myAccounts": "MY ACCOUNTS",
+      "search": "Search",
+      "notFound": "No contacts found",
+      "noContacts": "No contacts"
+    },
+    "addresses": "Addresses",
+    "edit": "Edit",
+    "addressTable": {
+      "blockchain": "BLOCKCHAIN",
+      "address": "ADDRESS",
+      "sendAssets": "Send assets"
     }
   }
 }

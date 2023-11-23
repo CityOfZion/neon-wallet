@@ -1,5 +1,5 @@
 import { cloneElement, ComponentProps, ReactNode } from 'react'
-import { MdClose } from 'react-icons/md'
+import { MdClose, MdKeyboardBackspace } from 'react-icons/md'
 import { IconButton } from '@renderer/components/IconButton'
 import { Separator } from '@renderer/components/Separator'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
@@ -11,15 +11,31 @@ type TProps = {
   headingIcon?: JSX.Element
   headingIconFilled?: boolean
   contentClassName?: string
+  withBackButton?: boolean
 } & ComponentProps<'div'>
 
-export const ModalLayout = ({ heading, children, headingIcon, headingIconFilled = true, contentClassName }: TProps) => {
+export const ModalLayout = ({
+  heading,
+  children,
+  headingIcon,
+  headingIconFilled = true,
+  contentClassName,
+  withBackButton = false,
+}: TProps) => {
   const { modalNavigateWrapper } = useModalNavigate()
 
   return (
     <div className="w-[18.75rem] bg-gray-800 h-full px-4 text-white text-xs flex flex-col">
       <header className="flex justify-between items-center py-2.5">
-        <div className="flex gap-x-2.5">
+        {withBackButton && (
+          <IconButton
+            icon={<MdKeyboardBackspace className="fill-white" />}
+            size="md"
+            compacted
+            onClick={modalNavigateWrapper(-1)}
+          />
+        )}
+        <div className="flex items-center gap-x-2.5">
           {headingIcon &&
             cloneElement(headingIcon, {
               className: StyleHelper.mergeStyles('w-6 h-6', {

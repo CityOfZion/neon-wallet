@@ -1,6 +1,10 @@
 {
   "general": {
-    "continue": "Continue"
+    "continue": "Continue",
+    "next": "Next",
+    "save": "Save",
+    "edit": "Edit",
+    "cancel": "Cancel"
   },
   "wallet": {
     "importedName": "Imported Wallet",
@@ -11,5 +15,10 @@
   },
   "account": {
     "defaultName": "Account {{accountNumber}}"
+  },
+  "blockchain": {
+    "neo3": "Neo",
+    "neoLegacy": "Neo Legacy",
+    "ethereum": "Ethereum"
   }
 }
