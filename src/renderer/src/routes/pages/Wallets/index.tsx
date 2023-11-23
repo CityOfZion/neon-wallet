@@ -97,7 +97,13 @@ export const WalletsPage = () => {
             text={t('importButtonLabel')}
             onClick={modalNavigateWrapper('import')}
           />
-          <IconButton icon={<TbEyePlus />} filled={false} size="md" text={t('addWatchAccountButtonLabel')} disabled />
+          <IconButton
+            icon={<TbEyePlus />}
+            filled={false}
+            size="md"
+            text={t('addWatchAccountButtonLabel')}
+            onClick={modalNavigateWrapper('add-watch')}
+          />
           <IconButton icon={<TbRefresh />} filled={false} size="md" text={t('buttonRefreshLabel')} disabled />
         </div>
       }

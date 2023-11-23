@@ -5,6 +5,7 @@ interface Resources {
     }
     wallet: {
       importedName: 'Imported Wallet'
+      watchAccount: 'Watch Account'
       firstWalletName: 'My First Wallet'
       firstWalletNameBackupFile: 'My First Wallet Backup'
       firstWalletNameBackupFileTitle: 'YOUR MNEMONIC PHRASE:'
@@ -46,6 +47,18 @@ interface Resources {
         invalid: 'Invalid text'
         empty: 'Please enter some text'
         allAddressesAlreadyImported: 'All addresses are already imported'
+      }
+    }
+    addWatch: {
+      title: 'Add a watch account'
+      description: "Enter the address that you'd like to watch:"
+      inputPlaceholder: 'Please ender an address'
+      information: "You won't be able to use the assets in this account!"
+      willBeAdded: 'This account will be added:'
+      buttonAdd: 'Add Watch Account'
+      errors: {
+        invalid: 'Invalid address'
+        empty: 'Please enter some text'
       }
     }
     editWallet: {

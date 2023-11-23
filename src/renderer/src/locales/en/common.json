@@ -4,6 +4,7 @@
   },
   "wallet": {
     "importedName": "Imported Wallet",
+    "watchAccount": "Watch Account",
     "firstWalletName": "My First Wallet",
     "firstWalletNameBackupFile": "My First Wallet Backup",
     "firstWalletNameBackupFileTitle": "YOUR MNEMONIC PHRASE:"
