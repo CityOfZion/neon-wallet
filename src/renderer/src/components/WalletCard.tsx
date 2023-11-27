@@ -6,6 +6,7 @@ import { FilterHelper } from '@renderer/helpers/FilterHelper'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
 import { useAccountsByWalletIdSelector } from '@renderer/hooks/useAccountSelector'
 
+import { Tooltip } from './Tooltip'
 import { WalletIcon } from './WalletIcon'
 
 type TProps = {
@@ -52,10 +53,12 @@ export const WalletCard = ({
     >
       <WalletIcon wallet={wallet} withAccounts={iconWithAccounts} />
 
-      <div className="flex justify-between flex-grow">
-        <div className="flex flex-col flex-grow">
+      <div className="flex justify-between flex-grow min-w-0 gap-x-1">
+        <div className="flex flex-col flex-grow min-w-0">
           <p className="text-xs text-gray-100">{wallet.name}</p>
-          <span className="text-sm text-white">{formattedTotalTokensBalances}</span>
+          <Tooltip title={formattedTotalTokensBalances}>
+            <span className="block w-fit max-w-full text-sm text-white truncate">{formattedTotalTokensBalances}</span>
+          </Tooltip>
         </div>
         {rightComponent ?? (
           <div className="flex flex-col justify-between">
