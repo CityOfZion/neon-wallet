@@ -2,7 +2,7 @@ import { IWalletState, TWalletType } from './store'
 
 export type TBlockchainServiceKey = 'neo3' | 'neoLegacy' | 'ethereum'
 export type TBlockchainImageColor = 'white' | 'default'
-export type TAccountColorKey = 'green' | 'blue' | 'magenta' | 'gray'
+export type TAccountColorKey = 'green' | 'blue' | 'magenta' | 'gray' | 'yellow' | 'purple' | 'orange'
 
 export type TAccountToImport = {
   address: string

@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MdAdd, MdMoreHoriz } from 'react-icons/md'
 import { TbEyePlus, TbFileImport, TbMenuDeep, TbPencil, TbRefresh, TbRepeat } from 'react-icons/tb'
-import { IWalletState } from '@renderer/@types/store'
+import { IAccountState, IWalletState } from '@renderer/@types/store'
 import { ActionPopover } from '@renderer/components/ActionPopover'
 import { Button } from '@renderer/components/Button'
 import { IconButton } from '@renderer/components/IconButton'
@@ -30,6 +30,7 @@ export const WalletsPage = () => {
 
   const [selectedWallet, setSelectedWallet] = useState<IWalletState | undefined>(wallets[0])
   const [isReordering, setIsReordering] = useState(false)
+  const [selectedAccount, setSelectedAccount] = useState<IAccountState | undefined>(undefined)
 
   const handleReorderSave = (accountsOrder: string[]) => {
     dispatch(accountReducerActions.reorderAccounts(accountsOrder))
@@ -52,6 +53,10 @@ export const WalletsPage = () => {
       return wallets[0]
     })
   }, [wallets])
+
+  useEffect(() => {
+    setSelectedAccount(undefined)
+  }, [selectedWallet, accounts])
 
   return (
     <PortfolioLayout
@@ -137,17 +142,35 @@ export const WalletsPage = () => {
 
           <main className="flex-grow">
             <Separator />
-            <WalletCard wallet={selectedWallet} iconWithAccounts balanceExchange={balanceExchange} />
+            <WalletCard
+              onClick={() => setSelectedAccount(undefined)}
+              wallet={selectedWallet}
+              iconWithAccounts
+              balanceExchange={balanceExchange}
+              active={selectedAccount === undefined}
+            />
             <AccountList
               selectedWallet={selectedWallet}
               balanceExchange={balanceExchange}
               isReordering={isReordering}
               onReorderCancel={handleReorderCancel}
               onReorderSave={handleReorderSave}
+              onSelect={setSelectedAccount}
+              selectedAccount={selectedAccount}
             />
           </main>
 
           <footer className="px-4 pb-6">
+            {selectedAccount && (
+              <Button
+                label={t('editAccountButton')}
+                variant="outlined"
+                className="w-full pb-2"
+                flat
+                onClick={modalNavigateWrapper('edit-account', { state: { account: selectedAccount } })}
+                leftIcon={<TbPencil />}
+              />
+            )}
             <Button
               label={t('addAccountButtonLabel')}
               variant="outlined"

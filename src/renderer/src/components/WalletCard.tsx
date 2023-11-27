@@ -15,6 +15,7 @@ type TProps = {
   iconWithAccounts?: boolean
   rightComponent?: ReactNode
   noHover?: boolean
+  active?: boolean
 } & ComponentProps<'div'>
 
 export const WalletCard = ({
@@ -23,6 +24,7 @@ export const WalletCard = ({
   iconWithAccounts,
   rightComponent,
   noHover = false,
+  active = false,
   className,
   ...props
 }: TProps) => {
@@ -46,6 +48,7 @@ export const WalletCard = ({
         'flex items-center gap-x-1 text-on-surface py-2 pr-3 pl-2 border-l-4 border-l-transparent cursor-pointer',
         {
           'transition-colors hover:border-l-neon hover:bg-gray-900/50': !noHover,
+          'transition-colors border-l-neon bg-gray-900/50': active,
         },
         className
       )}

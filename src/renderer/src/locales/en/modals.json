@@ -29,6 +29,15 @@
     "saveButtonLabel": "Save",
     "cancelButtonLabel": "Cancel"
   },
+  "editAccount": {
+    "title": "Edit Account",
+    "inputPlaceholder": "Enter your account name...",
+    "colorSelectorLabel": "Select a colour for your account card",
+    "saveButtonLabel": "Save",
+    "cancelButtonLabel": "Cancel",
+    "deleteAccountTitle": "Delete Account",
+    "deleteAccountSubtext": "Tum dicere exorsus est et dolore magnam aliquam quaerat voluptatem."
+  },
   "persistContactModal": {
     "addContact": "Add Contact",
     "editContact": "Edit Contact",
