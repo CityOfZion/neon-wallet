@@ -116,6 +116,7 @@
     "@cityofzion/bs-neo-legacy": "0.3.0",
     "@cityofzion/bs-neo3": "0.3.0",
     "@cityofzion/dora-ts": "^0.0.9",
+    "@cityofzion/neon-dappkit": "^0.3.1",
     "@cityofzion/neon-invoker": "1.5.2",
     "@cityofzion/neon-js": "5.3.0",
     "@cityofzion/neon-js-legacy": "npm:@cityofzion/neon-js@3.11.9",
