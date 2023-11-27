@@ -6,6 +6,7 @@ import { FilterHelper } from '@renderer/helpers/FilterHelper'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
 
 import { AccountIcon } from './AccountIcon'
+import { Tooltip } from './Tooltip'
 
 type TProps = {
   rightComponent?: ReactNode
@@ -45,15 +46,18 @@ export const AccountCard = ({
     >
       <AccountIcon account={account} />
 
-      <div className="flex justify-between items-center flex-grow">
-        <div className="flex flex-col flex-grow">
+      <div className="flex justify-between items-center flex-grow min-w-0 gap-x-1">
+        <div className="flex flex-col flex-grow min-w-0">
           <p className="text-xs text-gray-100">{account.name}</p>
-          <span className="text-sm text-white">{formattedTotalTokensBalances}</span>
-        </div>
 
+          <Tooltip title={formattedTotalTokensBalances}>
+            <span className="block w-fit max-w-full text-sm text-white truncate">{formattedTotalTokensBalances}</span>
+          </Tooltip>
+        </div>
         {rightComponent ?? (
           <div className="flex flex-col justify-between">
-            {/* TODO: REPLACE THE MOCKED DATA WHEN THERE IS A SOLUTION FOR BALANCE VARIATION. Task link: https://app.clickup.com/t/86a197p77 */}
+            {/* TODO: REPLACE THE MOCKED DATA WHEN THERE IS A SOLUTION FOR BALANCE VARIATION. Task link:
+            https://app.clickup.com/t/86a197p77 */}
             <p className="text-xs text-gray-100">24h</p>
             <span className="text-sm text-neon">+5%</span>
           </div>
