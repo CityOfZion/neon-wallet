@@ -8,6 +8,7 @@ import { ContactsPage } from './Contacts'
 import { LoginPage } from './Login'
 import { PortfolioPage } from './Portfolio'
 import { SecuritySetupPage } from './SecuritySetup'
+import { SettingsPage } from './Settings'
 import { WalletsPage } from './Wallets'
 import { WelcomePage } from './Welcome'
 export const pageRouter = createBrowserRouter([
@@ -32,6 +33,14 @@ export const pageRouter = createBrowserRouter([
     element: (
       <PrivateRoute>
         <ContactsPage />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: '/settings',
+    element: (
+      <PrivateRoute>
+        <SettingsPage />
       </PrivateRoute>
     ),
   },

@@ -164,7 +164,7 @@ interface Resources {
       title: 'Contacts'
       buttonAddContactLabel: 'Add Contact'
       contactList: {
-        contacts: 'CONTACT'
+        contacts: 'CONTACTS'
         myAccounts: 'MY ACCOUNTS'
         search: 'Search'
         notFound: 'No contacts found'
@@ -176,6 +176,25 @@ interface Resources {
         blockchain: 'BLOCKCHAIN'
         address: 'ADDRESS'
         sendAssets: 'Send assets'
+      }
+    }
+    settings: {
+      title: 'Settings'
+      sidebarOption: {
+        personalisation: 'PERSONALISATION'
+        security: 'SECURITY'
+      }
+      personalisationOption: {
+        networkConfiguration: 'Network Configuration'
+        currency: 'Currency'
+        language: 'Language'
+        theme: 'Theme'
+        releaseNotes: 'Release Notes'
+      }
+      securityOption: {
+        encryptKey: 'Encrypt Key'
+        recoverWallet: 'Recover Wallet'
+        backupWallet: 'Backup Wallet'
       }
     }
   }
