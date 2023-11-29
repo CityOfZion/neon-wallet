@@ -13,6 +13,9 @@ export const AccountIcon = ({ account }: TProps) => {
     green: 'from-[#164C55] to-[#63D5D0]',
     gray: 'from-[#324C5F] to-[#9ABED3]',
     magenta: 'from-[#4C2F71] to-[#BB9EE4]',
+    yellow: 'from-[#BDA133] to-[#FEDD5B]',
+    purple: 'from-[#2F008E] to-[#7C4BFE]',
+    orange: 'from-[#B44D00] to-[#FE872F]',
   }
   return (
     <div className="w-[2.25rem] h-[2.25rem] flex justify-center items-center">

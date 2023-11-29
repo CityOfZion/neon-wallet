@@ -41,6 +41,7 @@
     "addAccountButtonLabel": "Add Account",
     "editWalletButtonLabel": "Edit Wallet",
     "reorderAccountsButtonLabel": "Reorder Accounts",
+    "editAccountButton": "Edit Account",
     "buttonRefreshLabel": "Refresh",
     "addWatchAccountButtonLabel": "Add Watch",
     "importButtonLabel": "Import",

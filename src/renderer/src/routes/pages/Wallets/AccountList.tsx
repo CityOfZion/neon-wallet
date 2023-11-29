@@ -17,6 +17,8 @@ type TProps = {
   isReordering: boolean
   onReorderSave?: (orderList: string[]) => void
   onReorderCancel?: () => void
+  onSelect: (account: IAccountState) => void
+  selectedAccount?: IAccountState | undefined
   selectedWallet: IWalletState
   balanceExchange: UseMultipleBalanceAndExchangeResult
 }
@@ -25,9 +27,11 @@ type TAccountItemProps = {
   account: IAccountState
   balanceExchange: UseMultipleBalanceAndExchangeResult
   isReordering: boolean
+  active?: boolean
+  onClick?: () => void
 }
 
-const AccountItem = ({ account, balanceExchange, isReordering }: TAccountItemProps) => {
+const AccountItem = ({ account, balanceExchange, isReordering, onClick, active }: TAccountItemProps) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: account.address })
 
   const style = {
@@ -50,6 +54,8 @@ const AccountItem = ({ account, balanceExchange, isReordering }: TAccountItemPro
           })}
           {...attributes}
           {...listeners}
+          onClick={onClick}
+          active={active}
         />
       </li>
     </Fragment>
@@ -58,10 +64,12 @@ const AccountItem = ({ account, balanceExchange, isReordering }: TAccountItemPro
 
 export const AccountList = ({
   selectedWallet,
+  selectedAccount,
   balanceExchange,
   isReordering,
   onReorderCancel,
   onReorderSave,
+  onSelect,
 }: TProps) => {
   const { t } = useTranslation('pages', { keyPrefix: 'wallets' })
   const { accountsByWalletId } = useAccountsByWalletIdSelector(selectedWallet.id)
@@ -101,9 +109,15 @@ export const AccountList = ({
           {itemsAccounts.map(account => (
             <AccountItem
               key={account?.address}
+              onClick={() => {
+                if (!isReordering) {
+                  onSelect(account)
+                }
+              }}
               account={account}
               balanceExchange={balanceExchange}
               isReordering={isReordering}
+              active={account?.address === selectedAccount?.address}
             />
           ))}
         </ul>

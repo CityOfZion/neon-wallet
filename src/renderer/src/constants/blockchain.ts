@@ -21,4 +21,4 @@ export const blockchainIconsByBlockchain: Record<TBlockchainServiceKey, Record<T
   },
 }
 
-export const accountColorsKeys: TAccountColorKey[] = ['green', 'blue', 'magenta', 'gray']
+export const accountColorsKeys: TAccountColorKey[] = ['green', 'blue', 'magenta', 'gray', 'yellow']

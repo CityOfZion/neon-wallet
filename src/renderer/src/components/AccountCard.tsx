@@ -13,6 +13,7 @@ type TProps = {
   balanceExchange: UseMultipleBalanceAndExchangeResult
   account: IAccountState
   noHover?: boolean
+  active?: boolean
 } & ComponentProps<'div'>
 
 export const AccountCard = ({
@@ -21,6 +22,7 @@ export const AccountCard = ({
   noHover = false,
   className,
   rightComponent,
+  active = false,
   ...props
 }: TProps) => {
   const totalTokensBalances = useMemo(
@@ -39,6 +41,7 @@ export const AccountCard = ({
         'flex items-center gap-x-1 text-on-surface py-2 pr-3 pl-2 border-l-4 border-l-transparent cursor-pointer',
         {
           'transition-colors hover:border-l-neon hover:bg-gray-900/50': !noHover,
+          'transition-colors border-l-neon bg-gray-900/50': active,
         },
         className
       )}

@@ -44,6 +44,9 @@ interface Resources {
       placeholder: 'Select a wallet...'
       createWalletButtonLabel: 'Create New wallet'
     }
+    colorSelector: {
+      customColor: 'Custom Color'
+    }
   }
   modals: {
     import: {
@@ -75,6 +78,15 @@ interface Resources {
       inputPlaceholder: 'Enter your wallet name...'
       saveButtonLabel: 'Save'
       cancelButtonLabel: 'Cancel'
+    }
+    editAccount: {
+      title: 'Edit Account'
+      inputPlaceholder: 'Enter your account name...'
+      colorSelectorLabel: 'Select a colour for your account card'
+      saveButtonLabel: 'Save'
+      cancelButtonLabel: 'Cancel'
+      deleteAccountTitle: 'Delete Account'
+      deleteAccountSubtext: 'Tum dicere exorsus est et dolore magnam aliquam quaerat voluptatem.'
     }
     persistContactModal: {
       addContact: 'Add Contact'
@@ -150,6 +162,7 @@ interface Resources {
       addAccountButtonLabel: 'Add Account'
       editWalletButtonLabel: 'Edit Wallet'
       reorderAccountsButtonLabel: 'Reorder Accounts'
+      editAccountButton: 'Edit Account'
       buttonRefreshLabel: 'Refresh'
       addWatchAccountButtonLabel: 'Add Watch'
       importButtonLabel: 'Import'
