@@ -56,13 +56,14 @@ export const WalletCard = ({
     >
       <WalletIcon wallet={wallet} withAccounts={iconWithAccounts} />
 
-      <div className="flex justify-between flex-grow min-w-0 gap-x-1">
+      <div className="flex justify-between flex-grow min-w-0 gap-x-2">
         <div className="flex flex-col flex-grow min-w-0">
-          <p className="text-xs text-gray-100">{wallet.name}</p>
+          <p className="text-xs text-gray-100 truncate">{wallet.name}</p>
           <Tooltip title={formattedTotalTokensBalances}>
             <span className="block w-fit max-w-full text-sm text-white truncate">{formattedTotalTokensBalances}</span>
           </Tooltip>
         </div>
+
         {rightComponent ?? (
           <div className="flex flex-col justify-between">
             {/* TODO: REPLACE THE MOCKED DATA WHEN THERE IS A SOLUTION FOR BALANCE VARIATION. Task link: https://app.clickup.com/t/86a197p77 */}

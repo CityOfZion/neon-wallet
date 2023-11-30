@@ -10,6 +10,7 @@ interface Resources {
     wallet: {
       importedName: 'Imported Wallet'
       watchAccount: 'Watch Account'
+      mnemonicWalletName: 'Mnemonic Wallet'
       firstWalletName: 'My First Wallet'
       firstWalletNameBackupFile: 'My First Wallet Backup'
       firstWalletNameBackupFileTitle: 'YOUR MNEMONIC PHRASE:'
@@ -54,11 +55,16 @@ interface Resources {
       subtitle: 'IMPORT'
       description: 'Enter an address, encrypted key or private key'
       inputPlaceholder: 'Please ender an address or key...'
-      buttonContinueLabel: 'Continue'
+      buttonContinueLabel: 'Next'
       errors: {
         invalid: 'Invalid text'
         empty: 'Please enter some text'
         allAddressesAlreadyImported: 'All addresses are already imported'
+        mnemonicIncomplete: 'Mnemonic incomplete'
+      }
+      success: {
+        mnemonic: 'Mnemonic complete!'
+        key: 'Private key complete!'
       }
     }
     addWatch: {
@@ -117,6 +123,12 @@ interface Resources {
       title: 'Add Address'
       addToContact: 'Add to contact'
       subtext: 'This address will be added to the above contact:'
+    }
+    mnemonicAccountSelection: {
+      title: 'Import'
+      description: 'Select the addresses you’d like to import:'
+      importButtonLabel: 'Import'
+      noAccountsToImport: 'No accounts to import'
     }
   }
   pages: {
@@ -177,7 +189,7 @@ interface Resources {
       title: 'Contacts'
       buttonAddContactLabel: 'Add Contact'
       contactList: {
-        contacts: 'CONTACT'
+        contacts: 'CONTACTS'
         myAccounts: 'MY ACCOUNTS'
         search: 'Search'
         notFound: 'No contacts found'

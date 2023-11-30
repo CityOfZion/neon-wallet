@@ -44,7 +44,7 @@ export const AddAddressModalStep1 = () => {
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
 
-    modalNavigate('addAddressStep2', {
+    modalNavigate('add-address-step2', {
       state: {
         contactName: contactName,
         contactBlockchain: selectedBlockchain,

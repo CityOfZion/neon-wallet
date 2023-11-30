@@ -49,9 +49,9 @@ export const AccountCard = ({
     >
       <AccountIcon account={account} />
 
-      <div className="flex justify-between items-center flex-grow min-w-0 gap-x-1">
+      <div className="flex justify-between items-center flex-grow min-w-0 gap-x-2">
         <div className="flex flex-col flex-grow min-w-0">
-          <p className="text-xs text-gray-100">{account.name}</p>
+          <p className="text-xs text-gray-100 truncate">{account.name}</p>
 
           <Tooltip title={formattedTotalTokensBalances}>
             <span className="block w-fit max-w-full text-sm text-white truncate">{formattedTotalTokensBalances}</span>

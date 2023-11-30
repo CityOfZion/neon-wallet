@@ -14,9 +14,11 @@ export type TAccountToImport = {
   order?: number
 }
 
+export type TAccountsToImport = Omit<TAccountToImport, 'wallet' | 'order'>[]
+
 export type TImportAccountsParam = {
   wallet: IWalletState
-  accounts: Omit<TAccountToImport, 'wallet' | 'order'>[]
+  accounts: TAccountsToImport
 }
 
 export type TAccountToCreate = {

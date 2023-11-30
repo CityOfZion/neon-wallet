@@ -4,11 +4,6 @@ export abstract class UtilsHelper {
     return Math.floor(Math.random() * Math.floor(max))
   }
 
-  static isMnemonic(word: string | string[]) {
-    const wordArray = Array.isArray(word) ? word : word.trim().split(' ')
-    return wordArray.length === 12
-  }
-
   static async promiseAll<T, R>(array: T[], callback: (item: T) => Promise<R> | R): Promise<R[]> {
     const results: R[] = []
     const promises = array.map(async item => {
@@ -65,5 +60,15 @@ export abstract class UtilsHelper {
 
   static uuid() {
     return uuid.v4()
+  }
+
+  static isValidMnemonic(word: string | string[]) {
+    const wordArray = Array.isArray(word) ? word : word.trim().split(' ')
+    return wordArray.length === 12
+  }
+
+  static isMnemonic(word: string | string[]) {
+    const wordArray = Array.isArray(word) ? word : word.trim().split(' ')
+    return wordArray.length > 1
   }
 }

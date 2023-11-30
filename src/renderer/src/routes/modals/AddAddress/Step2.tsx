@@ -47,7 +47,7 @@ export const AddAddressModalStep2 = () => {
       return
     }
 
-    modalNavigate('addAddressStep3', {
+    modalNavigate('add-address-step3', {
       state: {
         contactName: contactName,
         contactAddress: { blockchain: blockchain, address: data.address },

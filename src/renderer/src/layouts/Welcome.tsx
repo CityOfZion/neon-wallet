@@ -18,8 +18,8 @@ export const WelcomeLayout = ({ bigger, children, heading, withBackButton, ...pr
     <div className="w-screen h-screen bg-asphalt flex justify-center items-center">
       <div
         className={StyleHelper.mergeStyles(
-          'w-full h-full bg-gray-800 max-h-[614px] flex flex-col items-center pb-10 pt-11 px-16 rounded relative',
-          { 'max-w-[930px]': bigger, 'max-w-[512px]': !bigger }
+          'w-full h-full bg-gray-800 max-h-[38.375rem] flex flex-col items-center pb-10 pt-11 px-16 rounded relative',
+          { 'max-w-[58.125rem]': bigger, 'max-w-[32rem]': !bigger }
         )}
         {...props}
       >

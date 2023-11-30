@@ -17,7 +17,7 @@ export const SidebarButton = ({ icon, title, onClick, disabled }: Props): JSX.El
           'text-white text-2xs flex flex-col justify-center items-center gap-1 py-2.5 w-full transition-colors relative',
           {
             'bg-transparent opacity-40 cursor-not-allowed': disabled,
-            'bg-transparent cursor-pointer opacity-60 hover:border-l-neon hover:border-l-[3px] hover:pr-[3px] hover:bg-asphalt hover:shadow-inner-md  hover:opacity-100':
+            'bg-transparent cursor-pointer opacity-60 hover:border-l-neon hover:border-l-3 hover:pr-[0.188rem] hover:bg-asphalt hover:shadow-inner-md  hover:opacity-100':
               !disabled,
           }
         )}
