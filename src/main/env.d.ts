@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly RENDERER_VITE_SENTRY_DSN?: string
+  readonly MAIN_VITE_SENTRY_DSN?: string
 }
 
 interface ImportMeta {

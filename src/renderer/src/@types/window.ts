@@ -6,8 +6,5 @@ declare global {
   interface Window {
     electron: ElectronAPI
     api: typeof customAPI
-    env: {
-      WALLET_MNEMONIC: string
-    }
   }
 }

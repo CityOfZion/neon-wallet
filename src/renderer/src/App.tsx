@@ -1,5 +1,6 @@
 import { Provider as StoreProvider } from 'react-redux'
 import { RouterProvider } from 'react-router-dom'
+import { setupSentryWrapper } from '@renderer/setup/sentryReact'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { PersistGate } from 'redux-persist/integration/react'
 
@@ -10,7 +11,7 @@ import { RootStore } from './store/RootStore'
 
 const queryClient = new QueryClient()
 
-export const App = (): JSX.Element => {
+const AppReact = (): JSX.Element => {
   return (
     <StoreProvider store={RootStore.store}>
       <PersistGate persistor={RootStore.persistor}>
@@ -23,3 +24,5 @@ export const App = (): JSX.Element => {
     </StoreProvider>
   )
 }
+
+export const App = setupSentryWrapper(AppReact)
