@@ -16,7 +16,7 @@ import { useModalNavigate } from '@renderer/hooks/useModalRouter'
 import { MainLayout } from '@renderer/layouts/Main'
 import { cloneDeep } from 'lodash'
 
-enum SidebarOption {
+enum ESidebarOption {
   CONTACTS = 1,
   MY_ACCOUNTS = 2,
 }
@@ -27,7 +27,7 @@ export const ContactsPage = () => {
 
   const { modalNavigateWrapper } = useModalNavigate()
   const { contacts } = useContactsSelector()
-  const [selectedSidebarOption, setSelectedSidebarOption] = useState(SidebarOption.CONTACTS)
+  const [selectedSidebarOption, setSelectedSidebarOption] = useState(ESidebarOption.CONTACTS)
   const [selectedContact, setSelectedContact] = useState<IContactState | null>(contacts[0] || null)
 
   const [search, setSearch] = useState<string | null>(null)
@@ -86,26 +86,26 @@ export const ContactsPage = () => {
           size="md"
           className="text-neon"
           text={t('buttonAddContactLabel')}
-          onClick={modalNavigateWrapper('persistContact')}
+          onClick={modalNavigateWrapper('persist-contact')}
         />
       }
     >
       <section className="bg-gray-800 w-full h-full flex rounded">
         <div className="w-[25%] px-2 border-r flex flex-col items-center">
-          <div className="flex flex-row justify-between h-15 w-full mb-5 text-[10px]">
+          <div className="flex flex-row justify-between h-15 w-full mb-5 text-1xs">
             <button
               className={StyleHelper.mergeStyles('w-[50%] border-b', {
-                'border-b-2': selectedSidebarOption === SidebarOption.CONTACTS,
+                'border-b-2': selectedSidebarOption === ESidebarOption.CONTACTS,
               })}
-              onClick={() => setSelectedSidebarOption(SidebarOption.CONTACTS)}
+              onClick={() => setSelectedSidebarOption(ESidebarOption.CONTACTS)}
             >
               {t('contactList.contacts')}
             </button>
             <button
               className={StyleHelper.mergeStyles('w-[50%] border-b', {
-                'border-b-2': selectedSidebarOption === SidebarOption.MY_ACCOUNTS,
+                'border-b-2': selectedSidebarOption === ESidebarOption.MY_ACCOUNTS,
               })}
-              onClick={() => setSelectedSidebarOption(SidebarOption.MY_ACCOUNTS)}
+              onClick={() => setSelectedSidebarOption(ESidebarOption.MY_ACCOUNTS)}
               disabled
             >
               {t('contactList.myAccounts')}
@@ -127,7 +127,7 @@ export const ContactsPage = () => {
             {groupedContacts &&
               Array.from(groupedContacts.entries()).map(([key, arrValues]) => (
                 <div key={key}>
-                  <div className="flex bg-asphalt/50 pl-4 text-blue font-bold h-[24px]">{key}</div>
+                  <div className="flex bg-asphalt/50 pl-4 text-blue font-bold h-6">{key}</div>
                   {arrValues.map((value, index) => (
                     <button
                       key={index}
@@ -162,7 +162,7 @@ export const ContactsPage = () => {
                   variant="outlined"
                   colorSchema="neon"
                   clickableProps={{ className: 'border-none' }}
-                  onClick={modalNavigateWrapper('persistContact', { state: { contact: selectedContact } })}
+                  onClick={modalNavigateWrapper('persist-contact', { state: { contact: selectedContact } })}
                 />
               </div>
               <Separator />
@@ -182,7 +182,7 @@ export const ContactsPage = () => {
                   {selectedContact &&
                     selectedContact.addresses.map((address, index) => {
                       return (
-                        <tr key={index} className="even:bg-gray-600 h-[50px] align-middle">
+                        <tr key={index} className="even:bg-gray-600 h-12 align-middle">
                           <td>
                             <div className="flex flex-row items-center px-2">
                               <div className="mr-2 bg-gray-700 p-2 rounded-full">

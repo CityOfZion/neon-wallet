@@ -29,7 +29,7 @@ const login = createAsyncThunk('settings/login', async ({ password }: TLoginPara
   const walletPromises = wallets.map(async wallet => {
     if (!wallet.encryptedMnemonic) return
     const mnemonic = await window.api.decryptBasedEncryptedSecret(wallet.encryptedMnemonic, encryptedPassword)
-    const isMnemonicValid = UtilsHelper.isMnemonic(mnemonic)
+    const isMnemonicValid = UtilsHelper.isValidMnemonic(mnemonic)
     if (!isMnemonicValid) throw new Error()
   })
 

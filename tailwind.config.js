@@ -47,6 +47,9 @@ module.exports = {
       },
     },
     extend: {
+      borderWidth: {
+        3: '3px',
+      },
       fontFamily: {
         sans: ['SofiaPro', 'sans-serif'],
       },
@@ -66,10 +69,14 @@ module.exports = {
         30: '7.5rem',
       },
       fontSize: {
+        '1xs': '0.625rem',
         '2xs': '0.5rem',
       },
       spacing: {
         15: '3.75rem',
+        0.75: '0.1875rem',
+        8.5: '2.125rem',
+        4.5: '1.125rem',
       },
     },
   },

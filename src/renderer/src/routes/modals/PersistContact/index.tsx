@@ -58,7 +58,7 @@ export const PersistContactModal = () => {
       return
     }
 
-    modalNavigate('addAddressStep1', {
+    modalNavigate('add-address-step1', {
       state: {
         contactName,
         address: selectedAddress,

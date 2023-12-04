@@ -28,7 +28,7 @@ export const Sidebar = (): JSX.Element => {
   }
 
   return (
-    <aside className="bg-gray-800 h-screen w-[64px] min-w-[64px] flex flex-col">
+    <aside className="bg-gray-800 h-screen w-[4rem] min-w-[4rem] flex flex-col">
       <div className="flex justify-center py-4">
         <NeonLogoIcon className="fill-neon" />
       </div>

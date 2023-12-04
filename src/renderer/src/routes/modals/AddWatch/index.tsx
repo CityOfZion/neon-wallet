@@ -1,8 +1,9 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MdAdd } from 'react-icons/md'
-import { TbEyePlus, TbInfoCircle } from 'react-icons/tb'
+import { TbEyePlus } from 'react-icons/tb'
 import { TBlockchainServiceKey, TImportAccountsParam } from '@renderer/@types/blockchain'
+import { Banner } from '@renderer/components/Banner'
 import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
 import { Separator } from '@renderer/components/Separator'
@@ -107,13 +108,8 @@ export const AddWatch = () => {
 
       <form className="mt-6" onSubmit={handleSubmit}>
         <Input onChange={handleChange} placeholder={t('inputPlaceholder')} errorMessage={error} />
-        <div className="flex mt-5 bg-gray-300/15 rounded-md overflow-hidden">
-          <div className="p-4 pt-5 bg-gray-300/30">
-            <TbInfoCircle className="w-6 h-6 stroke-blue" />
-          </div>
 
-          <p className="p-4 text-xs">{t('information')}</p>
-        </div>
+        <Banner className="mt-5" message={t('information')} type="info" />
 
         {validatedAddress?.blockchain && (
           <div>

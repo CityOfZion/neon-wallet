@@ -7,6 +7,7 @@ import { AddWatch } from './AddWatch'
 import { EditAccountModal } from './EditAccount'
 import { EditWalletModal } from './EditWallet'
 import { ImportModal } from './Import'
+import { MnemonicAccountSelectionModal } from './MnemonicAccountSelection'
 import { PersistContactModal } from './PersistContact'
 
 export const modalRoutes: TRoute[] = [
@@ -14,8 +15,9 @@ export const modalRoutes: TRoute[] = [
   { name: 'add-watch', element: <AddWatch /> },
   { name: 'edit-wallet', element: <EditWalletModal /> },
   { name: 'edit-account', element: <EditAccountModal /> },
-  { name: 'persistContact', element: <PersistContactModal /> },
-  { name: 'addAddressStep1', element: <AddAddressModalStep1 /> },
-  { name: 'addAddressStep2', element: <AddAddressModalStep2 /> },
-  { name: 'addAddressStep3', element: <AddAddressModalStep3 /> },
+  { name: 'persist-contact', element: <PersistContactModal /> },
+  { name: 'add-address-step1', element: <AddAddressModalStep1 /> },
+  { name: 'add-address-step2', element: <AddAddressModalStep2 /> },
+  { name: 'add-address-step3', element: <AddAddressModalStep3 /> },
+  { name: 'mnemonic-account-selection', element: <MnemonicAccountSelectionModal /> },
 ]
