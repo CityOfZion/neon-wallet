@@ -78,5 +78,10 @@
     "description": "Select the addresses you’d like to import:",
     "importButtonLabel": "Import",
     "noAccountsToImport": "No accounts to import"
+  },
+  "encryptedKey": {
+    "title": "Encrypted Key",
+    "subtitle": "Private Key encrypted successfully!",
+    "description": "Here’s your encrypted key:"
   }
 }

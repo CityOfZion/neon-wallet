@@ -1,5 +1,5 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
-import { MdCancel, MdSearch, MdVisibility, MdVisibilityOff } from 'react-icons/md'
+import { MdCancel, MdContentCopy, MdLock, MdSearch, MdVisibility, MdVisibilityOff } from 'react-icons/md'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
 
 import { IconButton } from './IconButton'
@@ -10,11 +10,12 @@ type TProps = Omit<React.ComponentProps<'input'>, 'type'> & {
   error?: boolean
   clearable?: boolean
   compact?: boolean
-  type?: 'text' | 'password' | 'search'
+  originalValue?: string
+  type?: 'text' | 'password' | 'search' | 'copy'
 }
 
 export const Input = forwardRef<HTMLInputElement, TProps>(
-  ({ className, containerClassName, type, errorMessage, error, compact, clearable, ...props }, ref) => {
+  ({ className, containerClassName, originalValue, type, errorMessage, error, compact, clearable, ...props }, ref) => {
     const internalRef = useRef<HTMLInputElement>(null)
     const [hidden, setHidden] = useState(type === 'password')
     const realType = type === 'password' ? (hidden ? 'password' : 'text') : type
@@ -22,6 +23,10 @@ export const Input = forwardRef<HTMLInputElement, TProps>(
     const toggleHidden: React.MouseEventHandler<HTMLButtonElement> = event => {
       event.stopPropagation()
       setHidden(prev => !prev)
+    }
+
+    const handleCopyInput: React.MouseEventHandler<HTMLButtonElement> = async () => {
+      await navigator.clipboard.writeText(originalValue ?? '')
     }
 
     const clear = () => {
@@ -50,17 +55,27 @@ export const Input = forwardRef<HTMLInputElement, TProps>(
           )}
         >
           {type === 'search' && <MdSearch className="w-6 h-6 fill-gray-300/50" />}
+          {type === 'copy' && <MdLock className="w-6 h-6 fill-gray-300/50" />}
 
           <input
             ref={internalRef}
             className={StyleHelper.mergeStyles('bg-transparent flex-grow outline-none', className)}
             type={realType}
             spellCheck="false"
+            disabled={type === 'copy' ? true : false}
             {...props}
           />
 
           {type === 'password' && (
             <IconButton icon={hidden ? <MdVisibility /> : <MdVisibilityOff />} onClick={toggleHidden} type="button" />
+          )}
+
+          {type === 'copy' && (
+            <IconButton
+              icon={<MdContentCopy className="fill-neon w-6 h-6" />}
+              onClick={handleCopyInput}
+              type="button"
+            />
           )}
 
           {clearable && <IconButton icon={<MdCancel />} type="button" onClick={clear} />}
