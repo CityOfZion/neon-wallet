@@ -43,7 +43,7 @@ export const Sidebar = (): JSX.Element => {
             <SidebarLink to="/nfts" title={t('nfts')} disabled icon={<TbDiamond />} />
             <SidebarLink to="/news" title={t('news')} disabled icon={<TbNews />} />
             <SidebarLink to="/contacts" title={t('contacts')} icon={<TbUsers />} />
-            <SidebarLink to="/settings" title={t('settings')} disabled icon={<TbSettings />} />
+            <SidebarLink to="/settings" title={t('settings')} icon={<TbSettings />} />
             <SidebarLink to="/mobile" title={t('mobile')} disabled isNew icon={<TbDeviceMobile />} />
           </div>
 

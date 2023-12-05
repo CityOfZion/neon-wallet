@@ -203,6 +203,25 @@ interface Resources {
         sendAssets: 'Send assets'
       }
     }
+    settings: {
+      title: 'Settings'
+      sidebarOption: {
+        personalisation: 'PERSONALISATION'
+        security: 'SECURITY'
+      }
+      personalisationOption: {
+        networkConfiguration: 'Network Configuration'
+        currency: 'Currency'
+        language: 'Language'
+        theme: 'Theme'
+        releaseNotes: 'Release Notes'
+      }
+      securityOption: {
+        encryptKey: 'Encrypt Key'
+        recoverWallet: 'Recover Wallet'
+        backupWallet: 'Backup Wallet'
+      }
+    }
   }
 }
 
