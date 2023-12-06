@@ -7,9 +7,9 @@ import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
 import { Separator } from '@renderer/components/Separator'
 import { useAccountsSelector } from '@renderer/hooks/useAccountSelector'
-import { useModalLocation, useModalNavigate } from '@renderer/hooks/useModalRouter'
+import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
 import { useAppDispatch } from '@renderer/hooks/useRedux'
-import { ModalLayout } from '@renderer/layouts/Modal'
+import { EndModalLayout } from '@renderer/layouts/EndModal'
 import { accountReducerActions } from '@renderer/store/reducers/AccountReducer'
 import { walletReducerActions } from '@renderer/store/reducers/WalletReducer'
 
@@ -24,15 +24,14 @@ type TLocationState = {
 export const EditWalletModal = () => {
   const { t } = useTranslation('modals', { keyPrefix: 'editWallet' })
   const { modalNavigate, modalNavigateWrapper } = useModalNavigate()
-  const location = useModalLocation<TLocationState>()
-  const wallet = location.state.wallet
+  const { wallet } = useModalState<TLocationState>()
 
   const dispatch = useAppDispatch()
   const { accounts } = useAccountsSelector()
 
   const form = useForm<TFormData>({
     defaultValues: {
-      name: location.state?.wallet.name,
+      name: wallet.name,
     },
   })
 
@@ -49,12 +48,7 @@ export const EditWalletModal = () => {
   }
 
   return (
-    <ModalLayout
-      heading={t('title')}
-      headingIcon={<TbPencil />}
-      headingIconFilled={false}
-      contentClassName="flex flex-col justify-between"
-    >
+    <EndModalLayout heading={t('title')} headingIcon={<TbPencil />} contentClassName="flex flex-col justify-between">
       <form onSubmit={form.handleSubmit(handleSubmit)}>
         <Input
           placeholder={t('inputPlaceholder')}
@@ -93,6 +87,6 @@ export const EditWalletModal = () => {
           flat
         />
       </div>
-    </ModalLayout>
+    </EndModalLayout>
   )
 }

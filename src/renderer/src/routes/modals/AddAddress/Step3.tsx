@@ -3,10 +3,10 @@ import { TbPlus } from 'react-icons/tb'
 import { TContactAddress } from '@renderer/@types/store'
 import { BlockchainIcon } from '@renderer/components/BlockchainIcon'
 import { Button } from '@renderer/components/Button'
-import { Input } from '@renderer/components/Input'
+import { Checkbox } from '@renderer/components/Checkbox'
 import { Separator } from '@renderer/components/Separator'
-import { useModalLocation, useModalNavigate } from '@renderer/hooks/useModalRouter'
-import { ModalLayout } from '@renderer/layouts/Modal'
+import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
+import { EndModalLayout } from '@renderer/layouts/EndModal'
 
 type TLocationState = {
   contactName: string
@@ -17,18 +17,16 @@ type TLocationState = {
 export const AddAddressModalStep3 = () => {
   const { t } = useTranslation('modals', { keyPrefix: 'addAddressStep3' })
   const { t: blockchainT } = useTranslation('common', { keyPrefix: 'blockchain' })
-  const location = useModalLocation<TLocationState>()
+  const { contactAddress, contactName, handleAddAddress } = useModalState<TLocationState>()
   const { modalNavigate } = useModalNavigate()
-  const contactName = location.state.contactName
-  const contactAddress = location.state.contactAddress
 
   const handle = () => {
-    location.state.handleAddAddress(contactAddress)
+    handleAddAddress(contactAddress)
     modalNavigate(-3)
   }
 
   return (
-    <ModalLayout heading={t('title')} headingIcon={<TbPlus />} headingIconFilled={false} withBackButton>
+    <EndModalLayout heading={t('title')} headingIcon={<TbPlus />} withBackButton>
       <div className="flex flex-col gap-y-5 justify-between h-full">
         <div className="flex flex-col gap-y-5">
           <div>
@@ -46,18 +44,13 @@ export const AddAddressModalStep3 = () => {
             <Separator />
             <div className="flex p-2 gap-x-2 items-center justify-between w-full">
               <div className="truncate">{contactAddress.address}</div>
-              <Input
-                type="checkbox"
-                className="accent-neon w-4 h-4"
-                containerClassName="w-fit pointer-events-none"
-                defaultChecked
-              />
+              <Checkbox checked />
             </div>
           </div>
         </div>
 
         <Button leftIcon={<TbPlus />} label={t('addToContact')} className="w-full" onClick={handle} />
       </div>
-    </ModalLayout>
+    </EndModalLayout>
   )
 }

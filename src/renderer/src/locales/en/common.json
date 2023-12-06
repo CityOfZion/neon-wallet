@@ -6,6 +6,10 @@
     "edit": "Edit",
     "cancel": "Cancel"
   },
+  "walletConnect": {
+    "name": "Neon Wallet",
+    "description": "Create and organize wallets, or easily import your existing ones, to safely manage and transfer your assets across accounts with Neon’s slick interface."
+  },
   "wallet": {
     "importedName": "Imported Wallet",
     "watchAccount": "Watch Account",

@@ -8,10 +8,10 @@ import { Button } from '@renderer/components/Button'
 import { useActions } from '@renderer/hooks/useActions'
 import { useBlockchainActions } from '@renderer/hooks/useBlockchainActions'
 import { useBsAggregatorSelector } from '@renderer/hooks/useBlockchainSelector'
-import { useModalLocation, useModalNavigate } from '@renderer/hooks/useModalRouter'
+import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
 import { useMount } from '@renderer/hooks/useMount'
 import { useAppSelector } from '@renderer/hooks/useRedux'
-import { ModalLayout } from '@renderer/layouts/Modal'
+import { EndModalLayout } from '@renderer/layouts/EndModal'
 
 type TLocation = {
   mnemonic: string
@@ -25,9 +25,7 @@ type TActionsData = {
 type TAccountWithBlockchain = AccountWithDerivationPath & { blockchain: TBlockchainServiceKey }
 
 export const MnemonicAccountSelectionModal = () => {
-  const {
-    state: { mnemonic },
-  } = useModalLocation<TLocation>()
+  const { mnemonic } = useModalState<TLocation>()
   const blockchainActions = useBlockchainActions()
   const { t: blockchainT } = useTranslation('common', { keyPrefix: 'wallet' })
   const { modalNavigate } = useModalNavigate()
@@ -88,13 +86,7 @@ export const MnemonicAccountSelectionModal = () => {
   }, [bsAggregatorRef, mnemonic])
 
   return (
-    <ModalLayout
-      heading={t('title')}
-      withBackButton
-      headingIcon={<TbFileImport />}
-      headingIconFilled={false}
-      contentClassName="flex flex-col"
-    >
+    <EndModalLayout heading={t('title')} withBackButton headingIcon={<TbFileImport />} contentClassName="flex flex-col">
       <p className="text-sm mr-">{t('description')}</p>
 
       <div className="flex flex-col gap-y-2.5 mt-6 flex-grow">
@@ -130,11 +122,10 @@ export const MnemonicAccountSelectionModal = () => {
         onClick={handleAct(handleImport)}
         label={t('importButtonLabel')}
         leftIcon={<TbFileImport />}
-        leftIconFilled={false}
         loading={actionState.isActing}
         disabled={actionData.selectedAccounts.length === 0}
         flat
       />
-    </ModalLayout>
+    </EndModalLayout>
   )
 }

@@ -10,7 +10,7 @@ import { Separator } from '@renderer/components/Separator'
 import { useBlockchainActions } from '@renderer/hooks/useBlockchainActions'
 import { useBsAggregatorSelector } from '@renderer/hooks/useBlockchainSelector'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
-import { ModalLayout } from '@renderer/layouts/Modal'
+import { EndModalLayout } from '@renderer/layouts/EndModal'
 
 import { BlockchainIcon } from '../../../components/BlockchainIcon'
 
@@ -103,7 +103,7 @@ export const AddWatch = () => {
   }
 
   return (
-    <ModalLayout heading={t('title')} headingIcon={<TbEyePlus />} headingIconFilled={false}>
+    <EndModalLayout heading={t('title')} headingIcon={<TbEyePlus />}>
       <p className="text-xs">{t('description')}</p>
 
       <form className="mt-6" onSubmit={handleSubmit}>
@@ -139,6 +139,6 @@ export const AddWatch = () => {
           </div>
         )}
       </form>
-    </ModalLayout>
+    </EndModalLayout>
   )
 }

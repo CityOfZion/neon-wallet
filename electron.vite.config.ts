@@ -21,7 +21,7 @@ export default defineConfig({
       react(),
       svgr(),
       nodePolyfills({
-        include: ['crypto', 'util', 'stream'],
+        include: ['crypto', 'util', 'stream', 'querystring'],
       }),
     ],
   },

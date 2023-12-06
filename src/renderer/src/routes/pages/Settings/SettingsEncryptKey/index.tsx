@@ -8,6 +8,8 @@ import { useActions } from '@renderer/hooks/useActions'
 import { useBsAggregatorSelector } from '@renderer/hooks/useBlockchainSelector'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
 
+import { SettingsEncryptKeySuccessContent } from './SettingsEncryptKeySuccessContent'
+
 type TFormData = {
   privateKey: string
   passphrase: string
@@ -16,12 +18,12 @@ type TFormData = {
 
 const MIN_LENGTH_PASSPHRASE = 4
 
-export const SettingsEncryptKey = (): JSX.Element => {
+export const SettingsEncryptKeyPage = (): JSX.Element => {
   const { t } = useTranslation('pages', { keyPrefix: 'settings' })
   const { bsAggregator } = useBsAggregatorSelector()
   const { modalNavigate } = useModalNavigate()
 
-  const { handleAct, setError, actionState, actionData, setData } = useActions<TFormData>({
+  const { handleAct, setError, actionState, actionData, setData, clearErrors, reset } = useActions<TFormData>({
     privateKey: '',
     passphrase: '',
     confirmationPassphrase: '',
@@ -32,33 +34,36 @@ export const SettingsEncryptKey = (): JSX.Element => {
     setData({
       privateKey: value,
     })
+
     if (!bsAggregator.validateKeyAllBlockchains(value)) {
       setError('privateKey', t('encryptKey.error.privateKey'))
-    } else {
-      setError('privateKey', undefined)
+      return
     }
+    clearErrors('privateKey')
   }
   const handlePassphraseChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value
     setData({
       passphrase: value,
     })
+
     if (value.length < MIN_LENGTH_PASSPHRASE) {
       setError('passphrase', t('encryptKey.error.passphrase'))
-    } else {
-      setError('passphrase', undefined)
+      return
     }
+    clearErrors('passphrase')
   }
   const handleConfirmationPassphraseChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value
     setData({
       confirmationPassphrase: value,
     })
+
     if (actionData.passphrase !== value) {
       setError('confirmationPassphrase', t('encryptKey.error.confirmationPassphrase'))
-    } else {
-      setError('confirmationPassphrase', undefined)
+      return
     }
+    clearErrors('confirmationPassphrase')
   }
 
   const handleSubmit = async (data: TFormData) => {
@@ -68,23 +73,17 @@ export const SettingsEncryptKey = (): JSX.Element => {
       return
     }
     const encryptedKey = await blockchainService.encrypt(data.privateKey, data.passphrase)
-    const abbreviateEncryptedKey = (ek: string): string => {
-      if (ek.length <= 21) {
-        return ek
-      }
-      return ek.substring(0, 8) + '.....' + ek.substring(ek.length - 8, ek.length)
-    }
-    modalNavigate('encrypted-key', {
+
+    modalNavigate('success', {
       state: {
-        encryptedKey,
-        abbreviateEncryptedKey: abbreviateEncryptedKey(encryptedKey),
+        heading: t('encryptKey.successModal.title'),
+        headingIcon: <MdOutlineLock />,
+        content: <SettingsEncryptKeySuccessContent encryptedKey={encryptedKey} />,
+        subtitle: t('encryptKey.successModal.subtitle'),
       },
     })
-    setData({
-      privateKey: '',
-      passphrase: '',
-      confirmationPassphrase: '',
-    })
+
+    reset()
   }
 
   return (
@@ -148,8 +147,7 @@ export const SettingsEncryptKey = (): JSX.Element => {
               type="submit"
               label={t('encryptKey.buttonGenerate')}
               loading={actionState.isActing}
-              // TODO Needs to fix the isValid of the actionState.
-              // disabled={!actionState.isValid}
+              disabled={!actionState.isValid}
               leftIcon={<MdOutlineLock />}
             />
           </div>

@@ -51,6 +51,7 @@
     "importButtonLabel": "Import",
     "newWalletButtonLabel": "New Wallet",
     "manageButtonLabel": "Manage",
+    "dappConnectionButtonLabel": "Dapp",
     "reorder": {
       "cancelButtonLabel": "Cancel",
       "saveButtonLabel": "Save"
@@ -106,6 +107,11 @@
         "privateKeyNotFound": "Unable to validate the private key",
         "passphrase": "Invalid passphrase",
         "confirmationPassphrase": "Confirmation passphrase is different from the passphrase"
+      },
+      "successModal": {
+        "title": "Encrypted Key",
+        "subtitle": "Private Key encrypted successfully!",
+        "description": "Here’s your encrypted key:"
       }
     }
   }

@@ -7,7 +7,7 @@ import { IContactState } from '@renderer/@types/store'
 import { BlockchainIcon } from '@renderer/components/BlockchainIcon'
 import { Button } from '@renderer/components/Button'
 import { IconButton } from '@renderer/components/IconButton'
-import { Input } from '@renderer/components/Input'
+import { SearchInput } from '@renderer/components/SearchInput'
 import { Separator } from '@renderer/components/Separator'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
 import { UtilsHelper } from '@renderer/helpers/UtilsHelper'
@@ -112,9 +112,8 @@ export const ContactsPage = () => {
           </div>
 
           {groupedContacts.size > 0 && (
-            <Input
+            <SearchInput
               placeholder={t('contactList.search')}
-              type="search"
               className="mb-5"
               onChange={event => setSearch(event.target.value)}
             />
@@ -156,7 +155,6 @@ export const ContactsPage = () => {
                 {t('addresses')}
                 <Button
                   leftIcon={<TbPencil />}
-                  leftIconFilled={false}
                   label={'Edit'}
                   variant="outlined"
                   colorSchema="neon"

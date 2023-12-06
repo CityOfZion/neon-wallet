@@ -9,9 +9,7 @@ export const PortfolioPage = () => {
   return (
     <PortfolioLayout
       heading={t('title')}
-      rightComponent={
-        <IconButton icon={<TbRefresh />} filled={false} size="md" text={t('buttonRefreshLabel')} disabled />
-      }
+      rightComponent={<IconButton icon={<TbRefresh />} size="md" text={t('buttonRefreshLabel')} disabled />}
     />
   )
 }

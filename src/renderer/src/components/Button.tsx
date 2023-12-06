@@ -6,9 +6,7 @@ export const Button = ({
   clickableProps,
   label,
   variant,
-  leftIconFilled,
   rightIcon,
-  rightIconFilled,
   leftIcon,
   flat,
   loading,
@@ -22,9 +20,7 @@ export const Button = ({
         label={label}
         variant={variant}
         leftIcon={leftIcon}
-        leftIconFilled={leftIconFilled}
         rightIcon={rightIcon}
-        rightIconFilled={rightIconFilled}
         flat={flat}
         loading={loading}
         disabled={props.disabled}

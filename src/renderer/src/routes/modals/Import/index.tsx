@@ -12,7 +12,7 @@ import { useActions } from '@renderer/hooks/useActions'
 import { useBlockchainActions } from '@renderer/hooks/useBlockchainActions'
 import { useBsAggregatorSelector } from '@renderer/hooks/useBlockchainSelector'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
-import { ModalLayout } from '@renderer/layouts/Modal'
+import { EndModalLayout } from '@renderer/layouts/EndModal'
 
 type TInputType = 'key' | 'mnemonic'
 
@@ -135,12 +135,7 @@ export const ImportModal = () => {
   }
 
   return (
-    <ModalLayout
-      heading={t('title')}
-      headingIcon={<TbFileImport />}
-      headingIconFilled={false}
-      contentClassName="flex flex-col"
-    >
+    <EndModalLayout heading={t('title')} headingIcon={<TbFileImport />} contentClassName="flex flex-col">
       <p className="text-gray-300 uppercase font-bold">{t('subtitle')}</p>
       <p className="text-xs">{t('description')}</p>
 
@@ -151,7 +146,7 @@ export const ImportModal = () => {
             error={!!actionState.errors.text}
             value={actionData.text}
             onChange={handleChange}
-            compact
+            compacted
             clearable
             multiline={actionData.inputType === 'mnemonic'}
           />
@@ -175,6 +170,6 @@ export const ImportModal = () => {
           flat
         />
       </form>
-    </ModalLayout>
+    </EndModalLayout>
   )
 }
