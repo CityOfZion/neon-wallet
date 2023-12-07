@@ -5,6 +5,7 @@ import { PrivateRoute } from '@renderer/components/PrivateRoute'
 import { SecuritySetupStep1Page } from './SecuritySetup/SecuritySetupStep1'
 import { SecuritySetupStep2Page } from './SecuritySetup/SecuritySetupStep2'
 import { SecuritySetupStep3Page } from './SecuritySetup/SecuritySetupStep3'
+import { SettingsEncryptKey } from './Settings/SettingsEncryptKey'
 import { SettingsPersonalisationPage } from './Settings/SettingsPersonalisation'
 import { SettingsSecurityPage } from './Settings/SettingsSecurity'
 import { ContactsPage } from './Contacts'
@@ -81,7 +82,7 @@ export const pageRouter = createBrowserRouter([
         children: [
           {
             path: 'encrypt-key?',
-            element: <Fragment />,
+            element: <SettingsEncryptKey />,
           },
           {
             path: 'recover-wallet',

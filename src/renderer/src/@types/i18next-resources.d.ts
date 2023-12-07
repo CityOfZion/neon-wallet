@@ -130,6 +130,11 @@ interface Resources {
       importButtonLabel: 'Import'
       noAccountsToImport: 'No accounts to import'
     }
+    encryptedKey: {
+      title: 'Encrypted Key'
+      subtitle: 'Private Key encrypted successfully!'
+      description: 'Here’s your encrypted key:'
+    }
   }
   pages: {
     welcome: {
@@ -220,6 +225,22 @@ interface Resources {
         encryptKey: 'Encrypt Key'
         recoverWallet: 'Recover Wallet'
         backupWallet: 'Backup Wallet'
+      }
+      encryptKey: {
+        subtitle: 'Choose a passphrase to encrypt an existing key:'
+        titleInput1: 'Enter the private key that you want to encrypt'
+        inputPrivateKeyPlaceholder: 'Enter a private key...'
+        titleInput2: 'Create a passphrase'
+        inputPassphrasePlaceholder: 'Enter a passphrase...'
+        titleInput3: 'Confirm your passphrase'
+        inputConfirmPassphrasePlaceholder: 'Confirm your passphrase...'
+        buttonGenerate: 'Generate an Encrypted Key'
+        error: {
+          privateKey: 'Invalid private key'
+          privateKeyNotFound: 'Unable to validate the private key'
+          passphrase: 'Invalid passphrase'
+          confirmationPassphrase: 'Confirmation passphrase is different from the passphrase'
+        }
       }
     }
   }

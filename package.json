@@ -23,11 +23,11 @@
     "i18next:interfaces": "i18next-resources-for-ts interface -i src/renderer/src/locales/en -o src/renderer/src/@types/i18next-resources.d.ts"
   },
   "dependencies": {
-    "@cityofzion/blockchain-service": "0.8.0",
+    "@cityofzion/blockchain-service": "0.9.0",
     "@cityofzion/bs-asteroid-sdk": "0.7.3",
-    "@cityofzion/bs-ethereum": "0.8.2",
-    "@cityofzion/bs-neo-legacy": "0.8.0",
-    "@cityofzion/bs-neo3": "0.8.0",
+    "@cityofzion/bs-ethereum": "0.9.0",
+    "@cityofzion/bs-neo-legacy": "0.9.0",
+    "@cityofzion/bs-neo3": "0.9.0",
     "@dnd-kit/core": "^6.0.8",
     "@dnd-kit/sortable": "^7.0.2",
     "@electron-toolkit/preload": "^2.0.0",

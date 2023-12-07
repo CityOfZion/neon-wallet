@@ -38,7 +38,7 @@ export const ModalLayout = ({
         <div className="flex items-center gap-x-2.5">
           {headingIcon &&
             cloneElement(headingIcon, {
-              className: StyleHelper.mergeStyles('w-6 h-6', {
+              className: StyleHelper.mergeStyles('w-6 h-6 text-blue', {
                 'fill-blue': headingIconFilled,
                 'stroke-blue': !headingIconFilled,
               }),
