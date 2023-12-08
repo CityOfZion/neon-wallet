@@ -17,29 +17,15 @@ type Props = {
   count: number,
   handleFetchAdditionalTxData: () => void,
   handleGetPendingTransactionInfo: () => void,
-  handleRefreshTxData: () => void,
   pendingTransactions: Array<Object>,
   address: string,
-  showSuccessNotification: ({ message: string }) => void,
   loading: boolean,
 }
 
-const REFRESH_INTERVAL_MS = 30000
-
 export default class TransactionHistory extends React.Component<Props> {
-  transactionDataInterval: IntervalID
-
   static defaultProps = {
     transactions: [],
     pendingTransactions: [],
-  }
-
-  componentDidMount() {
-    this.addPolling()
-  }
-
-  componentWillUnmount() {
-    this.removePolling()
   }
 
   render() {
@@ -99,23 +85,6 @@ export default class TransactionHistory extends React.Component<Props> {
         )}
       </>
     )
-  }
-
-  addPolling = () => {
-    const { showSuccessNotification } = this.props
-    this.transactionDataInterval = setInterval(async () => {
-      await this.props.handleGetPendingTransactionInfo()
-      this.props.handleRefreshTxData()
-      showSuccessNotification({
-        message: 'Received latest transaction information.',
-      })
-    }, REFRESH_INTERVAL_MS)
-  }
-
-  removePolling = () => {
-    if (this.transactionDataInterval) {
-      clearInterval(this.transactionDataInterval)
-    }
   }
 
   pruneConfirmedTransactionsFromPending() {

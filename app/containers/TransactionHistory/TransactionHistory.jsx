@@ -18,7 +18,7 @@ import {
   parseAbstractData,
 } from '../../actions/transactionHistoryActions'
 
-const { ipcRenderer, app } = require('electron')
+const { ipcRenderer } = require('electron')
 
 type Props = {
   chain: string,
