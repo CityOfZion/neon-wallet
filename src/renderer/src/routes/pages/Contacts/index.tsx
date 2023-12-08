@@ -76,7 +76,6 @@ export const ContactsPage = () => {
       .map(word => word[0])
       .join()
   }
-
   return (
     <MainLayout
       heading={t('title')}

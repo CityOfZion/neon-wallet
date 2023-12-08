@@ -6,6 +6,8 @@
     "src/renderer/src/**/*.tsx",
     "src/preload/*.d.ts",
     "src/renderer/src/**/*.json",
+    "sentry.config.ts",
+    "package.json",
   ],
   "compilerOptions": {
     "composite": true,

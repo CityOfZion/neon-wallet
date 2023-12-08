@@ -5,6 +5,9 @@ import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
 
 import { registerEncryptionHandlers } from './encryption'
+import { setupSentry } from './sentryElectron'
+
+setupSentry()
 
 function createWindow(): void {
   // Create the browser window.

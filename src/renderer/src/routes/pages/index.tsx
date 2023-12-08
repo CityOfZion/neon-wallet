@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
-import { createBrowserRouter } from 'react-router-dom'
 import { PrivateRoute } from '@renderer/components/PrivateRoute'
+import { createRouteHandler } from '@renderer/setup/sentryReact'
 
 import { SecuritySetupStep1Page } from './SecuritySetup/SecuritySetupStep1'
 import { SecuritySetupStep2Page } from './SecuritySetup/SecuritySetupStep2'
@@ -14,7 +14,10 @@ import { PortfolioPage } from './Portfolio'
 import { SecuritySetupPage } from './SecuritySetup'
 import { WalletsPage } from './Wallets'
 import { WelcomePage } from './Welcome'
-export const pageRouter = createBrowserRouter([
+
+const routeHandler = createRouteHandler()
+
+export const pageRouter = routeHandler([
   {
     path: '/',
     element: (

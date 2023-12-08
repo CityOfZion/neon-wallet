@@ -1,5 +1,4 @@
 import { electronAPI } from '@electron-toolkit/preload'
-import { config } from 'dotenv'
 import { contextBridge } from 'electron'
 
 import { customAPI } from './customAPI'
@@ -11,7 +10,6 @@ if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld('electron', electronAPI)
     contextBridge.exposeInMainWorld('api', customAPI)
-    contextBridge.exposeInMainWorld('env', config().parsed)
   } catch (error) {
     console.error(error)
   }
