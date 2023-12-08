@@ -6,9 +6,11 @@ import { IWalletState } from '@renderer/@types/store'
 import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
 import { Separator } from '@renderer/components/Separator'
+import { useAccountsSelector } from '@renderer/hooks/useAccountSelector'
 import { useModalLocation, useModalNavigate } from '@renderer/hooks/useModalRouter'
 import { useAppDispatch } from '@renderer/hooks/useRedux'
 import { ModalLayout } from '@renderer/layouts/Modal'
+import { accountReducerActions } from '@renderer/store/reducers/AccountReducer'
 import { walletReducerActions } from '@renderer/store/reducers/WalletReducer'
 
 type TFormData = {
@@ -26,6 +28,7 @@ export const EditWalletModal = () => {
   const wallet = location.state.wallet
 
   const dispatch = useAppDispatch()
+  const { accounts } = useAccountsSelector()
 
   const form = useForm<TFormData>({
     defaultValues: {
@@ -40,6 +43,8 @@ export const EditWalletModal = () => {
 
   const handleDelete = () => {
     dispatch(walletReducerActions.deleteWallet(wallet.id))
+    const accountsToRemove = accounts.filter(it => it.idWallet === wallet.id).map(it => it.address)
+    dispatch(accountReducerActions.deleteAccounts(accountsToRemove))
     modalNavigate(-1)
   }
 
