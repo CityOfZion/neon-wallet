@@ -1,57 +1,70 @@
-import { cloneElement, ComponentProps, ReactNode } from 'react'
-import { MdClose, MdKeyboardBackspace } from 'react-icons/md'
-import { IconButton } from '@renderer/components/IconButton'
-import { Separator } from '@renderer/components/Separator'
+import { ComponentProps, ReactNode, useEffect, useRef } from 'react'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
+import { motion } from 'framer-motion'
 
-type TProps = {
+export type TModalProps = {
   children?: ReactNode
-  heading: JSX.Element | string
-  headingIcon?: JSX.Element
-  headingIconFilled?: boolean
+  closeOnEsc?: boolean
+  closeOnOutsideClick?: boolean
   contentClassName?: string
-  withBackButton?: boolean
+  onClose?: () => void
 } & ComponentProps<'div'>
 
 export const ModalLayout = ({
-  heading,
+  closeOnEsc = true,
+  closeOnOutsideClick = true,
   children,
-  headingIcon,
-  headingIconFilled = true,
+  className,
   contentClassName,
-  withBackButton = false,
-}: TProps) => {
-  const { modalNavigateWrapper } = useModalNavigate()
+  onClose,
+}: TModalProps) => {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const { modalNavigate } = useModalNavigate()
+
+  const handleContentClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    event.stopPropagation()
+  }
+
+  const handleModalClick = () => {
+    if (!closeOnOutsideClick) return
+    modalNavigate(-1)
+    onClose?.()
+  }
+
+  const handleModalKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!closeOnEsc || event.key !== 'Escape') return
+    modalNavigate(-1)
+    onClose?.()
+  }
+
+  useEffect(() => {
+    containerRef.current?.focus()
+  }, [])
 
   return (
-    <div className="w-[18.75rem] bg-gray-800 h-full px-4 text-white text-xs flex flex-col">
-      <header className="flex justify-between items-center py-2.5">
-        {withBackButton && (
-          <IconButton
-            icon={<MdKeyboardBackspace className="fill-white" />}
-            size="md"
-            compacted
-            onClick={modalNavigateWrapper(-1)}
-          />
-        )}
-        <div className="flex items-center gap-x-2.5">
-          {headingIcon &&
-            cloneElement(headingIcon, {
-              className: StyleHelper.mergeStyles('w-6 h-6 text-blue', {
-                'fill-blue': headingIconFilled,
-                'stroke-blue': !headingIconFilled,
-              }),
-            })}
-          <h2 className="text-sm">{heading}</h2>
-        </div>
+    <div
+      className={StyleHelper.mergeStyles('fixed left-0 top-0 w-screen h-screen', className)}
+      onClick={handleModalClick}
+      onKeyDown={handleModalKeyDown}
+      ref={containerRef}
+      tabIndex={0}
+    >
+      <motion.div
+        className="absolute bg-gray-900/50 backdrop-blur-sm top-0 left-0 w-full h-full"
+        initial={{ opacity: 0 }}
+        transition={{ duration: 0.1 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      />
 
-        <IconButton icon={<MdClose className="fill-white" />} size="md" compacted onClick={modalNavigateWrapper(-1)} />
-      </header>
-
-      <Separator />
-
-      <main className={StyleHelper.mergeStyles('flex-grow py-10', contentClassName)}>{children}</main>
+      <div
+        onClick={handleContentClick}
+        onKeyDown={handleModalKeyDown}
+        className={StyleHelper.mergeStyles('relative', contentClassName)}
+      >
+        {children}
+      </div>
     </div>
   )
 }

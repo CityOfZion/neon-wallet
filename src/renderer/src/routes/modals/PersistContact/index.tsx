@@ -10,9 +10,9 @@ import { Input } from '@renderer/components/Input'
 import { Separator } from '@renderer/components/Separator'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
 import { UtilsHelper } from '@renderer/helpers/UtilsHelper'
-import { useModalLocation, useModalNavigate } from '@renderer/hooks/useModalRouter'
+import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
 import { useAppDispatch } from '@renderer/hooks/useRedux'
-import { ModalLayout } from '@renderer/layouts/Modal'
+import { EndModalLayout } from '@renderer/layouts/EndModal'
 import { contactReducerActions } from '@renderer/store/reducers/ContactReducer'
 
 type TFormData = {
@@ -29,10 +29,8 @@ export const PersistContactModal = () => {
   const { t: commonT } = useTranslation('common', { keyPrefix: 'general' })
 
   const { modalNavigate, modalNavigateWrapper } = useModalNavigate()
-  const location = useModalLocation<TLocationState>()
+  const { contact } = useModalState<TLocationState>()
   const dispatch = useAppDispatch()
-
-  const contact = location.state?.contact
 
   const form = useForm<TFormData>({
     defaultValues: {
@@ -94,11 +92,7 @@ export const PersistContactModal = () => {
   }
 
   return (
-    <ModalLayout
-      heading={contact ? t('editContact') : t('addContact')}
-      headingIcon={<TbPlus />}
-      headingIconFilled={false}
-    >
+    <EndModalLayout heading={contact ? t('editContact') : t('addContact')} headingIcon={<TbPlus />}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col justify-between h-full">
         <div>
           <div className="mb-5">
@@ -175,6 +169,6 @@ export const PersistContactModal = () => {
           )}
         </div>
       </form>
-    </ModalLayout>
+    </EndModalLayout>
   )
 }

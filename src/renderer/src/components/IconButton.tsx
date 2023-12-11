@@ -3,7 +3,6 @@ import { StyleHelper } from '@renderer/helpers/StyleHelper'
 
 type TProps = {
   icon: JSX.Element
-  filled?: boolean
   text?: string
   size?: 'sm' | 'md'
   compacted?: boolean
@@ -11,7 +10,7 @@ type TProps = {
 } & ComponentProps<'button'>
 
 export const IconButton = forwardRef<HTMLButtonElement, TProps>(
-  ({ text, icon, size = 'sm', filled = true, compacted, activated = false, ...props }, ref) => {
+  ({ text, icon, size = 'sm', compacted, activated = false, ...props }, ref) => {
     const { className: iconClassName, ...iconProps } = icon.props
 
     return (
@@ -33,12 +32,10 @@ export const IconButton = forwardRef<HTMLButtonElement, TProps>(
       >
         {cloneElement(icon, {
           className: StyleHelper.mergeStyles(
-            'object-contain',
+            'object-contain text-gray-300/50',
             {
               'w-4 h-4': size === 'sm',
               'w-6 h-6': size === 'md',
-              'fill-gray-300/50': filled,
-              'stroke-gray-300/50': !filled,
             },
             iconClassName
           ),

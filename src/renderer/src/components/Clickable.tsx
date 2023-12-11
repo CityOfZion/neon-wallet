@@ -10,8 +10,6 @@ export type TCustomClickableProps = {
   disabled?: boolean
   loading?: boolean
   flat?: boolean
-  leftIconFilled?: boolean
-  rightIconFilled?: boolean
   colorSchema?: 'neon' | 'gray' | 'error'
 }
 
@@ -33,8 +31,6 @@ const Outline = ({
   leftIcon,
   label,
   disabled = false,
-  leftIconFilled = true,
-  rightIconFilled = true,
   flat = false,
   rightIcon,
   loading = false,
@@ -44,20 +40,15 @@ const Outline = ({
   const { className: leftIconClassName = '', ...leftIconProps } = leftIcon ? leftIcon.props : {}
   const { className: rightIconClassName = '', ...rightIconProps } = rightIcon ? rightIcon.props : {}
 
-  const buildIconClassName = (className: string, filled: boolean) => {
+  const buildIconClassName = (className: string) => {
     return StyleHelper.mergeStyles(
-      ' object-contain ',
+      'object-contain group-aria-[disabled=true]:text-gray-100/50',
       {
         'w-6 h-6': !flat,
         'w-5 h-5': flat,
-        'group-aria-[disabled=true]:fill-gray-100/50': filled,
-        'group-aria-[disabled=true]:stroke-gray-100/50': !filled,
-        'stroke-neon': colorSchema === 'neon' && !filled,
-        'fill-neon': colorSchema === 'neon' && filled,
-        'stroke-gray-200': colorSchema === 'gray' && !filled,
-        'fill-gray-200': colorSchema === 'gray' && filled,
-        'stroke-pink': colorSchema === 'error' && !filled,
-        'fill-pink': colorSchema === 'error' && filled,
+        'text-neon': colorSchema === 'neon',
+        'text-gray-200': colorSchema === 'gray',
+        'text-pink': colorSchema === 'error',
       },
       className
     )
@@ -83,7 +74,7 @@ const Outline = ({
         <>
           {leftIcon &&
             cloneElement(leftIcon, {
-              className: buildIconClassName(leftIconClassName, leftIconFilled),
+              className: buildIconClassName(leftIconClassName),
               ...leftIconProps,
             })}
 
@@ -91,7 +82,7 @@ const Outline = ({
 
           {rightIcon &&
             cloneElement(rightIcon, {
-              className: buildIconClassName(rightIconClassName, rightIconFilled),
+              className: buildIconClassName(rightIconClassName),
               ...rightIconProps,
             })}
         </>
@@ -107,8 +98,6 @@ const Contained = ({
   rightIcon,
   label,
   disabled = false,
-  leftIconFilled = true,
-  rightIconFilled = true,
   loading = false,
   flat = false,
   colorSchema = 'neon',
@@ -119,22 +108,16 @@ const Contained = ({
 
   const isDisabled = disabled ?? loading
 
-  const buildIconClassName = (className: string, filled: boolean) => {
+  const buildIconClassName = (className: string) => {
     return StyleHelper.mergeStyles(
-      'object-contain',
+      'object-contain group-aria-[disabled=true]:fill-gray-100/50',
       {
         'w-6 h-6': !flat,
         'w-5 h-5': flat,
-        'group-aria-[disabled=true]:fill-gray-100/50': filled,
-        'group-aria-[disabled=true]:stroke-gray-100/50': !filled,
-        'stroke-neon': colorSchema === 'neon' && !filled,
-        'fill-neon': colorSchema === 'neon' && filled,
-        'stroke-gray-200': colorSchema === 'gray' && !filled,
-        'fill-gray-200': colorSchema === 'gray' && filled,
-        'stroke-pink': colorSchema === 'error' && !filled,
-        'fill-pink': colorSchema === 'error' && filled,
-        'stroke-gray-100/50': isDisabled && !filled,
-        'fill-gray-100/50': isDisabled && filled,
+        'text-neon': colorSchema === 'neon',
+        'text-gray-200': colorSchema === 'gray',
+        'text-pink': colorSchema === 'error',
+        'text-gray-100/50': isDisabled,
       },
       className
     )
@@ -162,7 +145,7 @@ const Contained = ({
         <>
           {leftIcon &&
             cloneElement(leftIcon, {
-              className: buildIconClassName(leftIconClassName, leftIconFilled),
+              className: buildIconClassName(leftIconClassName),
               ...leftIconProps,
             })}
 
@@ -170,7 +153,7 @@ const Contained = ({
 
           {rightIcon &&
             cloneElement(rightIcon, {
-              className: buildIconClassName(rightIconClassName, rightIconFilled),
+              className: buildIconClassName(rightIconClassName),
               ...rightIconProps,
             })}
         </>

@@ -1,65 +1,19 @@
-import { createContext, useCallback, useEffect, useRef, useState } from 'react'
+import { createContext, useCallback, useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { THistory, TModalRouterContextValue, TModalRouterProviderProps } from '@renderer/@types/modal'
-import { StyleHelper } from '@renderer/helpers/StyleHelper'
+import {
+  THistory,
+  TModalRouterContextNavigateOptions,
+  TModalRouterContextValue,
+  TModalRouterProviderProps,
+} from '@renderer/@types/modal'
+import { AnimatePresence } from 'framer-motion'
 
-type ModalProps = {
+type TModalPortalProps = {
   children: React.ReactNode
-  onClose: (name: string) => void
-  history: THistory
 }
-
-const Modal = ({ children, onClose, history }: ModalProps) => {
-  const { closeOnEsc, closeOnOutsideClick, className, ...props } = history.props ?? {}
-
-  const containerRef = useRef<HTMLDivElement>(null)
-
-  const handleContentClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    event.stopPropagation()
-  }
-
-  const handleModalClick = () => {
-    if (closeOnOutsideClick === false) {
-      return
-    }
-
-    onClose(history.name)
-  }
-
-  const handleModalKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (closeOnEsc === false || event.key !== 'Escape') {
-      return
-    }
-
-    onClose(history.name)
-  }
-
-  useEffect(() => {
-    containerRef.current?.focus()
-  }, [])
-
-  return (
-    <div
-      className={StyleHelper.mergeStyles(
-        'fixed left-0 top-0 w-screen h-screen flex justify-end bg-gray-black/50 backdrop-blur-sm',
-        className
-      )}
-      onClick={handleModalClick}
-      onKeyDown={handleModalKeyDown}
-      ref={containerRef}
-      tabIndex={0}
-      {...props}
-    >
-      <div onClick={handleContentClick} onKeyDown={handleModalKeyDown} className="h-full">
-        {children}
-      </div>
-    </div>
-  )
-}
-
-const ModalPortal = (props: ModalProps) => {
+const ModalPortal = ({ children }: TModalPortalProps) => {
   const modalRoot = document.querySelector('body') as HTMLBodyElement
-  return createPortal(<Modal {...props} />, modalRoot)
+  return createPortal(children, modalRoot)
 }
 
 export const ModalRouterContext = createContext<TModalRouterContextValue>({} as TModalRouterContextValue)
@@ -67,51 +21,40 @@ export const ModalRouterContext = createContext<TModalRouterContextValue>({} as 
 export const ModalRouterProvider = ({ routes, children }: TModalRouterProviderProps) => {
   const [history, setHistory] = useState<THistory[]>([])
 
-  const setNonRepeatedHistoryElement = useCallback((newHistory: THistory) => {
-    setHistory(prevState => {
-      const prevStateFiltered = prevState.filter(item => item.name !== newHistory.name)
-
-      return [...prevStateFiltered, newHistory]
-    })
-  }, [])
-
   const navigate = useCallback(
-    (name: string | number, options?: Omit<THistory, 'name'>) => {
+    (name: string | number, options?: TModalRouterContextNavigateOptions) => {
       if (typeof name === 'string') {
-        const routeExist = routes.some(route => route.name === name)
+        const routeExist = routes.find(route => route.name === name)
         if (!routeExist) {
           throw new Error(`Route not found: ${name}`)
         }
 
-        return setNonRepeatedHistoryElement({ name, ...options })
+        setHistory(prevState => {
+          if (options?.replace) {
+            return [...prevState.slice(0, -1), { name, state: options?.state }]
+          }
+
+          return [...prevState, { name, state: options?.state }]
+        })
+        return
       }
 
       if (name >= 0) {
-        const routeElement = routes[name]
-        if (!routeElement) {
-          throw new Error(`Route not found: ${name}`)
-        }
-
-        return setNonRepeatedHistoryElement(routeElement)
+        throw new Error('Number is only allowed to go back in history')
       }
 
       setHistory(prevState => prevState.slice(0, name))
-      return
     },
-    [setNonRepeatedHistoryElement, routes]
+    [routes]
   )
 
-  const getElementByHistory = (historyElement: THistory) => {
+  const getRouteByHistory = (historyElement: THistory) => {
     const route = routes.find(route => route.name === historyElement.name)
     if (!route) {
       throw new Error(`Route not found: ${historyElement.name}`)
     }
 
-    return route.element
-  }
-
-  const handleClose = () => {
-    navigate(-1)
+    return route
   }
 
   useEffect(() => {
@@ -126,11 +69,14 @@ export const ModalRouterProvider = ({ routes, children }: TModalRouterProviderPr
     <ModalRouterContext.Provider value={{ navigate, history }}>
       {children}
 
-      {history.map(item => (
-        <ModalPortal key={item.name} onClose={handleClose} history={item}>
-          {getElementByHistory(item)}
-        </ModalPortal>
-      ))}
+      <AnimatePresence>
+        {history.map(item => {
+          const route = getRouteByHistory(item)
+          const { element } = route
+
+          return <ModalPortal key={item.name}>{element}</ModalPortal>
+        })}
+      </AnimatePresence>
     </ModalRouterContext.Provider>
   )
 }

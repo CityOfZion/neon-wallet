@@ -1,13 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { setupSentryReact } from '@renderer/setup/sentryReact'
 
-import { setupI18n } from './setup/i18next'
+import { setupI18next } from './libs/i18next'
+import { setupSentryReact } from './libs/sentryReact'
 import { App } from './App'
 
 import './assets/css/index.css'
 
-setupI18n()
+setupI18next()
 setupSentryReact()
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(

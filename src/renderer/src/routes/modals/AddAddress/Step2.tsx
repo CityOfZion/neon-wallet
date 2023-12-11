@@ -8,8 +8,8 @@ import { TContactAddress } from '@renderer/@types/store'
 import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
 import { useBsAggregatorSelector } from '@renderer/hooks/useBlockchainSelector'
-import { useModalLocation, useModalNavigate } from '@renderer/hooks/useModalRouter'
-import { ModalLayout } from '@renderer/layouts/Modal'
+import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
+import { EndModalLayout } from '@renderer/layouts/EndModal'
 
 type TFormData = {
   address: string
@@ -24,14 +24,11 @@ type TLocationState = {
 export const AddAddressModalStep2 = () => {
   const { t } = useTranslation('modals', { keyPrefix: 'addAddressStep2' })
   const { t: commonT } = useTranslation('common', { keyPrefix: 'general' })
-  const location = useModalLocation<TLocationState>()
+  const { contactBlockchain, contactName, handleAddAddress } = useModalState<TLocationState>()
   const { modalNavigate } = useModalNavigate()
   const { bsAggregatorRef } = useBsAggregatorSelector()
 
   const [isAddressValid, setIsAddressValid] = useState<boolean>(false)
-
-  const contactName = location.state?.contactName
-  const blockchain = location.state?.contactBlockchain
 
   const form = useForm<TFormData>({})
 
@@ -50,14 +47,14 @@ export const AddAddressModalStep2 = () => {
     modalNavigate('add-address-step3', {
       state: {
         contactName: contactName,
-        contactAddress: { blockchain: blockchain, address: data.address },
-        handleAddAddress: location.state.handleAddAddress,
+        contactAddress: { blockchain: contactBlockchain, address: data.address },
+        handleAddAddress,
       },
     })
   }
 
   return (
-    <ModalLayout heading={t('title')} headingIcon={<TbPlus />} headingIconFilled={false} withBackButton>
+    <EndModalLayout heading={t('title')} headingIcon={<TbPlus />} withBackButton>
       <form className="flex flex-col gap-y-5 justify-between h-full" onSubmit={form.handleSubmit(handleSubmit)}>
         <div className="flex flex-col gap-y-5">
           <div>
@@ -83,6 +80,6 @@ export const AddAddressModalStep2 = () => {
 
         <Button label={commonT('next')} className="w-full" type="submit" disabled={hasSomeError} />
       </form>
-    </ModalLayout>
+    </EndModalLayout>
   )
 }

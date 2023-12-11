@@ -21,5 +21,8 @@
   },
   "colorSelector": {
     "customColor": "Custom Color"
+  },
+  "walletAccordionList": {
+    "noAccounts": "No accounts"
   }
 }

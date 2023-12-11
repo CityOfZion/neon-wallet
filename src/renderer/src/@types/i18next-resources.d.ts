@@ -7,6 +7,10 @@ interface Resources {
       edit: 'Edit'
       cancel: 'Cancel'
     }
+    walletConnect: {
+      name: 'Neon Wallet'
+      description: 'Create and organize wallets, or easily import your existing ones, to safely manage and transfer your assets across accounts with Neon’s slick interface.'
+    }
     wallet: {
       importedName: 'Imported Wallet'
       watchAccount: 'Watch Account'
@@ -47,6 +51,9 @@ interface Resources {
     }
     colorSelector: {
       customColor: 'Custom Color'
+    }
+    walletAccordionList: {
+      noAccounts: 'No accounts'
     }
   }
   modals: {
@@ -130,10 +137,33 @@ interface Resources {
       importButtonLabel: 'Import'
       noAccountsToImport: 'No accounts to import'
     }
-    encryptedKey: {
-      title: 'Encrypted Key'
-      subtitle: 'Private Key encrypted successfully!'
-      description: 'Here’s your encrypted key:'
+    dappConnection: {
+      title: 'Connect with a dApp'
+      description: 'All transactions requested by a connected dApp will <strong>require your permission before being broadcast</strong> to the blockchain.'
+      disclaimer: 'No actions that are initiated by the dApp will happen without your direct approval.'
+      inputPlaceholder: 'Paste your URL here...'
+      buttonConnectLabel: 'Connect'
+    }
+    dappConnectionDetails: {
+      title: 'This app wants to connect!'
+      description: '{{name}} wants to connect to your wallet'
+      connectionDetailsTitle: 'Connection details'
+      successModal: {
+        title: 'Connect a dApp'
+        subtitle: 'A new dApp has been connected!'
+        buttonReturnLabel: 'Return to your dashboard'
+      }
+      errorModal: {
+        title: 'Connect a dApp'
+        subtitle: 'Oops! we’ve encountered an error'
+        subtitle2: 'The dApp hasn’t been connected'
+        subtitle3: 'Please try again later.'
+        buttonReturnLabel: 'Return to your dashboard'
+      }
+    }
+    dappConnectionAccountSelection: {
+      title: 'Connect to an account'
+      description: 'Which account do you want to connect ?'
     }
   }
   pages: {
@@ -185,6 +215,7 @@ interface Resources {
       importButtonLabel: 'Import'
       newWalletButtonLabel: 'New Wallet'
       manageButtonLabel: 'Manage'
+      dappConnectionButtonLabel: 'Dapp'
       reorder: {
         cancelButtonLabel: 'Cancel'
         saveButtonLabel: 'Save'
@@ -240,6 +271,11 @@ interface Resources {
           privateKeyNotFound: 'Unable to validate the private key'
           passphrase: 'Invalid passphrase'
           confirmationPassphrase: 'Confirmation passphrase is different from the passphrase'
+        }
+        successModal: {
+          title: 'Encrypted Key'
+          subtitle: 'Private Key encrypted successfully!'
+          description: 'Here’s your encrypted key:'
         }
       }
     }

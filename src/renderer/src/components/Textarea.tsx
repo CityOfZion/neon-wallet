@@ -9,13 +9,13 @@ type TProps = React.ComponentProps<'textarea'> & {
   errorMessage?: string
   error?: boolean
   clearable?: boolean
-  compact?: boolean
+  compacted?: boolean
   multiline?: boolean
 }
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TProps>(
   (
-    { className, containerClassName, errorMessage, error, compact, clearable, onChange, multiline = true, ...props },
+    { className, containerClassName, errorMessage, error, compacted, clearable, onChange, multiline = true, ...props },
     ref
   ) => {
     const internalRef = useRef<HTMLTextAreaElement>(null)
@@ -59,8 +59,8 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TProps>(
           className={StyleHelper.mergeStyles(
             'flex items-center gap-x-1 rounded bg-asphalt ring-2 ring-transparent w-full px-5 outline-none font-medium placeholder:text-white/50 text-white',
             {
-              'py-[0.3125rem]  text-xs': compact,
-              'py-2 text-sm': !compact,
+              'py-[0.3125rem]  text-xs': compacted,
+              'py-2 text-sm': !compacted,
               'ring-pink': !!errorMessage || error === true,
               'focus:ring-neon': !errorMessage || error === false,
               'pr-3': clearable,

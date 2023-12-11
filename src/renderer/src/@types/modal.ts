@@ -1,25 +1,23 @@
-import { ComponentProps } from 'react'
-
-export type THistory<T = undefined> = {
+export type THistory<T = any> = {
   name: string
-  state: T extends undefined ? unknown | undefined : T
-  props?: {
-    closeOnOutsideClick?: boolean
-    closeOnEsc?: boolean
-  } & ComponentProps<'div'>
+  state: T
 }
 
 export type TRoute = {
-  element: React.ReactNode
+  element: JSX.Element
   name: string
 }
 
 export type TModalRouterContextValue = {
-  navigate: (name: string | number, options?: Omit<THistory, 'name'>) => void
+  navigate: (name: string | number, options?: TModalRouterContextNavigateOptions) => void
   history: THistory[]
 }
 
 export type TModalRouterProviderProps = {
   routes: TRoute[]
   children: React.ReactNode
+}
+
+export type TModalRouterContextNavigateOptions = Pick<THistory, 'state'> & {
+  replace?: boolean
 }

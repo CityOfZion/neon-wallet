@@ -1,11 +1,11 @@
 import { Fragment } from 'react'
 import { PrivateRoute } from '@renderer/components/PrivateRoute'
-import { createRouteHandler } from '@renderer/setup/sentryReact'
+import { createRouteHandler } from '@renderer/libs/sentryReact'
 
 import { SecuritySetupStep1Page } from './SecuritySetup/SecuritySetupStep1'
 import { SecuritySetupStep2Page } from './SecuritySetup/SecuritySetupStep2'
 import { SecuritySetupStep3Page } from './SecuritySetup/SecuritySetupStep3'
-import { SettingsEncryptKey } from './Settings/SettingsEncryptKey'
+import { SettingsEncryptKeyPage } from './Settings/SettingsEncryptKey'
 import { SettingsPersonalisationPage } from './Settings/SettingsPersonalisation'
 import { SettingsSecurityPage } from './Settings/SettingsSecurity'
 import { ContactsPage } from './Contacts'
@@ -85,7 +85,7 @@ export const pageRouter = routeHandler([
         children: [
           {
             path: 'encrypt-key?',
-            element: <SettingsEncryptKey />,
+            element: <SettingsEncryptKeyPage />,
           },
           {
             path: 'recover-wallet',

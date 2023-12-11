@@ -8,9 +8,9 @@ import { Button } from '@renderer/components/Button'
 import { ColorSelector } from '@renderer/components/ColorSelector'
 import { Input } from '@renderer/components/Input'
 import { Separator } from '@renderer/components/Separator'
-import { useModalLocation, useModalNavigate } from '@renderer/hooks/useModalRouter'
+import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
 import { useAppDispatch } from '@renderer/hooks/useRedux'
-import { ModalLayout } from '@renderer/layouts/Modal'
+import { EndModalLayout } from '@renderer/layouts/EndModal'
 import { accountReducerActions } from '@renderer/store/reducers/AccountReducer'
 
 type TFormData = {
@@ -24,15 +24,14 @@ type TLocationState = {
 export const EditAccountModal = () => {
   const { t } = useTranslation('modals', { keyPrefix: 'editAccount' })
   const { modalNavigate, modalNavigateWrapper } = useModalNavigate()
-  const location = useModalLocation<TLocationState>()
-  const account = location.state.account
+  const { account } = useModalState<TLocationState>()
   const [accountColor, setAccountColor] = useState<string>(account.backgroundColor)
 
   const dispatch = useAppDispatch()
 
   const form = useForm<TFormData>({
     defaultValues: {
-      name: location.state?.account.name,
+      name: account.name,
     },
   })
 
@@ -47,12 +46,7 @@ export const EditAccountModal = () => {
   }
 
   return (
-    <ModalLayout
-      heading={t('title')}
-      headingIcon={<TbPencil />}
-      headingIconFilled={false}
-      contentClassName="flex flex-col justify-between"
-    >
+    <EndModalLayout heading={t('title')} headingIcon={<TbPencil />} contentClassName="flex flex-col justify-between">
       <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col h-full justify-between">
         <div>
           <Input
@@ -94,6 +88,6 @@ export const EditAccountModal = () => {
           flat
         />
       </div>
-    </ModalLayout>
+    </EndModalLayout>
   )
 }

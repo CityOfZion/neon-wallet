@@ -4,7 +4,7 @@ import * as RadixPopover from '@radix-ui/react-popover'
 import { Button } from './Button'
 import { Separator } from './Separator'
 
-type Action = { icon?: JSX.Element; iconFilled?: boolean; label: string; onClick?: () => void | Promise<void> }
+type Action = { icon?: JSX.Element; label: string; onClick?: () => void | Promise<void> }
 
 type TProps = {
   children: React.ReactNode
@@ -25,7 +25,7 @@ export const ActionPopover = ({ children, actions }: TProps) => {
       <RadixPopover.Portal>
         <RadixPopover.Content className="relative" side="right" align="center" sideOffset={20}>
           <div className="bg-gray-900/50 flex flex-col rounded backdrop-blur-md border-l-4 border-l-neon overflow-hidden">
-            {actions.map(({ iconFilled = true, label, icon, onClick }, index) => (
+            {actions.map(({ label, icon, onClick }, index) => (
               <Fragment key={index}>
                 <Button
                   clickableProps={{ className: 'border-none rounded-none text-left h-10' }}
@@ -33,7 +33,6 @@ export const ActionPopover = ({ children, actions }: TProps) => {
                   variant="outlined"
                   flat
                   leftIcon={icon}
-                  leftIconFilled={iconFilled}
                   onClick={() => handleClick(onClick)}
                 />
 

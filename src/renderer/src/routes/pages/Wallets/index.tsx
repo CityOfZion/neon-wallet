@@ -1,7 +1,9 @@
 import { Fragment, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MdAdd, MdMoreHoriz } from 'react-icons/md'
-import { TbEyePlus, TbFileImport, TbMenuDeep, TbPencil, TbRefresh, TbRepeat } from 'react-icons/tb'
+import { TbEyePlus, TbFileImport, TbMenuDeep, TbPencil, TbPlug, TbRefresh, TbRepeat } from 'react-icons/tb'
+import { EStatus } from '@cityofzion/wallet-connect-sdk-wallet-core'
+import { useWalletConnectWallet } from '@cityofzion/wallet-connect-sdk-wallet-react'
 import { IAccountState, IWalletState } from '@renderer/@types/store'
 import { ActionPopover } from '@renderer/components/ActionPopover'
 import { Button } from '@renderer/components/Button'
@@ -21,6 +23,7 @@ import { accountReducerActions } from '@renderer/store/reducers/AccountReducer'
 import { AccountList } from './AccountList'
 
 export const WalletsPage = () => {
+  const { status } = useWalletConnectWallet()
   const { t } = useTranslation('pages', { keyPrefix: 'wallets' })
   const { wallets } = useWalletsSelector()
   const { accounts } = useAccountsSelector()
@@ -71,9 +74,7 @@ export const WalletsPage = () => {
       }
       rightComponent={
         <div className="flex gap-x-2">
-          <PopOver
-            trigger={<IconButton icon={<TbMenuDeep />} filled={false} size="md" text={t('manageButtonLabel')} />}
-          >
+          <PopOver trigger={<IconButton icon={<TbMenuDeep />} size="md" text={t('manageButtonLabel')} />}>
             {wallets.map((wallet, index) => (
               <Fragment key={index}>
                 {index !== 0 && <Separator />}
@@ -97,19 +98,24 @@ export const WalletsPage = () => {
           <IconButton icon={<MdAdd />} size="md" text={t('newWalletButtonLabel')} disabled />
           <IconButton
             icon={<TbFileImport />}
-            filled={false}
             size="md"
             text={t('importButtonLabel')}
             onClick={modalNavigateWrapper('import')}
           />
           <IconButton
             icon={<TbEyePlus />}
-            filled={false}
             size="md"
             text={t('addWatchAccountButtonLabel')}
             onClick={modalNavigateWrapper('add-watch')}
           />
-          <IconButton icon={<TbRefresh />} filled={false} size="md" text={t('buttonRefreshLabel')} disabled />
+          <IconButton
+            icon={<TbPlug />}
+            size="md"
+            text={t('dappConnectionButtonLabel')}
+            onClick={modalNavigateWrapper('dapp-connection')}
+            disabled={status !== EStatus.STARTED}
+          />
+          <IconButton icon={<TbRefresh />} size="md" text={t('buttonRefreshLabel')} disabled />
         </div>
       }
       headerClassName="pb-2"
@@ -124,13 +130,11 @@ export const WalletsPage = () => {
               actions={[
                 {
                   icon: <TbPencil />,
-                  iconFilled: false,
                   label: t('editWalletButtonLabel'),
                   onClick: modalNavigateWrapper('edit-wallet', { state: { wallet: selectedWallet } }),
                 },
                 {
                   icon: <TbRepeat />,
-                  iconFilled: false,
                   label: t('reorderAccountsButtonLabel'),
                   onClick: () => setIsReordering(true),
                 },
