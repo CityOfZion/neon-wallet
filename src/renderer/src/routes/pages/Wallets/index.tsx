@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { MdAdd, MdMoreHoriz } from 'react-icons/md'
+import { MdAdd, MdMoreVert } from 'react-icons/md'
 import { TbEyePlus, TbFileImport, TbMenuDeep, TbPencil, TbPlug, TbRefresh, TbRepeat } from 'react-icons/tb'
 import { EStatus } from '@cityofzion/wallet-connect-sdk-wallet-core'
 import { useWalletConnectWallet } from '@cityofzion/wallet-connect-sdk-wallet-react'
@@ -140,7 +140,7 @@ export const WalletsPage = () => {
                 },
               ]}
             >
-              <IconButton icon={<MdMoreHoriz />} size="md" disabled={isReordering} />
+              <IconButton compacted icon={<MdMoreVert />} size="md" disabled={isReordering} />
             </ActionPopover>
           </header>
 
