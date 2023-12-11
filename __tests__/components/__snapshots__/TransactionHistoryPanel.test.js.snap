@@ -2,9 +2,7 @@
 
 exports[`TransactionHistoryPanel renders without crashing 1`] = `
 <Connect(withData(Connect(withData(withProps(Connect(withActions(Connect(withActions(Connect(withCall(Connect(withData(Connect(withProgress(withProps(Connect(withData(TransactionHistory))))))))))))))))))
-  showErrorNotification={[Function]}
-  showInfoNotification={[Function]}
-  showSuccessNotification={[Function]}
+  dispatch={[Function]}
   store={
     Object {
       "clearActions": [Function],
