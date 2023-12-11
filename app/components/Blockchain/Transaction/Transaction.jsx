@@ -101,7 +101,7 @@ export default function Transaction(props: Props) {
     )
   }
 
-  function renderAbstract(type: string, isN3?: boolean) {
+  function renderAbstract(isN3?: boolean) {
     const { isPending, address } = props
     const { time, label, amount, isNetworkFee, to, from, image } =
       props.tx || {}
@@ -154,7 +154,7 @@ export default function Transaction(props: Props) {
       }
       default:
         console.warn('renderTxTypeIcon() invoked with an invalid argument!', {
-          type,
+          type: tx?.type,
         })
         return null
     }
@@ -166,6 +166,10 @@ export default function Transaction(props: Props) {
    */
   function renderAbstractN3() {
     const { isPending, tx } = props
+    if (isPending) {
+      return renderAbstract(true)
+    }
+
     const { time, type, sender } = tx
     const txDate = renderTxDate(time || (tx.metadata && tx.metadata.time))
 
@@ -176,10 +180,6 @@ export default function Transaction(props: Props) {
       findContact,
       showAddContactModal: displayModal,
       ...tx.metadata,
-    }
-
-    if (isPending) {
-      return renderAbstract(type, true)
     }
 
     switch (type) {
@@ -209,9 +209,7 @@ export default function Transaction(props: Props) {
 
   return (
     <div className={classNames(styles.transactionContainer, className)}>
-      {chain === 'neo3' && !renderN2Tx
-        ? renderAbstractN3()
-        : renderAbstract(tx?.type)}
+      {chain === 'neo3' && !renderN2Tx ? renderAbstractN3() : renderAbstract()}
       {!isPending && (
         <Button
           className={styles.transactionHistoryButton}
