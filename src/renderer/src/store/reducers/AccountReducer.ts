@@ -39,11 +39,17 @@ const deleteAccount: CaseReducer<IAccountReducer, PayloadAction<string>> = (stat
   state.data = state.data.filter(account => account.address !== address)
 }
 
+const deleteAccounts: CaseReducer<IAccountReducer, PayloadAction<string[]>> = (state, action) => {
+  const addresses = action.payload
+  state.data = state.data.filter(account => !addresses.includes(account.address))
+}
+
 const AccountReducer = createSlice({
   name: accountReducerName,
   initialState,
   reducers: {
     deleteAccount,
+    deleteAccounts,
     saveAccount,
     reorderAccounts,
   },

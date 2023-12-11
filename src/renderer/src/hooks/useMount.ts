@@ -13,7 +13,7 @@ export const useMount = (
     setIsMounting(true)
     timeoutRef.current = setTimeout(async () => {
       try {
-        effect()
+        await effect()
       } finally {
         setIsMounting(false)
       }

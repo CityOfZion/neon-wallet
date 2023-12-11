@@ -2,7 +2,7 @@
   "import": {
     "title": "Import",
     "subtitle": "IMPORT",
-    "description": "Enter an address, encrypted key or private key",
+    "description": "To import your wallet, enter an address, encrypted key, private key or mnemonic words:",
     "inputPlaceholder": "Please ender an address or key...",
     "buttonContinueLabel": "Next",
     "errors": {
