@@ -54,6 +54,8 @@ export const EditWalletModal = () => {
           placeholder={t('inputPlaceholder')}
           {...form.register('name')}
           errorMessage={form.formState.errors.name?.message}
+          clearable
+          compacted
         />
 
         <div className="flex gap-x-3 mt-8">
@@ -85,6 +87,7 @@ export const EditWalletModal = () => {
           onClick={handleDelete}
           colorSchema="error"
           flat
+          iconsOnEdge={false}
         />
       </div>
     </EndModalLayout>
