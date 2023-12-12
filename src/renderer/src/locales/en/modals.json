@@ -73,7 +73,13 @@
     "addToContact": "Add to contact",
     "subtext": "This address will be added to the above contact:"
   },
-  "mnemonicAccountSelection": {
+  "importMnemonicAccountsSelection": {
+    "title": "Import",
+    "description": "Select the addresses you’d like to import:",
+    "importButtonLabel": "Import",
+    "noAccountsToImport": "No accounts to import"
+  },
+  "importKeyAccountsSelection": {
     "title": "Import",
     "description": "Select the addresses you’d like to import:",
     "importButtonLabel": "Import",

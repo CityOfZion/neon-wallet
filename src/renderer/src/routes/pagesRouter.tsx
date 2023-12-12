@@ -2,22 +2,22 @@ import { Fragment } from 'react'
 import { PrivateRoute } from '@renderer/components/PrivateRoute'
 import { createRouteHandler } from '@renderer/libs/sentryReact'
 
-import { SecuritySetupStep1Page } from './SecuritySetup/SecuritySetupStep1'
-import { SecuritySetupStep2Page } from './SecuritySetup/SecuritySetupStep2'
-import { SecuritySetupStep3Page } from './SecuritySetup/SecuritySetupStep3'
-import { SettingsEncryptKeyPage } from './Settings/SettingsEncryptKey'
-import { SettingsPersonalisationPage } from './Settings/SettingsPersonalisation'
-import { SettingsSecurityPage } from './Settings/SettingsSecurity'
-import { ContactsPage } from './Contacts'
-import { LoginPage } from './Login'
-import { PortfolioPage } from './Portfolio'
-import { SecuritySetupPage } from './SecuritySetup'
-import { WalletsPage } from './Wallets'
-import { WelcomePage } from './Welcome'
+import { ContactsPage } from './pages/Contacts'
+import { LoginPage } from './pages/Login'
+import { PortfolioPage } from './pages/Portfolio'
+import { SecuritySetupPage } from './pages/SecuritySetup'
+import { SecuritySetupStep1Page } from './pages/SecuritySetup/SecuritySetupStep1'
+import { SecuritySetupStep2Page } from './pages/SecuritySetup/SecuritySetupStep2'
+import { SecuritySetupStep3Page } from './pages/SecuritySetup/SecuritySetupStep3'
+import { SettingsEncryptKeyPage } from './pages/Settings/SettingsEncryptKey'
+import { SettingsPersonalisationPage } from './pages/Settings/SettingsPersonalisation'
+import { SettingsSecurityPage } from './pages/Settings/SettingsSecurity'
+import { WalletsPage } from './pages/Wallets'
+import { WelcomePage } from './pages/Welcome'
 
 const routeHandler = createRouteHandler()
 
-export const pageRouter = routeHandler([
+export const pagesRouter = routeHandler([
   {
     path: '/',
     element: (

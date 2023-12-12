@@ -60,7 +60,7 @@ interface Resources {
     import: {
       title: 'Import'
       subtitle: 'IMPORT'
-      description: 'Enter an address, encrypted key or private key'
+      description: 'To import your wallet, enter an address, encrypted key, private key or mnemonic words:'
       inputPlaceholder: 'Please ender an address or key...'
       buttonContinueLabel: 'Next'
       errors: {
@@ -131,7 +131,13 @@ interface Resources {
       addToContact: 'Add to contact'
       subtext: 'This address will be added to the above contact:'
     }
-    mnemonicAccountSelection: {
+    importMnemonicAccountsSelection: {
+      title: 'Import'
+      description: 'Select the addresses you’d like to import:'
+      importButtonLabel: 'Import'
+      noAccountsToImport: 'No accounts to import'
+    }
+    importKeyAccountsSelection: {
       title: 'Import'
       description: 'Select the addresses you’d like to import:'
       importButtonLabel: 'Import'

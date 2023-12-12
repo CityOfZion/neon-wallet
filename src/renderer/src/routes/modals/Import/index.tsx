@@ -2,14 +2,11 @@ import { ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MdChevronRight } from 'react-icons/md'
 import { TbFileImport } from 'react-icons/tb'
-import { TBlockchainServiceKey, TImportAccountsParam } from '@renderer/@types/blockchain'
 import { Banner } from '@renderer/components/Banner'
 import { Button } from '@renderer/components/Button'
 import { Textarea } from '@renderer/components/Textarea'
 import { UtilsHelper } from '@renderer/helpers/UtilsHelper'
-import { useAccountsSelector } from '@renderer/hooks/useAccountSelector'
 import { useActions } from '@renderer/hooks/useActions'
-import { useBlockchainActions } from '@renderer/hooks/useBlockchainActions'
 import { useBsAggregatorSelector } from '@renderer/hooks/useBlockchainSelector'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
 import { EndModalLayout } from '@renderer/layouts/EndModal'
@@ -23,17 +20,10 @@ type TFormData = {
 
 export const ImportModal = () => {
   const { bsAggregator } = useBsAggregatorSelector()
-  const blockchainActions = useBlockchainActions()
-  const { accountsRef } = useAccountsSelector()
   const { modalNavigate } = useModalNavigate()
   const { t } = useTranslation('modals', { keyPrefix: 'import' })
-  const { t: commomT } = useTranslation('common', { keyPrefix: 'wallet' })
 
   const { handleAct, setError, actionState, actionData, setData, clearErrors } = useActions<TFormData>({ text: '' })
-
-  const accountAlreadyExists = (address: string, blockchain: TBlockchainServiceKey) => {
-    return accountsRef.current.some(account => account.address === address && account.blockchain === blockchain)
-  }
 
   const validateMnemonic = (value: string) => {
     const isValid = UtilsHelper.isValidMnemonic(value)
@@ -76,41 +66,11 @@ export const ImportModal = () => {
   }
 
   const submitKey = async (key: string) => {
-    const addresses = await UtilsHelper.promiseAll(bsAggregator.blockchainServices, async service => {
-      if (!service.validateKey(key)) throw new Error()
-
-      const blockchain = service.blockchainName
-      const { address } = service.generateAccountFromKey(key)
-
-      if (accountAlreadyExists(address, blockchain)) throw new Error()
-
-      return {
-        address,
-        blockchain,
-      }
-    })
-
-    if (!addresses.length) throw new Error(t('errors.allAddressesAlreadyImported'))
-
-    const wallet = await blockchainActions.createWallet({
-      name: commomT('importedName'),
-      walletType: 'legacy',
-      mnemonic: undefined,
-    })
-
-    const accountsToImport: TImportAccountsParam['accounts'] = addresses.map(({ address, blockchain }) => ({
-      address,
-      blockchain,
-      key,
-      type: 'legacy',
-    }))
-
-    await blockchainActions.importAccounts({ wallet, accounts: accountsToImport })
-    modalNavigate(-1)
+    modalNavigate('import-key-accounts-selection', { state: { key } })
   }
 
   const submitMnemonic = async (mnemonic: string) => {
-    modalNavigate('mnemonic-account-selection', { state: { mnemonic } })
+    modalNavigate('import-mnemonic-accounts-selection', { state: { mnemonic } })
   }
 
   const handleSubmit = async (data: TFormData) => {
