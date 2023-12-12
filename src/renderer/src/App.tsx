@@ -7,8 +7,8 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { ModalRouterProvider } from './contexts/ModalRouterContext'
 import { setupSentryWrapper } from './libs/sentryReact'
 import { walletConnectOptions } from './libs/walletConnectSDK'
-import { modalRoutes } from './routes/modals'
-import { pageRouter } from './routes/pages'
+import { modalsRouter } from './routes/modalsRouter'
+import { pagesRouter } from './routes/pagesRouter'
 import { RootStore } from './store/RootStore'
 
 const queryClient = new QueryClient()
@@ -19,8 +19,8 @@ const AppReact = (): JSX.Element => {
       <PersistGate persistor={RootStore.persistor}>
         <WalletConnectWalletProvider options={walletConnectOptions}>
           <QueryClientProvider client={queryClient}>
-            <ModalRouterProvider routes={modalRoutes}>
-              <RouterProvider router={pageRouter} />
+            <ModalRouterProvider routes={modalsRouter}>
+              <RouterProvider router={pagesRouter} />
             </ModalRouterProvider>
           </QueryClientProvider>
         </WalletConnectWalletProvider>

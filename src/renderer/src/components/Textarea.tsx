@@ -22,7 +22,13 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TProps>(
 
     const clear = () => {
       if (internalRef.current) {
-        internalRef.current.value = ''
+        const nativeTextAreaValueSetter = Object.getOwnPropertyDescriptor(
+          window.HTMLTextAreaElement.prototype,
+          'value'
+        )!.set!
+        nativeTextAreaValueSetter.call(internalRef.current, '')
+        const inputEvent = new Event('input', { bubbles: true })
+        internalRef.current.dispatchEvent(inputEvent)
         internalRef.current.focus()
         calcHeight()
       }

@@ -24,12 +24,12 @@ type TActionsData = {
 
 type TAccountWithBlockchain = AccountWithDerivationPath & { blockchain: TBlockchainServiceKey }
 
-export const MnemonicAccountSelectionModal = () => {
+export const ImportMnemonicAccountsSelectionModal = () => {
   const { mnemonic } = useModalState<TLocation>()
   const blockchainActions = useBlockchainActions()
-  const { t: blockchainT } = useTranslation('common', { keyPrefix: 'wallet' })
+  const { t: commonT } = useTranslation('common', { keyPrefix: 'wallet' })
   const { modalNavigate } = useModalNavigate()
-  const { t } = useTranslation('modals', { keyPrefix: 'mnemonicAccountSelection' })
+  const { t } = useTranslation('modals', { keyPrefix: 'importMnemonicAccountsSelection' })
   const { bsAggregatorRef } = useBsAggregatorSelector()
   const { ref: allAccountsRef } = useAppSelector(state => state.account.data.map(it => it.address))
 
@@ -48,7 +48,7 @@ export const MnemonicAccountSelectionModal = () => {
 
   const handleImport = async (data: TActionsData) => {
     const wallet = await blockchainActions.createWallet({
-      name: blockchainT('mnemonicWalletName'),
+      name: commonT('mnemonicWalletName'),
       walletType: 'standard',
       mnemonic,
     })
