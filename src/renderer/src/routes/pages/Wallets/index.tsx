@@ -112,7 +112,7 @@ export const WalletsPage = () => {
             icon={<TbPlug />}
             size="md"
             text={t('dappConnectionButtonLabel')}
-            onClick={modalNavigateWrapper('dapp-connection')}
+            onClick={modalNavigateWrapper('dapp-connection-list')}
             disabled={status !== EStatus.STARTED}
           />
           <IconButton icon={<TbRefresh />} size="md" text={t('buttonRefreshLabel')} disabled />

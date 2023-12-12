@@ -171,6 +171,13 @@ interface Resources {
       title: 'Connect to an account'
       description: 'Which account do you want to connect ?'
     }
+    dappConnectionListModal: {
+      title: 'Connected dApps'
+      inputPlaceholder: 'Search for dApp...'
+      listTitle: 'Your connected dApps'
+      emptyList: 'No dApp connections'
+      buttonLabel: 'Connect new'
+    }
   }
   pages: {
     welcome: {
