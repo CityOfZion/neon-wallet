@@ -14,7 +14,7 @@ export const DappConnectionSuccessContent = () => {
         className="w-full px-14"
         flat
         leftIcon={<MdArrowBack />}
-        onClick={modalNavigateWrapper(-1)}
+        onClick={modalNavigateWrapper(-2)}
       />
     </div>
   )

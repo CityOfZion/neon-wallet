@@ -18,6 +18,7 @@ export type TModalRouterProviderProps = {
   children: React.ReactNode
 }
 
-export type TModalRouterContextNavigateOptions = Pick<THistory, 'state'> & {
+export type TModalRouterContextNavigateOptions = {
+  state?: any
   replace?: boolean
 }

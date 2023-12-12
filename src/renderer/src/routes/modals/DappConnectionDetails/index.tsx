@@ -84,7 +84,7 @@ export const DappConnectionDetailsModal = () => {
         src={proposal.params.proposer.metadata.icons[0]}
         alt={`${proposal.params.proposer.metadata.name} icon`}
         fallbackSrc={dappFallbackIcon}
-        className="h-9 object-contain mt-5 rounded-sm bg-asphalt "
+        className="max-h-[2.25rem] max-w-[4rem] object-contain mt-5 rounded-sm "
       />
 
       <p className="text-white text-2xl mt-9">{t('title')}</p>

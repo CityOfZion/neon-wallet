@@ -7,6 +7,7 @@ import { AddWatch } from './modals/AddWatch'
 import { DappConnectionModal } from './modals/DappConnection'
 import { DappConnectionAccountSelectionModal } from './modals/DappConnectionAccountSelection'
 import { DappConnectionDetailsModal } from './modals/DappConnectionDetails'
+import { DappConnectionListModal } from './modals/DappConnectionList'
 import { EditAccountModal } from './modals/EditAccount'
 import { EditWalletModal } from './modals/EditWallet'
 import { ErrorModal } from './modals/Error'
@@ -32,4 +33,5 @@ export const modalsRouter: TRoute[] = [
   { name: 'dapp-connection', element: <DappConnectionModal /> },
   { name: 'dapp-connection-details', element: <DappConnectionDetailsModal /> },
   { name: 'dapp-connection-account-selection', element: <DappConnectionAccountSelectionModal /> },
+  { name: 'dapp-connection-list', element: <DappConnectionListModal /> },
 ]

@@ -68,13 +68,13 @@ const WalletAccordionAccount = ({
   }
 
   return (
-    <li className="flex justify-between px-1.5 py-3">
-      <div className="flex gap-x-2.5">
-        <div className="w-6 flex items-center justify-center">
+    <li className="flex justify-between px-1.5 py-3 min-w-0 gap-x-2">
+      <div className="flex gap-x-2.5 min-w-0">
+        <div className="min-w-[1.5rem] flex items-center justify-center">
           <div className="w-2 h-2 rounded-full bg-gray-300/30" />
         </div>
 
-        <span className="text-white">{account.name}</span>
+        <span className="text-white truncate">{account.name}</span>
       </div>
 
       <div className="flex gap-x-2.5 mr-1">
@@ -114,11 +114,11 @@ const WalletAccordion = ({
 
   return (
     <RadixAccordion.Item className="text-sm text-gray-300 w-full" value={wallet.id}>
-      <div className="flex justify-between  p-1.5 bg-gray-900 rounded">
-        <div className="flex gap-x-2.5 items-center">
-          <MdAccountBalanceWallet className="w-6 h-6 fill-blue" />
+      <div className="flex justify-between min-w-0 gap-2 p-1.5 bg-gray-900 rounded">
+        <div className="flex gap-x-2.5 items-center min-w-0">
+          <MdAccountBalanceWallet className="min-w-[1.5rem] min-h-[1.5rem] fill-blue" />
 
-          <span>{wallet.name}</span>
+          <span className="block truncate">{wallet.name}</span>
         </div>
 
         <div className="flex items-center gap-x-2.5">
