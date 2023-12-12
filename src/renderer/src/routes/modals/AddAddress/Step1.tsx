@@ -82,8 +82,7 @@ export const AddAddressModalStep1 = () => {
                   <BlockchainIcon blockchain={service} type="white" />
                   {blockchainT(service)}
                 </div>
-
-                <Checkbox onClick={() => handleCheckboxChange(service)} checked={isChecked(service)} />
+                <Checkbox onCheckedChange={() => handleCheckboxChange(service)} checked={isChecked(service)} />
               </div>
             ))}
         </div>

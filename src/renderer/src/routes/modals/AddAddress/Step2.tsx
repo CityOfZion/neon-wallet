@@ -64,7 +64,7 @@ export const AddAddressModalStep2 = () => {
 
           <div>{t('enterNNSorPublicKey')}</div>
 
-          <Input {...form.register('address', { onChange: handleChange })} />
+          <Input {...form.register('address', { onChange: handleChange })} clearable />
 
           {!hasSomeError && (
             <div className="flex flex-row w-full items-center h-12 rounded">

@@ -76,7 +76,7 @@ export const PersistContactModal = () => {
       return
     }
 
-    if (data.addresses) {
+    if (!data.addresses) {
       form.setError('addresses', { message: t('emptyAddresses') })
       return
     }
