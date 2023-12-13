@@ -78,6 +78,7 @@ export const Input = forwardRef<HTMLInputElement, TInputProps>(
             className={StyleHelper.mergeStyles('bg-transparent flex-grow outline-none', className)}
             type={realType}
             spellCheck="false"
+            autoComplete="off"
             {...props}
           />
 

@@ -8,9 +8,11 @@ export const useAppDispatch: () => AppDispatch = useDispatch
 export function useAppSelector<T = unknown>(
   selectHandler: (state: RootState) => T
 ): { value: T; ref: MutableRefObject<T> } {
-  const ref = useRef<T>()
+  const value = useSelector(selectHandler)
 
-  const value = useSelector(selectHandler, (old, next) => {
+  const ref = useRef<T>(value)
+
+  useSelector(selectHandler, (old, next) => {
     ref.current = next
     return shallowEqual(old, next)
   })

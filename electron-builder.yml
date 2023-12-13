@@ -1,5 +1,5 @@
-appId: com.electron.app
-productName: neon
+appId: com.electron.neon3
+productName: Neon3
 directories:
   buildResources: build
 files:
@@ -12,7 +12,11 @@ files:
 asarUnpack:
   - resources/**
 win:
-  executableName: neon
+  executableName: Neon3
+  target:
+    - target: nsis
+      arch:
+        - x64
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}

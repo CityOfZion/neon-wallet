@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { createBrowserRouter } from 'react-router-dom'
+import { createHashRouter } from 'react-router-dom'
 import * as ElectronRedererSentry from '@sentry/electron/renderer'
 import * as ReactSentry from '@sentry/react'
 
@@ -25,5 +25,5 @@ export function setupSentryWrapper(app: React.ComponentType) {
 }
 
 export function createRouteHandler() {
-  return isProductionMode ? ReactSentry.wrapCreateBrowserRouter(createBrowserRouter) : createBrowserRouter
+  return isProductionMode ? ReactSentry.wrapCreateBrowserRouter(createHashRouter) : createHashRouter
 }
