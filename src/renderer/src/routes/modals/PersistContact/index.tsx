@@ -1,7 +1,7 @@
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { MdDeleteForever } from 'react-icons/md'
-import { TbPlus, TbTrash } from 'react-icons/tb'
+import { TbPlus } from 'react-icons/tb'
 import { IContactState, TContactAddress } from '@renderer/@types/store'
 import { BlockchainIcon } from '@renderer/components/BlockchainIcon'
 import { Button } from '@renderer/components/Button'
@@ -51,10 +51,6 @@ export const PersistContactModal = () => {
 
   const openAddAddressModal = (selectedAddress?: TContactAddress) => {
     const contactName = form.getValues('name')
-    if (!contactName) {
-      form.setError('name', { message: t('invalidName') })
-      return
-    }
 
     modalNavigate('add-address-step1', {
       state: {
@@ -71,13 +67,15 @@ export const PersistContactModal = () => {
   }
 
   const handleSubmit: SubmitHandler<TFormData> = async data => {
-    if (!data.name.length) {
-      form.setError('name', { message: t('invalidName') })
-      return
-    }
+    if (!data.name.length || !data.addresses || data.addresses.length == 0) {
+      if (!data.name.length) {
+        form.setError('name', { message: t('invalidName') })
+      }
 
-    if (!data.addresses) {
-      form.setError('addresses', { message: t('emptyAddresses') })
+      if (!data.addresses || data.addresses.length == 0) {
+        form.setError('addresses', { message: t('emptyAddresses') })
+      }
+
       return
     }
 
@@ -96,11 +94,14 @@ export const PersistContactModal = () => {
       <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col justify-between h-full">
         <div>
           <div className="mb-5">
-            <div className="text-gray-100 font-bold font-bold pb-2">{t('name')}</div>
+            <div className="text-gray-100 font-bold pb-2">{t('name')}</div>
             <Input
               placeholder={t('enterAName')}
               {...form.register('name')}
               errorMessage={form.formState.errors.name?.message}
+              compacted
+              clearable
+              onFocus={() => form.clearErrors('name')}
             />
           </div>
 
@@ -109,28 +110,38 @@ export const PersistContactModal = () => {
             {fields.map((address, index) => (
               <div
                 key={address.id}
-                className="flex items-center h-12 rounded bg-asphalt w-full mb-2 px-4 justify-between"
+                className="flex items-center pl-3 pr-2 justify-between h-8.5 rounded bg-asphalt w-full mb-5"
               >
-                <div className="flex gap-x-2 max-w-[90%]">
-                  <BlockchainIcon blockchain={address.blockchain} type="white" />
+                <div className="flex items-center gap-x-3 max-w-[90%]">
+                  <BlockchainIcon blockchain={address.blockchain} type="white" className="h-3 w-3" />
                   <span className="truncate">{address.address}</span>
                 </div>
-                <IconButton icon={<TbTrash />} compacted type="button" onClick={() => handleDeleteAddress(index)} />
+                <IconButton
+                  icon={<MdDeleteForever className="text-pink h-5 w-5" />}
+                  compacted
+                  type="button"
+                  onClick={() => handleDeleteAddress(index)}
+                  className="items-center"
+                />
               </div>
             ))}
 
             <button
               type="button"
               onClick={() => openAddAddressModal()}
-              className={StyleHelper.mergeStyles('flex items-center h-12 rounded bg-asphalt w-full px-3', {
-                'border-2 border-magenta': form.formState.errors.addresses,
-              })}
+              className={StyleHelper.mergeStyles(
+                'flex items-center h-9 rounded bg-asphalt w-full px-5 justify-between',
+                {
+                  'border-2 border-pink': form.formState.errors.addresses,
+                }
+              )}
+              onFocus={() => form.clearErrors('addresses')}
             >
-              <span className="flex-1">{t('enterPublicKeyOrNNS')}</span>
-              <TbPlus className="stroke-neon" />
+              <span className="text-gray-100 font-medium text-xs">{t('enterPublicKeyOrNNS')}</span>
+              <TbPlus className="stroke-neon w-5 h-5" />
             </button>
             {form.formState.errors.addresses && (
-              <div className="text-magenta text-center py-2">{form.formState.errors.addresses.message}</div>
+              <div className="text-pink py-1">{form.formState.errors.addresses.message}</div>
             )}
           </div>
         </div>

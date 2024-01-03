@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { BiSolidDownArrow, BiSolidSortAlt, BiSolidUpArrow } from 'react-icons/bi'
 import { FiSend } from 'react-icons/fi'
+import { MdOutlineContentCopy } from 'react-icons/md'
 import { TbPencil, TbPlus } from 'react-icons/tb'
-import { TbCopy } from 'react-icons/tb'
 import { IContactState } from '@renderer/@types/store'
 import { BlockchainIcon } from '@renderer/components/BlockchainIcon'
 import { Button } from '@renderer/components/Button'
@@ -29,6 +30,8 @@ export const ContactsPage = () => {
   const { contacts } = useContactsSelector()
   const [selectedSidebarOption, setSelectedSidebarOption] = useState(ESidebarOption.CONTACTS)
   const [selectedContact, setSelectedContact] = useState<IContactState | null>(contacts[0] || null)
+
+  const [sortBlockchain, setSortBlockchain] = useState<boolean | null>(null)
 
   const [search, setSearch] = useState<string | null>(null)
 
@@ -70,18 +73,45 @@ export const ContactsPage = () => {
     return groupContactsByFirstLetter
   }, [search, contacts])
 
-  const getNameInitials = (name: string) => {
+  const sortedSelectedContactAddresses = useMemo(() => {
+    if (!selectedContact) return
+
+    const addressesCopy = [...selectedContact.addresses]
+
+    if (sortBlockchain === null) {
+      return addressesCopy
+    }
+
+    if (sortBlockchain) {
+      return addressesCopy.sort((a, b) => a.address.localeCompare(b.address))
+    }
+
+    return addressesCopy.sort((a, b) => b.address.localeCompare(a.address))
+  }, [selectedContact, sortBlockchain])
+
+  const changeBlockchainSort = () => {
+    if (sortBlockchain === null) {
+      setSortBlockchain(true)
+    } else if (sortBlockchain) {
+      setSortBlockchain(false)
+    } else {
+      setSortBlockchain(null)
+    }
+  }
+
+  const getFirstLastNameInitials = (name: string) => {
     return name
       .split(' ')
       .map(word => word[0])
-      .join()
+      .filter((_letter, index, array) => index === 0 || index === array.length - 1)
+      .join('')
   }
   return (
     <MainLayout
       heading={t('title')}
       rightComponent={
         <IconButton
-          icon={<TbPlus />}
+          icon={<TbPlus className="text-neon" />}
           size="md"
           className="text-neon"
           text={t('buttonAddContactLabel')}
@@ -111,15 +141,13 @@ export const ContactsPage = () => {
             </button>
           </div>
 
-          {groupedContacts.size > 0 && (
-            <SearchInput
-              placeholder={t('contactList.search')}
-              className="mb-5"
-              onChange={event => setSearch(event.target.value)}
-            />
+          {contacts.length > 0 && (
+            <div className="w-full mb-8">
+              <SearchInput placeholder={t('contactList.search')} onChange={event => setSearch(event.target.value)} />
+            </div>
           )}
 
-          {groupedContacts.size <= 0 && <div>{t('contactList.noContacts')}</div>}
+          {contacts.length <= 0 && <div>{t('contactList.noContacts')}</div>}
 
           <section className="w-full h-full overflow-y-auto">
             {groupedContacts &&
@@ -137,8 +165,15 @@ export const ContactsPage = () => {
                         }
                       )}
                     >
-                      <div className="w-6 h-6 bg-gray-300/30 rounded-full text-sm flex items-center justify-center">
-                        {getNameInitials(value.name)}
+                      <div
+                        className={StyleHelper.mergeStyles(
+                          'w-6 h-6 bg-gray-300/30 rounded-full text-sm flex items-center justify-center',
+                          {
+                            'bg-gray-200 text-gray-800 font-bold': isContactSelected(value.id),
+                          }
+                        )}
+                      >
+                        {getFirstLastNameInitials(value.name)}
                       </div>
                       {value.name}
                     </button>
@@ -168,16 +203,27 @@ export const ContactsPage = () => {
             <div className="px-2">
               <table className="table-auto w-full">
                 <thead>
-                  <tr className="text-left text-gray-100 font-bold">
-                    <th>{t('addressTable.blockchain')}</th>
+                  <tr className="text-left text-gray-100 font-bold text-sm">
+                    <th>
+                      <button
+                        className="flex items-center gap-2 px-2 py-2"
+                        type="button"
+                        onClick={() => changeBlockchainSort()}
+                      >
+                        {t('addressTable.blockchain')}
+                        {sortBlockchain === null && <BiSolidSortAlt className="text-gray-200" />}
+                        {sortBlockchain === false && <BiSolidDownArrow className="text-gray-200" />}
+                        {sortBlockchain && <BiSolidUpArrow className="text-gray-200" />}
+                      </button>
+                    </th>
                     <th>{t('addressTable.address')}</th>
                     <th></th>
                   </tr>
                 </thead>
-
                 <tbody>
                   {selectedContact &&
-                    selectedContact.addresses.map((address, index) => {
+                    sortedSelectedContactAddresses &&
+                    sortedSelectedContactAddresses.map((address, index) => {
                       return (
                         <tr key={index} className="even:bg-gray-600 h-12 align-middle">
                           <td>
@@ -192,8 +238,7 @@ export const ContactsPage = () => {
                             <div className="flex items-center">
                               {address.address}
                               <IconButton
-                                icon={<TbCopy />}
-                                className="text-neon"
+                                icon={<MdOutlineContentCopy className="text-neon" />}
                                 size="md"
                                 onClick={() => UtilsHelper.copyToClipboard(address.address)}
                               />
@@ -201,7 +246,7 @@ export const ContactsPage = () => {
                           </td>
                           <td>
                             <button className="flex flex-row items-center px-2 w-full justify-end" disabled>
-                              <IconButton icon={<FiSend />} className="text-neon" disabled />
+                              <IconButton icon={<FiSend className="text-neon" />} size="md" disabled />
                               {t('addressTable.sendAssets')}
                             </button>
                           </td>
