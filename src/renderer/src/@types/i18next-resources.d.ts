@@ -234,6 +234,15 @@ interface Resources {
         saveButtonLabel: 'Save'
       }
     }
+    activity: {
+      title: 'Activity'
+      txType: 'TX.TYPE'
+      date: 'DATE'
+      time: 'TIME'
+      name: 'NAME'
+      hash: 'HASH'
+      view: 'View'
+    }
     contacts: {
       title: 'Contacts'
       buttonAddContactLabel: 'Add Contact'
