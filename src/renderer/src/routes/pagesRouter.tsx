@@ -9,6 +9,7 @@ import { SecuritySetupPage } from './pages/SecuritySetup'
 import { SecuritySetupStep1Page } from './pages/SecuritySetup/SecuritySetupStep1'
 import { SecuritySetupStep2Page } from './pages/SecuritySetup/SecuritySetupStep2'
 import { SecuritySetupStep3Page } from './pages/SecuritySetup/SecuritySetupStep3'
+import { SendPage } from './pages/Send'
 import { SettingsEncryptKeyPage } from './pages/Settings/SettingsEncryptKey'
 import { SettingsPersonalisationPage } from './pages/Settings/SettingsPersonalisation'
 import { SettingsSecurityPage } from './pages/Settings/SettingsSecurity'
@@ -31,6 +32,14 @@ export const pagesRouter = routeHandler([
     element: (
       <PrivateRoute>
         <WalletsPage />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: '/send',
+    element: (
+      <PrivateRoute>
+        <SendPage />
       </PrivateRoute>
     ),
   },

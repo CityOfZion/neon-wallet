@@ -38,7 +38,7 @@ export const Sidebar = (): JSX.Element => {
           <div>
             <SidebarLink to="/" title={t('portfolio')} icon={<TbHome2 />} />
             <SidebarLink to="/wallets" title={t('wallets')} icon={<WalletIcon />} />
-            <SidebarLink to="/send" title={t('send')} disabled icon={<TbStepOut />} />
+            <SidebarLink to="/send" title={t('send')} icon={<TbStepOut />} />
             <SidebarLink to="/receive" title={t('receive')} disabled icon={<TbStepInto />} />
             <SidebarLink to="/nfts" title={t('nfts')} disabled icon={<TbDiamond />} />
             <SidebarLink to="/news" title={t('news')} disabled icon={<TbNews />} />

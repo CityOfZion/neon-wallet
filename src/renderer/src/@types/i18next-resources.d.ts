@@ -217,6 +217,25 @@ interface Resources {
       buttonLoginLabel: 'Login'
       invalidPassword: 'Invalid password'
     }
+    send: {
+      title: 'Send Tokens'
+      leftSideTitle: 'Token balances'
+      token: 'Token'
+      quantity: 'Quantity'
+      price: 'Price'
+      rightSideTitle: 'What tokens do you want to send?'
+      tokenToSend: 'Token to send'
+      selectToken: 'Select token...'
+      sourceAccount: 'Source account'
+      selectAccount: 'Select account...'
+      amount: 'Amount'
+      fiatValue: 'Fiat value (USD estimated)'
+      recipientAddress: 'Recipient address'
+      contacts: 'Contacts'
+      addressInputHint: 'Enter recipient address...'
+      totalFee: 'Total fee'
+      sendNow: 'Send Now'
+    }
     wallets: {
       title: 'Wallets'
       addAccountButtonLabel: 'Add Account'
