@@ -4,6 +4,7 @@ import { TContactAddress } from '@renderer/@types/store'
 import { BlockchainIcon } from '@renderer/components/BlockchainIcon'
 import { Button } from '@renderer/components/Button'
 import { Checkbox } from '@renderer/components/Checkbox'
+import { Input } from '@renderer/components/Input'
 import { Separator } from '@renderer/components/Separator'
 import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
 import { EndModalLayout } from '@renderer/layouts/EndModal'
@@ -31,7 +32,7 @@ export const AddAddressModalStep3 = () => {
         <div className="flex flex-col gap-y-5">
           <div>
             <div className="text-gray-100 font-bold pb-2 uppercase">{t('addToContact')}</div>
-            <div>{contactName}</div>
+            <Input value={contactName} compacted readOnly />
           </div>
 
           <div>{t('subtext')}</div>

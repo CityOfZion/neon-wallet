@@ -6,6 +6,7 @@ import { TContactAddress } from '@renderer/@types/store'
 import { BlockchainIcon } from '@renderer/components/BlockchainIcon'
 import { Button } from '@renderer/components/Button'
 import { Checkbox } from '@renderer/components/Checkbox'
+import { Input } from '@renderer/components/Input'
 import { SearchInput } from '@renderer/components/SearchInput'
 import { Separator } from '@renderer/components/Separator'
 import { useBsAggregatorSelector } from '@renderer/hooks/useBlockchainSelector'
@@ -66,12 +67,12 @@ export const AddAddressModalStep1 = () => {
         <div className="flex flex-col gap-y-5">
           <div>
             <div className="text-gray-100 font-bold pb-2">{t('addToContact')}</div>
-            <div>{contactName}</div>
+            <Input value={contactName} compacted readOnly />
           </div>
 
           <div>{t('selectBlockchain')}</div>
 
-          <SearchInput placeholder={t('search')} onChange={event => setSearch(event.target.value)} />
+          <SearchInput placeholder={t('search')} onChange={event => setSearch(event.target.value)} compacted />
 
           <Separator />
 
@@ -79,7 +80,7 @@ export const AddAddressModalStep1 = () => {
             filteredBlockchain.map((service, index) => (
               <div className="flex flex-row items-center justify-between h-12 rounded bg-asphalt p-5" key={index}>
                 <div className="flex flex-row gap-x-2">
-                  <BlockchainIcon blockchain={service} type="white" />
+                  <BlockchainIcon blockchain={service} type="white" className="opacity-60" />
                   {blockchainT(service)}
                 </div>
                 <Checkbox onCheckedChange={() => handleCheckboxChange(service)} checked={isChecked(service)} />
@@ -87,7 +88,7 @@ export const AddAddressModalStep1 = () => {
             ))}
         </div>
 
-        <Button label={commonT('next')} className="w-full" type="submit" disabled={!selectedBlockchain} />
+        <Button label={commonT('next')} className="w-full" type="submit" disabled={!selectedBlockchain} flat />
       </form>
     </EndModalLayout>
   )
