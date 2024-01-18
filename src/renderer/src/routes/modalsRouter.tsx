@@ -15,6 +15,7 @@ import { ImportModal } from './modals/Import'
 import { ImportKeyAccountsSelectionModal } from './modals/ImportKeyAccountsSelection'
 import { ImportMnemonicAccountsSelectionModal } from './modals/ImportMnemonicAccountSelection'
 import { PersistContactModal } from './modals/PersistContact'
+import { SelectContact } from './modals/SelectContact'
 import { SuccessModal } from './modals/Success'
 
 export const modalsRouter: TRoute[] = [
@@ -34,4 +35,5 @@ export const modalsRouter: TRoute[] = [
   { name: 'dapp-connection-details', element: <DappConnectionDetailsModal /> },
   { name: 'dapp-connection-account-selection', element: <DappConnectionAccountSelectionModal /> },
   { name: 'dapp-connection-list', element: <DappConnectionListModal /> },
+  { name: 'select-contact', element: <SelectContact /> },
 ]

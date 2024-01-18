@@ -178,6 +178,10 @@ interface Resources {
       emptyList: 'No dApp connections'
       buttonLabel: 'Connect new'
     }
+    selectContact: {
+      title: 'Select a contact'
+      selectRecipient: 'Select recipient'
+    }
   }
   pages: {
     welcome: {
