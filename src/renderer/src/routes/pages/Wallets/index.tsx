@@ -15,6 +15,7 @@ import { PopOver } from '@renderer/components/PopOver'
 import { Separator } from '@renderer/components/Separator'
 import { WalletCard } from '@renderer/components/WalletCard'
 import { WalletSelect } from '@renderer/components/WalletSelect'
+import { DateHelper } from '@renderer/helpers/DateHelper'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
 import { useAccountsSelector } from '@renderer/hooks/useAccountSelector'
 import { useBalancesAndExchange } from '@renderer/hooks/useBalancesAndExchange'
@@ -50,16 +51,6 @@ export const WalletsPage = () => {
 
   const handleReorderCancel = () => {
     setIsReordering(false)
-  }
-
-  const timeToDate = (unixTime: number): string => {
-    const date = new Date(unixTime * 1000) // Converte para milissegundos
-    return date.toLocaleDateString() // Use toLocaleDateString() para obter a representação da data
-  }
-
-  const timeToHour = (unixTime: number): string => {
-    const date = new Date(unixTime * 1000) // Converte para milissegundos
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) // Use toLocaleTimeString() para obter a representação da hora
   }
 
   const handleCopyHash = async (hash: string) => {
@@ -264,14 +255,12 @@ export const WalletsPage = () => {
                 {transactions.map((tr, index) => (
                   <tr
                     key={index}
-                    className={(() => {
-                      return StyleHelper.mergeStyles('', {
-                        'bg-gray-300 bg-opacity-15': index % 2 !== 0,
-                      })
-                    })()}
+                    className={StyleHelper.mergeStyles({
+                      'bg-gray-300 bg-opacity-15': index % 2 !== 0,
+                    })}
                   >
-                    <td className="pl-4">{timeToDate(tr.time)}</td>
-                    <td>{timeToHour(tr.time)}</td>
+                    <td className="pl-4">{DateHelper.timeToDate(tr.time)}</td>
+                    <td>{DateHelper.timeToHour(tr.time)}</td>
                     <td>{hashToContractName(tr.transfers[0].from, tr.transfers[0].contractHash)}</td>
                     <td>
                       <div className="flex items-center justify-between">
