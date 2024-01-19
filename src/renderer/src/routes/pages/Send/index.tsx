@@ -2,6 +2,8 @@ import { useTranslation } from 'react-i18next'
 import { TbArrowDown, TbStepOut } from 'react-icons/tb'
 import { Button } from '@renderer/components/Button'
 import { Separator } from '@renderer/components/Separator'
+import { useAccountsSelector } from '@renderer/hooks/useAccountSelector'
+import { useBalancesAndExchange } from '@renderer/hooks/useBalancesAndExchange'
 import { ContentLayout } from '@renderer/layouts/ContentLayout'
 
 import { Recipient } from './Recipient'
@@ -13,6 +15,8 @@ import { TotalFee } from './TotalFee'
 
 export const SendPage = () => {
   const { t } = useTranslation('pages', { keyPrefix: 'send' })
+  const { accounts } = useAccountsSelector()
+  const balanceExchange = useBalancesAndExchange(accounts)
 
   return (
     <ContentLayout title={t('title')} titleIcon={<TbStepOut />}>
@@ -22,7 +26,7 @@ export const SendPage = () => {
             <h1 className="text-white my-4">{t('leftSideTitle')}</h1>
             <Separator />
           </div>
-          <TokenBalanceList />
+          <TokenBalanceList balanceExchange={balanceExchange} />
         </aside>
         <div className="w-[75%] px-4 flex flex-col">
           <h1 className="text-white my-4">{t('rightSideTitle')}</h1>

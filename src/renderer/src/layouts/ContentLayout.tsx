@@ -23,9 +23,6 @@ export const ContentLayout = ({
 }: TMainLayoutProps): JSX.Element => {
   const navigate = useNavigate()
   const { className: titleIconClassName = '', ...titleIconProps } = titleIcon ? titleIcon.props : {}
-  const buildIconClassName = (className: string) => {
-    return StyleHelper.mergeStyles('text-neon mx-2', className)
-  }
 
   const handleBackClick = () => {
     navigate(-1)
@@ -43,7 +40,7 @@ export const ContentLayout = ({
           <div className="flex items-center mx-auto">
             {titleIcon &&
               cloneElement(titleIcon, {
-                className: buildIconClassName(titleIconClassName),
+                className: StyleHelper.mergeStyles('text-neon mx-2', titleIconClassName),
                 ...titleIconProps,
               })}
             <h1 className="text-sm">{title}</h1>

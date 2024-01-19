@@ -1,16 +1,18 @@
 import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
+import { UseMultipleBalanceAndExchangeResult } from '@renderer/@types/query'
 import { BlockchainIcon } from '@renderer/components/BlockchainIcon'
 import { BalanceHelper } from '@renderer/helpers/BalanceHelper'
+import { FilterHelper } from '@renderer/helpers/FilterHelper'
 import { StringHelper } from '@renderer/helpers/StringHelper'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
-import { useAccountsSelector } from '@renderer/hooks/useAccountSelector'
-import { useBalancesAndExchange } from '@renderer/hooks/useBalancesAndExchange'
 
-export const TokenBalanceList = () => {
+type TProps = {
+  balanceExchange: UseMultipleBalanceAndExchangeResult
+}
+
+export const TokenBalanceList = ({ balanceExchange }: TProps) => {
   const { t } = useTranslation('pages', { keyPrefix: 'send' })
-  const { accounts } = useAccountsSelector()
-  const balanceExchange = useBalancesAndExchange(accounts)
   let rowCount = 0
 
   return (
@@ -29,16 +31,13 @@ export const TokenBalanceList = () => {
               <Fragment key={balance.address}>
                 {balance.tokensBalances.map((tokenBalance, innerIndex) => {
                   if (tokenBalance.amountNumber > 0) {
-                    const isGrayBackground = rowCount % 2 !== 0
                     rowCount++
                     return (
                       <tr
                         key={innerIndex}
-                        className={(() => {
-                          return StyleHelper.mergeStyles('h-[2.2rem]', {
-                            'bg-gray-300 bg-opacity-15': isGrayBackground,
-                          })
-                        })()}
+                        className={StyleHelper.mergeStyles('h-[2.2rem]', {
+                          'bg-gray-300 bg-opacity-15': rowCount % 2 !== 0,
+                        })}
                       >
                         <td>
                           <div className="flex pl-4">
@@ -58,7 +57,7 @@ export const TokenBalanceList = () => {
                           <span title={tokenBalance.amount}>{StringHelper.truncateString(tokenBalance.amount, 8)}</span>
                         </td>
                         <td>
-                          {StringHelper.formatPrice(
+                          {FilterHelper.currency(
                             BalanceHelper.convertBalanceToCurrency(tokenBalance, balanceExchange.exchange.data)
                               ?.convertedAmount
                           )}

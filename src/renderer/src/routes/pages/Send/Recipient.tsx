@@ -22,7 +22,7 @@ export const Recipient = () => {
         <Separator />
       </div>
       <div className="py-4">
-        <Input className="w-[24rem] h-[2rem] text-xs mx-auto" placeholder={t('addressInputHint')} />
+        <Input className="w-[24rem] mx-auto" compacted placeholder={t('addressInputHint')} />
       </div>
     </div>
   )
