@@ -14,11 +14,13 @@ const path = require('path')
 const url = require('url')
 const { autoUpdater } = require('electron-updater')
 const log = require('electron-log')
+const { setupSentry } = require('./config/sentryElectron.setup')
 
 const port = process.env.PORT || 3000
 
 let mainWindow = null
 let initialDeepLinkUri = null
+setupSentry()
 
 if (process.defaultApp) {
   if (process.argv.length >= 2) {

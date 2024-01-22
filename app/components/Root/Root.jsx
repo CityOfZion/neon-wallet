@@ -10,6 +10,7 @@ import IntlWrapper from './IntlWrapper'
 import Routes from './Routes'
 import ContactsContextProvider from '../../context/contacts'
 import { walletConnectOptions } from '../../util/walletConnect'
+import { setupSentryWrapper } from '../../util/SentryReactHelper'
 
 type Props = {
   store: Object,
@@ -33,4 +34,4 @@ const Root = ({ store }: Props) => (
   </Provider>
 )
 
-export default Root
+export default setupSentryWrapper(Root)
