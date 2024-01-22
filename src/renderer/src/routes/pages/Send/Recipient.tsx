@@ -1,23 +1,30 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TbStepInto, TbUsers } from 'react-icons/tb'
+import { TokenBalance } from '@renderer/@types/query'
 import { TContactAddress } from '@renderer/@types/store'
 import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
 import { Separator } from '@renderer/components/Separator'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
 
-export const Recipient = () => {
+type TRecipientParams = {
+  selectedToken?: TokenBalance | null
+  selectedAddress: string
+  onSelectRecipient: (recipientAddress: string) => void
+  active: boolean
+}
+
+export const Recipient = ({ selectedToken, onSelectRecipient, selectedAddress, active }: TRecipientParams) => {
   const { t } = useTranslation('pages', { keyPrefix: 'send' })
   const { modalNavigateWrapper } = useModalNavigate()
-  const [address, setAddress] = useState<string>()
 
-  const handleSelectContact = (selectedAddress: TContactAddress) => {
-    setAddress(selectedAddress.address)
+  const handleSelectContact = (address: TContactAddress) => {
+    onSelectRecipient(address.address)
   }
 
   const handleChangeAddres = (event: ChangeEvent<HTMLInputElement>) => {
-    setAddress(event.target.value)
+    onSelectRecipient(event.target.value)
   }
 
   return (
@@ -32,8 +39,13 @@ export const Recipient = () => {
           onClick={modalNavigateWrapper('select-contact', {
             state: {
               handleSelectContact: handleSelectContact,
+              selectedToken: selectedToken,
             },
           })}
+          clickableProps={{
+            className: selectedToken && active ? 'text-gray-100 hover:bg-gray-300/15 hover:rounded' : 'text-gray-100',
+          }}
+          disabled={selectedToken && active ? false : true}
           variant="text"
           label={t('contacts')}
           leftIcon={<TbUsers />}
@@ -45,9 +57,10 @@ export const Recipient = () => {
       </div>
       <div className="py-4">
         <Input
-          value={address}
+          value={selectedAddress}
           onChange={handleChangeAddres}
           compacted
+          disabled={selectedToken && active ? false : true}
           className="w-[24rem] mx-auto"
           placeholder={t('addressInputHint')}
           clearable={true}

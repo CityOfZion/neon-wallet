@@ -67,6 +67,11 @@ interface Resources {
       cancelButtonLabel: 'Cancel'
       saveButtonLabel: 'Save'
     }
+    tokenBalance: {
+      token: 'Token'
+      quantity: 'Quantity'
+      price: 'Price'
+    }
   }
   modals: {
     import: {
@@ -274,9 +279,6 @@ interface Resources {
     send: {
       title: 'Send Tokens'
       leftSideTitle: 'Token balances'
-      token: 'Token'
-      quantity: 'Quantity'
-      price: 'Price'
       rightSideTitle: 'What tokens do you want to send?'
       tokenToSend: 'Token to send'
       selectToken: 'Select token...'
@@ -292,6 +294,18 @@ interface Resources {
       selectAccountModal: {
         title: 'Select a source account'
         selectSourceAccount: 'Select source account'
+      }
+      saveContact: 'Save contact'
+      viewStatus: 'View status'
+      sendSuccess: {
+        title: 'Your tokens have been sent successfully!'
+      }
+      sendFail: {
+        title: "Oops! We've encountered an error."
+        subtitle: 'Please try again later'
+      }
+      error: {
+        decryptKey: 'Error to decrypt key'
       }
     }
     selectAccount: {

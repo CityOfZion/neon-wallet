@@ -6,11 +6,12 @@ type TState = {
   heading: string
   headingIcon?: JSX.Element
   subtitle?: string
+  description?: string
   content: JSX.Element
 }
 
 export const ErrorModal = () => {
-  const { heading, headingIcon, content, subtitle } = useModalState<TState>()
+  const { heading, headingIcon, content, subtitle, description } = useModalState<TState>()
 
   return (
     <EndModalLayout
@@ -23,7 +24,8 @@ export const ErrorModal = () => {
         <MdCancel className="w-24 h-24 text-pink" />
       </div>
 
-      <p className="text-lg text-white mt-7">{subtitle}</p>
+      {subtitle && <p className="text-lg text-white mt-7">{subtitle}</p>}
+      {description && <p className="text-xs text-gray-300 mt-2">{description}</p>}
 
       {content}
     </EndModalLayout>

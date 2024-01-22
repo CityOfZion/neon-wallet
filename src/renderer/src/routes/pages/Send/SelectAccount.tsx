@@ -2,6 +2,7 @@ import { cloneElement, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TbChevronRight } from 'react-icons/tb'
 import { IAccountState } from '@renderer/@types/store'
+import { Button } from '@renderer/components/Button'
 import { Separator } from '@renderer/components/Separator'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
@@ -45,7 +46,7 @@ export const SelectAccount = ({
             {title}
           </span>
         </div>
-        <button
+        <Button
           className="flex items-center"
           onClick={modalNavigateWrapper('select-account', {
             state: {
@@ -55,16 +56,13 @@ export const SelectAccount = ({
               leftIcon,
             },
           })}
-        >
-          <span
-            className={StyleHelper.mergeStyles('mr-3', {
-              'text-neon': active,
-            })}
-          >
-            {selectedAccount ? selectedAccount.name : t('selectAccount')}
-          </span>
-          <TbChevronRight className="w-5 h-5 text-gray-300" />
-        </button>
+          clickableProps={{ className: 'hover:bg-gray-300/15 hover:rounded pr-1' }}
+          variant="text"
+          colorSchema={active ? 'neon' : 'white'}
+          label={selectedAccount ? selectedAccount.name : t('selectAccount')}
+          rightIcon={<TbChevronRight />}
+          flat
+        />
       </div>
       <div className="px-3">
         <Separator />

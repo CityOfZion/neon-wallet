@@ -4,6 +4,7 @@ import { TbChevronRight } from 'react-icons/tb'
 import { VscCircleFilled } from 'react-icons/vsc'
 import { TokenBalance } from '@renderer/@types/query'
 import { IAccountState } from '@renderer/@types/store'
+import { Button } from '@renderer/components/Button'
 import { BalanceHelper } from '@renderer/helpers/BalanceHelper'
 import { FilterHelper } from '@renderer/helpers/FilterHelper'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
@@ -44,7 +45,7 @@ export const SendAmount = ({
 
   return (
     <Fragment>
-      <div className="flex justify-between h-6 pt-4 px-3">
+      <div className="flex justify-between h-6 pt-4 p-3">
         <div className="flex items-center">
           <VscCircleFilled className="text-gray-300 w-2 h-2 mr-[1.09rem] ml-[0.65rem]" />
           <span
@@ -55,7 +56,7 @@ export const SendAmount = ({
             {t('amount')}
           </span>
         </div>
-        <button
+        <Button
           className="flex items-center"
           disabled={!selectedToken}
           onClick={modalNavigateWrapper('input-amount', {
@@ -65,22 +66,17 @@ export const SendAmount = ({
               onSelectAmount: onSelectAmount,
             },
           })}
-        >
-          {selectedAmount > 0 ? (
-            <span className="mr-3 text-gray-100">{selectedAmount}</span>
-          ) : (
-            <span
-              className={StyleHelper.mergeStyles('mr-3', {
-                'text-neon': active,
-                'text-gray-100': !active,
-              })}
-            >
-              {t('inputAmount')}
-            </span>
-          )}
-
-          <TbChevronRight className="w-5 h-5 text-gray-300" />
-        </button>
+          clickableProps={{
+            className: selectedToken
+              ? 'hover:bg-gray-300/15 hover:rounded pr-1 pr-1 aria-[disabled=true]:text-gray-100'
+              : 'pr-1 aria-[disabled=true]:text-gray-100',
+          }}
+          variant="text"
+          colorSchema={selectedAmount > 0 ? 'white' : active ? 'neon' : 'gray'}
+          label={selectedAmount > 0 ? selectedAmount.toString() : t('inputAmount')}
+          rightIcon={<TbChevronRight />}
+          flat
+        />
       </div>
       <div className="flex justify-between h-11 p-3">
         <span className="text-gray-100 pl-9 italic">{t('fiatValue')}</span>

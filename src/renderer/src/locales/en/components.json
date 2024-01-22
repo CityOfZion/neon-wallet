@@ -35,5 +35,10 @@
   "wallets": {
     "cancelButtonLabel": "Cancel",
     "saveButtonLabel": "Save"
+  },
+  "tokenBalance": {
+    "token": "Token",
+    "quantity": "Quantity",
+    "price": "Price"
   }
 }
