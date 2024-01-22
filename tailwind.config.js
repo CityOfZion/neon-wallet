@@ -33,6 +33,7 @@ module.exports = {
       },
       magenta: {
         DEFAULT: '#D355E7',
+        700: '#7D4B93',
       },
       white: {
         DEFAULT: '#FFFFFF',

@@ -1,6 +1,6 @@
-import { Fragment } from 'react'
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { UseMultipleBalanceAndExchangeResult } from '@renderer/@types/query'
+import { TokenBalance, UseUniqueBalanceAndExchangeResult } from '@renderer/@types/query'
 import { BlockchainIcon } from '@renderer/components/BlockchainIcon'
 import { BalanceHelper } from '@renderer/helpers/BalanceHelper'
 import { FilterHelper } from '@renderer/helpers/FilterHelper'
@@ -8,12 +8,34 @@ import { StringHelper } from '@renderer/helpers/StringHelper'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
 
 type TProps = {
-  balanceExchange: UseMultipleBalanceAndExchangeResult
+  onTokenSelected?: (token: TokenBalance | null) => void
+  balanceExchange: UseUniqueBalanceAndExchangeResult
 }
 
-export const TokenBalanceList = ({ balanceExchange }: TProps) => {
+export const TokenBalanceList = ({ onTokenSelected, balanceExchange }: TProps) => {
   const { t } = useTranslation('pages', { keyPrefix: 'send' })
-  let rowCount = 0
+  const [selectedToken, setSelectedToken] = useState<TokenBalance | null>(null)
+
+  const filteredTokenBalance = useMemo(() => {
+    return balanceExchange.balance.data?.tokensBalances.filter(token => token.amountNumber > 0) ?? []
+  }, [balanceExchange.balance.data?.tokensBalances])
+
+  const isTokenSelected = (tokenBalance: TokenBalance) => {
+    if (!selectedToken) return
+
+    return (
+      selectedToken.blockchain === tokenBalance.blockchain &&
+      selectedToken.amount === tokenBalance.amount &&
+      selectedToken.token === tokenBalance.token
+    )
+  }
+
+  const handleTokenSelect = (tokenBalance: TokenBalance) => {
+    setSelectedToken(tokenBalance)
+    if (onTokenSelected) {
+      onTokenSelected(tokenBalance)
+    }
+  }
 
   return (
     <section className="overflow-y-auto flex flex-col basis-0 flex-grow">
@@ -26,48 +48,35 @@ export const TokenBalanceList = ({ balanceExchange }: TProps) => {
           </tr>
         </thead>
         <tbody>
-          {balanceExchange.balance.data.map(balance => {
+          {filteredTokenBalance.map((tokenBalance, index) => {
             return (
-              <Fragment key={balance.address}>
-                {balance.tokensBalances.map((tokenBalance, innerIndex) => {
-                  if (tokenBalance.amountNumber > 0) {
-                    rowCount++
-                    return (
-                      <tr
-                        key={innerIndex}
-                        className={StyleHelper.mergeStyles('h-[2.2rem]', {
-                          'bg-gray-300 bg-opacity-15': rowCount % 2 !== 0,
-                        })}
-                      >
-                        <td>
-                          <div className="flex pl-4">
-                            <div className="rounded-lg bg-gray-300 w-4.5 h-4.5 flex justify-center items-center">
-                              <BlockchainIcon
-                                blockchain={tokenBalance.blockchain}
-                                type="white"
-                                className="w-2.5 h-2.5"
-                              />
-                            </div>
-                            <span className="pl-2" title={tokenBalance.token.symbol}>
-                              {StringHelper.truncateString(tokenBalance.token.symbol, 4)}
-                            </span>
-                          </div>
-                        </td>
-                        <td>
-                          <span title={tokenBalance.amount}>{StringHelper.truncateString(tokenBalance.amount, 8)}</span>
-                        </td>
-                        <td>
-                          {FilterHelper.currency(
-                            BalanceHelper.convertBalanceToCurrency(tokenBalance, balanceExchange.exchange.data)
-                              ?.convertedAmount
-                          )}
-                        </td>
-                      </tr>
-                    )
-                  }
-                  return null
+              <tr
+                key={index}
+                onClick={() => handleTokenSelect(tokenBalance)}
+                className={StyleHelper.mergeStyles('h-[2.2rem] border-l-4 border-transparent', {
+                  'bg-gray-300 bg-opacity-15': !isTokenSelected(tokenBalance) && index % 2 === 0,
+                  'bg-gray-900 border-neon': isTokenSelected(tokenBalance),
                 })}
-              </Fragment>
+              >
+                <td>
+                  <div className="flex pl-4">
+                    <div className="rounded-lg bg-gray-300 w-4.5 h-4.5 flex justify-center items-center">
+                      <BlockchainIcon blockchain={tokenBalance.blockchain} type="white" className="w-2.5 h-2.5" />
+                    </div>
+                    <span className="pl-2" title={tokenBalance.token.symbol}>
+                      {StringHelper.truncateString(tokenBalance.token.symbol, 4)}
+                    </span>
+                  </div>
+                </td>
+                <td>
+                  <span title={tokenBalance.amount}>{StringHelper.truncateString(tokenBalance.amount, 8)}</span>
+                </td>
+                <td>
+                  {FilterHelper.currency(
+                    BalanceHelper.convertBalanceToCurrency(tokenBalance, balanceExchange.exchange.data)?.convertedAmount
+                  )}
+                </td>
+              </tr>
             )
           })}
         </tbody>

@@ -211,6 +211,25 @@ interface Resources {
       yourAccounts: 'Your accounts:'
       selectSourceAccount: 'Select source account'
     }
+    selectToken: {
+      title: 'Select token to send'
+      yourBalances: 'Your token balances:'
+      selectToken: 'Select token'
+    }
+    inputAmount: {
+      title: 'Amount you want to send'
+      enterTokenAmount: 'Enter token amount:'
+      fiatValue: 'Fiat value (USD estimated)'
+      balanceAfterTransaction: 'Balance after transaction'
+      insufficientBalanceAvailable: 'Insufficient balance available'
+      max: 'Max'
+      or: 'OR'
+      inputPlaceholder: '0,000.00'
+      enterUsdAmount: 'Enter a USD amount:'
+      roundDown: 'Round down'
+      selectAmountSend: 'Select amount to send'
+      tokenValue: 'Token value'
+    }
   }
   pages: {
     welcome: {
@@ -261,6 +280,7 @@ interface Resources {
       selectToken: 'Select token...'
       sourceAccount: 'Source account'
       selectAccount: 'Select account...'
+      inputAmount: 'Input amount...'
       amount: 'Amount'
       fiatValue: 'Fiat value (USD estimated)'
       recipientAddress: 'Recipient address'
