@@ -1,8 +1,17 @@
 import { Fragment, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { MdAdd } from 'react-icons/md'
+import { MdAdd, MdMoreVert } from 'react-icons/md'
 import { MdContentCopy } from 'react-icons/md'
-import { TbChevronRight, TbEyePlus, TbFileImport, TbMenuDeep, TbPencil, TbRefresh, TbRepeat } from 'react-icons/tb'
+import {
+  TbChevronRight,
+  TbEyePlus,
+  TbFileImport,
+  TbMenuDeep,
+  TbPencil,
+  TbPlug,
+  TbRefresh,
+  TbRepeat,
+} from 'react-icons/tb'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { TransactionResponse } from '@cityofzion/blockchain-service'
 import { EStatus } from '@cityofzion/wallet-connect-sdk-wallet-core'
@@ -231,7 +240,7 @@ export const WalletsPage = () => {
           <Separator className="mx-4" />
           <InfiniteScroll
             dataLength={transactions.length}
-            next={() => { }}
+            next={() => {}}
             hasMore={true}
             loader={<h4>Loading...</h4>}
             endMessage={
@@ -239,7 +248,7 @@ export const WalletsPage = () => {
                 <b>Yay! You have seen it all</b>
               </p>
             }
-            refreshFunction={() => { }}
+            refreshFunction={() => {}}
           >
             <table className="min-w-full text-xs text-left m-4 justify-evenly">
               <thead>
