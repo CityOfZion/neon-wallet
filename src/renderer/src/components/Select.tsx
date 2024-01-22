@@ -16,6 +16,8 @@ type TProps = {
   disabled?: boolean
   onSelect?: (value: string) => void
   children: React.ReactNode
+  bgColor?: string
+  radixContextClassName?: string
 }
 
 const Item = ({ children, value }: TItemProps) => {
@@ -27,7 +29,7 @@ const Item = ({ children, value }: TItemProps) => {
   )
 }
 
-const Root = ({ label, onSelect, disabled, children, title }: TProps) => {
+const Root = ({ label, onSelect, disabled, children, title, bgColor, radixContextClassName }: TProps) => {
   const [open, setOpen] = useState(false)
 
   return (
@@ -35,7 +37,9 @@ const Root = ({ label, onSelect, disabled, children, title }: TProps) => {
       <RadixSelect.Trigger
         aria-disabled={disabled}
         className={StyleHelper.mergeStyles(
-          'flex items-center w-[11.625rem] min-w-[11.625rem] py-1.5 px-2.5 transition-colors outline-none rounded aria-[disabled=false]:hover:bg-gray-300/15 aria-[disabled=true]:opacity-50 aria-[disabled=true]:cursor-not-allowed',
+          'flex items-center w-full min-w-[11.625rem] py-1.5 px-2.5 transition-colors outline-none rounded',
+          'aria-[disabled=false]:hover:bg-gray-300/15 aria-[disabled=true]:opacity-50 aria-[disabled=true]:cursor-not-allowed',
+          bgColor && [bgColor],
           {
             'bg-gray-800 rounded-b-none': open,
             'hover:bg-gray-300/15': !disabled,
@@ -55,9 +59,9 @@ const Root = ({ label, onSelect, disabled, children, title }: TProps) => {
 
       <RadixSelect.Portal>
         <RadixSelect.Content
-          className="bg-gray-800 w-[11.625rem] min-w-[11.625rem] rounded-b shadow-xl"
+          className={`bg-gray-800 min-w-[11.625rem] rounded-b shadow-xl ${radixContextClassName || ''}`}
           position="popper"
-          align="end"
+          align="center"
         >
           <RadixSelect.Viewport className="pt-2">{children}</RadixSelect.Viewport>
         </RadixSelect.Content>

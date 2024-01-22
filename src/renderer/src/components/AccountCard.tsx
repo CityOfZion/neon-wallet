@@ -1,4 +1,5 @@
 import { ComponentProps, ReactNode, useMemo } from 'react'
+import { TbCheck } from 'react-icons/tb'
 import { UseMultipleBalanceAndExchangeResult } from '@renderer/@types/query'
 import { IAccountState } from '@renderer/@types/store'
 import { BalanceHelper } from '@renderer/helpers/BalanceHelper'
@@ -14,6 +15,7 @@ type TProps = {
   account: IAccountState
   noHover?: boolean
   active?: boolean
+  showCheckOnSelected: boolean
 } & ComponentProps<'div'>
 
 export const AccountCard = ({
@@ -23,6 +25,7 @@ export const AccountCard = ({
   className,
   rightComponent,
   active = false,
+  showCheckOnSelected,
   ...props
 }: TProps) => {
   const totalTokensBalances = useMemo(
@@ -57,7 +60,7 @@ export const AccountCard = ({
             <span className="block w-fit max-w-full text-sm text-white truncate">{formattedTotalTokensBalances}</span>
           </Tooltip>
         </div>
-        {rightComponent ?? (
+        {(!showCheckOnSelected && rightComponent) ?? (
           <div className="flex flex-col justify-between">
             {/* TODO: REPLACE THE MOCKED DATA WHEN THERE IS A SOLUTION FOR BALANCE VARIATION. Task link:
             https://app.clickup.com/t/86a197p77 */}
@@ -65,6 +68,7 @@ export const AccountCard = ({
             <span className="text-sm text-neon">+5%</span>
           </div>
         )}
+        {showCheckOnSelected && active && <TbCheck className="text-neon h-4 w-4 mr-3" />}
       </div>
     </div>
   )

@@ -19,6 +19,10 @@ type TProps = {
   onSelect?: (wallet: IWalletState) => void
   wallets: IWalletState[]
   balanceExchange: UseMultipleBalanceAndExchangeResult
+  dontShowWatches?: boolean
+  showCreateWallet?: boolean
+  bgColor?: string
+  radixContextClassName?: string
 }
 
 const Item = ({ wallet, balanceExchange }: TItemProps) => {
@@ -30,7 +34,17 @@ const Item = ({ wallet, balanceExchange }: TItemProps) => {
   )
 }
 
-export const WalletSelect = ({ wallets, selected, onSelect, balanceExchange, disabled }: TProps) => {
+export const WalletSelect = ({
+  wallets,
+  selected,
+  onSelect,
+  balanceExchange,
+  disabled,
+  dontShowWatches,
+  showCreateWallet,
+  bgColor,
+  radixContextClassName,
+}: TProps) => {
   const { t } = useTranslation('components', { keyPrefix: 'walletSelect' })
 
   const handleValueChange = (value: string) => {
@@ -44,15 +58,21 @@ export const WalletSelect = ({ wallets, selected, onSelect, balanceExchange, dis
       onSelect={handleValueChange}
       disabled={disabled}
       label={selected ? selected.name : t('placeholder')}
+      bgColor={bgColor}
       title={t('title')}
+      radixContextClassName={radixContextClassName}
     >
-      {wallets.map(wallet => (
-        <Item key={wallet.id} wallet={wallet} balanceExchange={balanceExchange} />
-      ))}
-
-      <div className="py-5 px-3">
-        <Button className="w-full" label={t('createWalletButtonLabel')} variant="outlined" flat />
-      </div>
+      {wallets.map(wallet => {
+        if (!dontShowWatches || (dontShowWatches && wallet.walletType !== 'watch')) {
+          return <Item key={wallet.id} wallet={wallet} balanceExchange={balanceExchange} />
+        }
+        return null
+      })}
+      {(showCreateWallet === undefined || showCreateWallet === true) && (
+        <div className="py-5 px-3">
+          <Button className="w-full" label={t('createWalletButtonLabel')} variant="outlined" flat />
+        </div>
+      )}
     </Select.Root>
   )
 }

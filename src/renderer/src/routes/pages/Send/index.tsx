@@ -34,8 +34,8 @@ export const SendPage = () => {
           <section className="overflow-y-auto flex flex-col basis-0 flex-grow items-center py-10">
             <div className="relative">
               <div className="bg-gray-300 bg-opacity-30 flex flex-col w-[30rem] rounded">
-                <SelectToken />
                 <SelectAccount />
+                <SelectToken />
                 <SendAmount />
               </div>
               <Recipient />

@@ -111,13 +111,15 @@ export const WalletsPage = () => {
   return (
     <MainLayout
       heading={
-        <WalletSelect
-          balanceExchange={balanceExchange}
-          wallets={wallets}
-          selected={selectedWallet}
-          onSelect={setSelectedWallet}
-          disabled={isReordering}
-        />
+        <div className="max-w-[11.625rem]">
+          <WalletSelect
+            balanceExchange={balanceExchange}
+            wallets={wallets}
+            selected={selectedWallet}
+            onSelect={setSelectedWallet}
+            disabled={isReordering}
+          />
+        </div>
       }
       rightComponent={
         <div className="flex gap-x-2">

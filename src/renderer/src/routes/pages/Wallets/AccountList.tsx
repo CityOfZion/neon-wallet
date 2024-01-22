@@ -21,6 +21,8 @@ type TProps = {
   selectedAccount?: IAccountState | undefined
   selectedWallet: IWalletState
   balanceExchange: UseMultipleBalanceAndExchangeResult
+  showFirstSeparator?: boolean
+  showCheckOnSelected?: boolean
 }
 
 type TAccountItemProps = {
@@ -29,9 +31,19 @@ type TAccountItemProps = {
   isReordering: boolean
   active?: boolean
   onClick?: () => void
+  showSeparator: boolean
+  showCheckOnSelected: boolean
 }
 
-const AccountItem = ({ account, balanceExchange, isReordering, onClick, active }: TAccountItemProps) => {
+const AccountItem = ({
+  account,
+  balanceExchange,
+  isReordering,
+  onClick,
+  active,
+  showSeparator,
+  showCheckOnSelected,
+}: TAccountItemProps) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: account.address })
 
   const style = {
@@ -41,7 +53,7 @@ const AccountItem = ({ account, balanceExchange, isReordering, onClick, active }
 
   return (
     <Fragment>
-      <Separator />
+      {showSeparator && <Separator />}
       <li ref={setNodeRef} style={style}>
         <AccountCard
           account={account}
@@ -56,6 +68,7 @@ const AccountItem = ({ account, balanceExchange, isReordering, onClick, active }
           {...listeners}
           onClick={onClick}
           active={active}
+          showCheckOnSelected={showCheckOnSelected}
         />
       </li>
     </Fragment>
@@ -70,6 +83,8 @@ export const AccountList = ({
   onReorderCancel,
   onReorderSave,
   onSelect,
+  showFirstSeparator = true,
+  showCheckOnSelected = false,
 }: TProps) => {
   const { t } = useTranslation('pages', { keyPrefix: 'wallets' })
   const { accountsByWalletId } = useAccountsByWalletIdSelector(selectedWallet.id)
@@ -106,7 +121,7 @@ export const AccountList = ({
     <DndContext onDragEnd={handleDragEnd}>
       <SortableContext items={items} strategy={verticalListSortingStrategy} disabled={!isReordering}>
         <ul>
-          {itemsAccounts.map(account => (
+          {itemsAccounts.map((account, index) => (
             <AccountItem
               key={account?.address}
               onClick={() => {
@@ -118,6 +133,8 @@ export const AccountList = ({
               balanceExchange={balanceExchange}
               isReordering={isReordering}
               active={account?.address === selectedAccount?.address}
+              showSeparator={showFirstSeparator || index !== 0}
+              showCheckOnSelected={showCheckOnSelected}
             />
           ))}
         </ul>

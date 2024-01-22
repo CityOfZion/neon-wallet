@@ -13,7 +13,6 @@ interface Resources {
     }
     wallet: {
       importedName: 'Imported Wallet'
-      encryptedName: 'Encrypted Wallet'
       watchAccount: 'Watch Account'
       mnemonicWalletName: 'Mnemonic Wallet'
       firstWalletName: 'My First Wallet'
@@ -60,9 +59,6 @@ interface Resources {
       search: 'Search'
       noContacts: 'No contacts'
     }
-    blockchainSelection: {
-      search: 'Search...'
-    }
   }
   modals: {
     import: {
@@ -80,9 +76,7 @@ interface Resources {
       success: {
         mnemonic: 'Mnemonic complete!'
         key: 'Private key complete!'
-        encrypted: 'Encrypted key complete!'
       }
-      importEncryptedDescription: 'Select the desired blockchain for your new account'
     }
     addWatch: {
       title: 'Add a watch account'
@@ -125,6 +119,7 @@ interface Resources {
       title: 'Add Address'
       addToContact: 'ADD TO CONTACT'
       selectBlockchain: 'Select the desired blockchain for this account'
+      search: 'Search...'
       notFound: 'Blockchain not found'
       errorNoBlockchainSelected: 'No blockchain selected'
     }
@@ -191,16 +186,10 @@ interface Resources {
       title: 'Select a contact'
       selectRecipient: 'Select recipient'
     }
-    blockchaiinSelectionModal: {
-      buttonContinueLabel: 'Next'
-    }
-    importEncryptedPasswordModal: {
-      title: 'Import'
-      description: 'Enter a pass phrase for your encrypted key:'
-      inputPlaceholder: 'Enter your pass phrase...'
-      buttonContinueLabel: 'Import'
-      addressAlreadyExist: 'Address already exists'
-      success: 'Encrypted key successfully imported!'
+    selectAccount: {
+      title: 'Select a source account'
+      yourAccounts: 'Your accounts:'
+      selectSourceAccount: 'Select source account'
     }
   }
   pages: {
