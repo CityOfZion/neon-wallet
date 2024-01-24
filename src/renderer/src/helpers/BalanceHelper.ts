@@ -33,4 +33,18 @@ export class BalanceHelper {
       ? balances.filter(balances => addresses.includes(balances.address)).flatMap(balance => balance.tokensBalances)
       : balances.tokensBalances
   }
+
+  static convertBalanceToCurrency(
+    balance?: TokenBalance,
+    multiExchange?: MultiExchange
+  ): BalanceConvertedToExchange | undefined {
+    if (!balance || !multiExchange) return
+
+    const ratio = this.getExchangeRatio(balance.token.hash, balance.blockchain, multiExchange)
+
+    return {
+      ...balance,
+      convertedAmount: balance.amountNumber * ratio,
+    }
+  }
 }
