@@ -152,7 +152,6 @@ export const PersistContactModal = () => {
               label={commonT('cancel')}
               onClick={modalNavigateWrapper(-1)}
               clickableProps={{ className: 'w-32 h-10' }}
-              disabled={hasSomeError}
               type="button"
             />
             <Button

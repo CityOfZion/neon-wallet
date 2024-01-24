@@ -120,7 +120,7 @@ export const ContactsPage = () => {
       }
     >
       <section className="bg-gray-800 w-full h-full flex rounded">
-        <div className="w-[25%] px-2 border-r flex flex-col items-center">
+        <div className="w-full max-w-[17.188rem] px-2 border-r flex flex-col items-center">
           <div className="flex flex-row justify-between h-15 w-full mb-5 text-1xs">
             <button
               className={StyleHelper.mergeStyles('w-[50%] border-b', {
@@ -167,7 +167,7 @@ export const ContactsPage = () => {
                     >
                       <div
                         className={StyleHelper.mergeStyles(
-                          'w-6 h-6 bg-gray-300/30 rounded-full text-sm flex items-center justify-center',
+                          'w-6 h-6 bg-gray-300/30 rounded-full text-sm flex shrink-0 items-center justify-center',
                           {
                             'bg-gray-200 text-gray-800 font-bold': isContactSelected(value.id),
                           }
@@ -175,7 +175,7 @@ export const ContactsPage = () => {
                       >
                         {getFirstLastNameInitials(value.name)}
                       </div>
-                      {value.name}
+                      <span className="truncate">{value.name}</span>
                     </button>
                   ))}
                 </div>
