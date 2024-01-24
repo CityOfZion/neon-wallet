@@ -1,4 +1,3 @@
-import { SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { MdDeleteForever } from 'react-icons/md'
 import { TbPencil } from 'react-icons/tb'
@@ -7,6 +6,7 @@ import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
 import { Separator } from '@renderer/components/Separator'
 import { useAccountsSelector } from '@renderer/hooks/useAccountSelector'
+import { useActions } from '@renderer/hooks/useActions'
 import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
 import { useAppDispatch } from '@renderer/hooks/useRedux'
 import { EndModalLayout } from '@renderer/layouts/EndModal'
@@ -29,13 +29,19 @@ export const EditWalletModal = () => {
   const dispatch = useAppDispatch()
   const { accounts } = useAccountsSelector()
 
-  const form = useForm<TFormData>({
-    defaultValues: {
-      name: wallet.name,
-    },
+  const form = useActions<TFormData>({
+    name: wallet.name,
   })
 
-  const handleSubmit: SubmitHandler<TFormData> = ({ name }) => {
+  const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    form.setData({ name: event.target.value })
+  }
+
+  const handleSubmit = ({ name }: TFormData) => {
+    if (name.length <= 0) {
+      form.setError('name', t('nameLengthError'))
+      return
+    }
     dispatch(walletReducerActions.saveWallet({ ...wallet, name }))
     modalNavigate(-1)
   }
@@ -49,11 +55,12 @@ export const EditWalletModal = () => {
 
   return (
     <EndModalLayout heading={t('title')} headingIcon={<TbPencil />} contentClassName="flex flex-col justify-between">
-      <form onSubmit={form.handleSubmit(handleSubmit)}>
+      <form onSubmit={form.handleAct(handleSubmit)}>
         <Input
           placeholder={t('inputPlaceholder')}
-          {...form.register('name')}
-          errorMessage={form.formState.errors.name?.message}
+          errorMessage={form.actionState.errors.name}
+          value={form.actionData.name}
+          onChange={handleChangeName}
           clearable
           compacted
         />
