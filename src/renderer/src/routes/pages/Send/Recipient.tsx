@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TbStepInto, TbUsers } from 'react-icons/tb'
-import { IContactState } from '@renderer/@types/store'
+import { TContactAddress } from '@renderer/@types/store'
 import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
 import { Separator } from '@renderer/components/Separator'
@@ -12,8 +12,8 @@ export const Recipient = () => {
   const { modalNavigateWrapper } = useModalNavigate()
   const [address, setAddress] = useState<string>()
 
-  const handleSelectContact = (contact: IContactState) => {
-    setAddress(contact.addresses[0].address)
+  const handleSelectContact = (selectedAddress: TContactAddress) => {
+    setAddress(selectedAddress.address)
   }
 
   const handleChangeAddres = (event: ChangeEvent<HTMLInputElement>) => {
