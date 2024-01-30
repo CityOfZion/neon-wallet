@@ -17,7 +17,7 @@ type TProps = {
 }
 
 export const ContactList = ({ onContactSelected, selectFirst, showSelectedIcon, children }: TProps) => {
-  const { t: contactT } = useTranslation('pages', { keyPrefix: 'contacts' })
+  const { t: contactT } = useTranslation('components', { keyPrefix: 'contacts' })
   const { contacts } = useContactsSelector()
   const [search, setSearch] = useState<string | null>(null)
   const [selectedContact, setSelectedContact] = useState<IContactState | null>(selectFirst ? contacts[0] || null : null)
@@ -74,10 +74,10 @@ export const ContactList = ({ onContactSelected, selectFirst, showSelectedIcon, 
     <Fragment>
       <div className="px-2 flex flex-col h-full items-center">
         <div className="mb-8 w-full">
-          <SearchInput placeholder={contactT('contactList.search')} onChange={event => setSearch(event.target.value)} />
+          <SearchInput placeholder={contactT('search')} onChange={event => setSearch(event.target.value)} />
         </div>
 
-        {groupedContacts.size <= 0 && <div>{contactT('contactList.noContacts')}</div>}
+        {groupedContacts.size <= 0 && <div>{contactT('noContacts')}</div>}
 
         <section className="w-full overflow-y-auto flex-grow flex flex-col basis-0">
           {groupedContacts &&

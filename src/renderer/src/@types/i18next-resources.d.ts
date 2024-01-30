@@ -55,6 +55,10 @@ interface Resources {
     walletAccordionList: {
       noAccounts: 'No accounts'
     }
+    contacts: {
+      search: 'Search'
+      noContacts: 'No contacts'
+    }
   }
   modals: {
     import: {
@@ -272,9 +276,7 @@ interface Resources {
       contactList: {
         contacts: 'CONTACTS'
         myAccounts: 'MY ACCOUNTS'
-        search: 'Search'
         notFound: 'No contacts found'
-        noContacts: 'No contacts'
       }
       addresses: 'Addresses'
       edit: 'Edit'

@@ -91,9 +91,7 @@
     "contactList": {
       "contacts": "CONTACTS",
       "myAccounts": "MY ACCOUNTS",
-      "search": "Search",
-      "notFound": "No contacts found",
-      "noContacts": "No contacts"
+      "notFound": "No contacts found"
     },
     "addresses": "Addresses",
     "edit": "Edit",
