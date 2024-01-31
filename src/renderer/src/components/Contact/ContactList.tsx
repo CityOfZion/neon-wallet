@@ -32,8 +32,15 @@ export const ContactList = ({
   const [selectedContact, setSelectedContact] = useState<IContactState | null>(selectFirst ? contacts[0] || null : null)
   const [selectedAddress, setSelectedAddress] = useState<TContactAddress | null>(null)
 
-  onContactSelected && onContactSelected(selectedContact)
-  onAddressSelected && onAddressSelected(selectedAddress)
+  const handleAddressSelected = (address: TContactAddress | null) => {
+    setSelectedAddress(address)
+    onAddressSelected && onAddressSelected(address)
+  }
+
+  const handleContactSelected = (contact: IContactState | null) => {
+    setSelectedContact(contact)
+    onContactSelected && onContactSelected(contact)
+  }
 
   const isContactSelected = (id: string) => {
     if (!selectedContact) return
@@ -53,12 +60,20 @@ export const ContactList = ({
       .join('')
   }
 
-  const handleContactSelected = (contact: IContactState) => {
-    setSelectedAddress(null)
+  const onContactSelect = (contact: IContactState) => {
+    handleAddressSelected(null)
     if (isContactSelected(contact.id)) {
-      setSelectedContact(null)
+      handleContactSelected(null)
     } else {
-      setSelectedContact(contact)
+      handleContactSelected(contact)
+    }
+  }
+
+  const onAddressSelect = (address: TContactAddress) => {
+    if (isAddressSelected(address?.address)) {
+      handleAddressSelected(null)
+    } else {
+      handleAddressSelected(address)
     }
   }
 
@@ -88,12 +103,14 @@ export const ContactList = ({
 
     if (firstContact && selectFirst) {
       setSelectedContact(firstContact[0])
+      onContactSelected && onContactSelected(firstContact[0])
     } else {
       setSelectedContact(null)
+      onContactSelected && onContactSelected(null)
     }
 
     return groupContactsByFirstLetter
-  }, [contacts, search, selectFirst])
+  }, [contacts, onContactSelected, search, selectFirst])
 
   return (
     <Fragment>
@@ -112,7 +129,7 @@ export const ContactList = ({
                 {arrValues.map((value, index) => (
                   <Fragment key={index}>
                     <button
-                      onClick={() => handleContactSelected(value)}
+                      onClick={() => onContactSelect(value)}
                       className={StyleHelper.mergeStyles(
                         'w-full flex items-center justify-between h-10 py-4 pl-2 border-l-4 border-transparent',
                         {
@@ -145,7 +162,7 @@ export const ContactList = ({
                         return (
                           <div key={addressIndex}>
                             <button
-                              onClick={() => setSelectedAddress(address)}
+                              onClick={() => onAddressSelect(address)}
                               className="pl-[2.3rem] flex w-full items-center justify-between"
                             >
                               <div
