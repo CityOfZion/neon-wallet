@@ -11,7 +11,7 @@ import { useBsAggregatorSelector } from '@renderer/hooks/useBlockchainSelector'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
 import { EndModalLayout } from '@renderer/layouts/EndModal'
 
-type TInputType = 'key' | 'mnemonic'
+type TInputType = 'key' | 'mnemonic' | 'encrypted'
 
 type TFormData = {
   text: string
@@ -38,6 +38,7 @@ export const ImportModal = () => {
       const checkFunctionsByInputType: Record<TInputType, (value: string) => boolean> = {
         key: bsAggregator.validateKeyAllBlockchains.bind(bsAggregator),
         mnemonic: UtilsHelper.isMnemonic,
+        encrypted: bsAggregator.validateEncryptedAllBlockchains.bind(bsAggregator),
       }
 
       const functionsByInputType = Object.entries(checkFunctionsByInputType).find(([, checkFunc]) => {
@@ -73,10 +74,24 @@ export const ImportModal = () => {
     modalNavigate('import-mnemonic-accounts-selection', { state: { mnemonic } })
   }
 
+  const submitEncrypted = async (encryptedKey: string) => {
+    modalNavigate('blockchain-selection', {
+      state: {
+        heading: t('title'),
+        headingIcon: <TbFileImport />,
+        description: t('importEncryptedDescription'),
+        onSelect: (blockchain: string) => {
+          modalNavigate('import-encrypted-password', { state: { encryptedKey, blockchain } })
+        },
+      },
+    })
+  }
+
   const handleSubmit = async (data: TFormData) => {
     const submitByInputType: Record<TInputType, (value: string) => Promise<void>> = {
       key: submitKey,
       mnemonic: submitMnemonic,
+      encrypted: submitEncrypted,
     }
 
     try {

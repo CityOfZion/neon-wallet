@@ -4,6 +4,7 @@ import { AddAddressModalStep1 } from './modals/AddAddress/Step1'
 import { AddAddressModalStep2 } from './modals/AddAddress/Step2'
 import { AddAddressModalStep3 } from './modals/AddAddress/Step3'
 import { AddWatch } from './modals/AddWatch'
+import { BlockchainSelectionModal } from './modals/BlockchainSelection'
 import { DappConnectionModal } from './modals/DappConnection'
 import { DappConnectionAccountSelectionModal } from './modals/DappConnectionAccountSelection'
 import { DappConnectionDetailsModal } from './modals/DappConnectionDetails'
@@ -12,8 +13,9 @@ import { EditAccountModal } from './modals/EditAccount'
 import { EditWalletModal } from './modals/EditWallet'
 import { ErrorModal } from './modals/Error'
 import { ImportModal } from './modals/Import'
-import { ImportKeyAccountsSelectionModal } from './modals/ImportKeyAccountsSelection'
-import { ImportMnemonicAccountsSelectionModal } from './modals/ImportMnemonicAccountSelection'
+import { ImportEncryptedPasswordModal } from './modals/Import/ImportEncryptedPasswordModal'
+import { ImportKeyAccountsSelectionModal } from './modals/Import/ImportKeyAccountsSelectionModal'
+import { ImportMnemonicAccountsSelectionModal } from './modals/Import/ImportMnemonicAccountsSelectionModal'
 import { PersistContactModal } from './modals/PersistContact'
 import { SelectContact } from './modals/SelectContact'
 import { SuccessModal } from './modals/Success'
@@ -36,4 +38,6 @@ export const modalsRouter: TRoute[] = [
   { name: 'dapp-connection-account-selection', element: <DappConnectionAccountSelectionModal /> },
   { name: 'dapp-connection-list', element: <DappConnectionListModal /> },
   { name: 'select-contact', element: <SelectContact /> },
+  { name: 'blockchain-selection', element: <BlockchainSelectionModal /> },
+  { name: 'import-encrypted-password', element: <ImportEncryptedPasswordModal /> },
 ]
