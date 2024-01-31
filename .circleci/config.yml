@@ -1,0 +1,110 @@
+version: 2.1
+
+orbs:
+  win: circleci/windows@5.0.0
+  node: circleci/node@5.1.0
+
+references:
+  container_config: &container_config
+    docker:
+      - image: electronuserland/builder:wine-chrome
+        environment:
+          TARGET_ARCH: x64
+    working_directory: ~/neon-wallet
+
+  workspace_root: &workspace_root ~/neon-wallet
+
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
+jobs:
+  test:
+    <<: *container_config
+    steps:
+      - checkout
+      - node/install:
+          node-version: '18.14.2'
+      - restore_cache:
+          key: neon3-wallet-dependencies-cache-{{ checksum "package-lock.json" }}
+      - run: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4EB27DB2A3B88B8B
+      - run: apt-get -y update
+      - run: npm config delete proxy
+      - run: npm ci --timeout 1500000
+      - run: npm run lint
+      - save_cache:
+          key: neon3-wallet-dependencies-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm
+            - ./node_modules
+
+  build_linux:
+    <<: *container_config
+    resource_class: large
+    steps:
+      - checkout
+      - node/install:
+          node-version: '18.14.2'
+      - run: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4EB27DB2A3B88B8B
+      - run: apt-get -y update
+      - run: apt-get -y install libusb-1.0-0-dev icnsutils graphicsmagick libudev-dev
+      - run: apt-get -y install libxtst6 libxss1 libgtk2.0-0 libnss3 libasound2 libgconf-2-4
+      - run: npm config delete proxy
+      - run: npm ci --timeout 1500000
+      - run: npm run build:linux
+      - store_artifacts:
+          path: dist
+          destination: build
+
+  build_macos:
+    macos:
+      xcode: "15.2.0"
+    steps:
+      - checkout
+      - node/install:
+          node-version: '18.14.2'
+      - run: npm ci --timeout 1500000
+      - run: npm run build:mac
+      - store_artifacts:
+          path: dist
+          destination: build
+
+  build_win:
+    executor:
+      name: win/default
+      size: "medium"
+    steps:
+      - checkout
+      - run: npm ci --timeout 1500000
+      - run: npm run build:win
+      - store_artifacts:
+          path: dist
+          destination: build
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      # run test on every commit
+      - test
+  deploy:
+    jobs:
+      # build artifacts only on tags with name v.*
+      - build_macos:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v.*/
+      - build_win:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v.*/
+      - build_linux:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v.*/
