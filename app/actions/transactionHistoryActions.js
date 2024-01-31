@@ -220,7 +220,6 @@ export default createActions(
     if (chain === 'neo3') {
       const network = net === 'MainNet' ? 'mainnet' : 'testnet'
       const data = await NeoRest.addressTXFull(address, page, network)
-      count = data.totalCount
       parsedEntries = await computeN3Activity(data, address, net)
     } else {
       const network = net === 'MainNet' ? 'mainnet' : 'testnet'
@@ -233,12 +232,23 @@ export default createActions(
       parsedEntries = await parseAbstractData(data.entries, address, net)
     }
     page += 1
+
+    // check to see if there is another page
+    let nextPage = true
+    const network = net === 'MainNet' ? 'mainnet' : 'testnet'
+    const testData = await NeoRest.addressTXFull(address, page, network)
+    const testCount = testData.totalCount
+    if (typeof testCount === 'undefined') nextPage = false
+
     if (shouldIncrementPagination) {
       if (page === 1) entries = []
       entries.push(...parsedEntries)
+      // handle the option to load more transactions for neo3
+      if (chain === 'neo3' && nextPage === false) count = entries.length
       return { entries, count }
     }
     entries = [...parsedEntries]
+    if (chain === 'neo3' && nextPage === false) count = entries.length
     return { entries, count }
   },
 )
