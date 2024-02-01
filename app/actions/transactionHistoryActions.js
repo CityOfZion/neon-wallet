@@ -207,6 +207,7 @@ export default createActions(
     shouldIncrementPagination = false,
   }: Props = {}) => async () => {
     const { chain } = await getSettings()
+    const network = net === 'MainNet' ? 'mainnet' : 'testnet'
 
     // If refresh action dispatched reset pagination
     // to grab the most recent abstracts
@@ -218,11 +219,9 @@ export default createActions(
     let count = 0
 
     if (chain === 'neo3') {
-      const network = net === 'MainNet' ? 'mainnet' : 'testnet'
       const data = await NeoRest.addressTXFull(address, page, network)
       parsedEntries = await computeN3Activity(data, address, net)
     } else {
-      const network = net === 'MainNet' ? 'mainnet' : 'testnet'
       const data = await NeoLegacyREST.getAddressAbstracts(
         address,
         page,
@@ -235,10 +234,8 @@ export default createActions(
 
     // check to see if there is another page
     let nextPage = true
-    const network = net === 'MainNet' ? 'mainnet' : 'testnet'
     const testData = await NeoRest.addressTXFull(address, page, network)
-    const testCount = testData.totalCount
-    if (typeof testCount === 'undefined') nextPage = false
+    if (typeof testData.totalCount === 'undefined') nextPage = false
 
     if (shouldIncrementPagination) {
       if (page === 1) entries = []
