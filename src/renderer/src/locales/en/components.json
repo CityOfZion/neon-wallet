@@ -28,5 +28,8 @@
   "contacts": {
     "search": "Search",
     "noContacts": "No contacts"
+  },
+  "blockchainSelection": {
+    "search": "Search..."
   }
 }

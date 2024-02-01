@@ -6,6 +6,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 
 import { ModalRouterProvider } from './contexts/ModalRouterContext'
 import { setupSentryWrapper } from './libs/sentryReact'
+import { ToastProvider } from './libs/sonner'
 import { walletConnectOptions } from './libs/walletConnectSDK'
 import { modalsRouter } from './routes/modalsRouter'
 import { pagesRouter } from './routes/pagesRouter'
@@ -21,6 +22,7 @@ const AppReact = (): JSX.Element => {
           <QueryClientProvider client={queryClient}>
             <ModalRouterProvider routes={modalsRouter}>
               <RouterProvider router={pagesRouter} />
+              <ToastProvider />
             </ModalRouterProvider>
           </QueryClientProvider>
         </WalletConnectWalletProvider>

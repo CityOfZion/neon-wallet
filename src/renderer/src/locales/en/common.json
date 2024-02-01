@@ -12,6 +12,7 @@
   },
   "wallet": {
     "importedName": "Imported Wallet",
+    "encryptedName": "Encrypted Wallet",
     "watchAccount": "Watch Account",
     "mnemonicWalletName": "Mnemonic Wallet",
     "firstWalletName": "My First Wallet",

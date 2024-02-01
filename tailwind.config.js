@@ -12,6 +12,7 @@ module.exports = {
       },
       green: {
         DEFAULT: '#2EBE81',
+        700: '#345048',
         100: '#00DDB4', // light
       },
       purple: {
@@ -19,6 +20,7 @@ module.exports = {
       },
       pink: {
         DEFAULT: '#E75595',
+        700: '#7D4B93',
       },
       blue: {
         DEFAULT: '#47BEFF',
