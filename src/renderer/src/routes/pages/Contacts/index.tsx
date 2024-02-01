@@ -32,10 +32,6 @@ export const ContactsPage = () => {
 
   const [sortBlockchain, setSortBlockchain] = useState<boolean | null>(null)
 
-  const handleContactSelected = contact => {
-    setSelectedContact(contact)
-  }
-
   const sortedSelectedContactAddresses = useMemo(() => {
     if (!selectedContact) return
 
@@ -96,7 +92,7 @@ export const ContactsPage = () => {
               {t('contactList.myAccounts')}
             </button>
           </div>
-          <ContactList onContactSelected={handleContactSelected} selectFirst={true} showSelectedIcon={false} />
+          <ContactList onContactSelected={setSelectedContact} selectFirst={true} showSelectedIcon={false} />
         </div>
 
         {selectedContact && (
