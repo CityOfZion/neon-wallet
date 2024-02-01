@@ -242,7 +242,7 @@ export const WalletsPage = () => {
           <Separator className="mx-4" />
           <InfiniteScroll
             dataLength={transactions.length}
-            next={() => { }}
+            next={() => {}}
             hasMore={true}
             loader={<h4>Loading...</h4>}
             endMessage={
@@ -250,7 +250,7 @@ export const WalletsPage = () => {
                 <b>Yay! You have seen it all</b>
               </p>
             }
-            refreshFunction={() => { }}
+            refreshFunction={() => {}}
           >
             <table className="min-w-full text-xs text-left m-4 justify-evenly">
               <thead>

@@ -16,8 +16,8 @@ type TProps = {
   disabled?: boolean
   onSelect?: (value: string) => void
   children: React.ReactNode
-  bgColor?: string
-  radixContextClassName?: string
+  triggerClassName?: string
+  contentClassName?: string
 }
 
 const Item = ({ children, value }: TItemProps) => {
@@ -29,7 +29,7 @@ const Item = ({ children, value }: TItemProps) => {
   )
 }
 
-const Root = ({ label, onSelect, disabled, children, title, bgColor, radixContextClassName }: TProps) => {
+const Root = ({ label, onSelect, disabled, children, title, triggerClassName, contentClassName }: TProps) => {
   const [open, setOpen] = useState(false)
 
   return (
@@ -39,12 +39,12 @@ const Root = ({ label, onSelect, disabled, children, title, bgColor, radixContex
         className={StyleHelper.mergeStyles(
           'flex items-center w-full min-w-[11.625rem] py-1.5 px-2.5 transition-colors outline-none rounded',
           'aria-[disabled=false]:hover:bg-gray-300/15 aria-[disabled=true]:opacity-50 aria-[disabled=true]:cursor-not-allowed',
-          bgColor && [bgColor],
           {
             'bg-gray-800 rounded-b-none': open,
             'hover:bg-gray-300/15': !disabled,
             '': disabled,
-          }
+          },
+          triggerClassName
         )}
       >
         <div className="flex flex-col pointer-events-none w-full text-left min-w-0">
@@ -59,10 +59,7 @@ const Root = ({ label, onSelect, disabled, children, title, bgColor, radixContex
 
       <RadixSelect.Portal>
         <RadixSelect.Content
-          className={StyleHelper.mergeStyles(
-            'bg-gray-800 min-w-[11.625rem] rounded-b shadow-xl',
-            radixContextClassName
-          )}
+          className={StyleHelper.mergeStyles('bg-gray-800 min-w-[11.625rem] rounded-b shadow-xl', contentClassName)}
           position="popper"
           align="center"
         >

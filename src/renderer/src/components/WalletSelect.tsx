@@ -20,8 +20,8 @@ type TProps = {
   wallets: IWalletState[]
   balanceExchange: UseMultipleBalanceAndExchangeResult
   showCreateWalletButton?: boolean
-  bgColor?: string
-  radixContextClassName?: string
+  selectTriggerClassName?: string
+  selectContentClassName?: string
 }
 
 const Item = ({ wallet, balanceExchange }: TItemProps) => {
@@ -40,8 +40,8 @@ export const WalletSelect = ({
   balanceExchange,
   disabled,
   showCreateWalletButton,
-  bgColor,
-  radixContextClassName,
+  selectTriggerClassName,
+  selectContentClassName,
 }: TProps) => {
   const { t } = useTranslation('components', { keyPrefix: 'walletSelect' })
 
@@ -56,9 +56,9 @@ export const WalletSelect = ({
       onSelect={handleValueChange}
       disabled={disabled}
       label={selected ? selected.name : t('placeholder')}
-      bgColor={bgColor}
+      triggerClassName={selectTriggerClassName}
       title={t('title')}
-      radixContextClassName={radixContextClassName}
+      contentClassName={selectContentClassName}
     >
       {wallets.map(wallet => (
         <Item key={wallet.id} wallet={wallet} balanceExchange={balanceExchange} />

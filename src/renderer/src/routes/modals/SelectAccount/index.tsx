@@ -50,8 +50,8 @@ export const SelectAccount = () => {
         selected={selectedWallet}
         onSelect={handleSelectWallet}
         showCreateWalletButton={false}
-        bgColor={'bg-asphalt'}
-        radixContextClassName={'w-[19.5rem]'}
+        selectTriggerClassName={'bg-asphalt'}
+        selectContentClassName={'w-[19.5rem]'}
       />
 
       {selectedWallet && (
