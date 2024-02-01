@@ -1,7 +1,8 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TbStepOut } from 'react-icons/tb'
 import { IAccountState, IWalletState } from '@renderer/@types/store'
+import { AccountList } from '@renderer/components/AccountList'
 import { Button } from '@renderer/components/Button'
 import { WalletSelect } from '@renderer/components/WalletSelect'
 import { useAccountsSelector } from '@renderer/hooks/useAccountSelector'
@@ -9,7 +10,6 @@ import { useBalancesAndExchange } from '@renderer/hooks/useBalancesAndExchange'
 import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
 import { useWalletsSelector } from '@renderer/hooks/useWalletSelector'
 import { EndModalLayout } from '@renderer/layouts/EndModal'
-import { AccountList } from '@renderer/routes/pages/Wallets/AccountList'
 
 type TLocationState = {
   handleSelectAccount: (contact: IAccountState) => void
@@ -38,15 +38,18 @@ export const SelectAccount = () => {
     modalNavigate(-1)
   }
 
+  const filteredWallets = useMemo(() => {
+    return wallets.filter(wallet => wallet.walletType !== 'watch')
+  }, [wallets])
+
   return (
     <EndModalLayout heading={t('title')} headingIcon={<TbStepOut />}>
       <WalletSelect
         balanceExchange={balanceExchange}
-        wallets={wallets}
+        wallets={filteredWallets}
         selected={selectedWallet}
         onSelect={handleSelectWallet}
-        dontShowWatches={true}
-        showCreateWallet={false}
+        showCreateWalletButton={false}
         bgColor={'bg-asphalt'}
         radixContextClassName={'w-[19.5rem]'}
       />

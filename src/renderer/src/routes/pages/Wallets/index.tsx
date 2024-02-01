@@ -35,7 +35,7 @@ import { useWalletsSelector } from '@renderer/hooks/useWalletSelector'
 import { MainLayout } from '@renderer/layouts/Main'
 import { accountReducerActions } from '@renderer/store/reducers/AccountReducer'
 
-import { AccountList } from './AccountList'
+import { AccountList } from '../../../components/AccountList'
 
 export const WalletsPage = () => {
   const { status } = useWalletConnectWallet()
@@ -111,7 +111,7 @@ export const WalletsPage = () => {
   return (
     <MainLayout
       heading={
-        <div className="max-w-[11.625rem]">
+        <div>
           <WalletSelect
             balanceExchange={balanceExchange}
             wallets={wallets}
@@ -242,7 +242,7 @@ export const WalletsPage = () => {
           <Separator className="mx-4" />
           <InfiniteScroll
             dataLength={transactions.length}
-            next={() => {}}
+            next={() => { }}
             hasMore={true}
             loader={<h4>Loading...</h4>}
             endMessage={
@@ -250,7 +250,7 @@ export const WalletsPage = () => {
                 <b>Yay! You have seen it all</b>
               </p>
             }
-            refreshFunction={() => {}}
+            refreshFunction={() => { }}
           >
             <table className="min-w-full text-xs text-left m-4 justify-evenly">
               <thead>

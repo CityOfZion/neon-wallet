@@ -86,7 +86,7 @@ export const AccountList = ({
   showFirstSeparator = true,
   showCheckOnSelected = false,
 }: TProps) => {
-  const { t } = useTranslation('pages', { keyPrefix: 'wallets' })
+  const { t } = useTranslation('components', { keyPrefix: 'wallets' })
   const { accountsByWalletId } = useAccountsByWalletIdSelector(selectedWallet.id)
   const orderedAccountsAddresses = useMemo(() => {
     return UtilsHelper.orderBy(accountsByWalletId, 'order', 'asc').map(account => account.address)
@@ -142,7 +142,7 @@ export const AccountList = ({
         {isReordering && (
           <div className="flex justify-between px-3 gap-x-3 mt-4">
             <Button
-              label={t('reorder.cancelButtonLabel')}
+              label={t('cancelButtonLabel')}
               variant="outlined"
               flat
               className="w-full"
@@ -150,7 +150,7 @@ export const AccountList = ({
               onClick={handleReorderCancel}
             />
             <Button
-              label={t('reorder.saveButtonLabel')}
+              label={t('saveButtonLabel')}
               variant="outlined"
               flat
               className="w-full"

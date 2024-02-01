@@ -59,7 +59,10 @@ const Root = ({ label, onSelect, disabled, children, title, bgColor, radixContex
 
       <RadixSelect.Portal>
         <RadixSelect.Content
-          className={`bg-gray-800 min-w-[11.625rem] rounded-b shadow-xl ${radixContextClassName || ''}`}
+          className={StyleHelper.mergeStyles(
+            'bg-gray-800 min-w-[11.625rem] rounded-b shadow-xl',
+            radixContextClassName
+          )}
           position="popper"
           align="center"
         >

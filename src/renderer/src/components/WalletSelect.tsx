@@ -19,8 +19,7 @@ type TProps = {
   onSelect?: (wallet: IWalletState) => void
   wallets: IWalletState[]
   balanceExchange: UseMultipleBalanceAndExchangeResult
-  dontShowWatches?: boolean
-  showCreateWallet?: boolean
+  showCreateWalletButton?: boolean
   bgColor?: string
   radixContextClassName?: string
 }
@@ -40,8 +39,7 @@ export const WalletSelect = ({
   onSelect,
   balanceExchange,
   disabled,
-  dontShowWatches,
-  showCreateWallet,
+  showCreateWalletButton,
   bgColor,
   radixContextClassName,
 }: TProps) => {
@@ -62,13 +60,10 @@ export const WalletSelect = ({
       title={t('title')}
       radixContextClassName={radixContextClassName}
     >
-      {wallets.map(wallet => {
-        if (!dontShowWatches || (dontShowWatches && wallet.walletType !== 'watch')) {
-          return <Item key={wallet.id} wallet={wallet} balanceExchange={balanceExchange} />
-        }
-        return null
-      })}
-      {(showCreateWallet === undefined || showCreateWallet === true) && (
+      {wallets.map(wallet => (
+        <Item key={wallet.id} wallet={wallet} balanceExchange={balanceExchange} />
+      ))}
+      {(showCreateWalletButton === undefined || showCreateWalletButton === true) && (
         <div className="py-5 px-3">
           <Button className="w-full" label={t('createWalletButtonLabel')} variant="outlined" flat />
         </div>

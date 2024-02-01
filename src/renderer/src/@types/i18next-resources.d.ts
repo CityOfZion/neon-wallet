@@ -59,6 +59,10 @@ interface Resources {
       search: 'Search'
       noContacts: 'No contacts'
     }
+    wallets: {
+      cancelButtonLabel: 'Cancel'
+      saveButtonLabel: 'Save'
+    }
   }
   modals: {
     import: {
@@ -261,10 +265,6 @@ interface Resources {
       newWalletButtonLabel: 'New Wallet'
       manageButtonLabel: 'Manage'
       dappConnectionButtonLabel: 'Dapp'
-      reorder: {
-        cancelButtonLabel: 'Cancel'
-        saveButtonLabel: 'Save'
-      }
     }
     activity: {
       title: 'Activity'
