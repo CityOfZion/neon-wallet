@@ -1,6 +1,5 @@
 import { Fragment, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { TbStepOut } from 'react-icons/tb'
 import { IAccountState, IWalletState } from '@renderer/@types/store'
 import { AccountList } from '@renderer/components/AccountList'
 import { Button } from '@renderer/components/Button'
@@ -13,12 +12,15 @@ import { EndModalLayout } from '@renderer/layouts/EndModal'
 
 type TLocationState = {
   onSelectAccount: (contact: IAccountState) => void
+  title: string
+  buttonLabel: string
+  leftIcon: JSX.Element
 }
 
 export const SelectAccount = () => {
   const { t } = useTranslation('modals', { keyPrefix: 'selectAccount' })
+  const { onSelectAccount, leftIcon, title, buttonLabel } = useModalState<TLocationState>()
   const { modalNavigate } = useModalNavigate()
-  const { onSelectAccount } = useModalState<TLocationState>()
   const { accounts } = useAccountsSelector()
   const balanceExchange = useBalancesAndExchange(accounts)
   const { wallets } = useWalletsSelector()
@@ -43,7 +45,7 @@ export const SelectAccount = () => {
   }, [wallets])
 
   return (
-    <EndModalLayout heading={t('title')} headingIcon={<TbStepOut />}>
+    <EndModalLayout heading={title} headingIcon={leftIcon}>
       <WalletSelect
         balanceExchange={balanceExchange}
         wallets={filteredWallets}
@@ -73,7 +75,7 @@ export const SelectAccount = () => {
             <Button
               className="py-3 w-[16rem]"
               type="submit"
-              label={t('selectSourceAccount')}
+              label={buttonLabel}
               disabled={selectedAccount ? false : true}
               onClick={selectAccount}
             />

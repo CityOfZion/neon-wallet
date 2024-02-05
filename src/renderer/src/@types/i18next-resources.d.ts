@@ -208,9 +208,7 @@ interface Resources {
       success: 'Encrypted key successfully imported!'
     }
     selectAccount: {
-      title: 'Select a source account'
       yourAccounts: 'Your accounts:'
-      selectSourceAccount: 'Select source account'
     }
     selectToken: {
       title: 'Select token to send'
@@ -280,7 +278,6 @@ interface Resources {
       tokenToSend: 'Token to send'
       selectToken: 'Select token...'
       sourceAccount: 'Source account'
-      selectAccount: 'Select account...'
       inputAmount: 'Input amount...'
       amount: 'Amount'
       fiatValue: 'Fiat value (USD estimated)'
@@ -289,6 +286,13 @@ interface Resources {
       addressInputHint: 'Enter recipient address...'
       totalFee: 'Total fee'
       sendNow: 'Send Now'
+      selectAccountModal: {
+        title: 'Select a source account'
+        selectSourceAccount: 'Select source account'
+      }
+    }
+    selectAccount: {
+      selectAccount: 'Select account...'
     }
     wallets: {
       title: 'Wallets'
@@ -366,6 +370,21 @@ interface Resources {
           subtitle: 'Private Key encrypted successfully!'
           description: 'Here’s your encrypted key:'
         }
+      }
+    }
+    receive: {
+      title: 'Receive Tokens'
+      sendQRCode: 'Send QR Code'
+      yourAddressTabTitle: 'Your Address'
+      requestTokenTabTitle: 'Request Tokens'
+      receivingAccountTitle: 'Receiving account'
+      yourReceivingAddress: 'Your receiving account'
+      selectAccountToGenerateCode: 'Select an account to generate a code!'
+      addressInputHint: 'Your receiving address will be here...'
+      downloadQRCode: 'Download QR Code'
+      selectAccountModal: {
+        title: 'Select a receiving account'
+        selectReceivingAccount: 'Select receiving account'
       }
     }
   }

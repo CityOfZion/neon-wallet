@@ -138,9 +138,7 @@
     "success": "Encrypted key successfully imported!"
   },
   "selectAccount": {
-    "title": "Select a source account",
-    "yourAccounts": "Your accounts:",
-    "selectSourceAccount": "Select source account"
+    "yourAccounts": "Your accounts:"
   },
   "selectToken": {
     "title": "Select token to send",

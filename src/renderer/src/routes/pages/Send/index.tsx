@@ -78,6 +78,10 @@ export const SendPage = () => {
                   selectedAccount={selectedAccount}
                   onSelectAccount={handleSelectAccount}
                   active={currentStep === SendPageStep.SelectAccount}
+                  title={t('sourceAccount')}
+                  modalTitle={t('selectAccountModal.title')}
+                  buttonLabel={t('selectAccountModal.selectSourceAccount')}
+                  leftIcon={<TbStepOut />}
                 />
                 <SelectToken
                   selectedAccount={selectedAccount}

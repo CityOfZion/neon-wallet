@@ -5,6 +5,7 @@ import { createRouteHandler } from '@renderer/libs/sentryReact'
 import { ContactsPage } from './pages/Contacts'
 import { LoginPage } from './pages/Login'
 import { PortfolioPage } from './pages/Portfolio'
+import { ReceiveYourAddress } from './pages/Receive'
 import { SecuritySetupPage } from './pages/SecuritySetup'
 import { SecuritySetupStep1Page } from './pages/SecuritySetup/SecuritySetupStep1'
 import { SecuritySetupStep2Page } from './pages/SecuritySetup/SecuritySetupStep2'
@@ -40,6 +41,14 @@ export const pagesRouter = routeHandler([
     element: (
       <PrivateRoute>
         <SendPage />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: '/receive',
+    element: (
+      <PrivateRoute>
+        <ReceiveYourAddress />
       </PrivateRoute>
     ),
   },
