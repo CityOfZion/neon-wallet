@@ -12,13 +12,13 @@ import { useWalletsSelector } from '@renderer/hooks/useWalletSelector'
 import { EndModalLayout } from '@renderer/layouts/EndModal'
 
 type TLocationState = {
-  handleSelectAccount: (contact: IAccountState) => void
+  onSelectAccount: (contact: IAccountState) => void
 }
 
 export const SelectAccount = () => {
   const { t } = useTranslation('modals', { keyPrefix: 'selectAccount' })
   const { modalNavigate } = useModalNavigate()
-  const { handleSelectAccount } = useModalState<TLocationState>()
+  const { onSelectAccount } = useModalState<TLocationState>()
   const { accounts } = useAccountsSelector()
   const balanceExchange = useBalancesAndExchange(accounts)
   const { wallets } = useWalletsSelector()
@@ -34,7 +34,7 @@ export const SelectAccount = () => {
     if (!selectedAccount) {
       return
     }
-    handleSelectAccount(selectedAccount)
+    onSelectAccount(selectedAccount)
     modalNavigate(-1)
   }
 

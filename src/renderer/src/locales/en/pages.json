@@ -51,6 +51,7 @@
     "selectToken": "Select token...",
     "sourceAccount": "Source account",
     "selectAccount": "Select account...",
+    "inputAmount": "Input amount...",
     "amount": "Amount",
     "fiatValue": "Fiat value (USD estimated)",
     "recipientAddress": "Recipient address",

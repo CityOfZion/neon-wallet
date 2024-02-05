@@ -11,7 +11,7 @@ export type TInputProps = Omit<React.ComponentProps<'input'>, 'type' | 'ref'> & 
   clearable?: boolean
   compacted?: boolean
   copyable?: boolean
-  type?: 'text' | 'password'
+  type?: 'text' | 'password' | 'number'
   leftIcon?: JSX.Element
 }
 
@@ -75,7 +75,10 @@ export const Input = forwardRef<HTMLInputElement, TInputProps>(
 
           <input
             ref={internalRef}
-            className={StyleHelper.mergeStyles('bg-transparent flex-grow outline-none', className)}
+            className={StyleHelper.mergeStyles(
+              'bg-transparent flex-grow outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none',
+              className
+            )}
             type={realType}
             spellCheck="false"
             autoComplete="off"
