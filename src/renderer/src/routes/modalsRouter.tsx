@@ -17,6 +17,7 @@ import { ImportEncryptedPasswordModal } from './modals/Import/ImportEncryptedPas
 import { ImportKeyAccountsSelectionModal } from './modals/Import/ImportKeyAccountsSelectionModal'
 import { ImportMnemonicAccountsSelectionModal } from './modals/Import/ImportMnemonicAccountsSelectionModal'
 import { PersistContactModal } from './modals/PersistContact'
+import { SelectAccount } from './modals/SelectAccount'
 import { SelectContact } from './modals/SelectContact'
 import { SuccessModal } from './modals/Success'
 
@@ -40,4 +41,5 @@ export const modalsRouter: TRoute[] = [
   { name: 'select-contact', element: <SelectContact /> },
   { name: 'blockchain-selection', element: <BlockchainSelectionModal /> },
   { name: 'import-encrypted-password', element: <ImportEncryptedPasswordModal /> },
+  { name: 'select-account', element: <SelectAccount /> },
 ]

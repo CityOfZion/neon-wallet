@@ -35,7 +35,7 @@ import { useWalletsSelector } from '@renderer/hooks/useWalletSelector'
 import { MainLayout } from '@renderer/layouts/Main'
 import { accountReducerActions } from '@renderer/store/reducers/AccountReducer'
 
-import { AccountList } from './AccountList'
+import { AccountList } from '../../../components/AccountList'
 
 export const WalletsPage = () => {
   const { status } = useWalletConnectWallet()
@@ -111,13 +111,15 @@ export const WalletsPage = () => {
   return (
     <MainLayout
       heading={
-        <WalletSelect
-          balanceExchange={balanceExchange}
-          wallets={wallets}
-          selected={selectedWallet}
-          onSelect={setSelectedWallet}
-          disabled={isReordering}
-        />
+        <div>
+          <WalletSelect
+            balanceExchange={balanceExchange}
+            wallets={wallets}
+            selected={selectedWallet}
+            onSelect={setSelectedWallet}
+            disabled={isReordering}
+          />
+        </div>
       }
       rightComponent={
         <div className="flex gap-x-2">

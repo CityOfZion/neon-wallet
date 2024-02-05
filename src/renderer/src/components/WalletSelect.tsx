@@ -19,6 +19,9 @@ type TProps = {
   onSelect?: (wallet: IWalletState) => void
   wallets: IWalletState[]
   balanceExchange: UseMultipleBalanceAndExchangeResult
+  showCreateWalletButton?: boolean
+  selectTriggerClassName?: string
+  selectContentClassName?: string
 }
 
 const Item = ({ wallet, balanceExchange }: TItemProps) => {
@@ -30,7 +33,16 @@ const Item = ({ wallet, balanceExchange }: TItemProps) => {
   )
 }
 
-export const WalletSelect = ({ wallets, selected, onSelect, balanceExchange, disabled }: TProps) => {
+export const WalletSelect = ({
+  wallets,
+  selected,
+  onSelect,
+  balanceExchange,
+  disabled,
+  showCreateWalletButton,
+  selectTriggerClassName,
+  selectContentClassName,
+}: TProps) => {
   const { t } = useTranslation('components', { keyPrefix: 'walletSelect' })
 
   const handleValueChange = (value: string) => {
@@ -44,15 +56,18 @@ export const WalletSelect = ({ wallets, selected, onSelect, balanceExchange, dis
       onSelect={handleValueChange}
       disabled={disabled}
       label={selected ? selected.name : t('placeholder')}
+      triggerClassName={selectTriggerClassName}
       title={t('title')}
+      contentClassName={selectContentClassName}
     >
       {wallets.map(wallet => (
         <Item key={wallet.id} wallet={wallet} balanceExchange={balanceExchange} />
       ))}
-
-      <div className="py-5 px-3">
-        <Button className="w-full" label={t('createWalletButtonLabel')} variant="outlined" flat />
-      </div>
+      {(showCreateWalletButton === undefined || showCreateWalletButton === true) && (
+        <div className="py-5 px-3">
+          <Button className="w-full" label={t('createWalletButtonLabel')} variant="outlined" flat />
+        </div>
+      )}
     </Select.Root>
   )
 }

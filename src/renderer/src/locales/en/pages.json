@@ -70,11 +70,7 @@
     "importButtonLabel": "Import",
     "newWalletButtonLabel": "New Wallet",
     "manageButtonLabel": "Manage",
-    "dappConnectionButtonLabel": "Dapp",
-    "reorder": {
-      "cancelButtonLabel": "Cancel",
-      "saveButtonLabel": "Save"
-    }
+    "dappConnectionButtonLabel": "Dapp"
   },
   "activity": {
     "title": "Activity",

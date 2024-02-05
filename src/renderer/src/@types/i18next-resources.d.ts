@@ -63,6 +63,10 @@ interface Resources {
     blockchainSelection: {
       search: 'Search...'
     }
+    wallets: {
+      cancelButtonLabel: 'Cancel'
+      saveButtonLabel: 'Save'
+    }
   }
   modals: {
     import: {
@@ -202,6 +206,11 @@ interface Resources {
       addressAlreadyExist: 'Address already exists'
       success: 'Encrypted key successfully imported!'
     }
+    selectAccount: {
+      title: 'Select a source account'
+      yourAccounts: 'Your accounts:'
+      selectSourceAccount: 'Select source account'
+    }
   }
   pages: {
     welcome: {
@@ -272,10 +281,6 @@ interface Resources {
       newWalletButtonLabel: 'New Wallet'
       manageButtonLabel: 'Manage'
       dappConnectionButtonLabel: 'Dapp'
-      reorder: {
-        cancelButtonLabel: 'Cancel'
-        saveButtonLabel: 'Save'
-      }
     }
     activity: {
       title: 'Activity'

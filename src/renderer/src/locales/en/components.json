@@ -31,5 +31,9 @@
   },
   "blockchainSelection": {
     "search": "Search..."
+  },
+  "wallets": {
+    "cancelButtonLabel": "Cancel",
+    "saveButtonLabel": "Save"
   }
 }
