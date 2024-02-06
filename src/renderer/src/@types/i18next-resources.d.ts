@@ -163,6 +163,9 @@ interface Resources {
       disclaimer: 'No actions that are initiated by the dApp will happen without your direct approval.'
       inputPlaceholder: 'Paste your URL here...'
       buttonConnectLabel: 'Connect'
+      errors: {
+        errorToConnect: 'Oops! we’ve encountered an error. Try to generate a new uri and try again.'
+      }
     }
     dappConnectionDetails: {
       title: 'This app wants to connect!'
