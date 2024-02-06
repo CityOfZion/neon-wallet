@@ -105,6 +105,7 @@ interface Resources {
       inputPlaceholder: 'Enter your wallet name...'
       saveButtonLabel: 'Save'
       cancelButtonLabel: 'Cancel'
+      nameLengthError: 'Name must be at least 1 character long'
     }
     editAccount: {
       title: 'Edit Account'
