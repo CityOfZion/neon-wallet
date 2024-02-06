@@ -5,6 +5,7 @@ import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
 
 import { registerEncryptionHandlers } from './encryption'
+import { registerLedgerHandlers } from './ledger'
 import { setupSentry } from './sentryElectron'
 
 setupSentry()
@@ -77,3 +78,4 @@ app.on('window-all-closed', () => {
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
 registerEncryptionHandlers()
+registerLedgerHandlers()

@@ -69,6 +69,23 @@ export const WalletsPage = () => {
     setSelectedAccount(undefined)
   }, [selectedWallet, accounts])
 
+  const teste = useCallback(async () => {
+    console.log('aqui')
+    const test = await window.ledger.getStartInfo()
+    // const test = await getStartInfo()
+    console.log('pre')
+    console.log(test)
+    console.log('pos')
+  }, [])
+
+  let first = 0
+  useEffect(() => {
+    if (first === 0) {
+      teste()
+    }
+    first++
+  }, [first, teste])
+
   return (
     <MainLayout
       heading={

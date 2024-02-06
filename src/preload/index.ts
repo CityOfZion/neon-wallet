@@ -2,6 +2,7 @@ import { electronAPI } from '@electron-toolkit/preload'
 import { contextBridge } from 'electron'
 
 import { customAPI } from './customAPI'
+import { customLedgerAPI } from './customLedgerAPI'
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
@@ -10,6 +11,7 @@ if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld('electron', electronAPI)
     contextBridge.exposeInMainWorld('api', customAPI)
+    contextBridge.exposeInMainWorld('ledger', customLedgerAPI)
   } catch (error) {
     console.error(error)
   }
