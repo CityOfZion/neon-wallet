@@ -96,4 +96,13 @@ export abstract class UtilsHelper {
     }
     img.src = `data:image/svg+xml;base64,${btoa(svgData)}`
   }
+
+  static getRandomTokenColor(symbol: string) {
+    const mandatoryColors: Record<string, string> = {
+      NEO: '#56f33f',
+      GAS: '#02c797',
+    }
+
+    return mandatoryColors[symbol] ?? `#${(0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)}`
+  }
 }

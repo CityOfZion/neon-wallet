@@ -1,5 +1,6 @@
 import { TBlockchainServiceKey } from '@renderer/@types/blockchain'
 import { Balance, MultiExchange, TokenBalance } from '@renderer/@types/query'
+import cloneDeep from 'lodash.clonedeep'
 
 export type BalanceConvertedToExchange = TokenBalance & {
   convertedAmount: number
@@ -28,10 +29,12 @@ export class BalanceHelper {
     return exchange?.price ?? 0
   }
 
-  static getTokensBalance(balances: Balance[] | Balance, addresses: string[] = []) {
-    return Array.isArray(balances)
-      ? balances.filter(balances => addresses.includes(balances.address)).flatMap(balance => balance.tokensBalances)
-      : balances.tokensBalances
+  static getTokensBalance(balances: Balance[] | Balance, addresses?: string[]) {
+    let tokenBalances = Array.isArray(balances) ? balances : [balances]
+    if (addresses) {
+      tokenBalances = tokenBalances.filter(balances => addresses.includes(balances.address))
+    }
+    return tokenBalances.flatMap(balance => balance.tokensBalances)
   }
 
   static convertBalanceToCurrency(
@@ -46,5 +49,25 @@ export class BalanceHelper {
       ...balance,
       convertedAmount: balance.amountNumber * ratio,
     }
+  }
+
+  static convertBalancesToCurrency(
+    balances?: Balance[] | Balance,
+    multiExchange?: MultiExchange
+  ): BalanceConvertedToExchange[] | undefined {
+    if (!balances || !multiExchange) return
+
+    const tokenBalances = this.getTokensBalance(balances)
+
+    const clonedTokenBalances = cloneDeep(tokenBalances)
+    const convertedBalancesToCurrency: BalanceConvertedToExchange[] = []
+
+    clonedTokenBalances.forEach(item => {
+      const converted = this.convertBalanceToCurrency(item, multiExchange)
+      if (!converted) return
+      convertedBalancesToCurrency.push(converted)
+    })
+
+    return convertedBalancesToCurrency
   }
 }

@@ -98,6 +98,17 @@ interface Resources {
       hash: 'HASH'
       view: 'View'
     }
+    balanceChart: {
+      tokenName: {
+        others: 'Others'
+      }
+      noAssests: 'No assets'
+    }
+    accountBalancePanel: {
+      holdings: 'Holdings'
+      walletsAndAccounts: '{{wallets}} Wallets / {{accounts}} Accounts'
+      totalValue: 'Total value'
+    }
   }
   modals: {
     import: {
@@ -354,6 +365,10 @@ interface Resources {
       newWalletButtonLabel: 'New Wallet'
       manageButtonLabel: 'Manage'
       dappConnectionButtonLabel: 'Dapp'
+      balance: 'Balance'
+      changeIn24hrs: 'Change in 24HRS'
+      portfolioBalance: 'Portfolio Balance'
+      publicAddress: 'Public Address'
     }
     activity: {
       title: 'Activity'
