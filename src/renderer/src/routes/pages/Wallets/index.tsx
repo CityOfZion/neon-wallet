@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { MdAdd, MdMoreVert } from 'react-icons/md'
+import { MdAdd, MdMoreVert, MdOutlineContentCopy } from 'react-icons/md'
 import { MdContentCopy } from 'react-icons/md'
 import {
   TbChevronRight,
@@ -18,6 +18,7 @@ import { EStatus } from '@cityofzion/wallet-connect-sdk-wallet-core'
 import { useWalletConnectWallet } from '@cityofzion/wallet-connect-sdk-wallet-react'
 import { IAccountState, IWalletState } from '@renderer/@types/store'
 import { ActionPopover } from '@renderer/components/ActionPopover'
+import { BlockchainIcon } from '@renderer/components/BlockchainIcon'
 import { Button } from '@renderer/components/Button'
 import { IconButton } from '@renderer/components/IconButton'
 import { PopOver } from '@renderer/components/PopOver'
@@ -26,6 +27,7 @@ import { WalletCard } from '@renderer/components/WalletCard'
 import { WalletSelect } from '@renderer/components/WalletSelect'
 import { DateHelper } from '@renderer/helpers/DateHelper'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
+import { UtilsHelper } from '@renderer/helpers/UtilsHelper'
 import { useAccountsSelector } from '@renderer/hooks/useAccountSelector'
 import { useBalancesAndExchange } from '@renderer/hooks/useBalancesAndExchange'
 import { useBsAggregatorSelector } from '@renderer/hooks/useBlockchainSelector'
@@ -36,6 +38,8 @@ import { MainLayout } from '@renderer/layouts/Main'
 import { accountReducerActions } from '@renderer/store/reducers/AccountReducer'
 
 import { AccountList } from '../../../components/AccountList'
+
+import { BalanceRingChart } from './BalanceRingChart'
 
 export const WalletsPage = () => {
   const { status } = useWalletConnectWallet()
@@ -236,7 +240,49 @@ export const WalletsPage = () => {
         </section>
       )}
       <div className="flex-grow flex flex-col gap-y-5">
-        <div className="w-full flex bg-gray-800 rounded flex-grow drop-shadow-lg animate-pulse"></div>
+        <div className="w-full bg-gray-800 rounded flex-grow drop-shadow-lg max-h-[20rem] pb-4">
+          <div className={`flex ${selectedAccount ? 'justify-between' : ''}`}>
+            <h1 className="flex items-end text-white m-4">
+              {selectedAccount && (
+                <BlockchainIcon blockchain={selectedAccount.blockchain} type="white" className="w-4 h-4 mr-5 mb-1" />
+              )}
+              {selectedAccount ? selectedAccount.name : t('portfolioBalance')}
+            </h1>
+            {selectedAccount && (
+              <div className="flex items-center m-2">
+                <span className="text-gray-100 text-xs uppercase mr-4">{t('publicAddress')}</span>
+                <span className="text-gray-200 text-xs">{selectedAccount.address}</span>
+                <IconButton
+                  icon={<MdOutlineContentCopy className="text-neon" />}
+                  size="md"
+                  onClick={() => UtilsHelper.copyToClipboard(selectedAccount.address)}
+                />
+              </div>
+            )}
+          </div>
+          <Separator className="mx-4" />
+          <div className="flex">
+            <div className="flex flex-col ml-4 pr-4 h-full w-44 items-center border-r mt-4 border-gray-300/15">
+              <BalanceRingChart balanceExchange={balanceExchange} wallets={wallets} selectedWallet={selectedWallet} />
+              {selectedAccount ? (
+                <Button label={'Claim [0.00] GAS'} className="w-full" colorSchema="gray" />
+              ) : (
+                <div className="flex bg-gradient-to-t from-gray-600 to-gray-800 h-[45px] w-[135px] justify-center rounded">
+                  <div className="flex justify-evenly bg-asphalt h-11 w-[133px] rounded text-xs">
+                    <div className="flex flex-col w-full h-full justify-center items-center">
+                      <span className="text-gray-100">{'Wallets'}</span>
+                      <span>{wallets.length}</span>
+                    </div>
+                    <div className="flex flex-col w-full h-full justify-center items-center">
+                      <span className="text-gray-100">{'Accounts'}</span>
+                      <span>{accounts.length}</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
         <div className="w-full bg-gray-800 rounded flex-grow drop-shadow-lg overflow-scroll max-h-[20rem]">
           <h1 className="text-white m-4">{commonActivity('title')}</h1>
           <Separator className="mx-4" />

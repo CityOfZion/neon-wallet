@@ -302,6 +302,10 @@ interface Resources {
       newWalletButtonLabel: 'New Wallet'
       manageButtonLabel: 'Manage'
       dappConnectionButtonLabel: 'Dapp'
+      balance: 'Balance'
+      changeIn24hrs: 'Change in 24HRS'
+      portfolioBalance: 'Portfolio Balance'
+      publicAddress: 'Public Address'
     }
     activity: {
       title: 'Activity'
