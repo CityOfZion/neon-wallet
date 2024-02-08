@@ -6,6 +6,7 @@ import { ReactComponent as NeonWalletLogo } from '@renderer/assets/images/neon-w
 import { ReactComponent as WalletConnectLogo } from '@renderer/assets/images/wallet-connect.svg'
 import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
+import { ToastHelper } from '@renderer/helpers/ToastHelper'
 import { WalletConnectHelper } from '@renderer/helpers/WalletConnectHelper'
 import { useActions } from '@renderer/hooks/useActions'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
@@ -41,6 +42,7 @@ export const DappConnectionModal = () => {
       setData({ isConnecting: true })
       await connect(data.url)
     } catch {
+      ToastHelper.error({ message: t('errors.errorToConnect') })
       setData({ isConnecting: false })
     }
   }
