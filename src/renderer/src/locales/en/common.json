@@ -4,7 +4,8 @@
     "next": "Next",
     "save": "Save",
     "edit": "Edit",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "reset": "Reset"
   },
   "walletConnect": {
     "name": "Neon Wallet",
@@ -26,5 +27,9 @@
     "neo3": "Neo",
     "neoLegacy": "Neo Legacy",
     "ethereum": "Ethereum"
+  },
+  "networkTypeLabel": {
+    "mainnet": "MainNet",
+    "testnet": "TestNet"
   }
 }

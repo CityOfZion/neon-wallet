@@ -6,11 +6,7 @@
   },
   "securitySetup": {
     "title": "Welcome to Neon Wallet",
-    "steps": [
-      "Create Password",
-      "Confirm Password",
-      "Complete"
-    ]
+    "steps": ["Create Password", "Confirm Password", "Complete"]
   },
   "securitySetupStep1": {
     "formTitle": "Please create a password to secure your wallet",
@@ -151,6 +147,12 @@
         "subtitle": "Private Key encrypted successfully!",
         "description": "Here’s your encrypted key:"
       }
+    },
+    "settingsNetwork": {
+      "title": "Network Configuration",
+      "youAreConnectedNeoAndEth": "You are connected to both the Neo and Ethereum networks",
+      "globalConfiguration": "Global controls",
+      "currentNetwork": "Current Network"
     }
   },
   "receive": {

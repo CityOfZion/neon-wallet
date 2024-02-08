@@ -1,3 +1,5 @@
+import { NetworkType } from '@cityofzion/blockchain-service'
+
 import { IWalletState, TWalletType } from './store'
 
 export type TBlockchainServiceKey = 'neo3' | 'neoLegacy' | 'ethereum'
@@ -32,3 +34,5 @@ export type TWalletToCreate = {
   walletType: TWalletType
   mnemonic?: string
 }
+
+export type TNetworkType = Exclude<NetworkType, 'custom'>

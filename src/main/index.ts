@@ -22,6 +22,7 @@ function createWindow(): void {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false,
     },
+    autoHideMenuBar: true,
   })
 
   mainWindow.on('ready-to-show', () => {

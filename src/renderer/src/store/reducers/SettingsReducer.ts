@@ -1,4 +1,5 @@
 import { CaseReducer, createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { TNetworkType } from '@renderer/@types/blockchain'
 import { ISettingsState, RootState, TSecurityType } from '@renderer/@types/store'
 import { UtilsHelper } from '@renderer/helpers/UtilsHelper'
 
@@ -12,6 +13,7 @@ const initialState: ISettingsState = {
   encryptedPassword: undefined,
   securityType: 'none',
   isFirstTime: true,
+  networkType: 'mainnet',
 }
 
 const setEncryptedPassword: CaseReducer<ISettingsState, PayloadAction<string>> = (state, action) => {
@@ -57,6 +59,10 @@ const setSecurityType: CaseReducer<ISettingsState, PayloadAction<TSecurityType>>
   state.securityType = action.payload
 }
 
+const setNetworkType: CaseReducer<ISettingsState, PayloadAction<TNetworkType>> = (state, action) => {
+  state.networkType = action.payload
+}
+
 const SettingsReducer = createSlice({
   name: settingsReducerName,
   initialState,
@@ -64,6 +70,7 @@ const SettingsReducer = createSlice({
     setIsFirstTime,
     setSecurityType,
     setEncryptedPassword,
+    setNetworkType,
     logout,
   },
   extraReducers: builder => {

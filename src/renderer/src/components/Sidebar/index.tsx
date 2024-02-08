@@ -10,6 +10,7 @@ import {
   TbStepOut,
   TbUsers,
 } from 'react-icons/tb'
+import { StyleHelper } from '@renderer/helpers/StyleHelper'
 import { useAppDispatch } from '@renderer/hooks/useRedux'
 import { settingsReducerActions } from '@renderer/store/reducers/SettingsReducer'
 
@@ -30,7 +31,7 @@ export const Sidebar = (): JSX.Element => {
   return (
     <aside className="bg-gray-800 h-screen w-[4rem] min-w-[4rem] flex flex-col">
       <div className="flex justify-center py-4">
-        <NeonLogoIcon className="fill-neon" />
+        <NeonLogoIcon />
       </div>
 
       <nav className="flex-grow">

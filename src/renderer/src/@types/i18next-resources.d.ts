@@ -6,6 +6,7 @@ interface Resources {
       save: 'Save'
       edit: 'Edit'
       cancel: 'Cancel'
+      reset: 'Reset'
     }
     walletConnect: {
       name: 'Neon Wallet'
@@ -27,6 +28,10 @@ interface Resources {
       neo3: 'Neo'
       neoLegacy: 'Neo Legacy'
       ethereum: 'Ethereum'
+    }
+    networkTypeLabel: {
+      mainnet: 'MainNet'
+      testnet: 'TestNet'
     }
   }
   components: {
@@ -237,6 +242,10 @@ interface Resources {
       selectAmountSend: 'Select amount to send'
       tokenValue: 'Token value'
     }
+    networkSelection: {
+      title: 'Network'
+      selectNetwork: 'Select a network'
+    }
   }
   pages: {
     welcome: {
@@ -387,6 +396,12 @@ interface Resources {
           subtitle: 'Private Key encrypted successfully!'
           description: 'Here’s your encrypted key:'
         }
+      }
+      settingsNetwork: {
+        title: 'Network Configuration'
+        youAreConnectedNeoAndEth: 'You are connected to both the Neo and Ethereum networks'
+        globalConfiguration: 'Global configuration'
+        currentNetwork: 'Current Network'
       }
     }
     receive: {
