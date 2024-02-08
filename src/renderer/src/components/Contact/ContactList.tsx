@@ -1,6 +1,7 @@
 import { Fragment, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TbCheck, TbChevronUp } from 'react-icons/tb'
+import { TBlockchainServiceKey } from '@renderer/@types/blockchain'
 import { IContactState, TContactAddress } from '@renderer/@types/store'
 import { SearchInput } from '@renderer/components/SearchInput'
 import { StringHelper } from '@renderer/helpers/StringHelper'
@@ -16,6 +17,7 @@ type TProps = {
   onAddressSelected?: (address: TContactAddress | null) => void
   selectFirst: boolean
   showSelectedIcon: boolean
+  blockchainFilter?: TBlockchainServiceKey
   children?: React.ReactNode
 }
 
@@ -24,6 +26,7 @@ export const ContactList = ({
   onAddressSelected,
   selectFirst,
   showSelectedIcon,
+  blockchainFilter,
   children,
 }: TProps) => {
   const { t: contactT } = useTranslation('components', { keyPrefix: 'contacts' })
@@ -77,8 +80,24 @@ export const ContactList = ({
     }
   }
 
+  const filteredSelectContactAddresses = useMemo(() => {
+    let filtered = cloneDeep(selectedContact?.addresses)
+
+    if (blockchainFilter) {
+      filtered = filtered?.filter(address => address.blockchain === blockchainFilter)
+    }
+
+    return filtered
+  }, [selectedContact?.addresses, blockchainFilter])
+
   const groupedContacts = useMemo(() => {
     let filteredContacts = cloneDeep(contacts)
+
+    if (blockchainFilter) {
+      filteredContacts = contacts.filter(contact =>
+        contact.addresses.some(address => address.blockchain === blockchainFilter)
+      )
+    }
 
     if (search) {
       filteredContacts = contacts.filter(contact =>
@@ -110,7 +129,7 @@ export const ContactList = ({
     }
 
     return groupContactsByFirstLetter
-  }, [contacts, onContactSelected, search, selectFirst])
+  }, [contacts, onContactSelected, search, selectFirst, blockchainFilter])
 
   return (
     <Fragment>
@@ -131,7 +150,7 @@ export const ContactList = ({
                     <button
                       onClick={() => onContactSelect(value)}
                       className={StyleHelper.mergeStyles(
-                        'w-full flex items-center justify-between h-10 py-4 pl-2 border-l-4 border-transparent',
+                        'w-full flex items-center justify-between h-10 py-4 pl-2 border-l-4 border-transparent hover:border-neon hover:bg-gray-900',
                         {
                           'bg-gray-900 border-neon': isContactSelected(value.id),
                         }
@@ -157,8 +176,8 @@ export const ContactList = ({
 
                     {isContactSelected(value.id) &&
                       showSelectedIcon &&
-                      selectedContact &&
-                      selectedContact.addresses.map((address, addressIndex) => {
+                      filteredSelectContactAddresses &&
+                      filteredSelectContactAddresses.map((address, addressIndex) => {
                         return (
                           <div key={addressIndex}>
                             <button
@@ -166,10 +185,13 @@ export const ContactList = ({
                               className="pl-[2.3rem] flex w-full items-center justify-between"
                             >
                               <div
-                                className={StyleHelper.mergeStyles('flex w-full pl-[0.45rem] py-1 items-center', {
-                                  'bg-gray-900/50': isAddressSelected(address.address),
-                                  'mb-2': addressIndex === selectedContact.addresses.length - 1,
-                                })}
+                                className={StyleHelper.mergeStyles(
+                                  'flex w-full pl-[0.45rem] py-1 items-center hover:bg-gray-900/50',
+                                  {
+                                    'bg-gray-900/50': isAddressSelected(address.address),
+                                    'mb-2': addressIndex === filteredSelectContactAddresses.length - 1,
+                                  }
+                                )}
                               >
                                 <div className="flex w-full">
                                   <div className="flex items-center">
@@ -188,7 +210,7 @@ export const ContactList = ({
                                 {isAddressSelected(address.address) && <TbCheck className="text-neon h-5 w-5 mr-3" />}
                               </div>
                             </button>
-                            {addressIndex !== selectedContact.addresses.length - 1 && (
+                            {addressIndex !== filteredSelectContactAddresses.length - 1 && (
                               <div className="pl-[4.5rem]">
                                 <Separator />
                               </div>

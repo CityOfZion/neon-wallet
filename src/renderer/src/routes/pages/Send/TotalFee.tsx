@@ -1,7 +1,11 @@
 import { useTranslation } from 'react-i18next'
 import { TbReceipt } from 'react-icons/tb'
 
-export const TotalFee = () => {
+type TTotalFeeParams = {
+  totalFee: string
+}
+
+export const TotalFee = ({ totalFee }: TTotalFeeParams) => {
   const { t } = useTranslation('pages', { keyPrefix: 'send' })
 
   return (
@@ -12,7 +16,7 @@ export const TotalFee = () => {
           <span>{t('totalFee')}</span>
         </div>
         <div className="flex items-center">
-          <span className="text-gray-100">0.00</span>
+          <span className="text-gray-100">{totalFee}</span>
         </div>
       </div>
     </div>

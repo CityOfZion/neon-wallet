@@ -4,10 +4,10 @@ import { TbStepOut } from 'react-icons/tb'
 import { TokenBalance } from '@renderer/@types/query'
 import { IAccountState } from '@renderer/@types/store'
 import { Button } from '@renderer/components/Button'
+import { TokenBalanceList } from '@renderer/components/TokenBalanceList'
 import { useBalancesAndExchange } from '@renderer/hooks/useBalancesAndExchange'
 import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
 import { EndModalLayout } from '@renderer/layouts/EndModal'
-import { TokenBalanceList } from '@renderer/routes/pages/Send/TokenBalanceList'
 
 type TTokenState = {
   selectedAccount: IAccountState

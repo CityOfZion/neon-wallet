@@ -10,7 +10,7 @@ export type TCustomClickableProps = {
   disabled?: boolean
   loading?: boolean
   flat?: boolean
-  colorSchema?: 'neon' | 'gray' | 'error'
+  colorSchema?: 'neon' | 'gray' | 'white' | 'error'
   iconsOnEdge?: boolean
 }
 
@@ -37,6 +37,7 @@ const Outline = ({ className, colorSchema = 'neon', ...props }: TClickableProps)
         {
           'aria-[disabled=false]:text-neon aria-[disabled=false]:border-neon': colorSchema === 'neon',
           'aria-[disabled=false]:text-gray-100 aria-[disabled=false]:border-gray-100': colorSchema === 'gray',
+          'aria-[disabled=false]:text-white aria-[disabled=false]:border-white': colorSchema === 'white',
           'aria-[disabled=false]:text-pink aria-[disabled=false]:border-pink': colorSchema === 'error',
         }
       )}
@@ -92,6 +93,7 @@ const Base = ({
         'w-5 h-5': flat,
         'text-neon': colorSchema === 'neon',
         'text-gray-200': colorSchema === 'gray',
+        'text-white': colorSchema === 'white',
         'text-pink': colorSchema === 'error',
         'text-gray-100/50': isDisabled,
       },
@@ -108,6 +110,7 @@ const Base = ({
           'h-8.5 text-xs px-4': flat,
           'aria-[disabled=false]:text-neon': colorSchema === 'neon',
           'aria-[disabled=false]:text-gray-200': colorSchema === 'gray',
+          'aria-[disabled=false]:text-white': colorSchema === 'white',
           'aria-[disabled=false]:text-pink': colorSchema === 'error',
         },
 

@@ -37,7 +37,7 @@ export const ContentLayout = ({
           <button type="button" onClick={handleBackClick}>
             <TbArrowLeft className="w-5 h-5 text-gray-100" />
           </button>
-          <div className="flex items-center mx-auto">
+          <div className="flex items-center mx-auto pr-6">
             {titleIcon &&
               cloneElement(titleIcon, {
                 className: StyleHelper.mergeStyles('text-neon mx-2', titleIconClassName),
