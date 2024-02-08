@@ -1,6 +1,6 @@
-import { Fragment } from 'react'
+import { cloneElement, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
-import { TbChevronRight, TbStepOut } from 'react-icons/tb'
+import { TbChevronRight } from 'react-icons/tb'
 import { IAccountState } from '@renderer/@types/store'
 import { Separator } from '@renderer/components/Separator'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
@@ -10,23 +10,39 @@ type TAccountParams = {
   selectedAccount?: IAccountState
   onSelectAccount: (contact: IAccountState) => void
   active: boolean
+  title: string
+  modalTitle: string
+  buttonLabel: string
+  leftIcon: JSX.Element
 }
 
-export const SelectAccount = ({ selectedAccount, onSelectAccount, active }: TAccountParams) => {
-  const { t } = useTranslation('pages', { keyPrefix: 'send' })
+export const SelectAccount = ({
+  selectedAccount,
+  onSelectAccount,
+  active,
+  title,
+  modalTitle,
+  buttonLabel,
+  leftIcon,
+}: TAccountParams) => {
+  const { t } = useTranslation('pages', { keyPrefix: 'selectAccount' })
   const { modalNavigateWrapper } = useModalNavigate()
 
   return (
     <Fragment>
       <div className="flex justify-between h-11 p-3">
         <div className="flex items-center">
-          <TbStepOut className="text-blue w-5 h-5 mr-3 ml-1" />
+          {leftIcon &&
+            cloneElement(leftIcon, {
+              ...leftIcon.props,
+              className: StyleHelper.mergeStyles('text-blue w-5 h-5 mr-3 ml-1', leftIcon.props.className),
+            })}
           <span
             className={StyleHelper.mergeStyles({
               'font-bold': active,
             })}
           >
-            {t('sourceAccount')}
+            {title}
           </span>
         </div>
         <button
@@ -34,6 +50,9 @@ export const SelectAccount = ({ selectedAccount, onSelectAccount, active }: TAcc
           onClick={modalNavigateWrapper('select-account', {
             state: {
               onSelectAccount: onSelectAccount,
+              title: modalTitle,
+              buttonLabel: buttonLabel,
+              leftIcon,
             },
           })}
         >
