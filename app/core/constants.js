@@ -393,5 +393,6 @@ export const WITNESS_SCOPE = {
   '1': 'CalledByEntry',
   '16': 'CustomContracts',
   '32': 'CustomGroups',
+  '64': 'WitnessRules',
   '128': 'Global',
 }
