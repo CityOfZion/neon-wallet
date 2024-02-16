@@ -31,7 +31,8 @@
   },
   "portfolio": {
     "title": "Portfolio",
-    "buttonRefreshLabel": "Refresh"
+    "buttonRefreshLabel": "Refresh",
+    "allAccounts": "All accounts"
   },
   "login": {
     "title": "Welcome to Neon Wallet",
@@ -89,13 +90,7 @@
     "dappConnectionButtonLabel": "Dapp"
   },
   "activity": {
-    "title": "Activity",
-    "txType": "TX.TYPE",
-    "date": "DATE",
-    "time": "TIME",
-    "name": "NAME",
-    "hash": "HASH",
-    "view": "View"
+    "title": "Activity"
   },
   "contacts": {
     "title": "Contacts",

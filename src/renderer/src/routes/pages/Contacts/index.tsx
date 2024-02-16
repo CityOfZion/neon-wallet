@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { BiSolidDownArrow, BiSolidSortAlt, BiSolidUpArrow } from 'react-icons/bi'
 import { FiSend } from 'react-icons/fi'
 import { MdOutlineContentCopy } from 'react-icons/md'
 import { TbPencil, TbPlus } from 'react-icons/tb'
@@ -10,6 +9,7 @@ import { Button } from '@renderer/components/Button'
 import { ContactList } from '@renderer/components/Contact/ContactList'
 import { IconButton } from '@renderer/components/IconButton'
 import { Separator } from '@renderer/components/Separator'
+import { SortIcon } from '@renderer/components/SortIcon'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
 import { UtilsHelper } from '@renderer/helpers/UtilsHelper'
 import { useContactsSelector } from '@renderer/hooks/useContactSelector'
@@ -123,9 +123,7 @@ export const ContactsPage = () => {
                         onClick={() => changeBlockchainSort()}
                       >
                         {t('addressTable.blockchain')}
-                        {sortBlockchain === null && <BiSolidSortAlt className="text-gray-200" />}
-                        {sortBlockchain === false && <BiSolidDownArrow className="text-gray-200" />}
-                        {sortBlockchain && <BiSolidUpArrow className="text-gray-200" />}
+                        <SortIcon selected={sortBlockchain} />
                       </button>
                     </th>
                     <th>{t('addressTable.address')}</th>

@@ -40,5 +40,26 @@
     "token": "Token",
     "quantity": "Quantity",
     "price": "Price"
+  },
+  "portfolioTokenBalanceList": {
+    "ticker": "TICKER",
+    "token": "TOKEN",
+    "holdings": "HOLDINGS",
+    "price": "PRICE",
+    "value": "VALUE"
+  },
+  "accountData": {
+    "tab": {
+      "tokens": "TOKENS",
+      "nfts": "NFTS",
+      "transactions": "TRANSACTIONS"
+    }
+  },
+  "transactionList": {
+    "date": "DATE",
+    "time": "TIME",
+    "name": "NAME",
+    "hash": "HASH",
+    "view": "View"
   }
 }

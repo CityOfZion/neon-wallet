@@ -72,6 +72,27 @@ interface Resources {
       quantity: 'Quantity'
       price: 'Price'
     }
+    portfolioTokenBalanceList: {
+      ticker: 'TICKER'
+      token: 'TOKEN'
+      holdings: 'HOLDINGS'
+      price: 'PRICE'
+      value: 'VALUE'
+    }
+    accountData: {
+      tab: {
+        tokens: 'TOKENS'
+        nfts: 'NFTS'
+        transactions: 'TRANSACTIONS'
+      }
+    }
+    transactionList: {
+      date: 'DATE'
+      time: 'TIME'
+      name: 'NAME'
+      hash: 'HASH'
+      view: 'View'
+    }
   }
   modals: {
     import: {
@@ -268,6 +289,7 @@ interface Resources {
     portfolio: {
       title: 'Portfolio'
       buttonRefreshLabel: 'Refresh'
+      allAccounts: 'All accounts'
     }
     login: {
       title: 'Welcome to Neon Wallet'
@@ -326,12 +348,6 @@ interface Resources {
     }
     activity: {
       title: 'Activity'
-      txType: 'TX.TYPE'
-      date: 'DATE'
-      time: 'TIME'
-      name: 'NAME'
-      hash: 'HASH'
-      view: 'View'
     }
     contacts: {
       title: 'Contacts'
