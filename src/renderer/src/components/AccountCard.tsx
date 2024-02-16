@@ -4,6 +4,7 @@ import { UseMultipleBalanceAndExchangeResult } from '@renderer/@types/query'
 import { IAccountState } from '@renderer/@types/store'
 import { BalanceHelper } from '@renderer/helpers/BalanceHelper'
 import { FilterHelper } from '@renderer/helpers/FilterHelper'
+import { StringHelper } from '@renderer/helpers/StringHelper'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
 
 import { AccountIcon } from './AccountIcon'
@@ -54,7 +55,7 @@ export const AccountCard = ({
 
       <div className="flex justify-between items-center flex-grow min-w-0 gap-x-2">
         <div className="flex flex-col flex-grow min-w-0">
-          <p className="text-xs text-gray-100 truncate">{account.name}</p>
+          <p className="text-xs text-gray-100 truncate">{StringHelper.truncateString(account.name, 30)}</p>
 
           <Tooltip title={formattedTotalTokensBalances}>
             <span className="block w-fit max-w-full text-sm text-white truncate">{formattedTotalTokensBalances}</span>

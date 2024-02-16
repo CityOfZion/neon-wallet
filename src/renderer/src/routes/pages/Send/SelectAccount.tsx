@@ -4,6 +4,7 @@ import { TbChevronRight } from 'react-icons/tb'
 import { IAccountState } from '@renderer/@types/store'
 import { Button } from '@renderer/components/Button'
 import { Separator } from '@renderer/components/Separator'
+import { StringHelper } from '@renderer/helpers/StringHelper'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
 
@@ -59,7 +60,7 @@ export const SelectAccount = ({
           clickableProps={{ className: 'hover:bg-gray-300/15 hover:rounded pr-1' }}
           variant="text"
           colorSchema={active ? 'neon' : 'white'}
-          label={selectedAccount ? selectedAccount.name : t('selectAccount')}
+          label={selectedAccount ? StringHelper.truncateString(selectedAccount.name, 40) : t('selectAccount')}
           rightIcon={<TbChevronRight />}
           flat
         />
