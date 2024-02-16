@@ -167,7 +167,9 @@ export const ContactList = ({
                         >
                           {getFirstLastNameInitials(value.name)}
                         </div>
-                        <span className="pl-2">{value.name}</span>
+                        <span className="pl-2" title={value.name}>
+                          {StringHelper.truncateString(value.name, 32)}
+                        </span>
                       </div>
                       {isContactSelected(value.id) && showSelectedIcon && (
                         <TbChevronUp className="text-gray-300 h-4 w-4 mr-3" />
