@@ -104,12 +104,12 @@ function NumberParser(item, decimals) {
   }
 }
 
-// get tokens from Dora
 let page = 1
 const tokensFromDora = []
-const doraResults = async () => {
+
+const doraResults = async nNet => {
   const pageResults = await axios.get(
-    `https://dora.coz.io/api/v1/neo2/mainnet/assets/${page}`,
+    `https://dora.coz.io/api/v1/neo2/${nNet}/assets/${page}`,
   )
   let token
   for (token of pageResults.data.items) {
@@ -121,13 +121,12 @@ const doraResults = async () => {
   }
   page += 1
   const nextPage = await axios.get(
-    `https://dora.coz.io/api/v1/neo2/mainnet/assets/${page}`,
+    `https://dora.coz.io/api/v1/neo2/${nNet}/assets/${page}`,
   )
   if (nextPage.data.items.length !== 0) {
-    doraResults()
+    await doraResults(nNet)
   }
 }
-doraResults()
 
 const getTokenBalances = (url, scriptHashArray, address) => {
   const addrScriptHash = reverseHex(getScriptHashFromAddress(address))
@@ -372,10 +371,13 @@ async function getBalances({ net, address, isRetry = false, chain }: Props) {
   // $FlowFixMe
   const balances = extend({}, ...parsedTokenBalances, ...parsedAssets)
 
-  // check balances and update if necessary
-  const n = net === 'MainNet' ? 'mainnet' : 'testnet'
+  // check balances and update from Dora if necessary
+  const nNet = net === 'MainNet' ? 'mainnet' : 'testnet'
+  if (tokensFromDora.length === 0) {
+    await doraResults(nNet)
+  }
   const allBalances = await axios.get(
-    `https://dora.coz.io/api/v1/neo2/${n}/get_balance/${address}`,
+    `https://dora.coz.io/api/v1/neo2/${nNet}/get_balance/${address}`,
   )
   const tokenBalances = {}
   allBalances.data.balance.forEach(token => {
