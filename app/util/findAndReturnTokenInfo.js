@@ -2,6 +2,7 @@
 import { api } from '@cityofzion/neon-js-legacy'
 import N3Neon, { rpc as n3Rpc } from '@cityofzion/neon-js'
 
+import axios from 'axios'
 import { imageMap } from '../assets/nep5/png'
 import { getDefaultTokens } from '../core/nep5'
 import { ASSETS, NEO_ID, GAS_ID } from '../core/constants'
@@ -74,10 +75,16 @@ export const findAndReturnTokenInfo = async (
   // if token is unknown to application query neoscan
   const endpoint = await getRPCEndpoint(net)
   const tokenInfo = await api.nep5.getToken(endpoint, scriptHash).catch(e => {
+    console.warn(e)
+  })
+  if (tokenInfo) return { symbol: tokenInfo.symbol }
+
+  // if token is unknown to neoscan query dora
+  const network = net === 'MainNet' ? 'mainnet' : 'testnet'
+  const url = `https://dora.coz.io/api/v1/neo2/${network}/asset/${scriptHash}`
+  const results = await axios.get(url).catch(e => {
     console.error(e)
     return {}
   })
-  return {
-    symbol: tokenInfo.symbol,
-  }
+  return { symbol: results.data.symbol }
 }

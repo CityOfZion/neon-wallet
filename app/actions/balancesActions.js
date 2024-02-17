@@ -104,6 +104,33 @@ function NumberParser(item, decimals) {
   }
 }
 
+// get tokens from Dora
+let page = 1
+const tokensFromDora = []
+const doraResults = async () => {
+  const pageResults = await axios
+    .get(`https://dora.coz.io/api/v1/neo2/mainnet/assets/${page}`)
+    .catch(e => {
+      console.error(e)
+    })
+  let token
+  for (token of pageResults.data.items) {
+    tokensFromDora.push({
+      symbol: token.symbol,
+      scriptHash: token.scripthash.slice(2),
+      decimals: Number(token.decimals),
+    })
+  }
+  page += 1
+  const nextPage = await axios.get(
+    `https://dora.coz.io/api/v1/neo2/mainnet/assets/${page}`,
+  )
+  if (nextPage.data.items.length !== 0) {
+    doraResults()
+  }
+}
+doraResults()
+
 const getTokenBalances = (url, scriptHashArray, address) => {
   const addrScriptHash = reverseHex(getScriptHashFromAddress(address))
   const sb = new ScriptBuilder()
@@ -250,7 +277,7 @@ async function getBalances({ net, address, isRetry = false, chain }: Props) {
       .getToken(endpoint, token.scriptHash, address)
       .catch(error => {
         console.error(
-          'An error occurrred attempting to fetch custom script hash balance info.',
+          'An error occurred attempting to fetch custom script hash balance info.',
           { error },
         )
         return Promise.resolve()
@@ -343,8 +370,39 @@ async function getBalances({ net, address, isRetry = false, chain }: Props) {
 
   resetAudioTrigger()
   inMemoryNetwork = net
+
+  const balances = extend({}, ...parsedTokenBalances, ...parsedAssets)
+
+  // check balances and update if necessary
+  const n = net === 'MainNet' ? 'mainnet' : 'testnet'
+  const allBalances = await axios
+    .get(`https://dora.coz.io/api/v1/neo2/${n}/get_balance/${address}`)
+    .catch(e => {
+      console.error({ e })
+    })
+  const tokenBalances = {}
+  allBalances.data.balance.forEach(token => {
+    tokenBalances[token.asset_symbol || token.symbol] = token.amount
+  })
+  const items = Object.keys(tokenBalances)
+  items.forEach((item, i) => {
+    if (item !== 'NEO' && item !== 'GAS' && !(item in balances)) {
+      const lookup = tokensFromDora.find(el => el.symbol === item)
+      balances[lookup.scriptHash] = {
+        balance: Object.values(tokenBalances)[i],
+        cryptocompareSymbol: undefined,
+        decimals: lookup.decimals,
+        id: '',
+        isUserGenerated: false,
+        networkId: '1',
+        scriptHash: lookup.scriptHash,
+        symbol: lookup.symbol,
+        totalsupply: undefined,
+      }
+    }
+  })
   // $FlowFixMe
-  return extend({}, ...parsedTokenBalances, ...parsedAssets)
+  return balances
 }
 
 async function getN3Balances({ net, address }: Props) {
