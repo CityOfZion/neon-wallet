@@ -108,11 +108,9 @@ function NumberParser(item, decimals) {
 let page = 1
 const tokensFromDora = []
 const doraResults = async () => {
-  const pageResults = await axios
-    .get(`https://dora.coz.io/api/v1/neo2/mainnet/assets/${page}`)
-    .catch(e => {
-      console.error(e)
-    })
+  const pageResults = await axios.get(
+    `https://dora.coz.io/api/v1/neo2/mainnet/assets/${page}`,
+  )
   let token
   for (token of pageResults.data.items) {
     tokensFromDora.push({
@@ -371,15 +369,14 @@ async function getBalances({ net, address, isRetry = false, chain }: Props) {
   resetAudioTrigger()
   inMemoryNetwork = net
 
+  // $FlowFixMe
   const balances = extend({}, ...parsedTokenBalances, ...parsedAssets)
 
   // check balances and update if necessary
   const n = net === 'MainNet' ? 'mainnet' : 'testnet'
-  const allBalances = await axios
-    .get(`https://dora.coz.io/api/v1/neo2/${n}/get_balance/${address}`)
-    .catch(e => {
-      console.error({ e })
-    })
+  const allBalances = await axios.get(
+    `https://dora.coz.io/api/v1/neo2/${n}/get_balance/${address}`,
+  )
   const tokenBalances = {}
   allBalances.data.balance.forEach(token => {
     tokenBalances[token.asset_symbol || token.symbol] = token.amount
@@ -388,20 +385,19 @@ async function getBalances({ net, address, isRetry = false, chain }: Props) {
   items.forEach((item, i) => {
     if (item !== 'NEO' && item !== 'GAS' && !(item in balances)) {
       const lookup = tokensFromDora.find(el => el.symbol === item)
-      balances[lookup.scriptHash] = {
+      balances[(lookup?.scriptHash)] = {
         balance: Object.values(tokenBalances)[i],
         cryptocompareSymbol: undefined,
-        decimals: lookup.decimals,
+        decimals: lookup?.decimals,
         id: '',
         isUserGenerated: false,
         networkId: '1',
-        scriptHash: lookup.scriptHash,
-        symbol: lookup.symbol,
+        scriptHash: lookup?.scriptHash,
+        symbol: lookup?.symbol,
         totalsupply: undefined,
       }
     }
   })
-  // $FlowFixMe
   return balances
 }
 
