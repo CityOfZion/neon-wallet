@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useState } from 'react'
+import { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MdAdd, MdMoreVert } from 'react-icons/md'
 import { TbEyePlus, TbFileImport, TbMenuDeep, TbPencil, TbPlug, TbRefresh, TbRepeat } from 'react-icons/tb'
@@ -70,12 +70,8 @@ export const WalletsPage = () => {
   }, [selectedWallet, accounts])
 
   const teste = useCallback(async () => {
-    console.log('aqui')
-    const test = await window.ledger.getStartInfo()
-    // const test = await getStartInfo()
-    console.log('pre')
+    const test = await window.ledger.getHexPublicKey()
     console.log(test)
-    console.log('pos')
   }, [])
 
   let first = 0
