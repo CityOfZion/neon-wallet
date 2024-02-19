@@ -201,6 +201,9 @@ export const SendPage = () => {
                 buttonLabel={t('selectAccountModal.selectSourceAccount')}
                 leftIcon={<TbStepOut />}
               />
+              <div className="px-3">
+                <Separator />
+              </div>
               <SelectToken
                 selectedAccount={selectedAccount}
                 selectedToken={selectedToken}

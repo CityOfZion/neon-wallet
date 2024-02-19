@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import { TbChevronRight } from 'react-icons/tb'
 import { IAccountState } from '@renderer/@types/store'
 import { Button } from '@renderer/components/Button'
-import { Separator } from '@renderer/components/Separator'
 import { StringHelper } from '@renderer/helpers/StringHelper'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
@@ -64,9 +63,6 @@ export const SelectAccount = ({
           rightIcon={<TbChevronRight />}
           flat
         />
-      </div>
-      <div className="px-3">
-        <Separator />
       </div>
     </Fragment>
   )
