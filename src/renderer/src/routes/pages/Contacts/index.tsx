@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FiSend } from 'react-icons/fi'
 import { MdOutlineContentCopy } from 'react-icons/md'
@@ -57,6 +57,10 @@ export const ContactsPage = () => {
       setSortBlockchain(null)
     }
   }
+
+  useEffect(() => {
+    setSortBlockchain(null)
+  }, [selectedContact])
 
   return (
     <MainLayout

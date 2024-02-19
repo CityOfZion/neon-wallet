@@ -133,7 +133,7 @@ export const ContactList = ({
 
   return (
     <Fragment>
-      <div className="px-2 flex flex-col h-full items-center">
+      <div className="px-2 flex flex-col w-full h-full items-center">
         <div className="mb-8 w-full">
           <SearchInput placeholder={contactT('search')} onChange={event => setSearch(event.target.value)} />
         </div>
@@ -156,10 +156,10 @@ export const ContactList = ({
                         }
                       )}
                     >
-                      <div className="flex items-center">
+                      <div className="flex w-full items-center">
                         <div
                           className={StyleHelper.mergeStyles(
-                            'w-6 h-6 bg-gray-300/30 rounded-full text-sm flex items-center justify-center',
+                            'w-6 h-6 bg-gray-300/30 rounded-full text-sm flex shrink-0 items-center justify-center',
                             {
                               'bg-gray-200 text-gray-800': isContactSelected(value.id),
                             }
@@ -167,8 +167,8 @@ export const ContactList = ({
                         >
                           {getFirstLastNameInitials(value.name)}
                         </div>
-                        <span className="pl-2" title={value.name}>
-                          {StringHelper.truncateString(value.name, 32)}
+                        <span className="pl-2 truncate" title={value.name}>
+                          {value.name}
                         </span>
                       </div>
                       {isContactSelected(value.id) && showSelectedIcon && (
