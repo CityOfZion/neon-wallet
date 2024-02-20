@@ -24,9 +24,9 @@ export const ReceiveYourAddress = () => {
     <ContentLayout title={t('title')} titleIcon={<TbStepInto />}>
       <section className="bg-gray-800 h-full w-full flex rounded text-xs">
         <div className="w-full px-4 flex flex-col items-center">
-          <div className="flex flex-row justify-between h-15 w-fit text-1xs">
+          <div className="flex flex-row justify-between h-12 w-fit text-1xs">
             <button
-              className={StyleHelper.mergeStyles('w-44 border-b', {
+              className={StyleHelper.mergeStyles('w-44 border-b uppercase text-xs', {
                 'border-b-2': selectedTabbarOption === ETabbarOption.YOUR_ADDRESS,
               })}
               onClick={() => setSelectedTabbarOption(ETabbarOption.YOUR_ADDRESS)}
@@ -34,7 +34,7 @@ export const ReceiveYourAddress = () => {
               {t('yourAddressTabTitle')}
             </button>
             <button
-              className={StyleHelper.mergeStyles('w-44 border-b', {
+              className={StyleHelper.mergeStyles('w-44 border-b uppercase text-xs', {
                 'border-b-2': selectedTabbarOption === ETabbarOption.REQUEST_TOKENS,
               })}
               onClick={() => setSelectedTabbarOption(ETabbarOption.REQUEST_TOKENS)}
@@ -44,7 +44,7 @@ export const ReceiveYourAddress = () => {
             </button>
           </div>
           <Separator />
-          <section className="overflow-y-auto flex flex-col basis-0 flex-grow items-center py-10">
+          <section className="overflow-y-auto flex flex-col basis-0 flex-grow items-center py-6">
             <div className="relative">
               <div className="bg-gray-700 bg-opacity-60 flex flex-col w-[30rem] rounded">
                 <SelectAccount

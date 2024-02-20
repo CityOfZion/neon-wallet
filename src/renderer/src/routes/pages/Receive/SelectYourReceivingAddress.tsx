@@ -50,7 +50,7 @@ export const SelectYourReceivingAddress = ({ account }: TProps) => {
         <div className="px-3">
           <Separator />
         </div>
-        <div className="py-4">
+        <div className="pt-4">
           <Input
             value={address}
             onChange={handleChangeAddres}
@@ -77,7 +77,7 @@ export const SelectYourReceivingAddress = ({ account }: TProps) => {
         </div>
       </div>
       <Button
-        className="mt-10 w-[16rem]"
+        className="mt-8 w-[16rem]"
         label={!address ? t('sendQRCode') : t('downloadQRCode')}
         leftIcon={!address ? <TbSend /> : <TbCopy />}
         disabled={!address}
