@@ -12,7 +12,7 @@ const initialState = {
   bsAggregator: new BSAggregator<TBlockchainServiceKey>({
     neo3: new BSNeo3('neo3', { type: 'mainnet' }),
     neoLegacy: new BSNeoLegacy('neoLegacy', { type: 'mainnet' }),
-    ethereum: new BSEthereum('ethereum', { type: 'mainnet' }),
+    ethereum: new BSEthereum('ethereum', { type: 'mainnet' }, import.meta.env.BITQUERY_API_KEY ?? ''),
   }),
 } as IBlockchainState
 

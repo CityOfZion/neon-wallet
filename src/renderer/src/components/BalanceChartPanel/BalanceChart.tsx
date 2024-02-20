@@ -1,6 +1,5 @@
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { TbLoader2 } from 'react-icons/tb'
 import { UseMultipleBalanceAndExchangeResult } from '@renderer/@types/query'
 import { BalanceConvertedToExchange, BalanceHelper } from '@renderer/helpers/BalanceHelper'
 import { FilterHelper } from '@renderer/helpers/FilterHelper'
@@ -31,7 +30,7 @@ export const BalanceChart = ({ balanceExchange }: TProps) => {
       balanceExchange.exchange.data
     )
     if (!totalTokensBalances || totalTokensBalances <= 0 || !convertedBalances)
-      return [{ color: '#676767', name: t('noAssests'), value: FilterHelper.currency(0), widthPercent: 100 }]
+      return [{ color: '#676767', name: t('noAssets'), value: FilterHelper.currency(0), widthPercent: 100 }]
 
     const filteredBalances = convertedBalances
       .filter(balance => balance.convertedAmount > 0)
@@ -68,7 +67,7 @@ export const BalanceChart = ({ balanceExchange }: TProps) => {
     const otherBar: TBar = {
       color: '#47BEFF',
       value: FilterHelper.currency(othersAmount),
-      name: t('tokenName.others'),
+      name: t('othersTokens'),
       widthPercent: (othersAmount * 100) / totalTokensBalances,
     }
 
@@ -76,41 +75,35 @@ export const BalanceChart = ({ balanceExchange }: TProps) => {
   }, [balanceExchange.balance.data, balanceExchange.exchange.data, t, totalTokensBalances])
 
   return (
-    <div className="flex w-full justify-center">
-      {balanceExchange.isLoading ? (
-        <div className="flex justify-center w-full">
-          <TbLoader2 className="w-6 h-6 animate-spin" />
-        </div>
-      ) : (
-        bars.map(bar => (
+    <ul className="flex w-full justify-center">
+      {bars.map(bar => (
+        <li
+          key={bar.name}
+          className="flex flex-col mx-2 min-w-[5rem]"
+          style={{
+            width: `${bar.widthPercent}%`,
+          }}
+        >
           <div
-            key={bar.name}
-            className="flex flex-col mx-2 min-w-[5rem]"
+            className="h-2 w-full rounded-full drop-shadow-lg bg-white"
             style={{
-              width: `${bar.widthPercent}%`,
+              backgroundImage: `linear-gradient(0deg, ${bar.color} 0%, ${bar.color}80 100%)`,
             }}
-          >
+          ></div>
+          <div className="flex items-start mt-5">
             <div
-              className="h-2 w-full rounded-full drop-shadow-lg bg-white"
+              className="w-2 h-2 rounded-full mt-1"
               style={{
-                backgroundImage: `linear-gradient(0deg, ${bar.color} 0%, ${bar.color}80 100%)`,
+                backgroundColor: bar.color,
               }}
             ></div>
-            <div className="flex items-start mt-5">
-              <div
-                className="w-2 h-2 rounded-full mt-1"
-                style={{
-                  backgroundColor: bar.color,
-                }}
-              ></div>
-              <div className="flex flex-col pl-2">
-                <span className="text-white text-xs font-normal">{bar.name}</span>
-                <span className="text-gray-300 text-sm">{bar.value}</span>
-              </div>
+            <div className="flex flex-col pl-2">
+              <span className="text-white text-xs font-normal">{bar.name}</span>
+              <span className="text-gray-300 text-sm">{bar.value}</span>
             </div>
           </div>
-        ))
-      )}
-    </div>
+        </li>
+      ))}
+    </ul>
   )
 }

@@ -23,18 +23,24 @@ export const MainLayout = ({
 }: TMainLayoutProps): JSX.Element => {
   return (
     <AppLayout>
-      <div className={StyleHelper.mergeStyles('flex w-screen', className)} {...props}>
+      <div className={StyleHelper.mergeStyles('flex h-screen w-screen', className)} {...props}>
         <Sidebar />
-        <div className="flex-grow flex flex-col bg-asphalt text-white px-7 py-4">
-          <header className={StyleHelper.mergeStyles('border-b border-b-gray-300/30  pb-4', headerClassName)}>
-            <div className="flex justify-between items-center h-8">
-              {typeof heading === 'string' ? <h1 className="text-sm font-bold">{heading}</h1> : heading}
 
-              {rightComponent}
-            </div>
+        <div className="h-full w-full flex flex-col bg-asphalt text-white px-7 py-4 min-w-0 min-h-0">
+          <header
+            className={StyleHelper.mergeStyles(
+              'border-b border-b-gray-300/30 min-h-12  flex justify-between items-center pb-4',
+              headerClassName
+            )}
+          >
+            {typeof heading === 'string' ? <h1 className="text-sm font-bold">{heading}</h1> : heading}
+
+            {rightComponent}
           </header>
 
-          <main className={StyleHelper.mergeStyles('flex flex-col flex-grow pt-5', contentClassName)}>{children}</main>
+          <main className={StyleHelper.mergeStyles('flex w-full flex-col flex-grow min-h-0 pt-5', contentClassName)}>
+            {children}
+          </main>
         </div>
       </div>
     </AppLayout>

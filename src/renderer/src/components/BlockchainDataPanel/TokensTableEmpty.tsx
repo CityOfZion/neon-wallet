@@ -3,10 +3,10 @@ import { TbDiamondOff, TbFileImport, TbStepInto } from 'react-icons/tb'
 import { useNavigate } from 'react-router-dom'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
 
-import { BlockchainIcon } from './BlockchainIcon'
-import { Button } from './Button'
+import { BlockchainIcon } from '../BlockchainIcon'
+import { Button } from '../Button'
 
-export const TransactionsTableEmpty = () => {
+export const TokensTableEmpty = () => {
   const { t } = useTranslation('components', { keyPrefix: 'transactionsTableEmpty' })
   const navigate = useNavigate()
   const { modalNavigateWrapper } = useModalNavigate()
@@ -27,18 +27,18 @@ export const TransactionsTableEmpty = () => {
         <div className="flex justify-center text-center text-gray-300 text-xs mt-2">{t('subtitle')}</div>
         <div className="flex gap-3 my-5">
           <Button
-            className="w-full"
+            className="w-full min-w-[9.75rem]"
             label={t('requestAssetsLabel')}
             rightIcon={<TbStepInto />}
             onClick={() => navigate('/receive')}
-            clickableProps={{ className: 'h-10' }}
+            flat
           />
           <Button
-            className="w-full"
+            className="w-full min-w-[9.75rem]"
             label={t('importAccountLabel')}
             rightIcon={<TbFileImport />}
             onClick={modalNavigateWrapper('import')}
-            clickableProps={{ className: 'h-10' }}
+            flat
           />
         </div>
       </div>

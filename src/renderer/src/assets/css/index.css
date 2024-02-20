@@ -44,6 +44,11 @@
   src: url('../fonts/sofiapro-bold-webfont.woff') format('woff');
 }
 
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 12px;
