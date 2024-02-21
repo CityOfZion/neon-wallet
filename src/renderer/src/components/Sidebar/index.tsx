@@ -10,7 +10,6 @@ import {
   TbStepOut,
   TbUsers,
 } from 'react-icons/tb'
-import { StyleHelper } from '@renderer/helpers/StyleHelper'
 import { useAppDispatch } from '@renderer/hooks/useRedux'
 import { settingsReducerActions } from '@renderer/store/reducers/SettingsReducer'
 
