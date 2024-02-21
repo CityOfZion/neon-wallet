@@ -1,4 +1,3 @@
-import { BSAggregator } from '@cityofzion/blockchain-service'
 import { RootStore } from '@renderer/store/RootStore'
 
 import { TBlockchainServiceKey, TNetworkType } from './blockchain'
@@ -12,10 +11,6 @@ export interface IAccountState {
   blockchain: TBlockchainServiceKey
   encryptedKey?: string
   order: number
-}
-
-export interface IBlockchainState {
-  bsAggregator: BSAggregator<TBlockchainServiceKey>
 }
 
 export type TWalletType = 'standard' | 'watch' | 'legacy'

@@ -129,7 +129,12 @@ const Base = ({
             })}
         </>
       ) : (
-        <Loader flat={flat} />
+        <Loader
+          className={StyleHelper.mergeStyles({
+            'w-6 h-6': !flat,
+            'w-5 h-5': flat,
+          })}
+        />
       )}
     </div>
   )

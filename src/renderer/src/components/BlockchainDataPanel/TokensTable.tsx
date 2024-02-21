@@ -119,7 +119,7 @@ export const TokensTable = forwardRef<HTMLDivElement, TProps>(({ balanceExchange
   return (
     <section className="overflow-auto flex flex-col min-h-0 w-full flex-grow mt-4 pr-1 min-w-0" ref={scrollRef}>
       {balanceExchange.isLoading ? (
-        <Loader className="mt-4 flex-grow items-center" />
+        <Loader containerClassName="mt-4 flex-grow items-center" />
       ) : filteredTokenBalance.length <= 0 ? (
         <TokensTableEmpty />
       ) : (
