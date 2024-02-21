@@ -14,6 +14,7 @@ import { SendPage } from './pages/Send'
 import { SettingsPage } from './pages/Settings'
 import { SettingsEncryptKeyPage } from './pages/Settings/SettingsEncryptKey'
 import { SettingsNetwork } from './pages/Settings/SettingsNetwork'
+import { SettingsReleaseNotesPage } from './pages/Settings/SettingsReleaseNotes'
 import { WalletsPage } from './pages/Wallets'
 import { WelcomePage } from './pages/Welcome'
 
@@ -89,7 +90,7 @@ export const pagesRouter = routeHandler([
           },
           {
             path: 'release-notes',
-            element: <Fragment />,
+            element: <SettingsReleaseNotesPage />,
           },
         ],
       },

@@ -442,6 +442,12 @@ interface Resources {
         globalConfiguration: 'Global controls'
         currentNetwork: 'Current Network'
       }
+      settingsReleaseNotes: {
+        title: 'Release Notes'
+        button: {
+          learnMore: 'Learn More'
+        }
+      }
     }
     receive: {
       title: 'Receive Tokens'
