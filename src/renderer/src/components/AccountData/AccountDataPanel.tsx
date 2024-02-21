@@ -5,6 +5,7 @@ import { IAccountState } from '@renderer/@types/store'
 import { AdvancedTokenBalanceList } from '@renderer/components/AccountData/AdvancedTokenBalanceList'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
 
+import { NftViewer } from './NftViewer'
 import { TransactionList } from './TransactionList'
 
 enum EAccountTabOption {
@@ -24,7 +25,11 @@ export const AccountDataPanel = ({ accounts, balanceExchange }: TAccountDataPane
 
   return (
     <Fragment>
-      <div className="w-full flex flex-col items-center mb-7">
+      <div
+        className={StyleHelper.mergeStyles('w-full flex flex-col items-center', {
+          'mb-7': selectedTabOption !== EAccountTabOption.NFTS,
+        })}
+      >
         <div className="flex flex-row justify-between h-12 w-[20rem] border-b border-gray-300 text-1xs">
           <button
             className={StyleHelper.mergeStyles(
@@ -62,6 +67,7 @@ export const AccountDataPanel = ({ accounts, balanceExchange }: TAccountDataPane
         </div>
       </div>
       {selectedTabOption === EAccountTabOption.TOKENS && <AdvancedTokenBalanceList balanceExchange={balanceExchange} />}
+      {selectedTabOption === EAccountTabOption.NFTS && <NftViewer accounts={accounts} />}
       {selectedTabOption === EAccountTabOption.TRANSACTIONS && <TransactionList accounts={accounts} />}
     </Fragment>
   )
