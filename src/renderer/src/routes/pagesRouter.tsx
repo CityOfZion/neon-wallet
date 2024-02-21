@@ -12,6 +12,7 @@ import { SecuritySetupStep2Page } from './pages/SecuritySetup/SecuritySetupStep2
 import { SecuritySetupStep3Page } from './pages/SecuritySetup/SecuritySetupStep3'
 import { SendPage } from './pages/Send'
 import { SettingsEncryptKeyPage } from './pages/Settings/SettingsEncryptKey'
+import { SettingsNetwork } from './pages/Settings/SettingsNetwork'
 import { SettingsPersonalisationPage } from './pages/Settings/SettingsPersonalisation'
 import { SettingsSecurityPage } from './pages/Settings/SettingsSecurity'
 import { WalletsPage } from './pages/Wallets'
@@ -73,7 +74,7 @@ export const pagesRouter = routeHandler([
         children: [
           {
             path: 'network-configuration?',
-            element: <Fragment />,
+            element: <SettingsNetwork />,
           },
           {
             path: 'currency',

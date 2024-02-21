@@ -7,3 +7,11 @@ export const useEncryptedPasswordSelector = () => {
     encryptedPasswordRef: ref,
   }
 }
+
+export const useNetworkTypeSelector = () => {
+  const { ref, value } = useAppSelector(state => state.settings.networkType)
+  return {
+    networkType: value,
+    networkTypeRef: ref,
+  }
+}

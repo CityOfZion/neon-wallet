@@ -3,6 +3,8 @@ import { StyleHelper } from '@renderer/helpers/StyleHelper'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
 import { motion } from 'framer-motion'
 
+import { AppLayout } from './App'
+
 export type TModalProps = {
   children?: ReactNode
   closeOnEsc?: boolean
@@ -43,28 +45,30 @@ export const ModalLayout = ({
   }, [])
 
   return (
-    <div
-      className={StyleHelper.mergeStyles('fixed left-0 top-0 w-screen h-screen', className)}
-      onClick={handleModalClick}
-      onKeyDown={handleModalKeyDown}
-      ref={containerRef}
-      tabIndex={0}
-    >
-      <motion.div
-        className="absolute bg-gray-900/50 backdrop-blur-sm top-0 left-0 w-full h-full"
-        initial={{ opacity: 0 }}
-        transition={{ duration: 0.1 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      />
-
+    <AppLayout>
       <div
-        onClick={handleContentClick}
+        className={StyleHelper.mergeStyles('fixed left-0 top-0 w-screen h-screen', className)}
+        onClick={handleModalClick}
         onKeyDown={handleModalKeyDown}
-        className={StyleHelper.mergeStyles('relative', contentClassName)}
+        ref={containerRef}
+        tabIndex={0}
       >
-        {children}
+        <motion.div
+          className="absolute bg-gray-900/50 backdrop-blur-sm top-0 left-0 w-full h-full"
+          initial={{ opacity: 0 }}
+          transition={{ duration: 0.1 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        />
+
+        <div
+          onClick={handleContentClick}
+          onKeyDown={handleModalKeyDown}
+          className={StyleHelper.mergeStyles('relative', contentClassName)}
+        >
+          {children}
+        </div>
       </div>
-    </div>
+    </AppLayout>
   )
 }

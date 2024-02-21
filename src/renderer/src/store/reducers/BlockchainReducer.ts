@@ -2,8 +2,8 @@ import { BSAggregator } from '@cityofzion/blockchain-service'
 import { BSEthereum } from '@cityofzion/bs-ethereum'
 import { BSNeoLegacy } from '@cityofzion/bs-neo-legacy'
 import { BSNeo3 } from '@cityofzion/bs-neo3'
-import { createSlice } from '@reduxjs/toolkit'
-import { TBlockchainServiceKey } from '@renderer/@types/blockchain'
+import { CaseReducer, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { TBlockchainServiceKey, TNetworkType } from '@renderer/@types/blockchain'
 import { IBlockchainState } from '@renderer/@types/store'
 
 export const blockchainReducerName = 'blockchainReducer'
@@ -16,10 +16,20 @@ const initialState = {
   }),
 } as IBlockchainState
 
+const updateBSAggregatorNetwork: CaseReducer<IBlockchainState, PayloadAction<TNetworkType>> = (state, action) => {
+  const networkType = action.payload
+
+  state.bsAggregator.blockchainServices.forEach(service => {
+    service.setNetwork({ type: networkType })
+  })
+}
+
 const BlockchainReducer = createSlice({
   name: blockchainReducerName,
   initialState,
-  reducers: {},
+  reducers: {
+    updateBSAggregatorNetwork,
+  },
 })
 
 export const blockchainReducerActions = {

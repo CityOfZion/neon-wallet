@@ -161,5 +161,9 @@
     "roundDown": "Round down",
     "selectAmountSend": "Select amount to send",
     "tokenValue": "Token value"
+  },
+  "networkSelection": {
+    "title": "Network",
+    "selectNetwork": "Select a network"
   }
 }

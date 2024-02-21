@@ -128,7 +128,6 @@ export const WalletsPage = () => {
           <IconButton icon={<TbRefresh />} size="md" text={t('buttonRefreshLabel')} disabled />
         </div>
       }
-      headerClassName="pb-2"
       contentClassName="flex-row gap-x-2.5"
     >
       {selectedWallet && (

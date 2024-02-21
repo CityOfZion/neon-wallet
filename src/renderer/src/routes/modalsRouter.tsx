@@ -17,6 +17,7 @@ import { ImportEncryptedPasswordModal } from './modals/Import/ImportEncryptedPas
 import { ImportKeyAccountsSelectionModal } from './modals/Import/ImportKeyAccountsSelectionModal'
 import { ImportMnemonicAccountsSelectionModal } from './modals/Import/ImportMnemonicAccountsSelectionModal'
 import { InputAmount } from './modals/InputAmount'
+import { NetworkSelection } from './modals/NetworkSelection'
 import { PersistContactModal } from './modals/PersistContact'
 import { SelectAccount } from './modals/SelectAccount'
 import { SelectContact } from './modals/SelectContact'
@@ -46,4 +47,5 @@ export const modalsRouter: TRoute[] = [
   { name: 'select-account', element: <SelectAccount /> },
   { name: 'select-token', element: <SelectToken /> },
   { name: 'input-amount', element: <InputAmount /> },
+  { name: 'network-selection', element: <NetworkSelection /> },
 ]
