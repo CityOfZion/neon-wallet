@@ -18,7 +18,7 @@ export const NftList = ({ onNftSelected, nftsWithAccount }: TNftListProps) => {
         nftWithAccount.nfts.map((nft, index2) => {
           return (
             <button
-              key={(index + 1) * index2}
+              key={(index + 1) * (index2 + nftWithAccount.nfts.length)}
               className={StyleHelper.mergeStyles(
                 'h-[4.7rem] flex bg-gray-700/60 rounded-md mb-1 items-center hover:bg-gray-300/30'
               )}
@@ -27,11 +27,11 @@ export const NftList = ({ onNftSelected, nftsWithAccount }: TNftListProps) => {
               }}
             >
               <div className="w-24 flex items-center">
-                <img className="w-20 h-14 object-cover pl-2" src={nft.collectionImage} />
+                <img className="w-20 h-14 object-cover pl-2" src={nft.image} />
               </div>
               <div className="flex-1">
                 <div className="flex flex-col">
-                  <span className="mb-1 text-left">{nft.collectionName}</span>
+                  <span className="mb-1 text-left">{nft.name}</span>
                   <div className="flex mt-1">
                     <div className="w-4 h-4 bg-gray-300/30 rounded-full" />
                     <span className="text-gray-300 ml-1.5">{nft.contractHash}</span>

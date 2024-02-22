@@ -8,6 +8,7 @@ import { useBsAggregatorSelector } from '@renderer/hooks/useBlockchainSelector'
 
 import { IconButton } from '../IconButton'
 
+import { NftGallery } from './NftGallery'
 import { NftList } from './NftList'
 
 type TNftViewerProps = {
@@ -85,6 +86,14 @@ export const NftViewer = ({ accounts }: TNftViewerProps) => {
       </div>
       {selectedViewOption === ENftViewOption.LIST && (
         <NftList
+          nftsWithAccount={nftsWithAccount}
+          onNftSelected={nft => {
+            showNFT(nft.contractHash, nft.id)
+          }}
+        />
+      )}
+      {selectedViewOption === ENftViewOption.GALLERY && (
+        <NftGallery
           nftsWithAccount={nftsWithAccount}
           onNftSelected={nft => {
             showNFT(nft.contractHash, nft.id)
