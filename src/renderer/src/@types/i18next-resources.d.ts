@@ -109,6 +109,12 @@ interface Resources {
       walletsAndAccounts: '{{wallets}} Wallets / {{accounts}} Accounts'
       totalValue: 'Total value'
     }
+    transactionsTableEmpty: {
+      title: 'Your wallet is currently empty, why not add some assets or connect a dApp?'
+      subtitle: 'Your wallet is compatible with Neo, Gas and Ethereum assets'
+      requestAssetsLabel: 'Request assets'
+      importAccountLabel: 'Import account'
+    }
   }
   modals: {
     import: {

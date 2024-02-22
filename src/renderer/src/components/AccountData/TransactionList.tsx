@@ -10,6 +10,7 @@ import { StyleHelper } from '@renderer/helpers/StyleHelper'
 import { useBsAggregatorSelector } from '@renderer/hooks/useBlockchainSelector'
 
 import { IconButton } from '../IconButton'
+import { TransactionsTableEmpty } from '../TransactionsTableEmpty'
 
 type TTransactionListProps = {
   accounts: IAccountState[]
@@ -45,7 +46,7 @@ export const TransactionList = ({ accounts }: TTransactionListProps) => {
     fetchData()
   }, [accounts, bsAggregator.blockchainServicesByName])
 
-  return (
+  return transactions.length > 0 ? (
     <InfiniteScroll
       dataLength={transactions.length}
       next={() => {}}
@@ -100,5 +101,7 @@ export const TransactionList = ({ accounts }: TTransactionListProps) => {
         </tbody>
       </table>
     </InfiniteScroll>
+  ) : (
+    <TransactionsTableEmpty />
   )
 }
