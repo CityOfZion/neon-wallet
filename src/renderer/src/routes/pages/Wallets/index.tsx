@@ -5,7 +5,9 @@ import { TbEyePlus, TbFileImport, TbMenuDeep, TbPencil, TbPlug, TbRefresh, TbRep
 import { EStatus } from '@cityofzion/wallet-connect-sdk-wallet-core'
 import { useWalletConnectWallet } from '@cityofzion/wallet-connect-sdk-wallet-react'
 import { IAccountState, IWalletState } from '@renderer/@types/store'
+import { AccountBalancePanel } from '@renderer/components/AccountData/AccountBalancePanel'
 import { AccountDataPanel } from '@renderer/components/AccountData/AccountDataPanel'
+import { AccountList } from '@renderer/components/AccountList'
 import { ActionPopover } from '@renderer/components/ActionPopover'
 import { Button } from '@renderer/components/Button'
 import { IconButton } from '@renderer/components/IconButton'
@@ -20,8 +22,6 @@ import { useAppDispatch } from '@renderer/hooks/useRedux'
 import { useWalletsSelector } from '@renderer/hooks/useWalletSelector'
 import { MainLayout } from '@renderer/layouts/Main'
 import { accountReducerActions } from '@renderer/store/reducers/AccountReducer'
-
-import { AccountList } from '../../../components/AccountList'
 
 export const WalletsPage = () => {
   const { status } = useWalletConnectWallet()
@@ -196,7 +196,7 @@ export const WalletsPage = () => {
         </section>
       )}
       <div className="flex-grow flex flex-col gap-y-5">
-        <div className="w-full flex bg-gray-800 rounded flex-grow"></div>
+        <AccountBalancePanel balanceExchange={balanceExchangeAccountData} hideWalletAccountsLength />
         <div className="w-full bg-gray-800 rounded flex-grow overflow-scroll max-h-[20rem] p-4">
           <h1 className="text-white pb-4">{commonActivity('title')}</h1>
           <Separator />

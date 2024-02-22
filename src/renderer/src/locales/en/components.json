@@ -61,5 +61,16 @@
     "name": "NAME",
     "hash": "HASH",
     "view": "View"
+  },
+  "balanceChart": {
+    "tokenName": {
+      "others": "Others"
+    },
+    "noAssests": "No assets"
+  },
+  "accountBalancePanel": {
+    "holdings": "Holdings",
+    "walletsAndAccounts": "{{wallets}} Wallets / {{accounts}} Accounts",
+    "totalValue": "Total value"
   }
 }
