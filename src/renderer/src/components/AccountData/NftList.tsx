@@ -27,7 +27,7 @@ export const NftList = ({ onNftSelected, nftsWithAccount }: TNftListProps) => {
               }}
             >
               <div className="w-24 flex items-center">
-                <img className="w-20 h-14 object-cover pl-2" src={nft.collectionImage} />
+                <img className="w-20 h-14 object-cover pl-2" src={nft.image} />
               </div>
               <div className="flex-1">
                 <div className="flex flex-col">

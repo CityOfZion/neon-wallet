@@ -37,11 +37,14 @@ export const WalletsPage = () => {
   const [selectedAccount, setSelectedAccount] = useState<IAccountState | undefined>(undefined)
 
   const filteredAccounts = useMemo(() => {
+    if (selectedAccount) {
+      return [selectedAccount]
+    }
     return accounts.filter(account => account.idWallet === selectedWallet?.id)
-  }, [accounts, selectedWallet?.id])
+  }, [accounts, selectedAccount, selectedWallet?.id])
 
   const balanceExchange = useBalancesAndExchange(accounts)
-  const balanceExchangeAccountData = useBalancesAndExchange(selectedAccount ? [selectedAccount] : filteredAccounts)
+  const balanceExchangeAccountData = useBalancesAndExchange(filteredAccounts)
 
   const handleReorderSave = (accountsOrder: string[]) => {
     dispatch(accountReducerActions.reorderAccounts(accountsOrder))

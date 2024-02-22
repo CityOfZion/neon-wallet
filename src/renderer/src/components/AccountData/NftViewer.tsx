@@ -34,8 +34,7 @@ export const NftViewer = ({ accounts }: TNftViewerProps) => {
   }
 
   const handleLoadNFTS = useCallback(async () => {
-    if (nftsWithAccount.length > 0) return
-
+    setNftsWithAccount([])
     accounts.forEach(async (account: IAccountState) => {
       const blockchainService = bsAggregator.blockchainServicesByName[account.blockchain]
 
@@ -47,7 +46,7 @@ export const NftViewer = ({ accounts }: TNftViewerProps) => {
         setNftsWithAccount(prevState => [...prevState, { account, nfts: response.items }])
       }
     })
-  }, [nftsWithAccount.length, accounts, bsAggregator.blockchainServicesByName])
+  }, [accounts, bsAggregator.blockchainServicesByName])
 
   useEffect(() => {
     handleLoadNFTS()
