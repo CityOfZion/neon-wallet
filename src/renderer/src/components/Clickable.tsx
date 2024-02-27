@@ -1,6 +1,7 @@
 import { cloneElement } from 'react'
-import { TbLoader2 } from 'react-icons/tb'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
+
+import { Loader } from './Loader'
 
 export type TCustomClickableProps = {
   label: string
@@ -15,18 +16,6 @@ export type TCustomClickableProps = {
 }
 
 export type TClickableProps = TCustomClickableProps & React.ComponentProps<'div'>
-
-type TLoadingProps = {
-  flat?: boolean
-}
-
-const Loading = ({ flat }: TLoadingProps) => {
-  return (
-    <div className="flex justify-center w-full">
-      <TbLoader2 className={StyleHelper.mergeStyles('animate-spin', { 'w-6 h-6': !flat, 'w-5 h-5': flat })} />
-    </div>
-  )
-}
 
 const Outline = ({ className, colorSchema = 'neon', ...props }: TClickableProps) => {
   return (
@@ -140,7 +129,7 @@ const Base = ({
             })}
         </>
       ) : (
-        <Loading flat={flat} />
+        <Loader flat={flat} />
       )}
     </div>
   )

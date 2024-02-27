@@ -6,7 +6,11 @@
   },
   "securitySetup": {
     "title": "Welcome to Neon Wallet",
-    "steps": ["Create Password", "Confirm Password", "Complete"]
+    "steps": [
+      "Create Password",
+      "Confirm Password",
+      "Complete"
+    ]
   },
   "securitySetupStep1": {
     "formTitle": "Please create a password to secure your wallet",
@@ -27,8 +31,7 @@
   },
   "portfolio": {
     "title": "Portfolio",
-    "buttonRefreshLabel": "Refresh",
-    "allAccounts": "All accounts"
+    "buttonRefreshLabel": "Refresh"
   },
   "login": {
     "title": "Welcome to Neon Wallet",
@@ -88,9 +91,6 @@
     "changeIn24hrs": "Change in 24HRS",
     "portfolioBalance": "Portfolio Balance",
     "publicAddress": "Public Address"
-  },
-  "activity": {
-    "title": "Activity"
   },
   "contacts": {
     "title": "Contacts",
@@ -157,8 +157,8 @@
   "receive": {
     "title": "Receive Tokens",
     "sendQRCode": "Send QR Code",
-    "yourAddressTabTitle": "Your Address",
-    "requestTokenTabTitle": "Request Tokens",
+    "yourAddressTabTitle": "YOUR ADDRESS",
+    "requestTokenTabTitle": "REQUEST TOKENS",
     "receivingAccountTitle": "Receiving account",
     "yourReceivingAddress": "Your receiving account",
     "selectAccountToGenerateCode": "Select an account to generate a code!",

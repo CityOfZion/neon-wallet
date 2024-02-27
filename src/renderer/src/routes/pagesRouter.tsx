@@ -11,10 +11,9 @@ import { SecuritySetupStep1Page } from './pages/SecuritySetup/SecuritySetupStep1
 import { SecuritySetupStep2Page } from './pages/SecuritySetup/SecuritySetupStep2'
 import { SecuritySetupStep3Page } from './pages/SecuritySetup/SecuritySetupStep3'
 import { SendPage } from './pages/Send'
+import { SettingsPage } from './pages/Settings'
 import { SettingsEncryptKeyPage } from './pages/Settings/SettingsEncryptKey'
 import { SettingsNetwork } from './pages/Settings/SettingsNetwork'
-import { SettingsPersonalisationPage } from './pages/Settings/SettingsPersonalisation'
-import { SettingsSecurityPage } from './pages/Settings/SettingsSecurity'
 import { WalletsPage } from './pages/Wallets'
 import { WelcomePage } from './pages/Welcome'
 
@@ -63,14 +62,14 @@ export const pagesRouter = routeHandler([
   },
   {
     path: '/settings',
+    element: (
+      <PrivateRoute>
+        <SettingsPage />
+      </PrivateRoute>
+    ),
     children: [
       {
         path: 'personalisation?',
-        element: (
-          <PrivateRoute>
-            <SettingsPersonalisationPage />
-          </PrivateRoute>
-        ),
         children: [
           {
             path: 'network-configuration?',
@@ -96,11 +95,6 @@ export const pagesRouter = routeHandler([
       },
       {
         path: 'security',
-        element: (
-          <PrivateRoute>
-            <SettingsSecurityPage />
-          </PrivateRoute>
-        ),
         children: [
           {
             path: 'encrypt-key?',

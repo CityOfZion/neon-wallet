@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import { MdOutlineLock } from 'react-icons/md'
 import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
-import { Separator } from '@renderer/components/Separator'
 import { useActions } from '@renderer/hooks/useActions'
 import { useBsAggregatorSelector } from '@renderer/hooks/useBlockchainSelector'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
@@ -87,9 +86,11 @@ export const SettingsEncryptKeyPage = (): JSX.Element => {
   }
 
   return (
-    <div className="w-full">
-      <div className="p-5 text-[14px]">{t('securityOption.encryptKey')}</div>
-      <Separator className="mx-5 mb-5" />
+    <div className="w-full px-5">
+      <header className="w-full mb-5 h-14 border-b border-gray-300/30 items-center flex">
+        <h1 className="text-sm">{t('securityOption.encryptKey')}</h1>
+      </header>
+
       <form className="flex justify-center items-center" onSubmit={handleAct(handleSubmit)}>
         <div className="text-[12px] min-w-[360px]">
           <div className="mb-6 text-center">

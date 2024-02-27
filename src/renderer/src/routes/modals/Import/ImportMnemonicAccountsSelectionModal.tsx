@@ -1,10 +1,11 @@
 import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
-import { TbFileImport, TbLoader2 } from 'react-icons/tb'
+import { TbFileImport } from 'react-icons/tb'
 import { AccountWithDerivationPath } from '@cityofzion/blockchain-service'
 import { TAccountsToImport, TBlockchainServiceKey } from '@renderer/@types/blockchain'
 import { AccountSelection } from '@renderer/components/AccountSelection'
 import { Button } from '@renderer/components/Button'
+import { Loader } from '@renderer/components/Loader'
 import { useActions } from '@renderer/hooks/useActions'
 import { useBlockchainActions } from '@renderer/hooks/useBlockchainActions'
 import { useBsAggregatorSelector } from '@renderer/hooks/useBlockchainSelector'
@@ -91,9 +92,7 @@ export const ImportMnemonicAccountsSelectionModal = () => {
 
       <div className="flex flex-col gap-y-2.5 mt-6 flex-grow">
         {isMounting ? (
-          <div className="flex w-full justify-center">
-            <TbLoader2 className="w-6 h-6 animate-spin" />
-          </div>
+          <Loader />
         ) : actionData.selectedAccounts.length > 0 ? (
           Array.from(actionData.mnemonicAccounts.entries()).map(([blockchain, accounts]) => (
             <Fragment key={blockchain}>

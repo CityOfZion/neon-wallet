@@ -31,8 +31,8 @@ export const SettingsNetwork = () => {
   }
 
   return (
-    <div className="w-full px-4 flex flex-col">
-      <div className="mt-2 mb-1 flex flex-row items-center justify-between">
+    <div className=" flex flex-col px-5 w-full">
+      <header className="w-full  h-14 border-b border-gray-300/30 items-center flex justify-between">
         <h1 className="text-white text-sm">{t('title')}</h1>
 
         <Button
@@ -43,10 +43,9 @@ export const SettingsNetwork = () => {
           colorSchema="gray"
           onClick={handleChangeNetwork.bind(null, 'mainnet')}
         />
-      </div>
-      <Separator />
+      </header>
 
-      <div className="py-6 text-sm">{t('youAreConnectedNeoAndEth')}</div>
+      <div className="mt-8 mb-5 text-sm">{t('youAreConnectedNeoAndEth')}</div>
 
       <div className="flex flex-col gap-y-0.5">
         <div className="pb-2 text-neon flex gap-x-2 items-center">
@@ -63,8 +62,8 @@ export const SettingsNetwork = () => {
           <Button
             rightIcon={<TbChevronRight />}
             label={commonT(networkType)}
-            className="w-48"
-            clickableProps={{ className: 'aria-[disabled=false]:text-gray-300 h-fit' }}
+            className="w-40"
+            clickableProps={{ className: 'aria-[disabled=false]:text-gray-300 h-fit text-xs' }}
             variant="text"
             colorSchema="neon"
             onClick={modalNavigateWrapper('network-selection', {

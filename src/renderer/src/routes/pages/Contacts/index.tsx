@@ -6,19 +6,20 @@ import { TbPencil, TbPlus } from 'react-icons/tb'
 import { IContactState } from '@renderer/@types/store'
 import { BlockchainIcon } from '@renderer/components/BlockchainIcon'
 import { Button } from '@renderer/components/Button'
-import { ContactList } from '@renderer/components/Contact/ContactList'
 import { IconButton } from '@renderer/components/IconButton'
 import { Separator } from '@renderer/components/Separator'
 import { SortIcon } from '@renderer/components/SortIcon'
-import { StyleHelper } from '@renderer/helpers/StyleHelper'
+import { Tabs } from '@renderer/components/Tabs'
 import { UtilsHelper } from '@renderer/helpers/UtilsHelper'
 import { useContactsSelector } from '@renderer/hooks/useContactSelector'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
 import { MainLayout } from '@renderer/layouts/Main'
 
+import { ContactsTabContent } from './ContactsTabContent'
+
 enum ESidebarOption {
-  CONTACTS = 1,
-  MY_ACCOUNTS = 2,
+  CONTACTS = 'CONTACTS',
+  MY_ACCOUNTS = 'MY_ACCOUNTS',
 }
 
 export const ContactsPage = () => {
@@ -27,7 +28,6 @@ export const ContactsPage = () => {
 
   const { modalNavigateWrapper } = useModalNavigate()
   const { contacts } = useContactsSelector()
-  const [selectedSidebarOption, setSelectedSidebarOption] = useState(ESidebarOption.CONTACTS)
   const [selectedContact, setSelectedContact] = useState<IContactState | null>(contacts[0] || null)
 
   const [sortBlockchain, setSortBlockchain] = useState<boolean | null>(null)
@@ -76,27 +76,21 @@ export const ContactsPage = () => {
       }
     >
       <section className="bg-gray-800 w-full h-full flex rounded">
-        <div className="w-full max-w-[17.188rem] px-2 border-r flex flex-col items-center">
-          <div className="flex flex-row justify-between h-15 w-full mb-5 text-1xs">
-            <button
-              className={StyleHelper.mergeStyles('w-[50%] border-b', {
-                'border-b-2': selectedSidebarOption === ESidebarOption.CONTACTS,
-              })}
-              onClick={() => setSelectedSidebarOption(ESidebarOption.CONTACTS)}
-            >
-              {t('contactList.contacts')}
-            </button>
-            <button
-              className={StyleHelper.mergeStyles('w-[50%] border-b', {
-                'border-b-2': selectedSidebarOption === ESidebarOption.MY_ACCOUNTS,
-              })}
-              onClick={() => setSelectedSidebarOption(ESidebarOption.MY_ACCOUNTS)}
-              disabled
-            >
-              {t('contactList.myAccounts')}
-            </button>
-          </div>
-          <ContactList onContactSelected={setSelectedContact} selectFirst={true} showSelectedIcon={false} />
+        <div className="w-full max-w-[17.188rem] px-2 border-r border-gray-300/15 flex flex-col items-center">
+          <Tabs.Root defaultValue={ESidebarOption.CONTACTS} className="w-full">
+            <Tabs.List className="w-full mt-3 mb-7">
+              <Tabs.Trigger value={ESidebarOption.CONTACTS} className="px-8">
+                {t('contactList.contacts')}
+              </Tabs.Trigger>
+              <Tabs.Trigger value={ESidebarOption.MY_ACCOUNTS} className="px-8" disabled>
+                {t('contactList.myAccounts')}
+              </Tabs.Trigger>
+            </Tabs.List>
+
+            <Tabs.Content value={ESidebarOption.CONTACTS}>
+              <ContactsTabContent onContactSelected={setSelectedContact} />
+            </Tabs.Content>
+          </Tabs.Root>
         </div>
 
         {selectedContact && (

@@ -77,34 +77,37 @@ interface Resources {
       quantity: 'Quantity'
       price: 'Price'
     }
-    portfolioTokenBalanceList: {
+    tokensTable: {
       ticker: 'TICKER'
       token: 'TOKEN'
       holdings: 'HOLDINGS'
       price: 'PRICE'
       value: 'VALUE'
+      empty: 'No tokens to display'
     }
-    accountData: {
-      tab: {
+    blockchainDataPanel: {
+      tabs: {
         tokens: 'TOKENS'
         nfts: 'NFTS'
         transactions: 'TRANSACTIONS'
       }
+      title: 'All accounts'
     }
-    transactionList: {
+    transactionsTable: {
       date: 'DATE'
-      time: 'TIME'
-      name: 'NAME'
-      hash: 'HASH'
-      view: 'View'
+      asset: 'ASSET'
+      amount: 'AMOUNT'
+      from: 'FROM'
+      to: 'TO'
+      viewButtonLabel: 'View'
+      empty: 'No transactions to display'
+      doraError: 'Dora does not support this blockchain'
     }
     balanceChart: {
-      tokenName: {
-        others: 'Others'
-      }
-      noAssests: 'No assets'
+      othersTokens: 'Others'
+      noAssets: 'No assets'
     }
-    accountBalancePanel: {
+    balanceChartPanel: {
       holdings: 'Holdings'
       walletsAndAccounts: '{{wallets}} Wallets / {{accounts}} Accounts'
       totalValue: 'Total value'
@@ -114,6 +117,9 @@ interface Resources {
       subtitle: 'Your wallet is compatible with Neo, Gas and Ethereum assets'
       requestAssetsLabel: 'Request assets'
       importAccountLabel: 'Import account'
+    }
+    nftViewer: {
+      empty: 'No NFTS to display'
     }
   }
   modals: {
@@ -315,7 +321,6 @@ interface Resources {
     portfolio: {
       title: 'Portfolio'
       buttonRefreshLabel: 'Refresh'
-      allAccounts: 'All accounts'
     }
     login: {
       title: 'Welcome to Neon Wallet'
@@ -376,9 +381,6 @@ interface Resources {
       portfolioBalance: 'Portfolio Balance'
       publicAddress: 'Public Address'
     }
-    activity: {
-      title: 'Activity'
-    }
     contacts: {
       title: 'Contacts'
       buttonAddContactLabel: 'Add Contact'
@@ -437,15 +439,15 @@ interface Resources {
       settingsNetwork: {
         title: 'Network Configuration'
         youAreConnectedNeoAndEth: 'You are connected to both the Neo and Ethereum networks'
-        globalConfiguration: 'Global configuration'
+        globalConfiguration: 'Global controls'
         currentNetwork: 'Current Network'
       }
     }
     receive: {
       title: 'Receive Tokens'
       sendQRCode: 'Send QR Code'
-      yourAddressTabTitle: 'Your Address'
-      requestTokenTabTitle: 'Request Tokens'
+      yourAddressTabTitle: 'YOUR ADDRESS'
+      requestTokenTabTitle: 'REQUEST TOKENS'
       receivingAccountTitle: 'Receiving account'
       yourReceivingAddress: 'Your receiving account'
       selectAccountToGenerateCode: 'Select an account to generate a code!'

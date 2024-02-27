@@ -18,3 +18,8 @@ export const setupI18next = () => {
     })
   }
 }
+
+export const getI18next = () => {
+  setupI18next()
+  return i18n
+}
