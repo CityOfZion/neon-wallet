@@ -107,7 +107,7 @@ export const TransactionsTable = forwardRef<HTMLDivElement, TTransactionListProp
       onScroll={handleScroll}
     >
       {isLoading ? (
-        <Loader className="mt-4 flex-grow items-center" />
+        <Loader containerClassName="mt-4 flex-grow items-center" />
       ) : transfers.length <= 0 ? (
         <div className="flex justify-center mt-4">
           <p className="text-gray-300">{t('components:transactionsTable.empty')}</p>

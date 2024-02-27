@@ -1,11 +1,6 @@
-import { CaseReducer, createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { CaseReducer, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { TNetworkType } from '@renderer/@types/blockchain'
-import { ISettingsState, RootState, TSecurityType } from '@renderer/@types/store'
-import { UtilsHelper } from '@renderer/helpers/UtilsHelper'
-
-type TLoginParam = {
-  password: string
-}
+import { ISettingsState, TSecurityType } from '@renderer/@types/store'
 
 export const settingsReducerName = 'settingsReducer'
 
@@ -16,39 +11,8 @@ const initialState: ISettingsState = {
   networkType: 'mainnet',
 }
 
-const setEncryptedPassword: CaseReducer<ISettingsState, PayloadAction<string>> = (state, action) => {
+const setEncryptedPassword: CaseReducer<ISettingsState, PayloadAction<string | undefined>> = (state, action) => {
   state.encryptedPassword = action.payload
-}
-
-const login = createAsyncThunk('settings/login', async ({ password }: TLoginParam, { getState }) => {
-  const encryptedPassword = await window.api.encryptBasedOS(password)
-  const {
-    wallet: { data: wallets },
-    account: { data: accounts },
-    blockchain: { bsAggregator },
-  } = getState() as RootState
-
-  const walletPromises = wallets.map(async wallet => {
-    if (!wallet.encryptedMnemonic) return
-    const mnemonic = await window.api.decryptBasedEncryptedSecret(wallet.encryptedMnemonic, encryptedPassword)
-    const isMnemonicValid = UtilsHelper.isValidMnemonic(mnemonic)
-    if (!isMnemonicValid) throw new Error()
-  })
-
-  const accountPromises = accounts.map(async account => {
-    if (!account.encryptedKey) return
-    const key = await window.api.decryptBasedEncryptedSecret(account.encryptedKey, encryptedPassword)
-    const service = bsAggregator.blockchainServicesByName[account.blockchain]
-    const isKeyValid = service.validateKey(key)
-    if (!isKeyValid) throw new Error()
-  })
-
-  await Promise.all([...walletPromises, ...accountPromises])
-  return encryptedPassword
-})
-
-const logout: CaseReducer<ISettingsState> = state => {
-  state.encryptedPassword = undefined
 }
 
 const setIsFirstTime: CaseReducer<ISettingsState, PayloadAction<boolean>> = (state, action) => {
@@ -71,18 +35,11 @@ const SettingsReducer = createSlice({
     setSecurityType,
     setEncryptedPassword,
     setNetworkType,
-    logout,
-  },
-  extraReducers: builder => {
-    builder.addCase(login.fulfilled, (state, action) => {
-      state.encryptedPassword = action.payload
-    })
   },
 })
 
 export const settingsReducerActions = {
   ...SettingsReducer.actions,
-  login,
 }
 
 export default SettingsReducer.reducer

@@ -29,7 +29,7 @@
     "@cityofzion/bs-ethereum": "1.0.1",
     "@cityofzion/bs-neo-legacy": "0.9.0",
     "@cityofzion/bs-neo3": "0.9.1",
-    "@cityofzion/wallet-connect-sdk-wallet-react": "^3.0.3",
+    "@cityofzion/wallet-connect-sdk-wallet-react": "4.0.0",
     "@dnd-kit/core": "^6.0.8",
     "@dnd-kit/sortable": "^7.0.2",
     "@electron-toolkit/preload": "^2.0.0",

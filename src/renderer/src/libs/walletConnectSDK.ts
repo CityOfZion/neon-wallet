@@ -1,6 +1,7 @@
+import { DEFAULT_URL_BY_NETWORK_TYPE } from '@cityofzion/bs-neo3'
 import { AbstractWalletConnectNeonAdapter } from '@cityofzion/wallet-connect-sdk-wallet-core'
 import { TAdapterMethodParam } from '@cityofzion/wallet-connect-sdk-wallet-react'
-import { TOptions } from '@cityofzion/wallet-connect-sdk-wallet-react'
+import { TInitOptions } from '@cityofzion/wallet-connect-sdk-wallet-react'
 import { WalletConnectHelper } from '@renderer/helpers/WalletConnectHelper'
 import { RootStore } from '@renderer/store/RootStore'
 import i18n from 'i18next'
@@ -29,18 +30,16 @@ export class WalletConnectNeonAdapter extends AbstractWalletConnectNeonAdapter {
     }
   }
 
-  async getRPCUrl({ session }: TAdapterMethodParam): Promise<string> {
+  async getRPCUrl(): Promise<string> {
     const {
-      blockchain: { bsAggregator },
+      settings: { networkType },
     } = RootStore.store.getState()
 
-    const [{ blockchain }] = WalletConnectHelper.getAccountInformationFromSession(session)
-
-    return bsAggregator.getBlockchainByName(blockchain).network.url
+    return DEFAULT_URL_BY_NETWORK_TYPE[networkType]
   }
 }
 
-export const walletConnectOptions: TOptions = {
+export const walletConnectOptions: TInitOptions = {
   clientOptions: {
     projectId: '56de852a69580b46d61b53f7b3922ce1',
     metadata: {
@@ -54,20 +53,24 @@ export const walletConnectOptions: TOptions = {
     logger: import.meta.env.DEV ? 'debug' : undefined,
     relayUrl: 'wss://relay.walletconnect.com',
   },
-  methods: [
-    'invokeFunction',
-    'testInvoke',
-    'signMessage',
-    'verifyMessage',
-    'getWalletInfo',
-    'traverseIterator',
-    'getNetworkVersion',
-    'encrypt',
-    'decrypt',
-    'decryptFromArray',
-    'calculateFee',
-    'signTransaction',
-  ],
-  autoAcceptMethods: ['testInvoke', 'getWalletInfo', 'traverseIterator', 'getNetworkVersion', 'calculateFee'],
-  adapter: new WalletConnectNeonAdapter(),
+  blockchains: {
+    neo3: {
+      methods: [
+        'invokeFunction',
+        'testInvoke',
+        'signMessage',
+        'verifyMessage',
+        'getWalletInfo',
+        'traverseIterator',
+        'getNetworkVersion',
+        'encrypt',
+        'decrypt',
+        'decryptFromArray',
+        'calculateFee',
+        'signTransaction',
+      ],
+      autoAcceptMethods: ['testInvoke', 'getWalletInfo', 'traverseIterator', 'getNetworkVersion', 'calculateFee'],
+      adapter: new WalletConnectNeonAdapter(),
+    },
+  },
 }

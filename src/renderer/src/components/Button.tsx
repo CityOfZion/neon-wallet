@@ -12,10 +12,13 @@ export const Button = ({
   loading,
   colorSchema,
   iconsOnEdge,
+  disabled,
   ...props
 }: TProps) => {
+  const isDisabled = disabled || loading
+
   return (
-    <button {...props}>
+    <button {...props} disabled={isDisabled}>
       <Clickable
         {...clickableProps}
         label={label}
@@ -24,7 +27,7 @@ export const Button = ({
         rightIcon={rightIcon}
         flat={flat}
         loading={loading}
-        disabled={props.disabled}
+        disabled={isDisabled}
         colorSchema={colorSchema}
         iconsOnEdge={iconsOnEdge}
       />

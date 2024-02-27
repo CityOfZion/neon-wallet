@@ -10,8 +10,7 @@ import {
   TbStepOut,
   TbUsers,
 } from 'react-icons/tb'
-import { useAppDispatch } from '@renderer/hooks/useRedux'
-import { settingsReducerActions } from '@renderer/store/reducers/SettingsReducer'
+import { useLogin } from '@renderer/hooks/useLogin'
 
 import { ReactComponent as NeonLogoIcon } from '../../assets/images/neon-wallet-compact.svg'
 import { ReactComponent as WalletIcon } from '../../assets/images/wallet-icon.svg'
@@ -21,12 +20,7 @@ import { SidebarLink } from './SidebarLink'
 
 export const Sidebar = (): JSX.Element => {
   const { t } = useTranslation('components', { keyPrefix: 'sidebar' })
-  const dispatch = useAppDispatch()
-
-  const handleLogout = () => {
-    dispatch(settingsReducerActions.logout())
-  }
-
+  const { logout } = useLogin()
   return (
     <aside className="bg-gray-800 h-screen w-[4rem] min-w-[4rem] flex flex-col">
       <div className="flex justify-center py-4">
@@ -47,7 +41,7 @@ export const Sidebar = (): JSX.Element => {
             <SidebarLink to="/mobile" title={t('mobile')} disabled isNew icon={<TbDeviceMobile />} />
           </div>
 
-          <SidebarButton onClick={handleLogout} title={t('logout')} icon={<TbDoorExit />} />
+          <SidebarButton onClick={logout} title={t('logout')} icon={<TbDoorExit />} />
         </ul>
       </nav>
     </aside>
