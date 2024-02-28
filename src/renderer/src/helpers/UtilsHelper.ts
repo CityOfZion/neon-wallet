@@ -105,4 +105,30 @@ export abstract class UtilsHelper {
 
     return mandatoryColors[symbol] ?? `#${(0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)}`
   }
+
+  static generateTokenColor(hash: string) {
+    if (hash.length === 0) throw new Error('Invalid hash')
+
+    const mandatoryColors: Record<string, string> = {
+      ef4073a0f2b305a38ec4050e4d3d28bc40ea63f5: '#56f33f',
+      d2a4cff31913016155e38e474a2c06d08be276cf: '#02c797',
+    }
+
+    if (mandatoryColors[hash]) return mandatoryColors[hash]
+
+    let hashCode = 0
+
+    for (let index = 0; index < hash.length; index++) {
+      hashCode = hash.charCodeAt(index) + ((hashCode << 5) - hashCode)
+      hashCode = hashCode & hashCode
+    }
+
+    let color = '#'
+    for (let index = 0; index < 3; index++) {
+      const value = (hashCode >> (index * 8)) & 255
+      color += ('00' + value.toString(16)).substr(-2)
+    }
+
+    return color
+  }
 }

@@ -5,6 +5,8 @@ import { BalanceConvertedToExchange, BalanceHelper } from '@renderer/helpers/Bal
 import { FilterHelper } from '@renderer/helpers/FilterHelper'
 import { UtilsHelper } from '@renderer/helpers/UtilsHelper'
 
+import { Loader } from '../Loader'
+
 type TProps = {
   balanceExchange: UseMultipleBalanceAndExchangeResult
 }
@@ -24,7 +26,8 @@ export const BalanceChart = ({ balanceExchange }: TProps) => {
     [balanceExchange]
   )
 
-  const bars = useMemo<TBar[]>(() => {
+  const bars = useMemo<TBar[] | undefined>(() => {
+    if (balanceExchange.isLoading) return undefined
     const convertedBalances = BalanceHelper.convertBalancesToCurrency(
       balanceExchange.balance.data,
       balanceExchange.exchange.data
@@ -49,7 +52,7 @@ export const BalanceChart = ({ balanceExchange }: TProps) => {
       .sort((token1, token2) => token2.convertedAmount - token1.convertedAmount)
 
     const firstFourBars = filteredBalances.slice(0, 4).map<TBar>(balance => {
-      const color = UtilsHelper.getRandomTokenColor(balance.token.symbol)
+      const color = UtilsHelper.generateTokenColor(balance.token.hash)
       const widthPercent = (balance.convertedAmount * 100) / totalTokensBalances
       return {
         name: balance.token.name,
@@ -72,7 +75,11 @@ export const BalanceChart = ({ balanceExchange }: TProps) => {
     }
 
     return [...firstFourBars, otherBar]
-  }, [balanceExchange.balance.data, balanceExchange.exchange.data, t, totalTokensBalances])
+  }, [balanceExchange.balance.data, balanceExchange.exchange.data, balanceExchange.isLoading, t, totalTokensBalances])
+
+  if (bars === undefined) {
+    return <Loader />
+  }
 
   return (
     <ul className="flex w-full justify-center">
@@ -92,13 +99,13 @@ export const BalanceChart = ({ balanceExchange }: TProps) => {
           ></div>
           <div className="flex items-start mt-5">
             <div
-              className="w-2 h-2 rounded-full mt-1"
+              className="w-2 min-w-[0.5rem] h-2 rounded-full mt-1"
               style={{
                 backgroundColor: bar.color,
               }}
             ></div>
-            <div className="flex flex-col pl-2">
-              <span className="text-white text-xs font-normal">{bar.name}</span>
+            <div className="flex flex-col pl-2 min-w-0">
+              <span className="text-white text-xs font-normal truncate">{bar.name}</span>
               <span className="text-gray-300 text-sm">{bar.value}</span>
             </div>
           </div>
