@@ -8,7 +8,7 @@ import { ToastHelper } from '@renderer/helpers/ToastHelper'
 import { useAccountsSelector } from '@renderer/hooks/useAccountSelector'
 import { useActions } from '@renderer/hooks/useActions'
 import { useBlockchainActions } from '@renderer/hooks/useBlockchainActions'
-import { useBsAggregatorSelector } from '@renderer/hooks/useBlockchainSelector'
+import { useBsAggregator } from '@renderer/hooks/useBsAggregator'
 import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
 import { EndModalLayout } from '@renderer/layouts/EndModal'
 
@@ -27,7 +27,7 @@ export const ImportEncryptedPasswordModal = () => {
   const { blockchain, encryptedKey } = useModalState<TLocation>()
   const { modalNavigate } = useModalNavigate()
   const blockchainActions = useBlockchainActions()
-  const { bsAggregator } = useBsAggregatorSelector()
+  const { bsAggregator } = useBsAggregator()
   const { accounts } = useAccountsSelector()
 
   const { actionData, setData, actionState, handleAct, reset } = useActions<TFormData>({

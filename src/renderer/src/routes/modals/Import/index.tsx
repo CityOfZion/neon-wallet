@@ -7,7 +7,7 @@ import { Button } from '@renderer/components/Button'
 import { Textarea } from '@renderer/components/Textarea'
 import { UtilsHelper } from '@renderer/helpers/UtilsHelper'
 import { useActions } from '@renderer/hooks/useActions'
-import { useBsAggregatorSelector } from '@renderer/hooks/useBlockchainSelector'
+import { useBsAggregator } from '@renderer/hooks/useBsAggregator'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
 import { EndModalLayout } from '@renderer/layouts/EndModal'
 
@@ -19,7 +19,7 @@ type TFormData = {
 }
 
 export const ImportModal = () => {
-  const { bsAggregator } = useBsAggregatorSelector()
+  const { bsAggregator } = useBsAggregator()
   const { modalNavigate } = useModalNavigate()
   const { t } = useTranslation('modals', { keyPrefix: 'import' })
 

@@ -4,7 +4,7 @@ import { IAccountState } from '@renderer/@types/store'
 import { useQueries } from '@tanstack/react-query'
 
 import { useAccountsSelector } from './useAccountSelector'
-import { useBsAggregatorSelector } from './useBlockchainSelector'
+import { useBsAggregator } from './useBsAggregator'
 
 type TProps = {
   accounts: IAccountState[]
@@ -25,7 +25,7 @@ type TFetchTransactionsResponse = {
 }
 
 export const useTransactions = ({ accounts }: TProps) => {
-  const { bsAggregatorRef } = useBsAggregatorSelector()
+  const { bsAggregator } = useBsAggregator()
   const { accountsRef: allAccountRef } = useAccountsSelector()
   const [page, setPage] = useState(1)
 
@@ -34,7 +34,7 @@ export const useTransactions = ({ accounts }: TProps) => {
       // eslint-disable-next-line @tanstack/query/exhaustive-deps
       queryKey: ['transactions', account.address, page],
       queryFn: async (): Promise<TFetchTransactionsResponse> => {
-        const service = bsAggregatorRef.current.getBlockchainByName(account.blockchain)
+        const service = bsAggregator.getBlockchainByName(account.blockchain)
         try {
           const data = await service.blockchainDataService.getTransactionsByAddress({
             address: account.address,

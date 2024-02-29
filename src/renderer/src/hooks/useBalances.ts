@@ -10,7 +10,7 @@ import {
 } from '@renderer/@types/query'
 import { QueryKey, useQueries, UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
 
-import { useBsAggregatorSelector } from './useBlockchainSelector'
+import { useBsAggregator } from './useBsAggregator'
 import { useNetworkTypeSelector } from './useSettingsSelector'
 
 export function useBalances(params: UseBalancesParams[], queryOptions?: BaseOptions<Balance>): UseMultipleBalancesResult
@@ -27,12 +27,12 @@ export function useBalances(
   queryOptions?: BaseOptions<Balance>
 ): UseBalancesResult {
   const [isRefetchingByUser, setIsRefetchingByUser] = useState(false)
-  const { bsAggregatorRef } = useBsAggregatorSelector()
+  const { bsAggregator } = useBsAggregator()
   const { networkTypeRef } = useNetworkTypeSelector()
 
   const fetchBalance = useCallback(
     async (address: string, blockchain: TBlockchainServiceKey): Promise<Balance> => {
-      const service = bsAggregatorRef.current.getBlockchainByName(blockchain)
+      const service = bsAggregator.getBlockchainByName(blockchain)
       const balance = await service.blockchainDataService.getBalance(address)
       const tokensBalances = balance.map(balance => ({
         ...balance,
@@ -46,7 +46,7 @@ export function useBalances(
         tokensBalances,
       }
     },
-    [bsAggregatorRef]
+    [bsAggregator]
   )
 
   const generateQuery = useCallback(

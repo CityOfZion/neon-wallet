@@ -7,7 +7,7 @@ import { TContactAddress } from '@renderer/@types/store'
 import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
 import { useActions } from '@renderer/hooks/useActions'
-import { useBsAggregatorSelector } from '@renderer/hooks/useBlockchainSelector'
+import { useBsAggregator } from '@renderer/hooks/useBsAggregator'
 import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
 import { EndModalLayout } from '@renderer/layouts/EndModal'
 
@@ -27,7 +27,7 @@ export const AddAddressModalStep2 = () => {
   const { t: commonT } = useTranslation('common', { keyPrefix: 'general' })
   const { contactBlockchain, contactName, handleAddAddress } = useModalState<TLocationState>()
   const { modalNavigate } = useModalNavigate()
-  const { bsAggregatorRef } = useBsAggregatorSelector()
+  const { bsAggregator } = useBsAggregator()
 
   const { actionState, actionData, setData, setError, handleAct } = useActions<TActionData>({
     address: '',
@@ -38,13 +38,13 @@ export const AddAddressModalStep2 = () => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setData({
-      isAddressValid: bsAggregatorRef.current.validateAddressAllBlockchains(event.target.value),
+      isAddressValid: bsAggregator.validateAddressAllBlockchains(event.target.value),
       address: event.target.value,
     })
   }
 
   const handleSubmit = async (data: TActionData) => {
-    if (!data.address || !bsAggregatorRef.current.validateAddressAllBlockchains(data.address)) {
+    if (!data.address || !bsAggregator.validateAddressAllBlockchains(data.address)) {
       setError('address', t('invalidAddress'))
       return
     }

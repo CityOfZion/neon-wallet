@@ -4,7 +4,7 @@ import { MdOutlineLock } from 'react-icons/md'
 import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
 import { useActions } from '@renderer/hooks/useActions'
-import { useBsAggregatorSelector } from '@renderer/hooks/useBlockchainSelector'
+import { useBsAggregator } from '@renderer/hooks/useBsAggregator'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
 
 import { SettingsEncryptKeySuccessContent } from './SettingsEncryptKeySuccessContent'
@@ -19,7 +19,7 @@ const MIN_LENGTH_PASSPHRASE = 4
 
 export const SettingsEncryptKeyPage = (): JSX.Element => {
   const { t } = useTranslation('pages', { keyPrefix: 'settings' })
-  const { bsAggregator } = useBsAggregatorSelector()
+  const { bsAggregator } = useBsAggregator()
   const { modalNavigate } = useModalNavigate()
 
   const { handleAct, setError, actionState, actionData, setData, clearErrors, reset } = useActions<TFormData>({

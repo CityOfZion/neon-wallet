@@ -7,7 +7,7 @@ import { IAccountState } from '@renderer/@types/store'
 import { Button } from '@renderer/components/Button'
 import { Separator } from '@renderer/components/Separator'
 import { DoraHelper } from '@renderer/helpers/DoraHelper'
-import { useBsAggregatorSelector } from '@renderer/hooks/useBlockchainSelector'
+import { useBsAggregator } from '@renderer/hooks/useBsAggregator'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
 import { useEncryptedPasswordSelector } from '@renderer/hooks/useSettingsSelector'
 import { ContentLayout } from '@renderer/layouts/ContentLayout'
@@ -34,7 +34,7 @@ type TSendServiceResult = {
 
 export const SendPage = () => {
   const { t } = useTranslation('pages', { keyPrefix: 'send' })
-  const { bsAggregatorRef } = useBsAggregatorSelector()
+  const { bsAggregator } = useBsAggregator()
   const { encryptedPasswordRef } = useEncryptedPasswordSelector()
   const { modalNavigate } = useModalNavigate()
 
@@ -80,7 +80,7 @@ export const SendPage = () => {
       return null
     }
 
-    const service = bsAggregatorRef.current.getBlockchainByName(selectedAccount.blockchain)
+    const service = bsAggregator.getBlockchainByName(selectedAccount.blockchain)
 
     const key = await window.api.decryptBasedEncryptedSecret(selectedAccount.encryptedKey, encryptedPasswordRef.current)
     if (!key) throw new Error(t('error.decryptKey'))
@@ -90,7 +90,7 @@ export const SendPage = () => {
       service: service,
       token: selectedToken,
     }
-  }, [bsAggregatorRef, encryptedPasswordRef, selectedAccount, selectedAmount, selectedRecipient, selectedToken, t])
+  }, [bsAggregator, encryptedPasswordRef, selectedAccount, selectedAmount, selectedRecipient, selectedToken, t])
 
   const populateTotalFee = useCallback(async () => {
     const sendService = await getSendService()
@@ -226,8 +226,8 @@ export const SendPage = () => {
             />
             <div
               className="
-                  absolute top-1/2 left-1/2 
-                  transform -translate-x-1/2 -translate-y-1/2 mt-6 
+                  absolute top-1/2 left-1/2
+                  transform -translate-x-1/2 -translate-y-1/2 mt-6
                   border-[0.5rem] border-gray-800 rounded-full
                 "
             >

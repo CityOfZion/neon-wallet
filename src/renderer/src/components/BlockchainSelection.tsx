@@ -1,7 +1,7 @@
 import { ComponentProps, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TBlockchainServiceKey } from '@renderer/@types/blockchain'
-import { useBsAggregatorSelector } from '@renderer/hooks/useBlockchainSelector'
+import { useBsAggregator } from '@renderer/hooks/useBsAggregator'
 
 import { BlockchainIcon } from './BlockchainIcon'
 import { Checkbox } from './Checkbox'
@@ -16,12 +16,12 @@ type TProps = Omit<ComponentProps<'div'>, 'onSelect'> & {
 export const BlockchainSelection = ({ selected, onSelect, ...props }: TProps) => {
   const { t } = useTranslation('components', { keyPrefix: 'blockchainSelection' })
   const { t: blockchainT } = useTranslation('common', { keyPrefix: 'blockchain' })
-  const { bsAggregatorRef } = useBsAggregatorSelector()
+  const { bsAggregator } = useBsAggregator()
 
   const [search, setSearch] = useState<string | null>(null)
 
   const filteredBlockchain = useMemo(() => {
-    const blockchainServices = Object.keys(bsAggregatorRef.current.blockchainServicesByName) as TBlockchainServiceKey[]
+    const blockchainServices = Object.keys(bsAggregator.blockchainServicesByName) as TBlockchainServiceKey[]
 
     if (search) {
       return blockchainServices.filter(blockchain =>
@@ -30,7 +30,7 @@ export const BlockchainSelection = ({ selected, onSelect, ...props }: TProps) =>
     }
 
     return blockchainServices
-  }, [search, bsAggregatorRef])
+  }, [search, bsAggregator])
 
   const handleCheckboxChange = (service: TBlockchainServiceKey) => {
     onSelect(service)

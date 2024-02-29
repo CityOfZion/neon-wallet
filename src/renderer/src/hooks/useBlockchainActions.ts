@@ -9,14 +9,14 @@ import { walletReducerActions } from '@renderer/store/reducers/WalletReducer'
 import * as uuid from 'uuid'
 
 import { useAccountsSelector } from './useAccountSelector'
-import { useBsAggregatorSelector } from './useBlockchainSelector'
+import { useBsAggregator } from './useBsAggregator'
 import { useAppDispatch } from './useRedux'
 import { useEncryptedPasswordSelector } from './useSettingsSelector'
 
 export function useBlockchainActions() {
   const dispatch = useAppDispatch()
   const { accountsRef } = useAccountsSelector()
-  const { bsAggregatorRef } = useBsAggregatorSelector()
+  const { bsAggregator } = useBsAggregator()
   const { encryptedPasswordRef } = useEncryptedPasswordSelector()
   const { t } = useTranslation('common', { keyPrefix: 'account' })
 
@@ -59,7 +59,7 @@ export function useBlockchainActions() {
         account => account.idWallet === wallet.id && account.blockchain === blockchain
       ).length
 
-      const service = bsAggregatorRef.current.getBlockchainByName(blockchain)
+      const service = bsAggregator.getBlockchainByName(blockchain)
       const generatedAccount = service.generateAccountFromMnemonic(mnemonic, generateIndex)
 
       const encryptedKey = await window.api.encryptBasedEncryptedSecret(
@@ -84,7 +84,7 @@ export function useBlockchainActions() {
 
       return newAccount
     },
-    [dispatch, accountsRef, bsAggregatorRef, encryptedPasswordRef]
+    [dispatch, accountsRef, bsAggregator, encryptedPasswordRef]
   )
 
   const importAccount = useCallback(
