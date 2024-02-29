@@ -8,7 +8,7 @@ import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
 import { Separator } from '@renderer/components/Separator'
 import { useBlockchainActions } from '@renderer/hooks/useBlockchainActions'
-import { useBsAggregatorSelector } from '@renderer/hooks/useBlockchainSelector'
+import { useBsAggregator } from '@renderer/hooks/useBsAggregator'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
 import { EndModalLayout } from '@renderer/layouts/EndModal'
 
@@ -21,7 +21,7 @@ type TValidatedAddress = {
 }
 
 export const AddWatch = () => {
-  const { bsAggregator } = useBsAggregatorSelector()
+  const { bsAggregator } = useBsAggregator()
   const { modalNavigate } = useModalNavigate()
   const blockchainActions = useBlockchainActions()
   const { t } = useTranslation('modals', { keyPrefix: 'addWatch' })

@@ -5,7 +5,7 @@ import { hasNft, NftResponse } from '@cityofzion/blockchain-service'
 import { IAccountState } from '@renderer/@types/store'
 import { DoraHelper } from '@renderer/helpers/DoraHelper'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
-import { useBsAggregatorSelector } from '@renderer/hooks/useBlockchainSelector'
+import { useBsAggregator } from '@renderer/hooks/useBsAggregator'
 
 import { IconButton } from '../IconButton'
 
@@ -27,7 +27,7 @@ enum ENftViewOption {
 }
 
 export const NftViewer = forwardRef<HTMLDivElement, TNftViewerProps>(({ accounts }, ref) => {
-  const { bsAggregator } = useBsAggregatorSelector()
+  const { bsAggregator } = useBsAggregator()
   const { t } = useTranslation('components', { keyPrefix: 'nftViewer' })
 
   const [nftsWithAccount, setNftsWithAccount] = useState<TNftResponseWithAccount[]>([])
@@ -52,7 +52,7 @@ export const NftViewer = forwardRef<HTMLDivElement, TNftViewerProps>(({ accounts
         setNftsWithAccount(prevState => [...prevState, { account, nfts: response.items }])
       }
     })
-  }, [accounts, bsAggregator.blockchainServicesByName])
+  }, [accounts, bsAggregator])
 
   useEffect(() => {
     handleLoadNFTS()

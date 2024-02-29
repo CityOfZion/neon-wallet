@@ -9,7 +9,7 @@ import { Loader } from '@renderer/components/Loader'
 import { UtilsHelper } from '@renderer/helpers/UtilsHelper'
 import { useActions } from '@renderer/hooks/useActions'
 import { useBlockchainActions } from '@renderer/hooks/useBlockchainActions'
-import { useBsAggregatorSelector } from '@renderer/hooks/useBlockchainSelector'
+import { useBsAggregator } from '@renderer/hooks/useBsAggregator'
 import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
 import { useMount } from '@renderer/hooks/useMount'
 import { useAppSelector } from '@renderer/hooks/useRedux'
@@ -32,7 +32,7 @@ export const ImportKeyAccountsSelectionModal = () => {
   const { t: commomT } = useTranslation('common', { keyPrefix: 'wallet' })
   const { modalNavigate } = useModalNavigate()
   const { t } = useTranslation('modals', { keyPrefix: 'importKeyAccountsSelection' })
-  const { bsAggregatorRef } = useBsAggregatorSelector()
+  const { bsAggregator } = useBsAggregator()
   const { ref: allAccountsRef } = useAppSelector(state => state.account.data.map(it => it.address))
 
   const { actionData, setData, actionState, handleAct } = useActions<TActionsData>({
@@ -70,7 +70,7 @@ export const ImportKeyAccountsSelectionModal = () => {
     const accountsByBlockchain = new Map<TBlockchainServiceKey, TAccountWithBlockchain[]>()
     const selectedAccounts: TAccountWithBlockchain[] = []
 
-    await UtilsHelper.promiseAll(bsAggregatorRef.current.blockchainServices, async service => {
+    await UtilsHelper.promiseAll(bsAggregator.blockchainServices, async service => {
       const account = service.generateAccountFromKey(key)
       if (allAccountsRef.current.some(address => address === account.address)) throw new Error()
       accountsByBlockchain.set(service.blockchainName, [{ ...account, blockchain: service.blockchainName }])
@@ -81,7 +81,7 @@ export const ImportKeyAccountsSelectionModal = () => {
       accountsByBlockchain,
       selectedAccounts,
     })
-  }, [bsAggregatorRef, key, allAccountsRef])
+  }, [bsAggregator, key, allAccountsRef])
 
   return (
     <EndModalLayout heading={t('title')} withBackButton headingIcon={<TbFileImport />} contentClassName="flex flex-col">

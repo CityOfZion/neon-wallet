@@ -8,7 +8,7 @@ import { Button } from '@renderer/components/Button'
 import { Loader } from '@renderer/components/Loader'
 import { useActions } from '@renderer/hooks/useActions'
 import { useBlockchainActions } from '@renderer/hooks/useBlockchainActions'
-import { useBsAggregatorSelector } from '@renderer/hooks/useBlockchainSelector'
+import { useBsAggregator } from '@renderer/hooks/useBsAggregator'
 import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
 import { useMount } from '@renderer/hooks/useMount'
 import { useAppSelector } from '@renderer/hooks/useRedux'
@@ -31,7 +31,7 @@ export const ImportMnemonicAccountsSelectionModal = () => {
   const { t: commonT } = useTranslation('common', { keyPrefix: 'wallet' })
   const { modalNavigate } = useModalNavigate()
   const { t } = useTranslation('modals', { keyPrefix: 'importMnemonicAccountsSelection' })
-  const { bsAggregatorRef } = useBsAggregatorSelector()
+  const { bsAggregator } = useBsAggregator()
   const { ref: allAccountsRef } = useAppSelector(state => state.account.data.map(it => it.address))
 
   const { actionData, setData, actionState, handleAct } = useActions<TActionsData>({
@@ -70,7 +70,7 @@ export const ImportMnemonicAccountsSelectionModal = () => {
   }
 
   const { isMounting } = useMount(async () => {
-    const mnemonicAccounts = await bsAggregatorRef.current.generateAccountFromMnemonicAllBlockchains(
+    const mnemonicAccounts = await bsAggregator.generateAccountFromMnemonicAllBlockchains(
       mnemonic,
       allAccountsRef.current
     )
@@ -84,7 +84,7 @@ export const ImportMnemonicAccountsSelectionModal = () => {
       mnemonicAccounts,
       selectedAccounts,
     })
-  }, [bsAggregatorRef, mnemonic])
+  }, [bsAggregator, mnemonic])
 
   return (
     <EndModalLayout heading={t('title')} withBackButton headingIcon={<TbFileImport />} contentClassName="flex flex-col">

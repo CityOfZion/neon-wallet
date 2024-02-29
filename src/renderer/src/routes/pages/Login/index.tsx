@@ -33,7 +33,6 @@ export const LoginPage = () => {
       await login(data.password)
       navigate(location.state.from ?? '/')
     } catch (error: any) {
-      console.log({ error })
       form.setError('password', { message: t('invalidPassword') })
     }
   }

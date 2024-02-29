@@ -49,28 +49,28 @@ type THeadProps = {
   sortedBy?: 'asc' | 'desc' | false
 }
 const Head = forwardRef<HTMLTableCellElement, ThHTMLAttributes<HTMLTableCellElement> & THeadProps>(
-  ({ className, children, ...props }, ref) => (
+  ({ className, children, sortable, sortedBy, ...props }, ref) => (
     <th
       ref={ref}
       className={StyleHelper.mergeStyles(
         'h-9 px-2 text-left align-middle font-medium text-gray-100 [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
-        { 'cursor-pointer hover:text-white': props.sortable },
+        { 'cursor-pointer hover:text-white': sortable },
         className
       )}
       {...props}
     >
       <div className="flex gap-1.5 items-center">
         {children}
-        {props.sortable && (
+        {sortable && (
           <div className="relative ">
             <TbCaretUpFilled
               className={StyleHelper.mergeStyles('-mb-1.5 opacity-30', {
-                'opacity-100 text-white': props.sortedBy === 'asc',
+                'opacity-100 text-white': sortedBy === 'asc',
               })}
             />
             <TbCaretDownFilled
               className={StyleHelper.mergeStyles('-mt-1.5 opacity-30', {
-                'opacity-100 text-white': props.sortedBy === 'desc',
+                'opacity-100 text-white': sortedBy === 'desc',
               })}
             />
           </div>
