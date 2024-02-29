@@ -94,7 +94,7 @@ export const ContactsPage = () => {
         </div>
 
         {selectedContact && (
-          <div className="w-[75%] px-2">
+          <div className="w-full px-2">
             <div className="flex flex-col h-15 mb-5">
               <div className="w-full flex items-center justify-between px-2">
                 {t('addresses')}
