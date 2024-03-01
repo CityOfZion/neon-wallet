@@ -5,7 +5,6 @@ import { IAccountState, IWalletState } from '@renderer/@types/store'
 import { BalanceHelper } from '@renderer/helpers/BalanceHelper'
 import { FilterHelper } from '@renderer/helpers/FilterHelper'
 
-import { Loader } from '../Loader'
 import { Separator } from '../Separator'
 
 import { BalanceChart } from './BalanceChart'
@@ -49,7 +48,7 @@ export const BalanceChartPanel = ({ balanceExchange, accounts, wallets }: TProps
       <Separator />
 
       <ul className="flex h-full items-center px-20">
-        {balanceExchange.isLoading ? <Loader /> : <BalanceChart balanceExchange={balanceExchange} />}
+        <BalanceChart balanceExchange={balanceExchange} />
       </ul>
     </div>
   )
