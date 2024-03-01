@@ -152,6 +152,12 @@
       "youAreConnectedNeoAndEth": "You are connected to both the Neo and Ethereum networks",
       "globalConfiguration": "Global controls",
       "currentNetwork": "Current Network"
+    },
+    "settingsReleaseNotes": {
+      "title": "Release Notes",
+      "button": {
+        "learnMore": "Learn More"
+      }
     }
   },
   "receive": {

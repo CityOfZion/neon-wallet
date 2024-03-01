@@ -1,0 +1,13 @@
+[
+  {
+    "tag_name": "Patch v1.0.0",
+    "published_at": "31 Jan 2024",
+    "body": "*Lorem ipsum dolor sit amet, consectetur adipiscing elit.* Fusce congue massa mi, et egestas metus laoreet quis. Vestibulum volutpat tincidunt elit in dignissim. Nulla a justo vitae metus tincidunt placerat pulvinar eu augue. Donec quis quam sit amet ex pulvinar sagittis vel at mi. Suspendisse placerat odio ac ligula finibus, in sagittis sem varius. Nullam urna erat, eleifend in tempus non, eleifend vel ipsum. In varius laoreet lorem, nec iaculis velit bibendum at. Morbi consectetur mollis lacinia. <a href=\"https://github.com/CityOfZion/neon-wallet\" target=\"_blank\">Quisque</a> at leo sed purus interdum semper. Mauris justo neque, congue quis dui ut, mollis blandit ex. Vivamus quis euismod tortor. Nulla pretium semper bibendum. Aliquam erat volutpat.",
+    "html_url": "https://github.com/CityOfZion/neon-wallet"
+  },
+  {
+    "tag_name": "Patch v1.0.1",
+    "published_at": "01 Dec 2023",
+    "body": "**Lorem ipsum dolor sit amet, consectetur adipiscing elit.**</br>\r\n <li>Fusce congue massa mi, et egestas metus laoreet quis.\r\n <li>Vestibulum volutpat tincidunt elit in dignissim.\r\n <li>Nulla a justo vitae metus tincidunt placerat pulvinar eu augue.\r\n\r\n\r\n Donec quis quam sit amet ex pulvinar sagittis vel at mi. Suspendisse placerat odio ac ligula finibus, in sagittis sem varius. Nullam urna erat, eleifend in tempus non, eleifend vel ipsum. In varius laoreet lorem, nec iaculis velit bibendum at. Morbi consectetur mollis lacinia. Quisque at leo sed purus interdum semper. Mauris justo neque, congue quis dui ut, mollis blandit ex. Vivamus quis euismod tortor. Nulla pretium semper bibendum. Aliquam erat volutpat."
+  }
+]
