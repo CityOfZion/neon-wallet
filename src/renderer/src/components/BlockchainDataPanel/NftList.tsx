@@ -37,7 +37,7 @@ export const NftList = ({ onNftSelected, nftsWithAccount }: TNftListProps) => {
 
                 <div className="flex gap-1.5">
                   <div className="min-w-[1rem] min-h-[1rem] bg-gray-300/30 rounded-full" />
-                  <span className="text-gray-300 truncate">{nft.contractHash}</span>
+                  <span className="text-gray-300 truncate">{nft.creator.name ?? nft.creator.address}</span>
                 </div>
               </div>
 
