@@ -77,7 +77,7 @@ export const ContactsPage = () => {
     >
       <section className="bg-gray-800 w-full h-full flex rounded">
         <div className="w-full max-w-[17.188rem] px-2 border-r border-gray-300/15 flex flex-col items-center">
-          <Tabs.Root defaultValue={ESidebarOption.CONTACTS} className="w-full">
+          <Tabs.Root defaultValue={ESidebarOption.CONTACTS} className="w-full h-full flex-col flex">
             <Tabs.List className="w-full mt-3 mb-7">
               <Tabs.Trigger value={ESidebarOption.CONTACTS} className="px-8">
                 {t('contactList.contacts')}
@@ -87,7 +87,7 @@ export const ContactsPage = () => {
               </Tabs.Trigger>
             </Tabs.List>
 
-            <Tabs.Content value={ESidebarOption.CONTACTS}>
+            <Tabs.Content value={ESidebarOption.CONTACTS} className="h-full">
               <ContactsTabContent onContactSelected={setSelectedContact} />
             </Tabs.Content>
           </Tabs.Root>

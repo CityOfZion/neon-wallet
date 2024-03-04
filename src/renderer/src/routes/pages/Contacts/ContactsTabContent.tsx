@@ -6,9 +6,5 @@ type TProps = {
 }
 
 export const ContactsTabContent = ({ onContactSelected }: TProps) => {
-  return (
-    <div className="">
-      <ContactList onContactSelected={onContactSelected} selectFirst={true} showSelectedIcon={false} />
-    </div>
-  )
+  return <ContactList onContactSelected={onContactSelected} selectFirst={true} showSelectedIcon={false} />
 }
