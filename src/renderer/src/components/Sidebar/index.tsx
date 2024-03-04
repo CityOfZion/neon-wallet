@@ -23,8 +23,8 @@ export const Sidebar = (): JSX.Element => {
   const { logout } = useLogin()
   return (
     <aside className="bg-gray-800 h-screen w-[4rem] min-w-[4rem] flex flex-col">
-      <div className="flex justify-center py-4">
-        <NeonLogoIcon />
+      <div className="flex justify-center pt-4 pb-2">
+        <NeonLogoIcon className="border border-green rounded p-1" />
       </div>
 
       <nav className="flex-grow">
