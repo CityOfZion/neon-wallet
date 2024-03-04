@@ -76,6 +76,7 @@ export const ImportEncryptedPasswordModal = () => {
           placeholder={t('inputPlaceholder')}
           value={actionData.password}
           onChange={handlePasswordChange}
+          type="password"
         />
 
         <Button
