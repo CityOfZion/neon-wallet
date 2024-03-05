@@ -51,6 +51,10 @@ export const WalletsPage = () => {
     setIsReordering(false)
   }
 
+  const handleSelectWallet = (selected: IWalletState) => {
+    setSelectedWallet(selected)
+  }
+
   useEffect(() => {
     setSelectedWallet(prev => {
       if (prev) {
@@ -109,13 +113,21 @@ export const WalletsPage = () => {
             icon={<TbFileImport />}
             size="md"
             text={t('importButtonLabel')}
-            onClick={modalNavigateWrapper('import')}
+            onClick={modalNavigateWrapper('import', {
+              state: {
+                onImportWallet: handleSelectWallet,
+              },
+            })}
           />
           <IconButton
             icon={<TbEyePlus />}
             size="md"
             text={t('addWatchAccountButtonLabel')}
-            onClick={modalNavigateWrapper('add-watch')}
+            onClick={modalNavigateWrapper('add-watch', {
+              state: {
+                onAddWallet: handleSelectWallet,
+              },
+            })}
           />
           <IconButton
             icon={<TbPlug />}

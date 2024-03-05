@@ -3,16 +3,21 @@ import { useTranslation } from 'react-i18next'
 import { MdAdd } from 'react-icons/md'
 import { TbEyePlus } from 'react-icons/tb'
 import { TBlockchainServiceKey, TImportAccountsParam } from '@renderer/@types/blockchain'
+import { IWalletState } from '@renderer/@types/store'
 import { Banner } from '@renderer/components/Banner'
 import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
 import { Separator } from '@renderer/components/Separator'
 import { useBlockchainActions } from '@renderer/hooks/useBlockchainActions'
 import { useBsAggregator } from '@renderer/hooks/useBsAggregator'
-import { useModalNavigate } from '@renderer/hooks/useModalRouter'
+import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
 import { EndModalLayout } from '@renderer/layouts/EndModal'
 
 import { BlockchainIcon } from '../../../components/BlockchainIcon'
+
+type TAddWatchState = {
+  onAddWallet: (wallet: IWalletState) => void
+}
 
 type TValidatedAddress = {
   address: string
@@ -27,6 +32,7 @@ export const AddWatch = () => {
   const { t } = useTranslation('modals', { keyPrefix: 'addWatch' })
   const { t: commomT } = useTranslation('common', { keyPrefix: 'wallet' })
   const [validatedAddress, setValidatedAddress] = useState<TValidatedAddress>()
+  const { onAddWallet } = useModalState<TAddWatchState>()
   const [error, setError] = useState<string>()
 
   const [isLoading, setIsLoading] = useState(false)
@@ -58,6 +64,8 @@ export const AddWatch = () => {
       ]
 
       await blockchainActions.importAccounts({ wallet, accounts: accountsToImport })
+
+      onAddWallet(wallet)
 
       modalNavigate(-1)
     } catch (error: any) {
