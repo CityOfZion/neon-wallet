@@ -6,11 +6,7 @@
   },
   "securitySetup": {
     "title": "Welcome to Neon Wallet",
-    "steps": [
-      "Create Password",
-      "Confirm Password",
-      "Complete"
-    ]
+    "steps": ["Create Password", "Confirm Password", "Complete"]
   },
   "securitySetupStep1": {
     "formTitle": "Please create a password to secure your wallet",
@@ -100,13 +96,7 @@
       "myAccounts": "MY ACCOUNTS",
       "notFound": "No contacts found"
     },
-    "addresses": "Addresses",
-    "edit": "Edit",
-    "addressTable": {
-      "blockchain": "BLOCKCHAIN",
-      "address": "ADDRESS",
-      "sendAssets": "Send assets"
-    }
+    "addresses": "Addresses"
   },
   "settings": {
     "title": "Settings",

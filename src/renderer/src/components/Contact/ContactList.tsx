@@ -140,7 +140,7 @@ export const ContactList = ({
 
         {groupedContacts.size <= 0 && <div>{contactT('noContacts')}</div>}
 
-        <section className="w-full overflow-y-auto flex-grow flex flex-col basis-0">
+        <section className="w-full overflow-y-auto flex-grow flex flex-col gap-y-5 basis-0 text-xs">
           {groupedContacts &&
             Array.from(groupedContacts.entries()).map(([key, arrValues]) => (
               <div key={key}>

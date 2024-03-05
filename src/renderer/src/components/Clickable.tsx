@@ -52,7 +52,10 @@ const Contained = ({ className, ...props }: TClickableProps) => {
 const Text = ({ className, ...props }: TClickableProps) => {
   return (
     <Base
-      className={StyleHelper.mergeStyles(className, 'flex justify-center items-center text-center w-full gap-x-1.5')}
+      className={StyleHelper.mergeStyles(
+        className,
+        'flex justify-center items-center text-center rounded aria-[disabled=false]:hover:bg-gray-300/15 aria-[disabled=true]:opacity-50 aria-[disabled=true]:cursor-not-allowed  py-2 w-full gap-x-1.5'
+      )}
       {...props}
     />
   )

@@ -121,6 +121,11 @@ interface Resources {
     nftViewer: {
       empty: 'No NFTS to display'
     }
+    contactAddressTable: {
+      blockchain: 'BLOCKCHAIN'
+      address: 'ADDRESS'
+      sendAssets: 'Send assets'
+    }
   }
   modals: {
     import: {
@@ -390,12 +395,6 @@ interface Resources {
         notFound: 'No contacts found'
       }
       addresses: 'Addresses'
-      edit: 'Edit'
-      addressTable: {
-        blockchain: 'BLOCKCHAIN'
-        address: 'ADDRESS'
-        sendAssets: 'Send assets'
-      }
     }
     settings: {
       title: 'Settings'
