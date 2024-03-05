@@ -85,5 +85,10 @@
   },
   "nftViewer": {
     "empty": "No NFTS to display"
+  },
+  "contactAddressTable": {
+    "blockchain": "BLOCKCHAIN",
+    "address": "ADDRESS",
+    "sendAssets": "Send assets"
   }
 }

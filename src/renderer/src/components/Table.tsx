@@ -33,16 +33,23 @@ const HeaderRow = forwardRef<HTMLTableRowElement, HTMLAttributes<HTMLTableRowEle
   )
 )
 
-const BodyRow = forwardRef<HTMLTableRowElement, HTMLAttributes<HTMLTableRowElement>>(({ className, ...props }, ref) => (
-  <tr
-    ref={ref}
-    className={StyleHelper.mergeStyles(
-      'transition-colors even:bg-gray-300/15 hover:bg-gray-900/50 border-l-2 hover:border-neon border-transparent',
-      className
-    )}
-    {...props}
-  />
-))
+type TBodyRowProps = {
+  hoverable?: boolean
+}
+
+const BodyRow = forwardRef<HTMLTableRowElement, HTMLAttributes<HTMLTableRowElement> & TBodyRowProps>(
+  ({ className, hoverable = true, ...props }, ref) => (
+    <tr
+      ref={ref}
+      className={StyleHelper.mergeStyles(
+        'transition-colors even:bg-gray-300/15',
+        { 'hover:border-neon hover:bg-gray-900/50 border-l-2 border-transparent': hoverable },
+        className
+      )}
+      {...props}
+    />
+  )
+)
 
 type THeadProps = {
   sortable?: boolean
