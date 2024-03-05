@@ -94,6 +94,7 @@ interface Resources {
       title: 'All accounts'
     }
     transactionsTable: {
+      blockchain: 'BLOCKCHAIN'
       date: 'DATE'
       asset: 'ASSET'
       amount: 'AMOUNT'
