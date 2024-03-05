@@ -1,5 +1,9 @@
+import { getI18n } from 'react-i18next'
 import * as uuid from 'uuid'
-export abstract class UtilsHelper {
+
+import { ToastHelper } from './ToastHelper'
+
+export class UtilsHelper {
   static getRandomNumber(max: number) {
     return Math.floor(Math.random() * Math.floor(max))
   }
@@ -55,6 +59,8 @@ export abstract class UtilsHelper {
   }
 
   static copyToClipboard(text: string) {
+    const { t } = getI18n()
+    ToastHelper.success({ message: t('common:general.successfullyCopied') })
     navigator.clipboard.writeText(text)
   }
 

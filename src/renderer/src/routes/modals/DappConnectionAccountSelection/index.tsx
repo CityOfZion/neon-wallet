@@ -1,8 +1,7 @@
 import { ChangeEventHandler, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TbLink, TbPlug } from 'react-icons/tb'
-import { TSessionProposal } from '@cityofzion/wallet-connect-sdk-wallet-core'
-import { TBlockchainServiceKey } from '@renderer/@types/blockchain'
+import { TWalletConnectHelperProposalInformation } from '@renderer/@types/helpers'
 import { IAccountState } from '@renderer/@types/store'
 import { Button } from '@renderer/components/Button'
 import { SearchInput } from '@renderer/components/SearchInput'
@@ -16,11 +15,11 @@ import { WalletAccordionList } from './WalletAccordionList'
 
 type TState = {
   onSelectionFinish?: (account: IAccountState) => void
-  proposal: TSessionProposal
+  proposalInformation: TWalletConnectHelperProposalInformation
 }
 
 export const DappConnectionAccountSelectionModal = () => {
-  const { onSelectionFinish, proposal } = useModalState<TState>()
+  const { onSelectionFinish, proposalInformation } = useModalState<TState>()
   const { modalNavigate } = useModalNavigate()
   const { t } = useTranslation('modals', { keyPrefix: 'dappConnectionAccountSelection' })
 
@@ -38,10 +37,6 @@ export const DappConnectionAccountSelectionModal = () => {
 
     return accounts
   }, [search, accounts])
-
-  const acceptedBlockchains = useMemo(() => {
-    return Object.keys(proposal.params.requiredNamespaces) as TBlockchainServiceKey[]
-  }, [proposal])
 
   const handleSelect = (account: IAccountState) => {
     setSelectedAccount(account)
@@ -74,7 +69,7 @@ export const DappConnectionAccountSelectionModal = () => {
           accounts={filteredAccounts}
           wallets={wallets}
           balanceExchange={balanceExchange}
-          acceptedBlockchains={acceptedBlockchains}
+          acceptedBlockchains={[proposalInformation.blockchain]}
           onSelect={handleSelect}
           onDeselect={handleDeselect}
           selectedAccounts={selectedAccount ? [selectedAccount] : []}

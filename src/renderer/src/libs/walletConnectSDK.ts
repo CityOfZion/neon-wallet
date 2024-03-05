@@ -1,43 +1,8 @@
-import { DEFAULT_URL_BY_NETWORK_TYPE } from '@cityofzion/bs-neo3'
-import { AbstractWalletConnectNeonAdapter } from '@cityofzion/wallet-connect-sdk-wallet-core'
-import { TAdapterMethodParam } from '@cityofzion/wallet-connect-sdk-wallet-react'
-import { TInitOptions } from '@cityofzion/wallet-connect-sdk-wallet-react'
-import { WalletConnectHelper } from '@renderer/helpers/WalletConnectHelper'
-import { RootStore } from '@renderer/store/RootStore'
+import type { TInitOptions } from '@cityofzion/wallet-connect-sdk-wallet-react'
 import i18n from 'i18next'
-export class WalletConnectNeonAdapter extends AbstractWalletConnectNeonAdapter {
-  async getAccountString({ session }: TAdapterMethodParam): Promise<string> {
-    const {
-      account: { data: accounts },
-      settings: { encryptedPassword },
-    } = RootStore.store.getState()
 
-    const [{ address }] = WalletConnectHelper.getAccountInformationFromSession(session)
-    const account = accounts.find(account => account.address === address)
-    if (!account) throw new Error('Account not found')
-    if (!account.encryptedKey) throw new Error('Key not found')
-
-    const key = await window.api.decryptBasedEncryptedSecret(account.encryptedKey, encryptedPassword)
-    if (!key) throw new Error('Error to decrypt key')
-
-    return key
-  }
-
-  async getWalletInfo(): Promise<any> {
-    // TODO: Implement this method when ledger is supported. Task link: https://app.clickup.com/t/86a1n66zt
-    return {
-      isLedger: false,
-    }
-  }
-
-  async getRPCUrl(): Promise<string> {
-    const {
-      settings: { networkType },
-    } = RootStore.store.getState()
-
-    return DEFAULT_URL_BY_NETWORK_TYPE[networkType]
-  }
-}
+import { WalletConnectEIP155Adapter } from './WalletConnectEIP155Adapter'
+import { WalletConnectNeonAdapter } from './WalletConnectNeonAdapter'
 
 export const walletConnectOptions: TInitOptions = {
   clientOptions: {
@@ -71,6 +36,19 @@ export const walletConnectOptions: TInitOptions = {
       ],
       autoAcceptMethods: ['testInvoke', 'getWalletInfo', 'traverseIterator', 'getNetworkVersion', 'calculateFee'],
       adapter: new WalletConnectNeonAdapter(),
+    },
+    eip155: {
+      methods: [
+        'personal_sign',
+        'eth_sign',
+        'eth_signTransaction',
+        'eth_signTypedData',
+        'eth_signTypedData_v3',
+        'eth_signTypedData_v4',
+        'eth_sendTransaction',
+      ],
+      events: ['chainChanged', 'accountsChanged'],
+      adapter: new WalletConnectEIP155Adapter(),
     },
   },
 }

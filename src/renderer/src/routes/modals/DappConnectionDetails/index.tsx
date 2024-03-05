@@ -87,7 +87,7 @@ export const DappConnectionDetailsModal = () => {
     modalNavigate('dapp-connection-account-selection', {
       state: {
         onSelectionFinish: handleAccountSelection,
-        proposal,
+        proposalInformation: proposalInformation,
       },
     })
   }
@@ -97,10 +97,11 @@ export const DappConnectionDetailsModal = () => {
       const proposalInformation = WalletConnectHelper.getInformationFromProposal(proposal)
       setProposalInformation(proposalInformation)
     } catch (error: any) {
+      rejectProposal(proposal)
       ToastHelper.error(error.message)
       modalNavigate(-1)
     }
-  }, [proposal, modalNavigate])
+  }, [proposal, modalNavigate, rejectProposal])
 
   return (
     <CenterModalLayout onClose={handleClose} contentClassName="items-center justify-center flex flex-col">

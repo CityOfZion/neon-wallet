@@ -1,13 +1,14 @@
-import { Blockchain, TSession, TSessionProposal } from '@cityofzion/wallet-connect-sdk-wallet-react'
+import { TSession, TSessionProposal } from '@cityofzion/wallet-connect-sdk-wallet-react'
 import { TBlockchainServiceKey, TNetworkType } from '@renderer/@types/blockchain'
 import {
-  TWalletConnectHelperAccountInformation,
   TWalletConnectHelperProposalInformation,
+  TWalletConnectHelperSessionInformation,
 } from '@renderer/@types/helpers'
 
 export abstract class WalletConnectHelper {
-  static blockchainsByBlockchainServiceKey: Partial<Record<TBlockchainServiceKey, Blockchain>> = {
+  static blockchainsByBlockchainServiceKey: Partial<Record<TBlockchainServiceKey, string>> = {
     neo3: 'neo3',
+    ethereum: 'eip155',
   }
 
   static networksByBlockchainServiceKey: Partial<Record<TBlockchainServiceKey, Record<TNetworkType, string>>> = {
@@ -15,38 +16,49 @@ export abstract class WalletConnectHelper {
       mainnet: 'mainnet',
       testnet: 'testnet',
     },
+    ethereum: {
+      mainnet: '1',
+      testnet: '5',
+    },
   }
 
-  static getAccountInformationFromSession(session: TSession): TWalletConnectHelperAccountInformation[] {
+  static getAccountInformationFromSession(session: TSession): TWalletConnectHelperSessionInformation {
     const accounts = Object.values(session.namespaces)[0].accounts
-    const accountsInfos = accounts.map((account): TWalletConnectHelperAccountInformation => {
-      const [namespace, reference, address] = account.split(':')
+    if (!accounts) throw new Error('Accounts not found')
 
-      const blockchain = (
-        Object.entries(this.blockchainsByBlockchainServiceKey) as [TBlockchainServiceKey, Blockchain][]
-      ).find(([, value]) => value === namespace)
-      if (!blockchain) throw new Error('Blockchain not supported')
+    const account = accounts[0]
+    const [sessionBlockchain, sessionNetwork, sessionAddress] = account.split(':')
 
-      if (!blockchain) throw new Error('Blockchain not supported')
+    const blockchainByBlockchainServiceKey = Object.entries(this.blockchainsByBlockchainServiceKey).find(
+      ([, value]) => value === sessionBlockchain
+    )
+    if (!blockchainByBlockchainServiceKey) throw new Error('Blockchain not supported')
 
-      return {
-        address,
-        namespace,
-        reference,
-        chainId: `${namespace}:${reference}`,
-        blockchain: blockchain[0],
-      }
-    })
+    const blockchain = blockchainByBlockchainServiceKey[0] as TBlockchainServiceKey
 
-    return accountsInfos
+    const networks = this.networksByBlockchainServiceKey[blockchain]
+    if (!networks) throw new Error('Blockchain not supported')
+
+    const networkByNetworkType = Object.entries(networks).find(entry => entry[1] === sessionNetwork)
+    if (!networkByNetworkType) throw new Error('Network not supported')
+
+    const network = networkByNetworkType[0] as TNetworkType
+
+    return {
+      address: sessionAddress,
+      blockchain,
+      network,
+    }
   }
 
   static getInformationFromProposal(proposal: TSessionProposal): TWalletConnectHelperProposalInformation {
     const namespace = Object.values(proposal.params.requiredNamespaces)[0]
+    const optionsNamespace = Object.values(proposal.params.optionalNamespaces)[0]
+
     const chains = namespace.chains
     if (!chains) throw new Error('Chains not found')
 
-    const methods = namespace.methods
+    const methods = namespace.methods.concat(optionsNamespace?.methods ?? [])
     const chain = chains[0]
 
     const [proposalBlockchain, proposalNetwork] = chain.split(':')

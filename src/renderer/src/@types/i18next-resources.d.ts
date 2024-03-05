@@ -7,6 +7,7 @@ interface Resources {
       edit: 'Edit'
       cancel: 'Cancel'
       reset: 'Reset'
+      successfullyCopied: 'Successfully copied to clipboard'
     }
     walletConnect: {
       name: 'Neon Wallet'
@@ -305,6 +306,141 @@ interface Resources {
     networkSelection: {
       title: 'Network'
       selectNetwork: 'Select a network'
+    }
+    dappPermission: {
+      unsupportedMethodError: 'The method {{method}} is not supported'
+      cancelled: 'Request cancelled'
+      errorModal: {
+        heading: 'Dapp Request'
+        subtitle: 'Request failed'
+        text: "I'm sorry but your request could not be processed."
+        errorMessageLabel: 'ERROR MESSAGE'
+      }
+      requests: {
+        neo3: {
+          contractInvocation: {
+            subtitle: 'Confirm that you’d like to proceed'
+            overrideFeeInfo: 'The dApp has overwritten the fees'
+            feeError: 'Error to calculate fee. The request was cancelled.'
+            feeLabel: 'Fee'
+            hashLabel: 'HASH'
+            signatureScopeTitle: 'Signature scope'
+            acceptButtonLabel: 'Confirm'
+            cancelButtonLabel: 'Cancel'
+          }
+          invokeFunction: {
+            title: 'This app needs your permission to perform this transaction'
+            successModal: {
+              heading: 'Dapp Request'
+              subtitle: 'Transaction successfully sent!'
+              text: 'Once your transaction has been confirmed it will appear in your activity feed.'
+            }
+          }
+          signTransaction: {
+            title: 'This app needs your permission to sign this transaction'
+            successModal: {
+              heading: 'Dapp Request'
+              subtitle: 'Transaction successfully signed!'
+            }
+          }
+          signMessage: {
+            title: 'This app asks for authentication'
+            messageLabel: 'MESSAGE'
+            acceptButtonLabel: 'Authenticate'
+            cancelButtonLabel: 'Reject'
+            successModal: {
+              heading: 'Dapp Request'
+              subtitle: 'Message successfully signed!'
+            }
+          }
+          verifyMessage: {
+            title: 'This app asks for authentication'
+            messageLabel: 'SIGNED MESSAGE'
+            acceptButtonLabel: 'Authenticate'
+            cancelButtonLabel: 'Reject'
+            successModal: {
+              heading: 'Dapp Request'
+              subtitle: 'Wallet authenticated!'
+            }
+          }
+          encrypt: {
+            title: 'This app asks for encryption'
+            messageLabel: 'MESSAGE'
+            acceptButtonLabel: 'Encrypt'
+            cancelButtonLabel: 'Reject'
+            successModal: {
+              heading: 'Dapp Request'
+              subtitle: 'Message successfully encrypted!'
+            }
+          }
+          decrypt: {
+            title: 'This app asks for decryption'
+            messageLabel: 'MESSAGE'
+            acceptButtonLabel: 'Decrypt'
+            cancelButtonLabel: 'Reject'
+            successModal: {
+              heading: 'Dapp Request'
+              subtitle: 'Message successfully decrypted!'
+            }
+          }
+        }
+        ethereum: {
+          signMessage: {
+            title: 'This app asks for authentication'
+            messageLabel: 'MESSAGE'
+            acceptButtonLabel: 'Authenticate'
+            cancelButtonLabel: 'Reject'
+            successModal: {
+              heading: 'Dapp Request'
+              subtitle: 'Message successfully signed!'
+            }
+          }
+          rawJson: {
+            dataLabel: 'DATA'
+            acceptButtonLabel: 'Accept'
+            cancelButtonLabel: 'Reject'
+          }
+          signTransaction: {
+            title: 'This app needs your permission to sign this transaction'
+            successModal: {
+              heading: 'Dapp Request'
+              subtitle: 'Transaction successfully signed!'
+            }
+          }
+          sendTransaction: {
+            title: 'This app needs your permission to perform this transaction'
+            successModal: {
+              heading: 'Dapp Request'
+              subtitle: 'Transaction successfully sent!'
+              text: 'Once your transaction has been confirmed it will appear in your activity feed.'
+            }
+          }
+          signTypedData: {
+            title: 'This app asks for authentication'
+            successModal: {
+              heading: 'Dapp Request'
+              subtitle: 'Message successfully signed!'
+            }
+          }
+        }
+      }
+    }
+    dappPermissionSignatureScopeModal: {
+      scopes: {
+        None: 'Your signature is only valid for fee payments.'
+        CalledByEntry: 'Your signature can only be used by the calling contract and just for this transaction.'
+        Global: 'Your signature can be used without restriction with any contract.'
+        CustomContracts: 'Your signature can be used by the set of contracts listed above.'
+        CustomGroups: 'Your signature can be used by the set of groups listed above.'
+        WitnessRules: 'Your signature is only valid for transactions that match the specified rules and conditions, such as the current script hash, group, or calling script hash. This allows for more complex and expressive signature scoping to address edge cases and potential reentrancy attacks.'
+      }
+    }
+    dappPermissionContractDetails: {
+      title: 'Invocation details'
+      detailsLabel: 'DETAILS'
+      hashLabel: 'HASH'
+      parametersLabel: 'REQUEST PARAMETERS'
+      methodNotFoundError: 'Method not found in contract'
     }
   }
   pages: {

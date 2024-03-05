@@ -51,7 +51,7 @@ body {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 16px;
 }
 
 /* Track */
@@ -65,7 +65,7 @@ body {
   transition: background-color 10s;
   border-radius: 12px;
   background-clip: content-box;
-  border: 4px solid transparent;
+  border: 6px solid transparent;
 }
 
 /* Handle on hover */

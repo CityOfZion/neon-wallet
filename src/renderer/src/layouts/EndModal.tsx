@@ -50,7 +50,7 @@ export const EndModalLayout = ({
         exit={{ width: 0 }}
       >
         <div
-          className={StyleHelper.mergeStyles(' bg-gray-800 h-full px-4 text-white text-xs flex flex-col', {
+          className={StyleHelper.mergeStyles('bg-gray-800 h-full px-4 text-white text-xs flex flex-col', {
             'w-[25.875rem]': bigger,
             'w-[20.625rem]': !bigger,
           })}

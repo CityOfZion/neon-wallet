@@ -5,7 +5,8 @@
     "save": "Save",
     "edit": "Edit",
     "cancel": "Cancel",
-    "reset": "Reset"
+    "reset": "Reset",
+    "successfullyCopied": "Successfully copied to clipboard"
   },
   "walletConnect": {
     "name": "Neon Wallet",

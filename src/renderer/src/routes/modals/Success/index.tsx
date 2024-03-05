@@ -17,7 +17,7 @@ export const SuccessModal = () => {
       heading={heading}
       headingIcon={headingIcon}
       bigger
-      contentClassName="flex flex-col flex-grow items-center justify-center"
+      contentClassName="flex flex-col flex-grow min-w-0 items-center"
     >
       <div className="w-28 h-28 p-2 bg-asphalt rounded-full flex items-center">
         <PiSealCheckFill className="w-24 h-24 text-blue" />

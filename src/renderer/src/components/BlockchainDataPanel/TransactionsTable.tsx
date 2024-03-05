@@ -5,6 +5,7 @@ import { DoraHelper } from '@renderer/helpers/DoraHelper'
 import { StringHelper } from '@renderer/helpers/StringHelper'
 import { ToastHelper } from '@renderer/helpers/ToastHelper'
 import { useInfiniteScroll } from '@renderer/hooks/useInfiniteScroll'
+import { useNetworkTypeSelector } from '@renderer/hooks/useSettingsSelector'
 import { TUseTransactionsTransfer, useTransactions } from '@renderer/hooks/useTransactions'
 import { getI18next } from '@renderer/libs/i18next'
 import {
@@ -82,6 +83,7 @@ const columns = [
 
 export const TransactionsTable = forwardRef<HTMLDivElement, TTransactionListProps>(({ accounts }, ref) => {
   const { transfers, fetchNextPage, isLoading } = useTransactions({ accounts })
+  const { networkType } = useNetworkTypeSelector()
   const { handleScroll, ref: scrollRef } = useInfiniteScroll<HTMLDivElement>(fetchNextPage)
 
   const [sorting, setSorting] = useState<SortingState>([])
@@ -102,7 +104,7 @@ export const TransactionsTable = forwardRef<HTMLDivElement, TTransactionListProp
 
   const handleClick = (row: TUseTransactionsTransfer) => {
     try {
-      const url = DoraHelper.buildTransactionUrl(row.hash, row.account.blockchain)
+      const url = DoraHelper.buildTransactionUrl(row.hash, networkType, row.account.blockchain)
       window.open(url)
     } catch (error) {
       ToastHelper.error({ message: t('components:transactionsTable.doraError') })

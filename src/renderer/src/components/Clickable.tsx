@@ -22,7 +22,7 @@ const Outline = ({ className, colorSchema = 'neon', ...props }: TClickableProps)
     <Base
       className={StyleHelper.mergeStyles(
         className,
-        'group flex items-center w-full justify-center border text-center rounded py-3 gap-x-2.5 cursor-pointer transition-colors aria-[disabled=false]:hover:bg-gray-300/15 aria-[disabled=true]:opacity-50 aria-[disabled=true]:cursor-not-allowed',
+        'group flex items-center justify-center border text-center rounded py-3 gap-x-2.5 cursor-pointer transition-colors aria-[disabled=false]:hover:bg-gray-300/15 aria-[disabled=true]:opacity-50 aria-[disabled=true]:cursor-not-allowed',
         {
           'aria-[disabled=false]:text-neon aria-[disabled=false]:border-neon': colorSchema === 'neon',
           'aria-[disabled=false]:text-gray-100 aria-[disabled=false]:border-gray-100': colorSchema === 'gray',
@@ -39,7 +39,7 @@ const Contained = ({ className, ...props }: TClickableProps) => {
   return (
     <Base
       className={StyleHelper.mergeStyles(
-        'flex justify-center items-center text-center w-full py-3 gap-x-2.5 transition-colors rounded',
+        'flex min-w-0 justify-center items-center text-center py-3 gap-x-2.5 transition-colors rounded',
         'aria-[disabled=true]:bg-gray-300/30 aria-[disabled=true]:text-gray-100/50 aria-[disabled=true]:cursor-not-allowed',
         'aria-[disabled=false]:cursor-pointer aria-[disabled=false]:bg-gradient-to-t aria-[disabled=false]:from-gray-800 aria-[disabled=false]:to-gray-600 aria-[disabled=false]:shadow-[4px_8px_20px_0px_rgba(18,21,23,0.40),inset_1px_1px_0px_0px_rgba(214,210,210,0.14),inset_-1px_-1px_0px_0px_rgba(0,0,0,0.32)] aria-[disabled=false]:hover:from-gray-600 aria-[disabled=false]:hover:to-gray-600',
         className
@@ -54,7 +54,7 @@ const Text = ({ className, ...props }: TClickableProps) => {
     <Base
       className={StyleHelper.mergeStyles(
         className,
-        'flex justify-center items-center text-center rounded aria-[disabled=false]:hover:bg-gray-300/15 aria-[disabled=true]:opacity-50 aria-[disabled=true]:cursor-not-allowed  py-2 w-full gap-x-1.5'
+        'flex min-w-0 justify-center items-center text-center gap-x-1.5 aria-[disabled=false]:hover:bg-gray-300/15 rounded'
       )}
       {...props}
     />
@@ -118,7 +118,7 @@ const Base = ({
             })}
 
           <span
-            className={StyleHelper.mergeStyles('font-medium whitespace-nowrap', {
+            className={StyleHelper.mergeStyles('font-medium truncate', {
               'flex-grow': iconsOnEdge,
             })}
           >

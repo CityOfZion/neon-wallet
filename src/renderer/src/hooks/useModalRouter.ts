@@ -1,4 +1,4 @@
-import { useCallback, useContext, useMemo } from 'react'
+import { useCallback, useContext, useMemo, useRef } from 'react'
 import { TModalRouterContextNavigateOptions } from '@renderer/@types/modal'
 import { ModalRouterContext } from '@renderer/contexts/ModalRouterContext'
 
@@ -22,12 +22,11 @@ export const useModalNavigate = () => {
 
 export const useModalState = <T = any>(): T => {
   const { history } = useContext(ModalRouterContext)
+  const currentHistoryId = useRef<string>(history[history.length - 1].id)
 
   const state = useMemo(() => {
-    return (history[history.length - 1].state ?? {}) as T
-    // It is intentional not to add history to the dependencies array, because I don't want to update the ref
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    return history.find(item => item.id === currentHistoryId.current)!.state as T
+  }, [history])
 
   return state
 }
