@@ -17,6 +17,7 @@ import {
 } from '@tanstack/react-table'
 import { format } from 'date-fns'
 
+import { BlockchainIcon } from '../BlockchainIcon'
 import { Button } from '../Button'
 import { Loader } from '../Loader'
 import { Table } from '../Table'
@@ -30,6 +31,16 @@ const { t } = getI18next()
 const columnHelper = createColumnHelper<TUseTransactionsTransfer>()
 
 const columns = [
+  columnHelper.accessor(row => row.account.blockchain, {
+    cell: info => (
+      <div className="flex">
+        <BlockchainIcon blockchain={info.getValue()} />
+        <span className="ml-2">{info.getValue()}</span>
+      </div>
+    ),
+    id: 'blockchain',
+    header: t('components:transactionsTable.blockchain'),
+  }),
   columnHelper.accessor('time', {
     cell: info => format(info.getValue() * 1000, 'MM/dd/yyyy HH:mm:ss'),
     header: t('components:transactionsTable.date'),
