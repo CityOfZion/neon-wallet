@@ -80,7 +80,7 @@
     "@vitejs/plugin-react": "^4.0.4",
     "autoprefixer": "^10.4.15",
     "electron": "^27.0.0",
-    "electron-builder": "^24.6.3",
+    "electron-builder": "^24.13.3",
     "electron-builder-notarize": "^1.2.0",
     "electron-vite": "^1.0.27",
     "eslint": "^8.47.0",
