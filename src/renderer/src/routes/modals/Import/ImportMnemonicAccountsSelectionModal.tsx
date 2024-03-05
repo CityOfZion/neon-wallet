@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { TbFileImport } from 'react-icons/tb'
 import { AccountWithDerivationPath } from '@cityofzion/blockchain-service'
 import { TAccountsToImport, TBlockchainServiceKey } from '@renderer/@types/blockchain'
+import { IWalletState } from '@renderer/@types/store'
 import { AccountSelection } from '@renderer/components/AccountSelection'
 import { Button } from '@renderer/components/Button'
 import { Loader } from '@renderer/components/Loader'
@@ -16,6 +17,7 @@ import { EndModalLayout } from '@renderer/layouts/EndModal'
 
 type TLocation = {
   mnemonic: string
+  onImportWallet: (wallet: IWalletState) => void
 }
 
 type TActionsData = {
@@ -26,7 +28,7 @@ type TActionsData = {
 type TAccountWithBlockchain = AccountWithDerivationPath & { blockchain: TBlockchainServiceKey }
 
 export const ImportMnemonicAccountsSelectionModal = () => {
-  const { mnemonic } = useModalState<TLocation>()
+  const { mnemonic, onImportWallet } = useModalState<TLocation>()
   const blockchainActions = useBlockchainActions()
   const { t: commonT } = useTranslation('common', { keyPrefix: 'wallet' })
   const { modalNavigate } = useModalNavigate()
@@ -65,6 +67,8 @@ export const ImportMnemonicAccountsSelectionModal = () => {
       accounts: accountsToImport,
       wallet,
     })
+
+    onImportWallet(wallet)
 
     modalNavigate(-2)
   }

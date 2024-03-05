@@ -2,16 +2,21 @@ import { ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MdChevronRight } from 'react-icons/md'
 import { TbFileImport } from 'react-icons/tb'
+import { IWalletState } from '@renderer/@types/store'
 import { Banner } from '@renderer/components/Banner'
 import { Button } from '@renderer/components/Button'
 import { Textarea } from '@renderer/components/Textarea'
 import { UtilsHelper } from '@renderer/helpers/UtilsHelper'
 import { useActions } from '@renderer/hooks/useActions'
 import { useBsAggregator } from '@renderer/hooks/useBsAggregator'
-import { useModalNavigate } from '@renderer/hooks/useModalRouter'
+import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
 import { EndModalLayout } from '@renderer/layouts/EndModal'
 
 type TInputType = 'key' | 'mnemonic' | 'encrypted'
+
+type TImportState = {
+  onImportWallet: (wallet: IWalletState) => void
+}
 
 type TFormData = {
   text: string
@@ -22,6 +27,7 @@ export const ImportModal = () => {
   const { bsAggregator } = useBsAggregator()
   const { modalNavigate } = useModalNavigate()
   const { t } = useTranslation('modals', { keyPrefix: 'import' })
+  const { onImportWallet } = useModalState<TImportState>()
 
   const { handleAct, setError, actionState, actionData, setData, clearErrors } = useActions<TFormData>({ text: '' })
 
@@ -67,11 +73,11 @@ export const ImportModal = () => {
   }
 
   const submitKey = async (key: string) => {
-    modalNavigate('import-key-accounts-selection', { state: { key } })
+    modalNavigate('import-key-accounts-selection', { state: { key, onImportWallet } })
   }
 
   const submitMnemonic = async (mnemonic: string) => {
-    modalNavigate('import-mnemonic-accounts-selection', { state: { mnemonic } })
+    modalNavigate('import-mnemonic-accounts-selection', { state: { mnemonic, onImportWallet } })
   }
 
   const submitEncrypted = async (encryptedKey: string) => {
@@ -81,7 +87,7 @@ export const ImportModal = () => {
         headingIcon: <TbFileImport />,
         description: t('importEncryptedDescription'),
         onSelect: (blockchain: string) => {
-          modalNavigate('import-encrypted-password', { state: { encryptedKey, blockchain } })
+          modalNavigate('import-encrypted-password', { state: { encryptedKey, blockchain, onImportWallet } })
         },
       },
     })

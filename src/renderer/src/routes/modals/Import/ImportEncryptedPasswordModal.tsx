@@ -2,6 +2,7 @@ import { ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TbFileImport } from 'react-icons/tb'
 import { TBlockchainServiceKey } from '@renderer/@types/blockchain'
+import { IWalletState } from '@renderer/@types/store'
 import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
 import { ToastHelper } from '@renderer/helpers/ToastHelper'
@@ -15,6 +16,7 @@ import { EndModalLayout } from '@renderer/layouts/EndModal'
 type TLocation = {
   encryptedKey: string
   blockchain: TBlockchainServiceKey
+  onImportWallet: (wallet: IWalletState) => void
 }
 
 type TFormData = {
@@ -24,7 +26,7 @@ type TFormData = {
 export const ImportEncryptedPasswordModal = () => {
   const { t } = useTranslation('modals', { keyPrefix: 'importEncryptedPasswordModal' })
   const { t: tCommon } = useTranslation('common', { keyPrefix: 'wallet' })
-  const { blockchain, encryptedKey } = useModalState<TLocation>()
+  const { blockchain, encryptedKey, onImportWallet } = useModalState<TLocation>()
   const { modalNavigate } = useModalNavigate()
   const blockchainActions = useBlockchainActions()
   const { bsAggregator } = useBsAggregator()
@@ -54,6 +56,8 @@ export const ImportEncryptedPasswordModal = () => {
         walletType: 'legacy',
       })
       await blockchainActions.importAccount({ address, blockchain, wallet, key, type: 'legacy' })
+
+      onImportWallet(wallet)
 
       ToastHelper.success({ message: t('success') })
 

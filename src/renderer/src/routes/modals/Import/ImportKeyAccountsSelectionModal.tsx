@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { TbFileImport } from 'react-icons/tb'
 import { Account } from '@cityofzion/blockchain-service'
 import { TBlockchainServiceKey, TImportAccountsParam } from '@renderer/@types/blockchain'
+import { IWalletState } from '@renderer/@types/store'
 import { AccountSelection } from '@renderer/components/AccountSelection'
 import { Button } from '@renderer/components/Button'
 import { Loader } from '@renderer/components/Loader'
@@ -17,6 +18,7 @@ import { EndModalLayout } from '@renderer/layouts/EndModal'
 
 type TLocation = {
   key: string
+  onImportWallet: (wallet: IWalletState) => void
 }
 
 type TAccountWithBlockchain = Account & { blockchain: TBlockchainServiceKey }
@@ -27,7 +29,7 @@ type TActionsData = {
 }
 
 export const ImportKeyAccountsSelectionModal = () => {
-  const { key } = useModalState<TLocation>()
+  const { key, onImportWallet } = useModalState<TLocation>()
   const blockchainActions = useBlockchainActions()
   const { t: commomT } = useTranslation('common', { keyPrefix: 'wallet' })
   const { modalNavigate } = useModalNavigate()
@@ -63,6 +65,9 @@ export const ImportKeyAccountsSelectionModal = () => {
     }))
 
     await blockchainActions.importAccounts({ wallet, accounts: accountsToImport })
+
+    onImportWallet(wallet)
+
     modalNavigate(-2)
   }
 
