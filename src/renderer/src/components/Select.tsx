@@ -12,12 +12,13 @@ type TItemProps = {
 
 type TProps = {
   label?: string
-  title: string
+  title: string | React.ReactNode
   disabled?: boolean
   onSelect?: (value: string) => void
   children: React.ReactNode
   triggerClassName?: string
   contentClassName?: string
+  expandIconClassName?: string
 }
 
 const Item = ({ children, value }: TItemProps) => {
@@ -29,7 +30,16 @@ const Item = ({ children, value }: TItemProps) => {
   )
 }
 
-const Root = ({ label, onSelect, disabled, children, title, triggerClassName, contentClassName }: TProps) => {
+const Root = ({
+  label,
+  onSelect,
+  disabled,
+  children,
+  title,
+  triggerClassName,
+  contentClassName,
+  expandIconClassName,
+}: TProps) => {
   const [open, setOpen] = useState(false)
 
   return (
@@ -53,7 +63,11 @@ const Root = ({ label, onSelect, disabled, children, title, triggerClassName, co
         </div>
 
         <RadixSelect.Icon>
-          {open ? <MdExpandLess className="fill-white w-6 h-6" /> : <MdExpandMore className="fill-white w-6 h-6" />}
+          {open ? (
+            <MdExpandLess className={StyleHelper.mergeStyles('w-6 h-6 text-white', expandIconClassName)} />
+          ) : (
+            <MdExpandMore className={StyleHelper.mergeStyles('w-6 h-6 text-white', expandIconClassName)} />
+          )}
         </RadixSelect.Icon>
       </RadixSelect.Trigger>
 

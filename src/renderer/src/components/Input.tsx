@@ -3,6 +3,7 @@ import { MdCancel, MdContentCopy, MdVisibility, MdVisibilityOff } from 'react-ic
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
 
 import { IconButton } from './IconButton'
+import { Loader } from './Loader'
 
 export type TInputProps = Omit<React.ComponentProps<'input'>, 'type' | 'ref'> & {
   containerClassName?: string
@@ -13,11 +14,24 @@ export type TInputProps = Omit<React.ComponentProps<'input'>, 'type' | 'ref'> & 
   copyable?: boolean
   type?: 'text' | 'password' | 'number'
   leftIcon?: JSX.Element
+  loading?: boolean
 }
 
 export const Input = forwardRef<HTMLInputElement, TInputProps>(
   (
-    { className, containerClassName, type, errorMessage, error, compacted, clearable, leftIcon, copyable, ...props },
+    {
+      className,
+      containerClassName,
+      type,
+      errorMessage,
+      error,
+      compacted,
+      clearable,
+      leftIcon,
+      copyable,
+      loading,
+      ...props
+    },
     ref
   ) => {
     const internalRef = useRef<HTMLInputElement>(null)
@@ -85,15 +99,29 @@ export const Input = forwardRef<HTMLInputElement, TInputProps>(
             {...props}
           />
 
-          {type === 'password' && (
-            <IconButton icon={hidden ? <MdVisibility /> : <MdVisibilityOff />} onClick={toggleHidden} type="button" />
-          )}
+          <div className="flex items-center gap-x-2">
+            {loading && <Loader className="w-4 h-4 mr-1" />}
 
-          {copyable && (
-            <IconButton icon={<MdContentCopy className="fill-neon" />} onClick={handleCopyInput} type="button" />
-          )}
+            {type === 'password' && (
+              <IconButton
+                icon={hidden ? <MdVisibility /> : <MdVisibilityOff />}
+                onClick={toggleHidden}
+                type="button"
+                compacted
+              />
+            )}
 
-          {clearable && <IconButton icon={<MdCancel />} type="button" onClick={clear} />}
+            {copyable && (
+              <IconButton
+                icon={<MdContentCopy className="fill-neon" />}
+                onClick={handleCopyInput}
+                type="button"
+                compacted
+              />
+            )}
+
+            {clearable && <IconButton icon={<MdCancel />} type="button" onClick={clear} compacted />}
+          </div>
         </div>
 
         {errorMessage && <span className="block mt-1 text-xs text-pink absolute">{errorMessage}</span>}

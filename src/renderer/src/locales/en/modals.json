@@ -51,29 +51,36 @@
     "editContact": "Edit Contact",
     "invalidName": "Invalid name",
     "emptyAddresses": "No address added",
+    "noAddressesFound": "No addresses found",
+    "addAddress": "Add address",
+    "saveContact": "Save contact",
     "name": "NAME",
     "enterAName": "Enter a name...",
     "addresses": "ADDRESSES",
-    "enterPublicKeyOrNNS": "Enter a public key or NNS address..."
+    "deleteContact": {
+      "title": "Delete contact",
+      "warningText": "Delete this contact?",
+      "warningDescription": "All saved addresses will be unlinked from this contact",
+      "buttonDeleteLabel": "Delete this contact"
+    },
+    "deleteAddress": {
+      "title": "Delete address",
+      "warningText": "Delete this address?",
+      "warningDescription": "This address will be unlinked from",
+      "buttonDeleteLabel": "Delete this address"
+    }
   },
-  "addAddressStep1": {
-    "title": "Add Address",
-    "addToContact": "ADD TO CONTACT",
-    "selectBlockchain": "Select the desired blockchain for this account",
-    "notFound": "Blockchain not found",
-    "errorNoBlockchainSelected": "No blockchain selected"
-  },
-  "addAddressStep2": {
-    "title": "Add Address",
-    "addToContact": "ADD TO CONTACT",
-    "enterNNSorPublicKey": "To add an account to this contact, enter an NNS address or public key",
-    "publicKeyComplete": "Public key complete!",
-    "invalidAddress": "Invalid Address"
-  },
-  "addAddressStep3": {
-    "title": "Add Address",
-    "addToContact": "Add to contact",
-    "subtext": "This address will be added to the above contact:"
+  "addAddress": {
+    "title": "Add address",
+    "editTitle": "Edit address",
+    "name": "NAME",
+    "blockchain": "BLOCKCHAIN",
+    "addressOrDomain": "ADDRESS OR NS DOMAIN",
+    "errorNoBlockchainSelected": "No blockchain selected",
+    "addressComplete": "Address complete!",
+    "nnsComplete": "NS domain found!",
+    "invalidAddress": "Invalid address or NS domain",
+    "saveAddress": "Save address"
   },
   "importMnemonicAccountsSelection": {
     "title": "Import",

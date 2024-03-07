@@ -1,8 +1,6 @@
 import { TRoute } from '@renderer/@types/modal'
 
-import { AddAddressModalStep1 } from './modals/AddAddress/Step1'
-import { AddAddressModalStep2 } from './modals/AddAddress/Step2'
-import { AddAddressModalStep3 } from './modals/AddAddress/Step3'
+import { AddAddressModal } from './modals/AddAddress'
 import { AddWatch } from './modals/AddWatch'
 import { BlockchainSelectionModal } from './modals/BlockchainSelection'
 import { DappConnectionModal } from './modals/DappConnection'
@@ -19,6 +17,7 @@ import { ImportMnemonicAccountsSelectionModal } from './modals/Import/ImportMnem
 import { InputAmount } from './modals/InputAmount'
 import { NetworkSelection } from './modals/NetworkSelection'
 import { PersistContactModal } from './modals/PersistContact'
+import { DeleteModal } from './modals/PersistContact/DeleteModal'
 import { SelectAccount } from './modals/SelectAccount'
 import { SelectContact } from './modals/SelectContact'
 import { SelectToken } from './modals/SelectToken'
@@ -32,9 +31,8 @@ export const modalsRouter: TRoute[] = [
   { name: 'edit-wallet', element: <EditWalletModal /> },
   { name: 'edit-account', element: <EditAccountModal /> },
   { name: 'persist-contact', element: <PersistContactModal /> },
-  { name: 'add-address-step1', element: <AddAddressModalStep1 /> },
-  { name: 'add-address-step2', element: <AddAddressModalStep2 /> },
-  { name: 'add-address-step3', element: <AddAddressModalStep3 /> },
+  { name: 'delete-contact', element: <DeleteModal /> },
+  { name: 'add-address', element: <AddAddressModal /> },
   { name: 'success', element: <SuccessModal /> },
   { name: 'error', element: <ErrorModal /> },
   { name: 'dapp-connection', element: <DappConnectionModal /> },
