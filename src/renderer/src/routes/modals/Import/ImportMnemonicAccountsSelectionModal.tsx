@@ -17,7 +17,7 @@ import { EndModalLayout } from '@renderer/layouts/EndModal'
 
 type TLocation = {
   mnemonic: string
-  onImportWallet: (wallet: IWalletState) => void
+  onImportWallet?: (wallet: IWalletState) => void
 }
 
 type TActionsData = {
@@ -68,7 +68,7 @@ export const ImportMnemonicAccountsSelectionModal = () => {
       wallet,
     })
 
-    onImportWallet(wallet)
+    if (onImportWallet) onImportWallet(wallet)
 
     modalNavigate(-2)
   }

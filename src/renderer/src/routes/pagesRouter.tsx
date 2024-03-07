@@ -1,10 +1,13 @@
 import { Fragment } from 'react'
+import { redirect } from 'react-router-dom'
 import { PrivateRoute } from '@renderer/components/PrivateRoute'
 import { createRouteHandler } from '@renderer/libs/sentryReact'
 
 import { ContactsPage } from './pages/Contacts'
 import { LoginPage } from './pages/Login'
 import { PortfolioPage } from './pages/Portfolio'
+import { PortfolioActivityPage } from './pages/Portfolio/Activity'
+import { PortfolioOverviewPage } from './pages/Portfolio/Overview'
 import { ReceiveYourAddress } from './pages/Receive'
 import { SecuritySetupPage } from './pages/SecuritySetup'
 import { SecuritySetupStep1Page } from './pages/SecuritySetup/SecuritySetupStep1'
@@ -23,11 +26,29 @@ const routeHandler = createRouteHandler()
 export const pagesRouter = routeHandler([
   {
     path: '/',
+    loader: async () => redirect('/portfolio'),
+  },
+  {
+    path: '/portfolio',
     element: (
       <PrivateRoute>
         <PortfolioPage />
       </PrivateRoute>
     ),
+    children: [
+      {
+        path: '',
+        loader: async () => redirect('/portfolio/overview'),
+      },
+      {
+        path: 'overview',
+        element: <PortfolioOverviewPage />,
+      },
+      {
+        path: 'activity',
+        element: <PortfolioActivityPage />,
+      },
+    ],
   },
   {
     path: '/wallets',

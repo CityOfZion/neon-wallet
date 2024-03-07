@@ -16,7 +16,7 @@ import { EndModalLayout } from '@renderer/layouts/EndModal'
 type TLocation = {
   encryptedKey: string
   blockchain: TBlockchainServiceKey
-  onImportWallet: (wallet: IWalletState) => void
+  onImportWallet?: (wallet: IWalletState) => void
 }
 
 type TFormData = {
@@ -57,7 +57,7 @@ export const ImportEncryptedPasswordModal = () => {
       })
       await blockchainActions.importAccount({ address, blockchain, wallet, key, type: 'legacy' })
 
-      onImportWallet(wallet)
+      if (onImportWallet) onImportWallet(wallet)
 
       ToastHelper.success({ message: t('success') })
 

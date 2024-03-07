@@ -18,7 +18,7 @@ import { EndModalLayout } from '@renderer/layouts/EndModal'
 
 type TLocation = {
   key: string
-  onImportWallet: (wallet: IWalletState) => void
+  onImportWallet?: (wallet: IWalletState) => void
 }
 
 type TAccountWithBlockchain = Account & { blockchain: TBlockchainServiceKey }
@@ -66,7 +66,7 @@ export const ImportKeyAccountsSelectionModal = () => {
 
     await blockchainActions.importAccounts({ wallet, accounts: accountsToImport })
 
-    onImportWallet(wallet)
+    if (onImportWallet) onImportWallet(wallet)
 
     modalNavigate(-2)
   }

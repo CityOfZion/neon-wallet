@@ -472,7 +472,13 @@ interface Resources {
     }
     portfolio: {
       title: 'Portfolio'
-      buttonRefreshLabel: 'Refresh'
+      allAccounts: 'All accounts'
+      overview: 'Overview'
+      allActivity: 'All activity'
+      allConnections: 'All connections'
+      importButtonLabel: 'Import'
+      newWalletButtonLabel: 'New Wallet'
+      exportButtonLabel: 'Export'
     }
     login: {
       title: 'Welcome to Neon Wallet'
@@ -609,6 +615,16 @@ interface Resources {
         title: 'Select a receiving account'
         selectReceivingAccount: 'Select receiving account'
       }
+    }
+    portfolioActivity: {
+      allActivity: 'All activity'
+      walletsAndAccounts: '{{wallets}} Wallets / {{accounts}} Accounts'
+      balance: 'Balance'
+    }
+    portfolioOverview: {
+      overview: 'Overview'
+      walletsAndAccounts: '{{wallets}} Wallets / {{accounts}} Accounts'
+      balance: 'Balance'
     }
   }
 }
