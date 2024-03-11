@@ -19,6 +19,7 @@ import { SettingsEncryptKeyPage } from './pages/Settings/SettingsEncryptKey'
 import { SettingsNetwork } from './pages/Settings/SettingsNetwork'
 import { SettingsReleaseNotesPage } from './pages/Settings/SettingsReleaseNotes'
 import { WalletsPage } from './pages/Wallets'
+import { AccountOverview } from './pages/Wallets/AccountOverview'
 import { WelcomePage } from './pages/Welcome'
 
 const routeHandler = createRouteHandler()
@@ -57,6 +58,29 @@ export const pagesRouter = routeHandler([
         <WalletsPage />
       </PrivateRoute>
     ),
+    children: [
+      {
+        path: ':address',
+        children: [
+          {
+            path: 'overview?',
+            element: <AccountOverview />,
+          },
+          {
+            path: 'tokens',
+            element: <Fragment />,
+          },
+          {
+            path: 'nfts',
+            element: <Fragment />,
+          },
+          {
+            path: 'transactions',
+            element: <Fragment />,
+          },
+        ],
+      },
+    ],
   },
   {
     path: '/send',

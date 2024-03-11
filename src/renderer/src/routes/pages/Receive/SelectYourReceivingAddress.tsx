@@ -1,4 +1,3 @@
-import { ChangeEvent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TbCopy, TbQrcode, TbSend, TbStepInto } from 'react-icons/tb'
 import { IAccountState } from '@renderer/@types/store'
@@ -15,23 +14,12 @@ type TProps = {
 
 export const SelectYourReceivingAddress = ({ account }: TProps) => {
   const { t } = useTranslation('pages', { keyPrefix: 'receive' })
-  const [address, setAddress] = useState<string>()
 
-  const handleChangeAddres = (event: ChangeEvent<HTMLInputElement>) => {
-    setAddress(event.target.value)
-  }
+  const address = account?.address || ''
 
   const handleDownload = () => {
     UtilsHelper.donwloadSVGToPng('QRCode', address || 'QRCode')
   }
-
-  useEffect(() => {
-    if (account) {
-      setAddress(account.address)
-    } else {
-      setAddress(undefined)
-    }
-  }, [account])
 
   return (
     <div className="flex flex-col items-center">
@@ -53,7 +41,6 @@ export const SelectYourReceivingAddress = ({ account }: TProps) => {
         <div className="pt-4">
           <Input
             value={address}
-            onChange={handleChangeAddres}
             compacted
             className="w-[24rem] mx-auto"
             placeholder={t('addressInputHint')}
