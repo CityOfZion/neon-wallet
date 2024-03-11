@@ -90,5 +90,8 @@
     "blockchain": "BLOCKCHAIN",
     "address": "ADDRESS",
     "sendAssets": "Send assets"
+  },
+  "blockchainSelect": {
+    "placeholder": "Select a blockchain..."
   }
 }

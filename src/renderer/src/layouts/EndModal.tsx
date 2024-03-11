@@ -68,7 +68,7 @@ export const EndModalLayout = ({
             <div className="flex items-center gap-x-2.5">
               {headingIcon &&
                 cloneElement(headingIcon, {
-                  className: StyleHelper.mergeStyles('w-6 h-6 text-blue'),
+                  className: StyleHelper.mergeStyles('w-6 h-6 text-blue', headingIcon.props?.className ?? ''),
                 })}
               {heading && <h2 className="text-sm">{heading}</h2>}
             </div>
