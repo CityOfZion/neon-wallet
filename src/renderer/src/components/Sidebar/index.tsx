@@ -30,7 +30,7 @@ export const Sidebar = (): JSX.Element => {
       <nav className="flex-grow">
         <ul className="flex flex-col justify-between h-full">
           <div>
-            <SidebarLink to="/" title={t('portfolio')} icon={<TbHome2 />} />
+            <SidebarLink to="/portfolio" title={t('portfolio')} icon={<TbHome2 />} />
             <SidebarLink to="/wallets" title={t('wallets')} icon={<WalletIcon />} />
             <SidebarLink to="/send" title={t('send')} icon={<TbStepOut />} />
             <SidebarLink to="/receive" title={t('receive')} icon={<TbStepInto />} />

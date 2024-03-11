@@ -15,7 +15,7 @@ import { EndModalLayout } from '@renderer/layouts/EndModal'
 type TInputType = 'key' | 'mnemonic' | 'encrypted'
 
 type TImportState = {
-  onImportWallet: (wallet: IWalletState) => void
+  onImportWallet?: (wallet: IWalletState) => void
 }
 
 type TFormData = {
