@@ -9,7 +9,7 @@ import { Separator } from '@renderer/components/Separator'
 import { DoraHelper } from '@renderer/helpers/DoraHelper'
 import { useBsAggregator } from '@renderer/hooks/useBsAggregator'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
-import { useEncryptedPasswordSelector } from '@renderer/hooks/useSettingsSelector'
+import { useEncryptedPasswordSelector, useNetworkTypeSelector } from '@renderer/hooks/useSettingsSelector'
 import { ContentLayout } from '@renderer/layouts/ContentLayout'
 
 import { Recipient } from './Recipient'
@@ -37,6 +37,7 @@ export const SendPage = () => {
   const { bsAggregator } = useBsAggregator()
   const { encryptedPasswordRef } = useEncryptedPasswordSelector()
   const { modalNavigate } = useModalNavigate()
+  const { networkType } = useNetworkTypeSelector()
 
   const [selectedAccount, setSelectedAccount] = useState<IAccountState>()
   const [selectedToken, setSelectedToken] = useState<TokenBalance | null>()
@@ -113,7 +114,7 @@ export const SendPage = () => {
   }, [getSendService, selectedAmount, selectedRecipient])
 
   const showTransactionStatus = (hash: string) => {
-    window.open(DoraHelper.buildTransactionUrl(hash), '_blank')
+    window.open(DoraHelper.buildTransactionUrl(hash, networkType), '_blank')
   }
 
   const handleSendToken = async () => {

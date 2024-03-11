@@ -18,7 +18,6 @@ module.exports = {
         argsIgnorePattern: '^_',
       },
     ],
-    '@tanstack/query/exhaustive-deps': 'error',
     '@tanstack/query/prefer-query-object-syntax': 'error',
     'simple-import-sort/exports': 'error',
     'simple-import-sort/imports': [
@@ -38,5 +37,6 @@ module.exports = {
     'react/prop-types': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    '@tanstack/query/exhaustive-deps': 'off',
   },
 }

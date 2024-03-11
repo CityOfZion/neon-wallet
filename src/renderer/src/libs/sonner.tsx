@@ -47,4 +47,15 @@ export const ErrorToast = ({ message, sonnerId }: Pick<TBaseToastProps, 'message
   )
 }
 
+export const InfoToast = ({ message, sonnerId }: Pick<TBaseToastProps, 'message' | 'sonnerId'>) => {
+  return (
+    <BaseToast
+      className="bg-orange text-white"
+      message={message}
+      sonnerId={sonnerId}
+      icon={<MdErrorOutline className="text-white" />}
+    />
+  )
+}
+
 export const ToastProvider = () => <Toaster position="bottom-center" expand gap={10} />

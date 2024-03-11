@@ -6,6 +6,7 @@ import { IAccountState } from '@renderer/@types/store'
 import { DoraHelper } from '@renderer/helpers/DoraHelper'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
 import { useBsAggregator } from '@renderer/hooks/useBsAggregator'
+import { useNetworkTypeSelector } from '@renderer/hooks/useSettingsSelector'
 
 import { IconButton } from '../IconButton'
 
@@ -29,12 +30,13 @@ enum ENftViewOption {
 export const NftViewer = forwardRef<HTMLDivElement, TNftViewerProps>(({ accounts }, ref) => {
   const { bsAggregator } = useBsAggregator()
   const { t } = useTranslation('components', { keyPrefix: 'nftViewer' })
+  const { networkType } = useNetworkTypeSelector()
 
   const [nftsWithAccount, setNftsWithAccount] = useState<TNftResponseWithAccount[]>([])
   const [selectedViewOption, setSelectedViewOption] = useState(ENftViewOption.LIST)
 
   const showNFT = (hash: string, id: string) => {
-    window.open(DoraHelper.buildNftUrl(hash, id), '_blank')
+    window.open(DoraHelper.buildNftUrl(hash, id, networkType), '_blank')
   }
 
   const handleLoadNFTS = useCallback(async () => {

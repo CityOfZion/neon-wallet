@@ -21,9 +21,9 @@ export const IconButton = forwardRef<HTMLButtonElement, TProps>(
           'flex flex-col h-fit  justify-center items-center disabled:cursor-not-allowed flex-grow-0 rounded transition-colors text-gray-300/50',
           {
             'py-1 px-2 gap-y-0.5': size === 'sm' && !compacted,
-            'py-0.5 px-0.5 gap-y-0.5': size === 'sm' && compacted,
+            'p-1 gap-y-0.5': size === 'sm' && compacted,
             'py-1.5 px-3 gap-y-1': size === 'md' && !compacted,
-            'py-1 px-1 gap-y-1': size === 'md' && compacted,
+            'p-1 gap-y-1': size === 'md' && compacted,
             'bg-gray-300/15': activated,
             'hover:enabled:bg-gray-300/15': !activated,
           },

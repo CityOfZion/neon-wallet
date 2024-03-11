@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
 import { useNetworkTypeSelector } from '@renderer/hooks/useSettingsSelector'
 
-import { AppLayout } from './App'
+import { PageLayout } from './Page'
 
 export type TMainLayoutProps = {
   children?: ReactNode
@@ -33,7 +33,7 @@ export const ContentLayout = ({
   }
 
   return (
-    <AppLayout>
+    <PageLayout>
       <div className={StyleHelper.mergeStyles('flex h-screen', className)} {...props}>
         <div
           className={StyleHelper.mergeStyles('flex-grow flex flex-col bg-asphalt text-white px-7 py-4', {
@@ -59,6 +59,6 @@ export const ContentLayout = ({
           <main className={StyleHelper.mergeStyles('flex flex-col flex-grow pt-5', contentClassName)}>{children}</main>
         </div>
       </div>
-    </AppLayout>
+    </PageLayout>
   )
 }

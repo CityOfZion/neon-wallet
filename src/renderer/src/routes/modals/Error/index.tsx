@@ -18,7 +18,7 @@ export const ErrorModal = () => {
       heading={heading}
       headingIcon={headingIcon}
       bigger
-      contentClassName="flex flex-col flex-grow items-center justify-center"
+      contentClassName="flex flex-col flex-grow items-center justify-center min-w-0"
     >
       <div className="w-28 h-28 p-2 bg-asphalt rounded-full flex items-center">
         <MdCancel className="w-24 h-24 text-pink" />

@@ -1,11 +1,9 @@
 import { TBlockchainServiceKey, TNetworkType } from './blockchain'
 
-export type TWalletConnectHelperAccountInformation = {
-  namespace: string
-  reference: string
+export type TWalletConnectHelperSessionInformation = {
   address: string
-  chainId: string
   blockchain: TBlockchainServiceKey
+  network: TNetworkType
 }
 
 export type TWalletConnectHelperProposalInformation = {

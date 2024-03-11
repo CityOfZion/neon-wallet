@@ -7,6 +7,9 @@ import { DappConnectionModal } from './modals/DappConnection'
 import { DappConnectionAccountSelectionModal } from './modals/DappConnectionAccountSelection'
 import { DappConnectionDetailsModal } from './modals/DappConnectionDetails'
 import { DappConnectionListModal } from './modals/DappConnectionList'
+import { DappPermissionModal } from './modals/DappPermission'
+import { DappPermissionContractDetailsModal } from './modals/DappPermissionContractDetails'
+import { DappPermissionSignatureScopeModal } from './modals/DappPermissionSignatureScope'
 import { EditAccountModal } from './modals/EditAccount'
 import { EditWalletModal } from './modals/EditWallet'
 import { ErrorModal } from './modals/Error'
@@ -39,6 +42,9 @@ export const modalsRouter: TRoute[] = [
   { name: 'dapp-connection-details', element: <DappConnectionDetailsModal /> },
   { name: 'dapp-connection-account-selection', element: <DappConnectionAccountSelectionModal /> },
   { name: 'dapp-connection-list', element: <DappConnectionListModal /> },
+  { name: 'dapp-permission', element: <DappPermissionModal /> },
+  { name: 'dapp-permission-contract-details', element: <DappPermissionContractDetailsModal /> },
+  { name: 'dapp-permission-signature-scope', element: <DappPermissionSignatureScopeModal /> },
   { name: 'select-contact', element: <SelectContact /> },
   { name: 'blockchain-selection', element: <BlockchainSelectionModal /> },
   { name: 'import-encrypted-password', element: <ImportEncryptedPasswordModal /> },

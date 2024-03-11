@@ -24,4 +24,6 @@ export const customAPI = {
     const secret = await electronAPI.ipcRenderer.invoke('decryptBasedOS', encryptedSecret)
     return electronAPI.ipcRenderer.invoke('decryptBasedSecret', decryptedByOSValue, secret)
   },
+
+  restoreWindow: () => electronAPI.ipcRenderer.invoke('restore'),
 }

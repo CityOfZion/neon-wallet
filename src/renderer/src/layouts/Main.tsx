@@ -2,7 +2,7 @@ import { ComponentProps, ReactNode } from 'react'
 import { Sidebar } from '@renderer/components/Sidebar'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
 
-import { AppLayout } from './App'
+import { PageLayout } from './Page'
 
 export type TMainLayoutProps = {
   children?: ReactNode
@@ -22,7 +22,7 @@ export const MainLayout = ({
   ...props
 }: TMainLayoutProps): JSX.Element => {
   return (
-    <AppLayout>
+    <PageLayout>
       <div className={StyleHelper.mergeStyles('flex h-screen w-screen', className)} {...props}>
         <Sidebar />
 
@@ -43,6 +43,6 @@ export const MainLayout = ({
           </main>
         </div>
       </div>
-    </AppLayout>
+    </PageLayout>
   )
 }

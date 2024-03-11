@@ -1,6 +1,8 @@
 export type THistory<T = any> = {
   name: string
   state: T
+  status: 'mounted' | 'unmounted'
+  id: string
 }
 
 export type TRoute = {
