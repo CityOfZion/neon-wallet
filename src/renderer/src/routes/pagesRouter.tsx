@@ -15,6 +15,7 @@ import { SettingsEncryptKeyPage } from './pages/Settings/SettingsEncryptKey'
 import { SettingsNetwork } from './pages/Settings/SettingsNetwork'
 import { SettingsReleaseNotesPage } from './pages/Settings/SettingsReleaseNotes'
 import { WalletsPage } from './pages/Wallets'
+import { AccountNftList } from './pages/Wallets/AccountNftList'
 import { AccountOverview } from './pages/Wallets/AccountOverview'
 import { WelcomePage } from './pages/Welcome'
 import { WelcomeImportWalletPage } from './pages/WelcomeImportWallet'
@@ -76,7 +77,7 @@ export const pagesRouter = routeHandler([
           },
           {
             path: 'nfts',
-            element: <Fragment />,
+            element: <AccountNftList />,
           },
           {
             path: 'transactions',
