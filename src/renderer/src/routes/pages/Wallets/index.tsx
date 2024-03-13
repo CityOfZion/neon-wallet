@@ -202,7 +202,7 @@ export const WalletsPage = () => {
             />
           )}
         </header>
-        <div className="flex h-full bg-gray-900/30">
+        <div className="flex h-full bg-gray-900/30 min-h-0">
           <section className="h-full rounded drop-shadow-lg max-w-[11.625rem] min-w-[11.625rem] w-full flex flex-col border-r border-gray-300/30">
             <ul className="max-w-full w-full">
               <SidebarMenuButton title={t('overview')} to={`/wallets/${selectedAccount?.address}/overview`} />

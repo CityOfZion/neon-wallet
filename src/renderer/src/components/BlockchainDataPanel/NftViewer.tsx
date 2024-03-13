@@ -56,17 +56,26 @@ export const NftViewer = forwardRef<HTMLDivElement, TNftViewerProps>(({ accounts
     })
   }, [accounts, bsAggregator])
 
+  const totalNFTS = (nftsWithAccount: TNftResponseWithAccount[]) => {
+    let count = 0
+    nftsWithAccount.forEach(item => {
+      count = count + item.nfts.length
+    })
+    return count
+  }
+
   useEffect(() => {
     handleLoadNFTS()
   }, [handleLoadNFTS])
 
   return (
     <section className="w-full flex flex-col flex-grow text-xs min-h-0 gap-2" ref={ref}>
-      <div className="flex items-end justify-end gap-1">
+      <div className="flex items-center justify-start gap-1 my-5">
         <IconButton
           icon={<MdFormatListBulleted />}
           className={StyleHelper.mergeStyles({
-            'text-neon': selectedViewOption === ENftViewOption.LIST,
+            'text-neon': selectedViewOption !== ENftViewOption.LIST,
+            'text-gray-100': selectedViewOption === ENftViewOption.LIST,
           })}
           onClick={() => setSelectedViewOption(ENftViewOption.LIST)}
           size="md"
@@ -75,12 +84,14 @@ export const NftViewer = forwardRef<HTMLDivElement, TNftViewerProps>(({ accounts
         <IconButton
           icon={<MdGridView />}
           className={StyleHelper.mergeStyles({
-            'text-neon': selectedViewOption === ENftViewOption.GALLERY,
+            'text-neon': selectedViewOption !== ENftViewOption.GALLERY,
+            'text-gray-100': selectedViewOption === ENftViewOption.GALLERY,
           })}
           onClick={() => setSelectedViewOption(ENftViewOption.GALLERY)}
           size="md"
           activated={selectedViewOption === ENftViewOption.GALLERY}
         />
+        <h1 className="text-gray-300 text-sm font-normal">{`${totalNFTS(nftsWithAccount)} items`}</h1>
       </div>
 
       <div className="overflow-y-auto w-full flex flex-col min-h-0 pr-1">
