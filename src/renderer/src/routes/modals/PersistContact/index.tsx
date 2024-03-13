@@ -1,4 +1,4 @@
-import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
+import { ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MdDeleteForever } from 'react-icons/md'
 import { TbPencil, TbPlus } from 'react-icons/tb'
@@ -10,6 +10,7 @@ import { IconButton } from '@renderer/components/IconButton'
 import { Input } from '@renderer/components/Input'
 import { Separator } from '@renderer/components/Separator'
 import { UtilsHelper } from '@renderer/helpers/UtilsHelper'
+import { useActions } from '@renderer/hooks/useActions'
 import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
 import { useAppDispatch } from '@renderer/hooks/useRedux'
 import { EndModalLayout } from '@renderer/layouts/EndModal'
@@ -31,29 +32,27 @@ export const PersistContactModal = () => {
   const { contact } = useModalState<TLocationState>()
   const dispatch = useAppDispatch()
 
-  const form = useForm<TFormData>({
-    defaultValues: {
-      name: contact?.name ?? '',
-      addresses: contact?.addresses ?? [],
-    },
+  const { actionData, actionState, handleAct, setData, setError } = useActions<TFormData>({
+    name: contact?.name ?? '',
+    addresses: contact?.addresses ?? [],
   })
-  const { fields, append, remove } = useFieldArray({ control: form.control, name: 'addresses' })
-  const hasSomeError = Object.keys(form.formState.errors).length > 0
 
   const handleAddAddress = (address: TContactAddress) => {
-    append(address)
+    setData(prev => ({ addresses: [...prev.addresses, address] }))
   }
 
   const handleDeleteAddress = (addressToDeleteIndex: number) => {
-    remove(addressToDeleteIndex)
+    setData(prev => ({ addresses: prev.addresses.filter((_, index) => index !== addressToDeleteIndex) }))
+
+    if (actionData.addresses.length - 1 == 0) {
+      setError('addresses', t('emptyAddresses'))
+    }
   }
 
   const openAddAddressModal = (selectedAddress?: TContactAddress) => {
-    const contactName = form.getValues('name')
-
     modalNavigate('add-address', {
       state: {
-        contactName,
+        contactName: actionData.name,
         address: selectedAddress,
         handleAddAddress: handleAddAddress,
       },
@@ -65,19 +64,16 @@ export const PersistContactModal = () => {
     modalNavigate(-1)
   }
 
-  const handleSubmit: SubmitHandler<TFormData> = async data => {
-    if (!data.name.length || !data.addresses || data.addresses.length == 0) {
-      if (!data.name.length) {
-        form.setError('name', { message: t('invalidName') })
-      }
+  const handleChangeName = (event: ChangeEvent<HTMLInputElement>) => {
+    const name = event.target.value
+    setData({ name })
 
-      if (!data.addresses || data.addresses.length == 0) {
-        form.setError('addresses', { message: t('emptyAddresses') })
-      }
-
-      return
+    if (!name.length) {
+      setError('name', t('invalidName'))
     }
+  }
 
+  const handleSubmit = async (data: TFormData) => {
     if (contact) {
       dispatch(contactReducerActions.saveContact({ name: data.name, addresses: data.addresses, id: contact.id }))
     } else {
@@ -93,17 +89,17 @@ export const PersistContactModal = () => {
       heading={contact ? t('editContact') : t('addContact')}
       headingIcon={contact ? <TbPencil /> : <TbPlus />}
     >
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col justify-between h-full">
+      <form onSubmit={handleAct(handleSubmit)} className="flex flex-col justify-between h-full">
         <div className="flex flex-col gap-y-6">
           <div>
             <div className="text-gray-100 font-bold pb-2">{t('name')}</div>
             <Input
               placeholder={t('enterAName')}
-              {...form.register('name')}
-              errorMessage={form.formState.errors.name?.message}
+              value={actionData.name}
+              onChange={handleChangeName}
+              errorMessage={actionState.errors.name}
               compacted
               clearable
-              onFocus={() => form.clearErrors('name')}
             />
           </div>
 
@@ -111,9 +107,9 @@ export const PersistContactModal = () => {
             <div className="text-gray-100 font-bold pb-4">{t('addresses')}</div>
 
             <div>
-              {fields.map((address, index) => (
+              {actionData.addresses.map((address, index) => (
                 <div
-                  key={address.id}
+                  key={index}
                   className="flex items-center pl-3 pr-2 justify-between h-8.5 rounded bg-asphalt w-full mb-5"
                 >
                   <div className="flex items-center gap-x-3 flex-grow min-w-0">
@@ -149,11 +145,11 @@ export const PersistContactModal = () => {
             </div>
 
             <div className="flex flex-col gap-y-8">
-              {fields.length <= 0 && <Banner type="error" message={t('noAddressesFound')} className="mt-4" />}
-
-              {form.formState.errors.addresses && (
-                <div className="text-pink py-1">{form.formState.errors.addresses.message}</div>
+              {actionData.addresses.length <= 0 && (
+                <Banner type="error" message={t('noAddressesFound')} className="mt-4" />
               )}
+
+              {actionState.errors.addresses && <div className="text-pink py-1">{actionState.errors.addresses}</div>}
 
               <Separator />
 
@@ -200,7 +196,7 @@ export const PersistContactModal = () => {
           <Button
             label={t('saveContact')}
             flat
-            disabled={(fields.length <= 0 && !form.getValues('name').length) || hasSomeError}
+            disabled={actionData.addresses.length <= 0 || !actionState.isValid || actionState.isActing}
             type="submit"
           />
         </div>

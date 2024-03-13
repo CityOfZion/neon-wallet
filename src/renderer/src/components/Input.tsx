@@ -1,5 +1,5 @@
 import { cloneElement, forwardRef, useImperativeHandle, useRef, useState } from 'react'
-import { MdCancel, MdContentCopy, MdVisibility, MdVisibilityOff } from 'react-icons/md'
+import { MdCancel, MdContentCopy, MdContentPasteGo, MdVisibility, MdVisibilityOff } from 'react-icons/md'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
 
 import { IconButton } from './IconButton'
@@ -12,6 +12,7 @@ export type TInputProps = Omit<React.ComponentProps<'input'>, 'type' | 'ref'> & 
   clearable?: boolean
   compacted?: boolean
   copyable?: boolean
+  pastable?: boolean
   type?: 'text' | 'password' | 'number'
   leftIcon?: JSX.Element
   loading?: boolean
@@ -27,6 +28,7 @@ export const Input = forwardRef<HTMLInputElement, TInputProps>(
       error,
       compacted,
       clearable,
+      pastable,
       leftIcon,
       copyable,
       loading,
@@ -45,6 +47,17 @@ export const Input = forwardRef<HTMLInputElement, TInputProps>(
 
     const handleCopyInput = () => {
       navigator.clipboard.writeText(internalRef.current?.value ?? '')
+    }
+
+    const handlePaste = async () => {
+      if (internalRef.current) {
+        const text = await navigator.clipboard.readText()
+        const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')!.set!
+        nativeInputValueSetter.call(internalRef.current, text)
+        const inputEvent = new Event('input', { bubbles: true })
+        internalRef.current.dispatchEvent(inputEvent)
+        internalRef.current.focus()
+      }
     }
 
     const clear = () => {
@@ -106,6 +119,15 @@ export const Input = forwardRef<HTMLInputElement, TInputProps>(
               <IconButton
                 icon={hidden ? <MdVisibility /> : <MdVisibilityOff />}
                 onClick={toggleHidden}
+                type="button"
+                compacted
+              />
+            )}
+
+            {pastable && (
+              <IconButton
+                icon={<MdContentPasteGo className="text-neon" />}
+                onClick={handlePaste}
                 type="button"
                 compacted
               />

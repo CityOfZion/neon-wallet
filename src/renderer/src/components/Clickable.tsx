@@ -17,17 +17,17 @@ export type TCustomClickableProps = {
 
 export type TClickableProps = TCustomClickableProps & React.ComponentProps<'div'>
 
-const Outline = ({ className, colorSchema = 'neon', ...props }: TClickableProps) => {
+const Outline = ({ className, ...props }: TClickableProps) => {
   return (
     <Base
       className={StyleHelper.mergeStyles(
         className,
-        'group flex items-center justify-center border text-center rounded py-3 gap-x-2.5 cursor-pointer transition-colors aria-[disabled=false]:hover:bg-gray-300/15 aria-[disabled=true]:opacity-50 aria-[disabled=true]:cursor-not-allowed',
+        'group flex items-center justify-center border text-center rounded py-3 gap-x-2.5 cursor-pointer transition-colors aria-[disabled=false]:hover:bg-gray-300/15',
         {
-          'aria-[disabled=false]:text-neon aria-[disabled=false]:border-neon': colorSchema === 'neon',
-          'aria-[disabled=false]:text-gray-100 aria-[disabled=false]:border-gray-100': colorSchema === 'gray',
-          'aria-[disabled=false]:text-white aria-[disabled=false]:border-white': colorSchema === 'white',
-          'aria-[disabled=false]:text-pink aria-[disabled=false]:border-pink': colorSchema === 'error',
+          'border-neon': props.colorSchema === 'neon',
+          'border-gray-100': props.colorSchema === 'gray',
+          'border-white': props.colorSchema === 'white',
+          'border-pink': props.colorSchema === 'error',
         }
       )}
       {...props}
@@ -40,8 +40,8 @@ const Contained = ({ className, ...props }: TClickableProps) => {
     <Base
       className={StyleHelper.mergeStyles(
         'flex min-w-0 justify-center items-center text-center py-3 gap-x-2.5 transition-colors rounded',
-        'aria-[disabled=true]:bg-gray-300/30 aria-[disabled=true]:text-gray-100/50 aria-[disabled=true]:cursor-not-allowed',
-        'aria-[disabled=false]:cursor-pointer aria-[disabled=false]:bg-gradient-to-t aria-[disabled=false]:from-gray-800 aria-[disabled=false]:to-gray-600 aria-[disabled=false]:shadow-[4px_8px_20px_0px_rgba(18,21,23,0.40),inset_1px_1px_0px_0px_rgba(214,210,210,0.14),inset_-1px_-1px_0px_0px_rgba(0,0,0,0.32)] aria-[disabled=false]:hover:from-gray-600 aria-[disabled=false]:hover:to-gray-600',
+        'aria-[disabled=true]:bg-gray-300/30 aria-[disabled=true]:text-gray-100/50 aria-[disabled=true]:opacity-100',
+        'aria-[disabled=false]:bg-gradient-to-t aria-[disabled=false]:from-gray-800 aria-[disabled=false]:to-gray-600 aria-[disabled=false]:shadow-[4px_8px_20px_0px_rgba(18,21,23,0.40),inset_1px_1px_0px_0px_rgba(214,210,210,0.14),inset_-1px_-1px_0px_0px_rgba(0,0,0,0.32)] aria-[disabled=false]:hover:from-gray-600 aria-[disabled=false]:hover:to-gray-600',
         className
       )}
       {...props}
@@ -54,7 +54,7 @@ const Text = ({ className, ...props }: TClickableProps) => {
     <Base
       className={StyleHelper.mergeStyles(
         className,
-        'flex min-w-0 justify-center items-center text-center gap-x-1.5 aria-[disabled=false]:hover:bg-gray-300/15 rounded'
+        'flex min-w-0 justify-center items-center text-center gap-x-1.5 aria-[disabled=false]:hover:bg-gray-300/15 rounded transition-colors'
       )}
       {...props}
     />
@@ -65,11 +65,11 @@ const Base = ({
   leftIcon,
   rightIcon,
   label,
-  disabled = false,
-  loading = false,
-  flat = false,
-  colorSchema = 'neon',
-  iconsOnEdge = true,
+  disabled,
+  loading,
+  flat,
+  colorSchema,
+  iconsOnEdge,
   ...props
 }: TClickableProps) => {
   const { className: leftIconClassName = '', ...leftIconProps } = leftIcon ? leftIcon.props : {}
@@ -97,13 +97,14 @@ const Base = ({
     <div
       aria-disabled={isDisabled}
       className={StyleHelper.mergeStyles(
+        'aria-[disabled=true]:cursor-not-allowed aria-[disabled=true]:opacity-50 aria-[disabled=false]:cursor-pointer',
         {
           'h-12 text-sm px-5': !flat,
           'h-8.5 text-xs px-4': flat,
-          'aria-[disabled=false]:text-neon': colorSchema === 'neon',
-          'aria-[disabled=false]:text-gray-200': colorSchema === 'gray',
-          'aria-[disabled=false]:text-white': colorSchema === 'white',
-          'aria-[disabled=false]:text-pink': colorSchema === 'error',
+          'text-neon': colorSchema === 'neon',
+          'text-gray-200': colorSchema === 'gray',
+          'text-white': colorSchema === 'white',
+          'text-pink': colorSchema === 'error',
         },
 
         props.className
@@ -143,7 +144,16 @@ const Base = ({
   )
 }
 
-export const Clickable = (props: TClickableProps) => {
+export const Clickable = ({
+  colorSchema = 'neon',
+  disabled = false,
+  loading = false,
+  flat = false,
+  iconsOnEdge = true,
+  ...rest
+}: TClickableProps) => {
+  const props = { ...rest, colorSchema, disabled, loading, flat, iconsOnEdge }
+
   return props.variant === 'outlined' ? (
     <Outline {...props} />
   ) : props.variant === 'text' ? (

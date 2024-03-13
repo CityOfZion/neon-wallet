@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MdAdd } from 'react-icons/md'
 import { TbEyePlus } from 'react-icons/tb'
@@ -16,7 +16,8 @@ import { EndModalLayout } from '@renderer/layouts/EndModal'
 import { BlockchainIcon } from '../../../components/BlockchainIcon'
 
 type TAddWatchState = {
-  onAddWallet: (wallet: IWalletState) => void
+  address?: string
+  onAddWallet?: (wallet: IWalletState) => void
 }
 
 type TValidatedAddress = {
@@ -31,8 +32,10 @@ export const AddWatch = () => {
   const blockchainActions = useBlockchainActions()
   const { t } = useTranslation('modals', { keyPrefix: 'addWatch' })
   const { t: commomT } = useTranslation('common', { keyPrefix: 'wallet' })
+  const { onAddWallet, address: addressModalState } = useModalState<TAddWatchState>()
+
+  const [address, setAddress] = useState<string>('')
   const [validatedAddress, setValidatedAddress] = useState<TValidatedAddress>()
-  const { onAddWallet } = useModalState<TAddWatchState>()
   const [error, setError] = useState<string>()
 
   const [isLoading, setIsLoading] = useState(false)
@@ -65,7 +68,7 @@ export const AddWatch = () => {
 
       await blockchainActions.importAccounts({ wallet, accounts: accountsToImport })
 
-      onAddWallet(wallet)
+      onAddWallet?.(wallet)
 
       modalNavigate(-1)
     } catch (error: any) {
@@ -84,19 +87,20 @@ export const AddWatch = () => {
     )
   }
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value
-    if (!value.length) {
+  const handleChangeAndValidateAddress = (address: string) => {
+    setAddress(address)
+
+    if (!address.length) {
       setError(t('errors.empty'))
       return
     }
     for (const blockchainService of bsAggregator.blockchainServices) {
-      const isValid = blockchainService.validateAddress(value)
+      const isValid = blockchainService.validateAddress(address)
       if (isValid) {
         setValidatedAddress({
           blockchain: blockchainService.blockchainName,
-          abbreviatedAddress: abbreviateAddress(value),
-          address: value,
+          abbreviatedAddress: abbreviateAddress(address),
+          address,
         })
         setError(undefined)
         return
@@ -110,12 +114,22 @@ export const AddWatch = () => {
     setError(t('errors.invalid'))
   }
 
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value
+    handleChangeAndValidateAddress(value)
+  }
+
+  useEffect(() => {
+    if (addressModalState) handleChangeAndValidateAddress(addressModalState)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addressModalState])
+
   return (
     <EndModalLayout heading={t('title')} headingIcon={<TbEyePlus />}>
       <p className="text-xs">{t('description')}</p>
 
       <form className="mt-6" onSubmit={handleSubmit}>
-        <Input onChange={handleChange} placeholder={t('inputPlaceholder')} errorMessage={error} />
+        <Input value={address} onChange={handleChange} placeholder={t('inputPlaceholder')} errorMessage={error} />
 
         <Banner className="mt-5" message={t('information')} type="info" />
 

@@ -1,5 +1,5 @@
 import { ChangeEventHandler, forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react'
-import { MdCancel } from 'react-icons/md'
+import { MdCancel, MdContentPasteGo } from 'react-icons/md'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
 
 import { IconButton } from './IconButton'
@@ -9,16 +9,40 @@ type TProps = React.ComponentProps<'textarea'> & {
   errorMessage?: string
   error?: boolean
   clearable?: boolean
+  pastable?: boolean
   compacted?: boolean
   multiline?: boolean
 }
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TProps>(
   (
-    { className, containerClassName, errorMessage, error, compacted, clearable, onChange, multiline = true, ...props },
+    {
+      className,
+      containerClassName,
+      errorMessage,
+      pastable,
+      error,
+      compacted,
+      clearable,
+      onChange,
+      multiline = true,
+      ...props
+    },
     ref
   ) => {
     const internalRef = useRef<HTMLTextAreaElement>(null)
+
+    const handlePaste = async () => {
+      if (internalRef.current) {
+        const text = await navigator.clipboard.readText()
+        const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, 'value')!
+          .set!
+        nativeInputValueSetter.call(internalRef.current, text)
+        const inputEvent = new Event('input', { bubbles: true })
+        internalRef.current.dispatchEvent(inputEvent)
+        internalRef.current.focus()
+      }
+    }
 
     const clear = () => {
       if (internalRef.current) {
@@ -89,6 +113,15 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TProps>(
             spellCheck="false"
             {...props}
           />
+
+          {pastable && (
+            <IconButton
+              icon={<MdContentPasteGo className="text-neon" />}
+              onClick={handlePaste}
+              type="button"
+              compacted
+            />
+          )}
 
           {clearable && <IconButton icon={<MdCancel />} type="button" onClick={clear} />}
         </div>

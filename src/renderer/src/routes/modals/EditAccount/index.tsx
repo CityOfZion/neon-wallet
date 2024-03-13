@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { MdDeleteForever } from 'react-icons/md'
 import { TbPencil } from 'react-icons/tb'
@@ -8,6 +7,7 @@ import { Button } from '@renderer/components/Button'
 import { ColorSelector } from '@renderer/components/ColorSelector'
 import { Input } from '@renderer/components/Input'
 import { Separator } from '@renderer/components/Separator'
+import { useActions } from '@renderer/hooks/useActions'
 import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
 import { useAppDispatch } from '@renderer/hooks/useRedux'
 import { EndModalLayout } from '@renderer/layouts/EndModal'
@@ -29,13 +29,11 @@ export const EditAccountModal = () => {
 
   const dispatch = useAppDispatch()
 
-  const form = useForm<TFormData>({
-    defaultValues: {
-      name: account.name,
-    },
+  const { actionData, actionState, handleAct, setDataFromEventWrapper } = useActions<TFormData>({
+    name: account.name,
   })
 
-  const handleSubmit: SubmitHandler<TFormData> = ({ name }) => {
+  const handleSubmit = ({ name }: TFormData) => {
     dispatch(accountReducerActions.saveAccount({ ...account, name, backgroundColor: accountColor }))
     modalNavigate(-1)
   }
@@ -47,12 +45,13 @@ export const EditAccountModal = () => {
 
   return (
     <EndModalLayout heading={t('title')} headingIcon={<TbPencil />} contentClassName="flex flex-col justify-between">
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col h-full justify-between">
+      <form onSubmit={handleAct(handleSubmit)} className="flex flex-col h-full justify-between">
         <div>
           <Input
             placeholder={t('inputPlaceholder')}
-            {...form.register('name')}
-            errorMessage={form.formState.errors.name?.message}
+            value={actionData.name}
+            onChange={setDataFromEventWrapper('name')}
+            errorMessage={actionState.errors.name}
           />
 
           <ColorSelector label={t('colorSelectorLabel')} setNewColor={setAccountColor} accountColor={accountColor} />

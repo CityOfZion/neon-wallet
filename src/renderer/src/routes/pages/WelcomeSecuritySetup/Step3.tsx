@@ -1,36 +1,44 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MdDownload, MdOutlinePrint } from 'react-icons/md'
+import { Location, useLocation } from 'react-router-dom'
 import { useReactToPrint } from 'react-to-print'
 import { generateMnemonic } from '@cityofzion/bs-asteroid-sdk'
+import { TAccountsToImport, TWalletToCreate } from '@renderer/@types/blockchain'
 import { Button } from '@renderer/components/Button'
 import { Link } from '@renderer/components/Link'
+import { UtilsHelper } from '@renderer/helpers/UtilsHelper'
 import { useBlockchainActions } from '@renderer/hooks/useBlockchainActions'
 import { useAppDispatch } from '@renderer/hooks/useRedux'
 import { settingsReducerActions } from '@renderer/store/reducers/SettingsReducer'
 import jsPDF from 'jspdf'
 
-export const SecuritySetupStep3Page = () => {
-  const { t } = useTranslation('pages', { keyPrefix: 'securitySetupStep3' })
-  const { t: commonT } = useTranslation('common')
+type TLocationState = {
+  password: string
+  accountsToImport: TAccountsToImport
+  walletToImport: TWalletToCreate
+}
 
-  const { createAccount, createWallet } = useBlockchainActions()
+export const WelcomeSecuritySetupStep3Page = () => {
+  const { t } = useTranslation('pages', { keyPrefix: 'welcomeSecuritySetup.step3' })
+  const { t: commonT } = useTranslation('common')
+  const dispatch = useAppDispatch()
+  const { createAccount, createWallet, importAccounts } = useBlockchainActions()
+  const { state } = useLocation() as Location<TLocationState>
 
   const [isLoading, setIsLoading] = useState(true)
 
-  const wordsRef = useRef<string[]>()
   const alreadyPopulatedRef = useRef(false)
   const printElementRef = useRef<HTMLDivElement>(null)
-  const dispatch = useAppDispatch()
 
   const handlePrint = useReactToPrint({
     content: () => printElementRef.current,
-    documentTitle: commonT('wallet.firstWalletNameBackupFile'),
+    documentTitle: t('backupFileName'),
   })
 
   const handleDownload = useReactToPrint({
     content: () => printElementRef.current,
-    documentTitle: commonT('wallet.firstWalletNameBackupFile'),
+    documentTitle: t('backupFileTitle'),
     print: async target => {
       const document = target.contentDocument
       if (!document) return
@@ -43,7 +51,7 @@ export const SecuritySetupStep3Page = () => {
 
       pdf.html(html, {
         callback: function (pdf) {
-          pdf.save(`${commonT('wallet.firstWalletNameBackupFile')}.pdf`)
+          pdf.save(`${t('backupFileName')}.pdf`)
         },
       })
     },
@@ -55,23 +63,28 @@ export const SecuritySetupStep3Page = () => {
 
     const words = generateMnemonic()
 
-    const wallet = await createWallet({
-      name: commonT('wallet.firstWalletName'),
-      walletType: 'standard',
-      mnemonic: words.join(' '),
-    })
+    if (state.accountsToImport) {
+      const wallet = await createWallet(state.walletToImport)
 
-    await createAccount({
-      wallet,
-      blockchain: 'neo3',
-      name: commonT('account.defaultName', { accountNumber: 1 }),
-    })
+      await importAccounts({ wallet, accounts: state.accountsToImport })
+    } else {
+      const wallet = await createWallet({
+        name: commonT('wallet.firstWalletName'),
+        walletType: 'standard',
+        mnemonic: words.join(' '),
+      })
+
+      await createAccount({
+        wallet,
+        blockchain: 'neo3',
+        name: commonT('account.defaultName', { accountNumber: 1 }),
+      })
+    }
+
+    await UtilsHelper.sleep(500)
     dispatch(settingsReducerActions.setIsFirstTime(false))
-
-    wordsRef.current = words
-
     setIsLoading(false)
-  }, [createWallet, createAccount, commonT, dispatch])
+  }, [createWallet, createAccount, commonT, dispatch, importAccounts, state])
 
   useEffect(() => {
     populate()
@@ -106,8 +119,8 @@ export const SecuritySetupStep3Page = () => {
 
       <div className="hidden">
         <div ref={printElementRef}>
-          <div>{commonT('wallet.firstWalletNameBackupFileTitle')}</div>
-          <div>{wordsRef.current?.join(' ')}</div>
+          <div>{t('backupFileTitle')}</div>
+          <div>{state.password}</div>
         </div>
       </div>
     </div>
