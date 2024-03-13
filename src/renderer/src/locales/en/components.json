@@ -93,5 +93,13 @@
   },
   "blockchainSelect": {
     "placeholder": "Select a blockchain..."
+  },
+  "connectionsTable": {
+    "name": "Name",
+    "connected": "Connected",
+    "chain": "Chain",
+    "account": "Account",
+    "disconnect": "Disconnect",
+    "emptyList": "No dApp connections"
   }
 }

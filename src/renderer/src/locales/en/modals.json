@@ -92,6 +92,16 @@
     "importButtonLabel": "Import",
     "noAccountsToImport": "No accounts to import"
   },
+  "dappDisconnection": {
+    "title": "Connection details",
+    "disconnectAllApps": "Disconnect all applications?",
+    "disconnectApp": "Disconnect application?",
+    "totalDapps": "{{totalDapps}} applications",
+    "willRemove": "will be permanently removed",
+    "warning": "Are you sure you want to continue?",
+    "disconnect": "Disconnect",
+    "cancel": "Cancel"
+  },
   "dappConnection": {
     "title": "Connect with a dApp",
     "description": "All transactions requested by a connected dApp will <strong>require your permission before being broadcast</strong> to the blockchain.",

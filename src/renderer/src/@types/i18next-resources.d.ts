@@ -129,6 +129,14 @@ interface Resources {
     blockchainSelect: {
       placeholder: 'Select a blockchain...'
     }
+    connectionsTable: {
+      name: 'Name'
+      connected: 'Connected'
+      chain: 'Chain'
+      account: 'Account'
+      disconnect: 'Disconnect'
+      emptyList: 'No dApp connections'
+    }
   }
   hooks: {
     useImportAction: {
@@ -233,6 +241,16 @@ interface Resources {
       description: 'Select the addresses you’d like to import:'
       importButtonLabel: 'Import'
       noAccountsToImport: 'No accounts to import'
+    }
+    dappDisconnection: {
+      title: 'Connection details'
+      disconnectAllApps: 'Disconnect all applications?'
+      disconnectApp: 'Disconnect application?'
+      totalDapps: '{{totalDapps}} applications'
+      willRemove: 'will be permanently removed'
+      warning: 'Are you sure you want to continue?'
+      disconnect: 'Disconnect'
+      cancel: 'Cancel'
     }
     dappConnection: {
       title: 'Connect with a dApp'
@@ -662,6 +680,14 @@ interface Resources {
       overview: 'Overview'
       walletsAndAccounts: '{{wallets}} Wallets / {{accounts}} Accounts'
       balance: 'Balance'
+    }
+    connections: {
+      allConnections: 'All connections'
+      connections: 'Connections'
+      walletsAndAccounts: '{{wallets}} Wallets / {{accounts}} Accounts'
+      newConnection: 'New connection'
+      disconnectAll: 'Disconnect all'
+      totalConnections: '{{connections}} Connections'
     }
   }
 }

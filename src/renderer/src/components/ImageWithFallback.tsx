@@ -23,7 +23,7 @@ export const ImageWithFallback = ({ fallbackSrc, className, ...props }: TProps) 
       {isLoading && <Loader className="w-4 h-4 text-gray-600" containerClassName="p-2" />}
       <img
         {...props}
-        className={StyleHelper.mergeStyles({ hidden: isLoading }, 'w-full h-full')}
+        className={StyleHelper.mergeStyles({ hidden: isLoading }, 'w-full h-full object-contain')}
         onError={handleError}
         onLoad={() => setIsLoading(false)}
       />

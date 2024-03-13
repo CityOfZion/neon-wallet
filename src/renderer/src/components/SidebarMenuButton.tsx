@@ -1,4 +1,3 @@
-import { cloneElement, Fragment } from 'react'
 import { MdChevronRight } from 'react-icons/md'
 import { NavLink } from 'react-router-dom'
 import { Separator } from '@renderer/components/Separator'
@@ -7,10 +6,7 @@ import { StyleHelper } from '@renderer/helpers/StyleHelper'
 type TProps = {
   title: string
   to?: string
-  onClick?: () => void
   match?: boolean
-  type?: 'button' | 'link'
-  disabled?: boolean
 }
 
 const buildClassName = (isActive: boolean, match?: boolean) => {
@@ -21,31 +17,13 @@ const buildClassName = (isActive: boolean, match?: boolean) => {
   })
 }
 
-export const SidebarMenuButton = ({
-  title,
-  to,
-  onClick,
-  match,
-  disabled = false,
-  type = 'link',
-}: TProps): JSX.Element => {
-  const Component =
-    type === 'link' ? (
-      <NavLink to={to ?? ''} className={({ isActive }) => buildClassName(isActive, match)} />
-    ) : (
-      <button onClick={onClick} className={buildClassName(false, false)} disabled={disabled} />
-    )
-
+export const SidebarMenuButton = ({ title, to, match }: TProps): JSX.Element => {
   return (
     <li>
-      {cloneElement(Component, {
-        children: (
-          <Fragment>
-            <span className="text-xs text-white">{title}</span>
-            <MdChevronRight className="text-gray-100 w-6 h-6" />
-          </Fragment>
-        ),
-      })}
+      <NavLink to={to ?? ''} className={({ isActive }) => buildClassName(isActive, match)}>
+        <span className="text-xs text-white">{title}</span>
+        <MdChevronRight className="text-gray-100 w-6 h-6" />
+      </NavLink>
       <div className="px-4">
         <Separator />
       </div>

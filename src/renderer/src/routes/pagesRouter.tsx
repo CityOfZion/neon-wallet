@@ -3,6 +3,7 @@ import { redirect } from 'react-router-dom'
 import { PrivateRoute } from '@renderer/components/PrivateRoute'
 import { createRouteHandler } from '@renderer/libs/sentryReact'
 
+import { ConnectionsPage } from './pages/Connections'
 import { ContactsPage } from './pages/Contacts'
 import { LoginPage } from './pages/Login'
 import { PortfolioPage } from './pages/Portfolio'
@@ -54,6 +55,10 @@ export const pagesRouter = routeHandler([
         path: 'activity',
         element: <PortfolioActivityPage />,
       },
+      {
+        path: 'connections',
+        element: <ConnectionsPage />,
+      },
     ],
   },
   {
@@ -82,6 +87,10 @@ export const pagesRouter = routeHandler([
           {
             path: 'transactions',
             element: <Fragment />,
+          },
+          {
+            path: 'connections',
+            element: <ConnectionsPage />,
           },
         ],
       },

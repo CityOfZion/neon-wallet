@@ -7,7 +7,7 @@ export type TCustomClickableProps = {
   label: string
   leftIcon?: JSX.Element
   rightIcon?: JSX.Element
-  variant?: 'outlined' | 'contained' | 'text'
+  variant?: 'outlined' | 'contained' | 'text' | 'text-slim'
   disabled?: boolean
   loading?: boolean
   flat?: boolean
@@ -55,6 +55,18 @@ const Text = ({ className, ...props }: TClickableProps) => {
       className={StyleHelper.mergeStyles(
         className,
         'flex min-w-0 justify-center items-center text-center gap-x-1.5 aria-[disabled=false]:hover:bg-gray-300/15 rounded transition-colors'
+      )}
+      {...props}
+    />
+  )
+}
+
+const TextSlim = ({ className, ...props }: TClickableProps) => {
+  return (
+    <Base
+      className={StyleHelper.mergeStyles(
+        className,
+        'flex min-w-0 justify-center items-center text-center gap-x-1.5 aria-[disabled=false]:hover:opacity-75 h-fit px-0'
       )}
       {...props}
     />
@@ -158,6 +170,8 @@ export const Clickable = ({
     <Outline {...props} />
   ) : props.variant === 'text' ? (
     <Text {...props} />
+  ) : props.variant === 'text-slim' ? (
+    <TextSlim {...props} />
   ) : (
     <Contained {...props} />
   )

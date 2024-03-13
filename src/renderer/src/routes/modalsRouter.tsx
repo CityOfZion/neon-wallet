@@ -7,6 +7,7 @@ import { DappConnectionModal } from './modals/DappConnection'
 import { DappConnectionAccountSelectionModal } from './modals/DappConnectionAccountSelection'
 import { DappConnectionDetailsModal } from './modals/DappConnectionDetails'
 import { DappConnectionListModal } from './modals/DappConnectionList'
+import { DappDisconnectionModal } from './modals/DappDisconnection'
 import { DappPermissionModal } from './modals/DappPermission'
 import { DappPermissionContractDetailsModal } from './modals/DappPermissionContractDetails'
 import { DappPermissionSignatureScopeModal } from './modals/DappPermissionSignatureScope'
@@ -38,6 +39,7 @@ export const modalsRouter: TRoute[] = [
   { name: 'add-address', element: <AddAddressModal /> },
   { name: 'success', element: <SuccessModal /> },
   { name: 'error', element: <ErrorModal /> },
+  { name: 'dapp-disconnection', element: <DappDisconnectionModal /> },
   { name: 'dapp-connection', element: <DappConnectionModal /> },
   { name: 'dapp-connection-details', element: <DappConnectionDetailsModal /> },
   { name: 'dapp-connection-account-selection', element: <DappConnectionAccountSelectionModal /> },

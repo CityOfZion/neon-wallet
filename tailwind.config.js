@@ -40,6 +40,7 @@ module.exports = {
       },
       gray: {
         900: '#13191B', // almost_black
+        950: '#232a30',
         800: '#293139', // darker
         700: '#333D46', // dark
         600: '#42525C', // dark_mid

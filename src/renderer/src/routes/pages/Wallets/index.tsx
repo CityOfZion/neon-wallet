@@ -3,8 +3,6 @@ import { useTranslation } from 'react-i18next'
 import { MdAdd, MdOutlineContentCopy } from 'react-icons/md'
 import { TbFileImport, TbPencil } from 'react-icons/tb'
 import { Outlet, useNavigate } from 'react-router-dom'
-import { EStatus } from '@cityofzion/wallet-connect-sdk-wallet-core'
-import { useWalletConnectWallet } from '@cityofzion/wallet-connect-sdk-wallet-react'
 import { IAccountState, IWalletState } from '@renderer/@types/store'
 import { AccountList } from '@renderer/components/AccountList'
 import { Button } from '@renderer/components/Button'
@@ -26,7 +24,6 @@ export const WalletsPage = () => {
   const { accounts } = useAccountsSelector()
   const { modalNavigateWrapper } = useModalNavigate()
   const navigate = useNavigate()
-  const { status } = useWalletConnectWallet()
 
   const [selectedWallet, setSelectedWallet] = useState<IWalletState | undefined>(wallets[0])
   const [selectedAccount, setSelectedAccount] = useState<IAccountState | undefined>(
@@ -161,12 +158,7 @@ export const WalletsPage = () => {
               <SidebarMenuButton title={t('tokens')} to={`/wallets/${selectedAccount?.address}/tokens`} />
               <SidebarMenuButton title={t('nfts')} to={`/wallets/${selectedAccount?.address}/nfts`} />
               <SidebarMenuButton title={t('transactions')} to={`/wallets/${selectedAccount?.address}/transactions`} />
-              <SidebarMenuButton
-                title={t('connections')}
-                type="button"
-                disabled={status !== EStatus.STARTED}
-                onClick={modalNavigateWrapper('dapp-connection-list')}
-              />
+              <SidebarMenuButton title={t('connections')} to={`/wallets/${selectedAccount?.address}/connections`} />
             </ul>
           </section>
           <Outlet />
