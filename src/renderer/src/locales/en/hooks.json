@@ -1,0 +1,10 @@
+{
+  "useImportAction": {
+    "errors": {
+      "invalid": "Invalid text",
+      "empty": "Please enter some text",
+      "allAddressesAlreadyImported": "All addresses are already imported",
+      "mnemonicIncomplete": "Mnemonic incomplete"
+    }
+  }
+}

@@ -21,7 +21,7 @@ export const DappConnectionModal = () => {
   const { connect, proposals } = useWalletConnectWallet()
   const { modalNavigate } = useModalNavigate()
   const { t } = useTranslation('modals', { keyPrefix: 'dappConnection' })
-  const { actionData, setData, actionState, setError, clearErrors, handleAct } = useActions<TFormData>({
+  const { actionData, setData, actionState, setError, handleAct } = useActions<TFormData>({
     url: '',
     isConnecting: false,
   })
@@ -29,7 +29,6 @@ export const DappConnectionModal = () => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value
     setData({ url: value })
-    clearErrors()
   }
 
   const handleSubmit = async (data: TFormData) => {

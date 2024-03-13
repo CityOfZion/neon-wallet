@@ -22,7 +22,7 @@ export const SettingsEncryptKeyPage = (): JSX.Element => {
   const { bsAggregator } = useBsAggregator()
   const { modalNavigate } = useModalNavigate()
 
-  const { handleAct, setError, actionState, actionData, setData, clearErrors, reset } = useActions<TFormData>({
+  const { handleAct, setError, actionState, actionData, setData, reset } = useActions<TFormData>({
     privateKey: '',
     passphrase: '',
     confirmationPassphrase: '',
@@ -38,7 +38,6 @@ export const SettingsEncryptKeyPage = (): JSX.Element => {
       setError('privateKey', t('encryptKey.error.privateKey'))
       return
     }
-    clearErrors('privateKey')
   }
   const handlePassphraseChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value
@@ -50,7 +49,6 @@ export const SettingsEncryptKeyPage = (): JSX.Element => {
       setError('passphrase', t('encryptKey.error.passphrase'))
       return
     }
-    clearErrors('passphrase')
   }
   const handleConfirmationPassphraseChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value
@@ -62,7 +60,6 @@ export const SettingsEncryptKeyPage = (): JSX.Element => {
       setError('confirmationPassphrase', t('encryptKey.error.confirmationPassphrase'))
       return
     }
-    clearErrors('confirmationPassphrase')
   }
 
   const handleSubmit = async (data: TFormData) => {

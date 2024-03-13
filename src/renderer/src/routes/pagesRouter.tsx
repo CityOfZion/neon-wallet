@@ -9,10 +9,6 @@ import { PortfolioPage } from './pages/Portfolio'
 import { PortfolioActivityPage } from './pages/Portfolio/Activity'
 import { PortfolioOverviewPage } from './pages/Portfolio/Overview'
 import { ReceiveYourAddress } from './pages/Receive'
-import { SecuritySetupPage } from './pages/SecuritySetup'
-import { SecuritySetupStep1Page } from './pages/SecuritySetup/SecuritySetupStep1'
-import { SecuritySetupStep2Page } from './pages/SecuritySetup/SecuritySetupStep2'
-import { SecuritySetupStep3Page } from './pages/SecuritySetup/SecuritySetupStep3'
 import { SendPage } from './pages/Send'
 import { SettingsPage } from './pages/Settings'
 import { SettingsEncryptKeyPage } from './pages/Settings/SettingsEncryptKey'
@@ -21,6 +17,14 @@ import { SettingsReleaseNotesPage } from './pages/Settings/SettingsReleaseNotes'
 import { WalletsPage } from './pages/Wallets'
 import { AccountOverview } from './pages/Wallets/AccountOverview'
 import { WelcomePage } from './pages/Welcome'
+import { WelcomeImportWalletPage } from './pages/WelcomeImportWallet'
+import { WelcomeImportWalletStep1Page } from './pages/WelcomeImportWallet/Step1'
+import { WelcomeImportWalletStep2Page } from './pages/WelcomeImportWallet/Step2'
+import { WelcomeImportWalletStep3Page } from './pages/WelcomeImportWallet/Step3'
+import { WelcomeSecuritySetupPage } from './pages/WelcomeSecuritySetup'
+import { WelcomeSecuritySetupStep1Page } from './pages/WelcomeSecuritySetup/Step1'
+import { WelcomeSecuritySetupStep2Page } from './pages/WelcomeSecuritySetup/Step2'
+import { WelcomeSecuritySetupStep3Page } from './pages/WelcomeSecuritySetup/Step3'
 
 const routeHandler = createRouteHandler()
 
@@ -160,20 +164,38 @@ export const pagesRouter = routeHandler([
   },
   { path: '/welcome', element: <WelcomePage /> },
   {
-    path: '/security-setup',
-    element: <SecuritySetupPage />,
+    path: '/welcome-security-setup',
+    element: <WelcomeSecuritySetupPage />,
     children: [
       {
         path: '1?',
-        element: <SecuritySetupStep1Page />,
+        element: <WelcomeSecuritySetupStep1Page />,
       },
       {
         path: '2',
-        element: <SecuritySetupStep2Page />,
+        element: <WelcomeSecuritySetupStep2Page />,
       },
       {
         path: '3',
-        element: <SecuritySetupStep3Page />,
+        element: <WelcomeSecuritySetupStep3Page />,
+      },
+    ],
+  },
+  {
+    path: '/welcome-import-wallet',
+    element: <WelcomeImportWalletPage />,
+    children: [
+      {
+        path: '1?',
+        element: <WelcomeImportWalletStep1Page />,
+      },
+      {
+        path: '2',
+        element: <WelcomeImportWalletStep2Page />,
+      },
+      {
+        path: '3',
+        element: <WelcomeImportWalletStep3Page />,
       },
     ],
   },

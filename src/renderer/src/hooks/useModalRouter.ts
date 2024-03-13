@@ -25,7 +25,7 @@ export const useModalState = <T = any>(): T => {
   const currentHistoryId = useRef<string>(history[history.length - 1].id)
 
   const state = useMemo(() => {
-    return history.find(item => item.id === currentHistoryId.current)!.state as T
+    return (history.find(item => item.id === currentHistoryId.current)!.state ?? {}) as T
   }, [history])
 
   return state

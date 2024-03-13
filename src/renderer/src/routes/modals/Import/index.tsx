@@ -1,4 +1,3 @@
-import { ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MdChevronRight } from 'react-icons/md'
 import { TbFileImport } from 'react-icons/tb'
@@ -6,71 +5,18 @@ import { IWalletState } from '@renderer/@types/store'
 import { Banner } from '@renderer/components/Banner'
 import { Button } from '@renderer/components/Button'
 import { Textarea } from '@renderer/components/Textarea'
-import { UtilsHelper } from '@renderer/helpers/UtilsHelper'
-import { useActions } from '@renderer/hooks/useActions'
-import { useBsAggregator } from '@renderer/hooks/useBsAggregator'
+import { useImportAction } from '@renderer/hooks/useImportAction'
 import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
 import { EndModalLayout } from '@renderer/layouts/EndModal'
-
-type TInputType = 'key' | 'mnemonic' | 'encrypted'
 
 type TImportState = {
   onImportWallet?: (wallet: IWalletState) => void
 }
 
-type TFormData = {
-  text: string
-  inputType?: TInputType
-}
-
 export const ImportModal = () => {
-  const { bsAggregator } = useBsAggregator()
   const { modalNavigate } = useModalNavigate()
   const { t } = useTranslation('modals', { keyPrefix: 'import' })
   const { onImportWallet } = useModalState<TImportState>()
-
-  const { handleAct, setError, actionState, actionData, setData, clearErrors } = useActions<TFormData>({ text: '' })
-
-  const validateMnemonic = (value: string) => {
-    const isValid = UtilsHelper.isValidMnemonic(value)
-    if (!isValid) throw new Error(t('errors.mnemonicIncomplete'))
-  }
-
-  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    const value = event.target.value
-    setData({ text: value, inputType: undefined })
-
-    try {
-      const checkFunctionsByInputType: Record<TInputType, (value: string) => boolean> = {
-        key: bsAggregator.validateKeyAllBlockchains.bind(bsAggregator),
-        mnemonic: UtilsHelper.isMnemonic,
-        encrypted: bsAggregator.validateEncryptedAllBlockchains.bind(bsAggregator),
-      }
-
-      const functionsByInputType = Object.entries(checkFunctionsByInputType).find(([, checkFunc]) => {
-        try {
-          return checkFunc(value)
-        } catch {
-          return false
-        }
-      })
-
-      if (!functionsByInputType) throw new Error()
-      const inputType = functionsByInputType[0] as TInputType
-
-      setData({ inputType })
-
-      const validationByInputType: Partial<Record<TInputType, (value: string) => void>> = {
-        mnemonic: validateMnemonic,
-      }
-      const validateFunc = validationByInputType[inputType]
-      validateFunc?.(value)
-
-      clearErrors()
-    } catch (error: any) {
-      setError('text', error.message || t('errors.invalid'))
-    }
-  }
 
   const submitKey = async (key: string) => {
     modalNavigate('import-key-accounts-selection', { state: { key, onImportWallet } })
@@ -93,27 +39,16 @@ export const ImportModal = () => {
     })
   }
 
-  const handleSubmit = async (data: TFormData) => {
-    const submitByInputType: Record<TInputType, (value: string) => Promise<void>> = {
-      key: submitKey,
-      mnemonic: submitMnemonic,
-      encrypted: submitEncrypted,
-    }
-
-    try {
-      if (!data.text.length) {
-        throw new Error(t('errors.empty'))
-      }
-
-      if (!data.inputType) {
-        throw new Error(t('errors.invalid'))
-      }
-
-      await submitByInputType[data.inputType](data.text)
-    } catch (error: any) {
-      setError('text', error.message)
-    }
+  const submitAddress = async (address: string) => {
+    modalNavigate('add-watch', { replace: true, state: { address } })
   }
+
+  const { actionData, actionState, handleAct, handleChange, handleSubmit } = useImportAction({
+    key: submitKey,
+    mnemonic: submitMnemonic,
+    encrypted: submitEncrypted,
+    address: submitAddress,
+  })
 
   return (
     <EndModalLayout heading={t('title')} headingIcon={<TbFileImport />} contentClassName="flex flex-col">

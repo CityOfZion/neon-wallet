@@ -19,8 +19,6 @@ interface Resources {
       watchAccount: 'Watch Account'
       mnemonicWalletName: 'Mnemonic Wallet'
       firstWalletName: 'My First Wallet'
-      firstWalletNameBackupFile: 'My First Wallet Backup'
-      firstWalletNameBackupFileTitle: 'YOUR MNEMONIC PHRASE:'
     }
     account: {
       defaultName: 'Account {{accountNumber}}'
@@ -132,6 +130,16 @@ interface Resources {
       placeholder: 'Select a blockchain...'
     }
   }
+  hooks: {
+    useImportAction: {
+      errors: {
+        invalid: 'Invalid text'
+        empty: 'Please enter some text'
+        allAddressesAlreadyImported: 'All addresses are already imported'
+        mnemonicIncomplete: 'Mnemonic incomplete'
+      }
+    }
+  }
   modals: {
     import: {
       title: 'Import'
@@ -140,15 +148,13 @@ interface Resources {
       inputPlaceholder: 'Please ender an address or key...'
       buttonContinueLabel: 'Next'
       errors: {
-        invalid: 'Invalid text'
-        empty: 'Please enter some text'
         allAddressesAlreadyImported: 'All addresses are already imported'
-        mnemonicIncomplete: 'Mnemonic incomplete'
       }
       success: {
         mnemonic: 'Mnemonic complete!'
         key: 'Private key complete!'
         encrypted: 'Encrypted key complete!'
+        address: 'Address complete!'
       }
       importEncryptedDescription: 'Select the desired blockchain for your new account'
     }
@@ -446,29 +452,48 @@ interface Resources {
   pages: {
     welcome: {
       title: 'Welcome to Neon Wallet'
-      skipSecurityButtonLabel: 'Skip security'
-      setupSecurityButtonLabel: 'Setup security'
+      setupSecurityButtonLabel: 'Password Protect Neon Wallet'
     }
-    securitySetup: {
-      title: 'Welcome to Neon Wallet'
+    welcomeSecuritySetup: {
+      title: 'Securing your new wallet'
       steps: ['Create Password', 'Confirm Password', 'Complete']
+      step1: {
+        formTitle: 'Please create a password to secure your wallet'
+        passwordPlaceholder: 'Create a password...'
+        passwordError: 'Password must be at least {{length}} characters long'
+      }
+      step2: {
+        formTitle: 'Please confirm your password'
+        confirmPasswordPlaceholder: 'Confirm your password...'
+        confirmPasswordError: 'Passwords do not match'
+      }
+      step3: {
+        description: 'Your security setup is now complete, please back up your password below. Failure to backup may result in loss of access to your wallet'
+        buttonDownloadLabel: 'Download backup'
+        buttonPrintLabel: 'Print backup'
+        buttonContinueLabel: 'Open your new wallet'
+        firstWalletName: 'My First Wallet'
+        backupFileName: 'Neon Password Backup'
+        backupFileTitle: 'YOUR PASSWORD:'
+      }
     }
-    securitySetupStep1: {
-      formTitle: 'Please create a password to secure your wallet'
-      passwordPlaceholder: 'Create a password'
-      passwordError: 'Password must be at least {{length}} characters long'
-    }
-    securitySetupStep2: {
-      formTitle: 'Please confirm your password'
-      confirmPasswordPlaceholder: 'Confirm your password'
-      confirmPasswordError: 'Passwords do not match'
-    }
-    securitySetupStep3: {
-      description: 'Your security setup is now complete, please back up your password below. Failure to backup may result in loss of access to your wallet'
-      buttonDownloadLabel: 'Download backup'
-      buttonPrintLabel: 'Print backup'
-      buttonContinueLabel: 'Open your new wallet'
-      firstWalletName: 'My First Wallet'
+    welcomeImportWallet: {
+      title: 'Import a wallet'
+      steps: ['Enter address or key', 'Import', 'Complete']
+      step1: {
+        formTitle: 'Enter an address, encrypted key, private key or mnemonic'
+        inputPlaceholder: 'Enter an address, key or mnemonic...'
+        encryptedKeyIsNotSupported: 'Encrypted is not support on welcome flow'
+      }
+      step2: {
+        title: 'Please be patient, we are now setting up your wallet'
+        canNotFindBlockchainError: "We can't find the blockchain for this address"
+        encryptedKeyIsNotSupported: 'Encrypted is not support on welcome flow'
+      }
+      step3: {
+        title: 'Wallet imported successfully!'
+        setupSecurityButtonLabel: 'Password Protect Neon Wallet'
+      }
     }
     portfolio: {
       title: 'Portfolio'

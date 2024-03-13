@@ -6,15 +6,13 @@
     "inputPlaceholder": "Please ender an address or key...",
     "buttonContinueLabel": "Next",
     "errors": {
-      "invalid": "Invalid text",
-      "empty": "Please enter some text",
-      "allAddressesAlreadyImported": "All addresses are already imported",
-      "mnemonicIncomplete": "Mnemonic incomplete"
+      "allAddressesAlreadyImported": "All addresses are already imported"
     },
     "success": {
       "mnemonic": "Mnemonic complete!",
       "key": "Private key complete!",
-      "encrypted": "Encrypted key complete!"
+      "encrypted": "Encrypted key complete!",
+      "address": "Address complete!"
     },
     "importEncryptedDescription": "Select the desired blockchain for your new account"
   },

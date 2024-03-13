@@ -17,9 +17,7 @@
     "encryptedName": "Encrypted Wallet",
     "watchAccount": "Watch Account",
     "mnemonicWalletName": "Mnemonic Wallet",
-    "firstWalletName": "My First Wallet",
-    "firstWalletNameBackupFile": "My First Wallet Backup",
-    "firstWalletNameBackupFileTitle": "YOUR MNEMONIC PHRASE:"
+    "firstWalletName": "My First Wallet"
   },
   "account": {
     "defaultName": "Account {{accountNumber}}"

@@ -3,8 +3,8 @@ import { Outlet, useMatch } from 'react-router-dom'
 import { Stepper } from '@renderer/components/Stepper'
 import { WelcomeLayout } from '@renderer/layouts/Welcome'
 
-export const SecuritySetupPage = () => {
-  const { t } = useTranslation('pages', { keyPrefix: 'securitySetup' })
+export const WelcomeSecuritySetupPage = () => {
+  const { t } = useTranslation('pages', { keyPrefix: 'welcomeSecuritySetup' })
 
   const match = useMatch('/:path/:currentStep')
   const currentStep = match ? Number(match.params.currentStep) : 1
