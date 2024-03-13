@@ -21,7 +21,7 @@ const buildClassName = (isActive: boolean, match?: boolean) => {
   })
 }
 
-export const PortfolioSidebarLink = ({
+export const SidebarMenuButton = ({
   title,
   to,
   onClick,

@@ -1,7 +1,5 @@
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TbStepInto } from 'react-icons/tb'
-import { IAccountState } from '@renderer/@types/store'
 import { Tabs } from '@renderer/components/Tabs'
 import { ContentLayout } from '@renderer/layouts/ContentLayout'
 
@@ -14,7 +12,6 @@ enum ETabbarOption {
 
 export const ReceiveYourAddress = () => {
   const { t } = useTranslation('pages', { keyPrefix: 'receive' })
-  const [selectedAccount, setSelectedAccount] = useState<IAccountState>()
 
   return (
     <ContentLayout title={t('title')} titleIcon={<TbStepInto />}>
@@ -30,7 +27,7 @@ export const ReceiveYourAddress = () => {
           </Tabs.List>
 
           <Tabs.Content value={ETabbarOption.YOUR_ADDRESS}>
-            <YourAddressTabContent onSelectAccount={setSelectedAccount} selectedAccount={selectedAccount} />
+            <YourAddressTabContent />
           </Tabs.Content>
         </Tabs.Root>
       </section>

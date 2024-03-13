@@ -1,6 +1,7 @@
 import { Fragment, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TbArrowDown, TbEye, TbStepOut } from 'react-icons/tb'
+import { useLocation } from 'react-router-dom'
 import { Account, BlockchainService, isCalculableFee } from '@cityofzion/blockchain-service'
 import { TokenBalance } from '@renderer/@types/query'
 import { IAccountState } from '@renderer/@types/store'
@@ -38,8 +39,9 @@ export const SendPage = () => {
   const { encryptedPasswordRef } = useEncryptedPasswordSelector()
   const { modalNavigate } = useModalNavigate()
   const { networkType } = useNetworkTypeSelector()
+  const { state } = useLocation()
 
-  const [selectedAccount, setSelectedAccount] = useState<IAccountState>()
+  const [selectedAccount, setSelectedAccount] = useState<IAccountState>(state?.account)
   const [selectedToken, setSelectedToken] = useState<TokenBalance | null>()
   const [selectedAmount, setSelectedAmount] = useState<number>(0)
   const [selectedRecipient, setSelectedRecipient] = useState<string>('')

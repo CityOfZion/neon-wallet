@@ -525,9 +525,9 @@ interface Resources {
     wallets: {
       title: 'Wallets'
       addAccountButtonLabel: 'Add Account'
-      editWalletButtonLabel: 'Edit Wallet'
+      editWalletButtonLabel: 'Edit'
       reorderAccountsButtonLabel: 'Reorder Accounts'
-      editAccountButton: 'Edit Account'
+      editAccountButton: 'Edit'
       buttonRefreshLabel: 'Refresh'
       addWatchAccountButtonLabel: 'Add Watch'
       importButtonLabel: 'Import'
@@ -538,6 +538,16 @@ interface Resources {
       changeIn24hrs: 'Change in 24HRS'
       portfolioBalance: 'Portfolio Balance'
       publicAddress: 'Public Address'
+      address: 'Address'
+      overview: 'Account overview'
+      tokens: 'Tokens'
+      nfts: 'NFTs'
+      transactions: 'Transactions'
+      connections: 'Connections'
+      accountOverview: 'Account overview'
+      holdings: 'Holdings'
+      send: 'Send'
+      receive: 'Receive'
     }
     contacts: {
       title: 'Contacts'

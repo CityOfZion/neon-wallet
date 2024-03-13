@@ -6,10 +6,9 @@ import { EStatus } from '@cityofzion/wallet-connect-sdk-wallet-core'
 import { useWalletConnectWallet } from '@cityofzion/wallet-connect-sdk-wallet-react'
 import { IconButton } from '@renderer/components/IconButton'
 import { Separator } from '@renderer/components/Separator'
+import { SidebarMenuButton } from '@renderer/components/SidebarMenuButton'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
 import { MainLayout } from '@renderer/layouts/Main'
-
-import { PortfolioSidebarLink } from './PortfolioSidebarLink'
 
 export const PortfolioPage = () => {
   const { t } = useTranslation('pages', { keyPrefix: 'portfolio' })
@@ -39,9 +38,9 @@ export const PortfolioPage = () => {
           <Separator />
         </div>
         <ul className="max-w-full w-full">
-          <PortfolioSidebarLink title={t('overview')} to="/portfolio/overview" />
-          <PortfolioSidebarLink title={t('allActivity')} to="/portfolio/activity" />
-          <PortfolioSidebarLink
+          <SidebarMenuButton title={t('overview')} to="/portfolio/overview" />
+          <SidebarMenuButton title={t('allActivity')} to="/portfolio/activity" />
+          <SidebarMenuButton
             title={t('allConnections')}
             type="button"
             disabled={status !== EStatus.STARTED}
