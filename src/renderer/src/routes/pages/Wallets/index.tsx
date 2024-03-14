@@ -99,7 +99,7 @@ export const WalletsPage = () => {
             <h2 className="text-sm truncate">{t('accounts')}</h2>
           </header>
 
-          <main className="flex flex-col w-full items-center flex-grow">
+          <main className="flex flex-col w-full items-center flex-grow min-h-0">
             <Separator className="w-[80%]" />
 
             <AccountList
@@ -108,7 +108,7 @@ export const WalletsPage = () => {
               onSelect={handleSelectAccount}
               selectedAccount={selectedAccount}
               showFirstSeparator={false}
-              className="w-full"
+              className="flex flex-grow flex-col min-h-0 w-full overflow-y-auto"
             />
           </main>
 
