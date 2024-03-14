@@ -35,7 +35,7 @@ const AccountItem = ({
 }: TAccountItemProps) => {
   return (
     <Fragment>
-      {showSeparator && <Separator />}
+      {showSeparator && <Separator className="min-h-[0.0625rem]" />}
       <li>
         <AccountCard
           account={account}
