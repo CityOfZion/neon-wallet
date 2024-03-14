@@ -573,6 +573,7 @@ interface Resources {
       holdings: 'Holdings'
       send: 'Send'
       receive: 'Receive'
+      accounts: 'Accounts'
     }
     contacts: {
       title: 'Contacts'

@@ -1,52 +1,39 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { MdAdd, MdMoreVert, MdOutlineContentCopy } from 'react-icons/md'
-import { TbFileImport, TbPencil, TbRepeat } from 'react-icons/tb'
+import { MdAdd, MdOutlineContentCopy } from 'react-icons/md'
+import { TbFileImport, TbPencil } from 'react-icons/tb'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { EStatus } from '@cityofzion/wallet-connect-sdk-wallet-core'
 import { useWalletConnectWallet } from '@cityofzion/wallet-connect-sdk-wallet-react'
 import { IAccountState, IWalletState } from '@renderer/@types/store'
 import { AccountList } from '@renderer/components/AccountList'
-import { ActionPopover } from '@renderer/components/ActionPopover'
 import { Button } from '@renderer/components/Button'
 import { IconButton } from '@renderer/components/IconButton'
 import { Separator } from '@renderer/components/Separator'
 import { SidebarMenuButton } from '@renderer/components/SidebarMenuButton'
-import { WalletCard } from '@renderer/components/WalletCard'
 import { WalletSelect } from '@renderer/components/WalletSelect'
 import { StringHelper } from '@renderer/helpers/StringHelper'
 import { UtilsHelper } from '@renderer/helpers/UtilsHelper'
 import { useAccountsSelector } from '@renderer/hooks/useAccountSelector'
 import { useBalancesAndExchange } from '@renderer/hooks/useBalancesAndExchange'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
-import { useAppDispatch } from '@renderer/hooks/useRedux'
 import { useWalletsSelector } from '@renderer/hooks/useWalletSelector'
 import { MainLayout } from '@renderer/layouts/Main'
-import { accountReducerActions } from '@renderer/store/reducers/AccountReducer'
 
 export const WalletsPage = () => {
   const { t } = useTranslation('pages', { keyPrefix: 'wallets' })
   const { wallets } = useWalletsSelector()
   const { accounts } = useAccountsSelector()
-  const dispatch = useAppDispatch()
   const { modalNavigateWrapper } = useModalNavigate()
   const navigate = useNavigate()
   const { status } = useWalletConnectWallet()
 
   const [selectedWallet, setSelectedWallet] = useState<IWalletState | undefined>(wallets[0])
-  const [isReordering, setIsReordering] = useState(false)
-  const [selectedAccount, setSelectedAccount] = useState<IAccountState | undefined>(undefined)
+  const [selectedAccount, setSelectedAccount] = useState<IAccountState | undefined>(
+    accounts.find(account => account.idWallet === selectedWallet?.id)
+  )
 
   const balanceExchange = useBalancesAndExchange(accounts)
-
-  const handleReorderSave = (accountsOrder: string[]) => {
-    dispatch(accountReducerActions.reorderAccounts(accountsOrder))
-    setIsReordering(false)
-  }
-
-  const handleReorderCancel = () => {
-    setIsReordering(false)
-  }
 
   const handleSelectWallet = (selected: IWalletState) => {
     setSelectedWallet(selected)
@@ -71,7 +58,7 @@ export const WalletsPage = () => {
   }, [wallets])
 
   useEffect(() => {
-    setSelectedAccount(undefined)
+    setSelectedAccount(accounts.find(account => account.idWallet === selectedWallet?.id))
   }, [selectedWallet, accounts])
 
   return (
@@ -83,7 +70,6 @@ export const WalletsPage = () => {
             wallets={wallets}
             selected={selectedWallet}
             onSelect={setSelectedWallet}
-            disabled={isReordering}
           />
         </div>
       }
@@ -113,57 +99,23 @@ export const WalletsPage = () => {
       {selectedWallet && (
         <section className="bg-gray-800 rounded drop-shadow-lg max-w-[11.625rem] min-w-[11.625rem] w-full flex flex-col">
           <header className="flex justify-between pl-4 pr-2 py-3 items-center h-fit gap-x-1">
-            <h2 className="text-sm truncate">{selectedWallet.name}</h2>
-
-            <ActionPopover
-              actions={[
-                {
-                  icon: <TbPencil />,
-                  label: t('editWalletButtonLabel'),
-                  onClick: modalNavigateWrapper('edit-wallet', { state: { wallet: selectedWallet } }),
-                },
-                {
-                  icon: <TbRepeat />,
-                  label: t('reorderAccountsButtonLabel'),
-                  onClick: () => setIsReordering(true),
-                },
-              ]}
-            >
-              <IconButton compacted icon={<MdMoreVert />} size="md" disabled={isReordering} />
-            </ActionPopover>
+            <h2 className="text-sm truncate">{t('accounts')}</h2>
           </header>
 
-          <main className="flex-grow">
-            <Separator />
-            <WalletCard
-              onClick={() => setSelectedAccount(undefined)}
-              wallet={selectedWallet}
-              iconWithAccounts
-              balanceExchange={balanceExchange}
-              active={selectedAccount === undefined}
-            />
+          <main className="flex flex-col w-full items-center flex-grow">
+            <Separator className="w-[80%]" />
+
             <AccountList
               selectedWallet={selectedWallet}
               balanceExchange={balanceExchange}
-              isReordering={isReordering}
-              onReorderCancel={handleReorderCancel}
-              onReorderSave={handleReorderSave}
               onSelect={handleSelectAccount}
               selectedAccount={selectedAccount}
+              showFirstSeparator={false}
+              className="w-full"
             />
           </main>
 
           <footer className="px-4 pb-6">
-            {selectedAccount && (
-              <Button
-                label={t('editAccountButton')}
-                variant="outlined"
-                className="w-full pb-2"
-                flat
-                onClick={modalNavigateWrapper('edit-account', { state: { account: selectedAccount } })}
-                leftIcon={<TbPencil />}
-              />
-            )}
             <Button
               label={t('addAccountButtonLabel')}
               variant="outlined"
