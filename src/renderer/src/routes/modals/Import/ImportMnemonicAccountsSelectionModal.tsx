@@ -91,10 +91,15 @@ export const ImportMnemonicAccountsSelectionModal = () => {
   }, [bsAggregator, mnemonic])
 
   return (
-    <EndModalLayout heading={t('title')} withBackButton headingIcon={<TbFileImport />} contentClassName="flex flex-col">
+    <EndModalLayout
+      heading={t('title')}
+      withBackButton
+      headingIcon={<TbFileImport />}
+      contentClassName="flex flex-col min-h-0"
+    >
       <p className="text-sm mr-">{t('description')}</p>
 
-      <div className="flex flex-col gap-y-2.5 mt-6 flex-grow">
+      <div className="flex flex-col gap-y-2.5 mt-6 flex-grow min-h-0 overflow-y-auto mb-3">
         {isMounting ? (
           <Loader />
         ) : actionData.selectedAccounts.length > 0 ? (
