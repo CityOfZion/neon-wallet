@@ -5,11 +5,7 @@
   },
   "welcomeSecuritySetup": {
     "title": "Securing your new wallet",
-    "steps": [
-      "Create Password",
-      "Confirm Password",
-      "Complete"
-    ],
+    "steps": ["Create Password", "Confirm Password", "Complete"],
     "step1": {
       "formTitle": "Please create a password to secure your wallet",
       "passwordPlaceholder": "Create a password...",
@@ -32,11 +28,7 @@
   },
   "welcomeImportWallet": {
     "title": "Import a wallet",
-    "steps": [
-      "Enter address or key",
-      "Import",
-      "Complete"
-    ],
+    "steps": ["Enter address or key", "Import", "Complete"],
     "step1": {
       "formTitle": "Enter an address, encrypted key, private key or mnemonic",
       "inputPlaceholder": "Enter an address, key or mnemonic...",
@@ -84,6 +76,7 @@
     "addressInputHint": "Enter recipient address...",
     "totalFee": "Total fee",
     "sendNow": "Send Now",
+    "invalidAddress": "Invalid address",
     "selectAccountModal": {
       "title": "Select a source account",
       "selectSourceAccount": "Select source account"

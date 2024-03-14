@@ -6,6 +6,7 @@ import { TContactAddress } from '@renderer/@types/store'
 import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
 import { Separator } from '@renderer/components/Separator'
+import { StyleHelper } from '@renderer/helpers/StyleHelper'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
 
 type TRecipientParams = {
@@ -13,9 +14,20 @@ type TRecipientParams = {
   selectedAddress: string
   onSelectRecipient: (recipientAddress: string) => void
   active: boolean
+  validating: boolean
+  nsAddress?: string
+  isAddressValid?: boolean
 }
 
-export const Recipient = ({ selectedToken, onSelectRecipient, selectedAddress, active }: TRecipientParams) => {
+export const Recipient = ({
+  selectedToken,
+  onSelectRecipient,
+  selectedAddress,
+  active,
+  validating,
+  nsAddress,
+  isAddressValid,
+}: TRecipientParams) => {
   const { t } = useTranslation('pages', { keyPrefix: 'send' })
   const { modalNavigateWrapper } = useModalNavigate()
 
@@ -55,16 +67,24 @@ export const Recipient = ({ selectedToken, onSelectRecipient, selectedAddress, a
       <div className="px-3">
         <Separator />
       </div>
-      <div className="py-4">
+      <div
+        className={StyleHelper.mergeStyles('py-4 flex flex-col items-center mx-auto', {
+          'py-6': isAddressValid === false,
+        })}
+      >
         <Input
           value={selectedAddress}
           onChange={handleChangeAddres}
           compacted
           disabled={selectedToken && active ? false : true}
-          className="w-[24rem] mx-auto"
+          className="w-[24rem]"
           placeholder={t('addressInputHint')}
           clearable={true}
+          loading={validating}
+          error={isAddressValid === false}
+          errorMessage={isAddressValid === false ? t('invalidAddress') : undefined}
         />
+        {nsAddress && <p className="text-neon">{nsAddress}</p>}
       </div>
     </div>
   )

@@ -27,6 +27,7 @@ type TLocationState = {
 
 export const PersistContactModal = () => {
   const { t } = useTranslation('modals', { keyPrefix: 'persistContactModal' })
+  const { t: commonT } = useTranslation('common', { keyPrefix: 'general' })
 
   const { modalNavigate, modalNavigateWrapper } = useModalNavigate()
   const { contact } = useModalState<TLocationState>()
@@ -136,6 +137,7 @@ export const PersistContactModal = () => {
                         warningText: t('deleteAddress.warningText'),
                         warningDescription: t('deleteAddress.warningDescription'),
                         buttonLabel: t('deleteAddress.buttonDeleteLabel'),
+                        truncateFirstName: true,
                       },
                     })}
                     className="items-center"
@@ -162,6 +164,7 @@ export const PersistContactModal = () => {
                   onClick={() => openAddAddressModal()}
                   className="w-[17.125rem]"
                   flat
+                  iconsOnEdge={false}
                 />
               </div>
             </div>
@@ -189,15 +192,17 @@ export const PersistContactModal = () => {
                 })}
                 colorSchema="error"
                 flat
+                iconsOnEdge={false}
               />
             </div>
           )}
 
           <Button
-            label={t('saveContact')}
+            label={contact ? commonT('save') : t('saveContact')}
             flat
             disabled={actionData.addresses.length <= 0 || !actionState.isValid || actionState.isActing}
             type="submit"
+            iconsOnEdge={false}
           />
         </div>
       </form>

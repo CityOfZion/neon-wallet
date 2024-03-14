@@ -2,7 +2,8 @@ import { Fragment, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TbArrowDown, TbEye, TbStepOut } from 'react-icons/tb'
 import { useLocation } from 'react-router-dom'
-import { Account, BlockchainService, isCalculableFee } from '@cityofzion/blockchain-service'
+import { Account, BlockchainService, hasNameService, isCalculableFee } from '@cityofzion/blockchain-service'
+import { TBlockchainServiceKey } from '@renderer/@types/blockchain'
 import { TokenBalance } from '@renderer/@types/query'
 import { IAccountState } from '@renderer/@types/store'
 import { Button } from '@renderer/components/Button'
@@ -12,6 +13,7 @@ import { useBsAggregator } from '@renderer/hooks/useBsAggregator'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
 import { useEncryptedPasswordSelector, useNetworkTypeSelector } from '@renderer/hooks/useSettingsSelector'
 import { ContentLayout } from '@renderer/layouts/ContentLayout'
+import debounce from 'lodash/debounce'
 
 import { Recipient } from './Recipient'
 import { SelectAccount } from './SelectAccount'
@@ -47,6 +49,9 @@ export const SendPage = () => {
   const [selectedRecipient, setSelectedRecipient] = useState<string>('')
   const [currentStep, setCurrentStep] = useState<number>(SendPageStep.SelectAccount)
   const [totalFee, setTotalFee] = useState<string>('0.00')
+  const [validating, setValidating] = useState(false)
+  const [nsAddress, setNsAddress] = useState<string | undefined>()
+  const [isAddressValid, setIsAddressValid] = useState<boolean | undefined>()
 
   const handleSelectAccount = (account: IAccountState) => {
     setSelectedAccount(account)
@@ -70,13 +75,56 @@ export const SendPage = () => {
   }
 
   const handleSelectRecipientAddress = (recipientAddress: string) => {
+    setIsAddressValid(undefined)
+    setNsAddress(undefined)
+
+    validateAddressOrNSS(recipientAddress, selectedAccount.blockchain)
     setSelectedRecipient(recipientAddress)
+
     if (recipientAddress === '') {
       setCurrentStep(SendPageStep.SelectContact)
     } else {
       setCurrentStep(SendPageStep.Send)
     }
   }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const validateAddressOrNSS = useCallback(
+    debounce(async (recipientAddress: string, blockchain?: TBlockchainServiceKey) => {
+      if (!blockchain) return
+
+      setValidating(true)
+      let isValid = false
+
+      try {
+        const blockchainService = bsAggregator.getBlockchainByName(blockchain)
+        isValid = blockchainService.validateAddress(recipientAddress)
+
+        if (
+          !isValid &&
+          hasNameService(blockchainService) &&
+          blockchainService.validateNameServiceDomainFormat(recipientAddress)
+        ) {
+          const nnsAddress = await blockchainService.resolveNameServiceDomain(recipientAddress)
+
+          if (nnsAddress) {
+            isValid = true
+            setNsAddress(nnsAddress)
+            setIsAddressValid(true)
+          } else {
+            setIsAddressValid(false)
+          }
+        } else {
+          setIsAddressValid(isValid)
+        }
+      } catch {
+        // empty block
+      } finally {
+        setValidating(false)
+      }
+    }, 1000),
+    [bsAggregator]
+  )
 
   const getSendService = useCallback(async (): Promise<TSendServiceResult | null> => {
     if (!selectedAccount || !selectedToken || !selectedAmount || !selectedRecipient || !selectedAccount.encryptedKey) {
@@ -96,6 +144,8 @@ export const SendPage = () => {
   }, [bsAggregator, encryptedPasswordRef, selectedAccount, selectedAmount, selectedRecipient, selectedToken, t])
 
   const populateTotalFee = useCallback(async () => {
+    if (validating || !isAddressValid) return
+
     const sendService = await getSendService()
     if (!sendService) {
       return
@@ -106,14 +156,14 @@ export const SendPage = () => {
     const fee = await sendService.service.calculateTransferFee({
       senderAccount: sendService.serviceAccount,
       intent: {
-        receiverAddress: selectedRecipient,
+        receiverAddress: nsAddress || selectedRecipient,
         tokenHash: sendService.token.token.hash,
         amount: selectedAmount.toString(),
         tokenDecimals: sendService.token.token.decimals,
       },
     })
     setTotalFee(fee)
-  }, [getSendService, selectedAmount, selectedRecipient])
+  }, [getSendService, selectedAmount, selectedRecipient, nsAddress, validating, isAddressValid])
 
   const showTransactionStatus = (hash: string) => {
     window.open(DoraHelper.buildTransactionUrl(hash, networkType), '_blank')
@@ -131,7 +181,7 @@ export const SendPage = () => {
       const transactionHash = await sendService.service.transfer({
         senderAccount: sendService.serviceAccount,
         intent: {
-          receiverAddress: selectedRecipient,
+          receiverAddress: nsAddress || selectedRecipient,
           tokenHash: sendService.token.token.hash,
           amount: selectedAmount.toString(),
           tokenDecimals: sendService.token.token.decimals,
@@ -226,6 +276,9 @@ export const SendPage = () => {
               selectedAddress={selectedRecipient}
               active={currentStep === SendPageStep.SelectContact || currentStep === SendPageStep.Send}
               onSelectRecipient={handleSelectRecipientAddress}
+              validating={validating}
+              nsAddress={nsAddress}
+              isAddressValid={isAddressValid}
             />
             <div
               className="
@@ -243,7 +296,7 @@ export const SendPage = () => {
             onClick={handleSendToken}
             label={t('sendNow')}
             leftIcon={<TbStepOut />}
-            disabled={currentStep === SendPageStep.Send ? false : true}
+            disabled={currentStep === SendPageStep.Send && isAddressValid && !validating ? false : true}
           />
         </section>
       </section>
