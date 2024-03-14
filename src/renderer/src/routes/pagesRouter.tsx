@@ -18,6 +18,7 @@ import { SettingsReleaseNotesPage } from './pages/Settings/SettingsReleaseNotes'
 import { WalletsPage } from './pages/Wallets'
 import { AccountNftList } from './pages/Wallets/AccountNftList'
 import { AccountOverview } from './pages/Wallets/AccountOverview'
+import { AccountTokensList } from './pages/Wallets/AccountTokensList'
 import { WelcomePage } from './pages/Welcome'
 import { WelcomeImportWalletPage } from './pages/WelcomeImportWallet'
 import { WelcomeImportWalletStep1Page } from './pages/WelcomeImportWallet/Step1'
@@ -78,7 +79,7 @@ export const pagesRouter = routeHandler([
           },
           {
             path: 'tokens',
-            element: <Fragment />,
+            element: <AccountTokensList />,
           },
           {
             path: 'nfts',
