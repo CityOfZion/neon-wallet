@@ -527,6 +527,7 @@ interface Resources {
       addressInputHint: 'Enter recipient address...'
       totalFee: 'Total fee'
       sendNow: 'Send Now'
+      invalidAddress: 'Invalid address'
       selectAccountModal: {
         title: 'Select a source account'
         selectSourceAccount: 'Select source account'

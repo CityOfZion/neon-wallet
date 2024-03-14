@@ -1,6 +1,7 @@
 import { MdDeleteForever } from 'react-icons/md'
 import { PiWarningLight } from 'react-icons/pi'
 import { Button } from '@renderer/components/Button'
+import { StringHelper } from '@renderer/helpers/StringHelper'
 import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
 import { EndModalLayout } from '@renderer/layouts/EndModal'
 
@@ -12,16 +13,33 @@ type TLocationState = {
   secondName?: string
   onButtonClick: () => void
   buttonLabel: string
+  truncateFirstName?: boolean
 }
 
 export const DeleteModal = () => {
-  const { modalTitle, warningText, warningDescription, buttonLabel, firstName, secondName, onButtonClick } =
-    useModalState<TLocationState>()
+  const {
+    modalTitle,
+    warningText,
+    warningDescription,
+    buttonLabel,
+    firstName,
+    secondName,
+    onButtonClick,
+    truncateFirstName = false,
+  } = useModalState<TLocationState>()
   const { modalNavigate } = useModalNavigate()
 
   const handleButtonClick = () => {
     onButtonClick()
     modalNavigate(-1)
+  }
+
+  const formatFirstName = (text: string) => {
+    const minTextLength = 35
+
+    if (!truncateFirstName) return text
+
+    return text.length > minTextLength ? StringHelper.truncateStringMiddle(text, minTextLength) : text
   }
 
   return (
@@ -33,7 +51,7 @@ export const DeleteModal = () => {
           </div>
           <p>{warningText}</p>
 
-          <p className="text-gray-100 text-sm">{firstName}</p>
+          <p className="text-gray-100 text-sm">{formatFirstName(firstName)}</p>
 
           {warningDescription && <p className="text-sm text-gray-300">{warningDescription}</p>}
 
