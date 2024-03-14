@@ -2,8 +2,6 @@ import { useTranslation } from 'react-i18next'
 import { MdAdd } from 'react-icons/md'
 import { TbFileExport, TbFileImport } from 'react-icons/tb'
 import { Outlet } from 'react-router-dom'
-import { EStatus } from '@cityofzion/wallet-connect-sdk-wallet-core'
-import { useWalletConnectWallet } from '@cityofzion/wallet-connect-sdk-wallet-react'
 import { IconButton } from '@renderer/components/IconButton'
 import { Separator } from '@renderer/components/Separator'
 import { SidebarMenuButton } from '@renderer/components/SidebarMenuButton'
@@ -13,7 +11,6 @@ import { MainLayout } from '@renderer/layouts/Main'
 export const PortfolioPage = () => {
   const { t } = useTranslation('pages', { keyPrefix: 'portfolio' })
   const { modalNavigateWrapper } = useModalNavigate()
-  const { status } = useWalletConnectWallet()
 
   return (
     <MainLayout
@@ -40,12 +37,7 @@ export const PortfolioPage = () => {
         <ul className="max-w-full w-full">
           <SidebarMenuButton title={t('overview')} to="/portfolio/overview" />
           <SidebarMenuButton title={t('allActivity')} to="/portfolio/activity" />
-          <SidebarMenuButton
-            title={t('allConnections')}
-            type="button"
-            disabled={status !== EStatus.STARTED}
-            onClick={modalNavigateWrapper('dapp-connection-list')}
-          />
+          <SidebarMenuButton title={t('allConnections')} to="/portfolio/connections" />
         </ul>
       </section>
       <Outlet />

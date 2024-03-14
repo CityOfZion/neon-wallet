@@ -44,7 +44,7 @@ export const ModalLayout = ({
 
   return (
     <div
-      className={StyleHelper.mergeStyles('fixed left-0 top-0 w-screen h-screen', className)}
+      className={StyleHelper.mergeStyles('fixed left-0 top-0 w-screen h-screen z-[1000]', className)}
       onClick={handleModalClick}
       onKeyDown={handleModalKeyDown}
       ref={containerRef}

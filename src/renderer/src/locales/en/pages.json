@@ -211,5 +211,13 @@
     "overview": "Overview",
     "walletsAndAccounts": "{{wallets}} Wallets / {{accounts}} Accounts",
     "balance": "Balance"
+  },
+  "connections": {
+    "allConnections":"All connections",
+    "connections": "Connections",
+    "walletsAndAccounts": "{{wallets}} Wallets / {{accounts}} Accounts",
+    "newConnection": "New connection",
+    "disconnectAll": "Disconnect all",
+    "totalConnections": "{{connections}} Connections"
   }
 }
