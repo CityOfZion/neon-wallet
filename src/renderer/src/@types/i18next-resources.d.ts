@@ -8,6 +8,8 @@ interface Resources {
       cancel: 'Cancel'
       reset: 'Reset'
       successfullyCopied: 'Successfully copied to clipboard'
+      receive: 'Receive'
+      send: 'Send'
     }
     walletConnect: {
       name: 'Neon Wallet'
