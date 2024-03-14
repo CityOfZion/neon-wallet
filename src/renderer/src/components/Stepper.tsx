@@ -19,7 +19,8 @@ export const Stepper = ({ steps, currentStep = 1, className, ...props }: TProps)
                 className={StyleHelper.mergeStyles(
                   'w-6 h-6  rounded-full flex items-center justify-center text-sm font-bold transition-colors',
                   {
-                    'bg-blue text-asphalt': fixedIndex <= currentStep,
+                    'bg-blue text-asphalt': fixedIndex < currentStep,
+                    'bg-white text-asphalt': fixedIndex === currentStep,
                     'bg-gray-900 text-gray-300': fixedIndex > currentStep,
                   }
                 )}
@@ -31,7 +32,8 @@ export const Stepper = ({ steps, currentStep = 1, className, ...props }: TProps)
                 className={StyleHelper.mergeStyles(
                   'text-center w-20 top-8 left-1/2 -translate-x-1/2 text-xs transition-colors absolute',
                   {
-                    'text-blue': fixedIndex <= currentStep,
+                    'text-blue': fixedIndex < currentStep,
+                    'text-white': fixedIndex === currentStep,
                     'text-gray-300': fixedIndex > currentStep,
                   }
                 )}

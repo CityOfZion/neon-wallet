@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { TransactionsTable } from '@renderer/components/BlockchainDataPanel/TransactionsTable'
 import { Separator } from '@renderer/components/Separator'
+import { TransactionsTable } from '@renderer/components/TransactionsTable'
 import { BalanceHelper } from '@renderer/helpers/BalanceHelper'
 import { FilterHelper } from '@renderer/helpers/FilterHelper'
 import { useAccountsSelector } from '@renderer/hooks/useAccountSelector'

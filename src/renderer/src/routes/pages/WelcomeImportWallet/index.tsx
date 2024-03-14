@@ -10,10 +10,12 @@ export const WelcomeImportWalletPage = () => {
   const currentStep = match ? Number(match.params.currentStep) : 1
 
   return (
-    <WelcomeLayout heading={t('title')} withBackButton={currentStep === 1} className="overflow-hidden">
+    <WelcomeLayout heading={t('title')} withBackButton={currentStep <= 3} className="overflow-hidden px-8">
       <Stepper steps={t('steps', { returnObjects: true })} className="my-14" currentStep={currentStep} />
 
-      <Outlet />
+      <div className="px-8 flex flex-col flex-grow min-h-0 w-full items-center">
+        <Outlet />
+      </div>
     </WelcomeLayout>
   )
 }

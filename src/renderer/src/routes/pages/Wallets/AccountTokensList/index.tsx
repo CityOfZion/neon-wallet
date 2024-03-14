@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
-import { TokensTable } from '@renderer/components/BlockchainDataPanel/TokensTable'
+import { TokensTable } from '@renderer/components/TokensTable'
 import { BalanceHelper } from '@renderer/helpers/BalanceHelper'
 import { FilterHelper } from '@renderer/helpers/FilterHelper'
 import { useAccountsSelector } from '@renderer/hooks/useAccountSelector'

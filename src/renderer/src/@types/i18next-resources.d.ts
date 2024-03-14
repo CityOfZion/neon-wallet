@@ -167,6 +167,8 @@ interface Resources {
         address: 'Address complete!'
       }
       importEncryptedDescription: 'Select the desired blockchain for your new account'
+      addressAlreadyExist: 'Address already exists'
+      successEncryptKey: 'Encrypted key successfully imported!'
     }
     addWatch: {
       title: 'Add a watch account'
@@ -299,13 +301,11 @@ interface Resources {
     blockchaiinSelectionModal: {
       buttonContinueLabel: 'Next'
     }
-    importEncryptedPasswordModal: {
+    decryptKeyModal: {
       title: 'Import'
       description: 'Enter a pass phrase for your encrypted key:'
       inputPlaceholder: 'Enter your pass phrase...'
       buttonContinueLabel: 'Import'
-      addressAlreadyExist: 'Address already exists'
-      success: 'Encrypted key successfully imported!'
     }
     selectAccount: {
       yourAccounts: 'Your accounts:'
@@ -488,31 +488,28 @@ interface Resources {
         confirmPasswordError: 'Passwords do not match'
       }
       step3: {
-        description: 'Your security setup is now complete, please back up your password below. Failure to backup may result in loss of access to your wallet'
-        buttonDownloadLabel: 'Download backup'
-        buttonPrintLabel: 'Print backup'
-        buttonContinueLabel: 'Open your new wallet'
-        firstWalletName: 'My First Wallet'
-        backupFileName: 'Neon Password Backup'
-        backupFileTitle: 'YOUR PASSWORD:'
+        title: 'Password created successfully!'
+        buttonContinueLabel: 'Open your wallet'
       }
     }
     welcomeImportWallet: {
       title: 'Import a wallet'
-      steps: ['Enter address or key', 'Import', 'Complete']
-      step1: {
+      steps: ['Create Password', 'Confirm Password', 'Enter address or key', 'Import', 'Complete']
+      step3: {
         formTitle: 'Enter an address, encrypted key, private key or mnemonic'
         inputPlaceholder: 'Enter an address, key or mnemonic...'
-        encryptedKeyIsNotSupported: 'Encrypted is not support on welcome flow'
+        encryptedKeyMessage: 'Encrypted key identified - Password required'
+        importEncryptedDescription: 'Select the desired blockchain for your new account'
+        importEncryptedTitle: 'Import a wallet'
+        importEncryptedSubtitle: 'Your encrypted key has been recognised, please complete the below fields to continue.'
       }
-      step2: {
+      step4: {
         title: 'Please be patient, we are now setting up your wallet'
         canNotFindBlockchainError: "We can't find the blockchain for this address"
-        encryptedKeyIsNotSupported: 'Encrypted is not support on welcome flow'
       }
-      step3: {
+      step5: {
         title: 'Wallet imported successfully!'
-        setupSecurityButtonLabel: 'Password Protect Neon Wallet'
+        openWalletButtonLabel: 'Open your wallet'
       }
     }
     portfolio: {

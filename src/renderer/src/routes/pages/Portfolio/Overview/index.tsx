@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { BalanceChart } from '@renderer/components/BalanceChartPanel/BalanceChart'
+import { BalanceChart } from '@renderer/components/BalanceChart'
 import { Separator } from '@renderer/components/Separator'
 import { BalanceHelper } from '@renderer/helpers/BalanceHelper'
 import { FilterHelper } from '@renderer/helpers/FilterHelper'

@@ -123,7 +123,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TProps>(
             />
           )}
 
-          {clearable && <IconButton icon={<MdCancel />} type="button" onClick={clear} />}
+          {clearable && <IconButton icon={<MdCancel />} type="button" onClick={clear} compacted />}
         </div>
 
         {errorMessage && <span className="block mt-1 text-xs text-pink">{errorMessage}</span>}

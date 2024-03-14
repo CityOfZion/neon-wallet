@@ -14,7 +14,9 @@
       "encrypted": "Encrypted key complete!",
       "address": "Address complete!"
     },
-    "importEncryptedDescription": "Select the desired blockchain for your new account"
+    "importEncryptedDescription": "Select the desired blockchain for your new account",
+    "addressAlreadyExist": "Address already exists",
+    "successEncryptKey": "Encrypted key successfully imported!"
   },
   "addWatch": {
     "title": "Add a watch account",
@@ -147,13 +149,11 @@
   "blockchaiinSelectionModal": {
     "buttonContinueLabel": "Next"
   },
-  "importEncryptedPasswordModal": {
+  "decryptKeyModal": {
     "title": "Import",
     "description": "Enter a pass phrase for your encrypted key:",
     "inputPlaceholder": "Enter your pass phrase...",
-    "buttonContinueLabel": "Import",
-    "addressAlreadyExist": "Address already exists",
-    "success": "Encrypted key successfully imported!"
+    "buttonContinueLabel": "Import"
   },
   "selectAccount": {
     "yourAccounts": "Your accounts:"

@@ -10,11 +10,14 @@ type TProps = {
 }
 
 const buildClassName = (isActive: boolean, match?: boolean) => {
-  return StyleHelper.mergeStyles('px-4 w-full flex border-l-[0.1875rem] justify-between py-3.5 items-center', {
-    'border-l-neon bg-asphalt stroke-neon': isActive || match,
-    'border-l-transparent cursor-pointer opacity-60 hover:border-l-neon hover:bg-asphalt hover:opacity-100 hover:stroke-neon hover:text-neon':
-      !isActive && !match,
-  })
+  return StyleHelper.mergeStyles(
+    'px-4 w-full flex border-l-[0.1875rem] justify-between py-3.5 items-center transition-colors',
+    {
+      'border-l-neon bg-asphalt stroke-neon': isActive || match,
+      'border-l-transparent cursor-pointer opacity-60 hover:border-l-neon hover:bg-asphalt hover:opacity-100 hover:stroke-neon hover:text-neon':
+        !isActive && !match,
+    }
+  )
 }
 
 export const SidebarMenuButton = ({ title, to, match }: TProps): JSX.Element => {

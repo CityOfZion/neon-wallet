@@ -1,9 +1,11 @@
 import { ChangeEvent, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Location, useLocation, useNavigate } from 'react-router-dom'
+import { generateMnemonic } from '@cityofzion/bs-asteroid-sdk'
 import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
 import { useActions } from '@renderer/hooks/useActions'
+import { useBlockchainActions } from '@renderer/hooks/useBlockchainActions'
 import { useAppDispatch } from '@renderer/hooks/useRedux'
 import { settingsReducerActions } from '@renderer/store/reducers/SettingsReducer'
 
@@ -11,12 +13,21 @@ type TFormData = {
   confirmPassword: string
 }
 
-export const WelcomeSecuritySetupStep2Page = () => {
-  const { state } = useLocation()
+type TLocationState = {
+  password: string
+}
+
+type TProps = {
+  onSubmit?: (password: string) => void
+}
+
+export const WelcomeSecuritySetupStep2Page = ({ onSubmit }: TProps) => {
+  const { state } = useLocation() as Location<TLocationState>
   const { t } = useTranslation('pages', { keyPrefix: 'welcomeSecuritySetup.step2' })
   const { t: commonT } = useTranslation('common')
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
+  const { createWallet, createAccount } = useBlockchainActions()
 
   const { actionData, actionState, handleAct, setData, setError } = useActions<TFormData>({
     confirmPassword: '',
@@ -32,11 +43,31 @@ export const WelcomeSecuritySetupStep2Page = () => {
   }
 
   const handleSubmit = async (data: TFormData) => {
+    if (onSubmit) {
+      onSubmit(state.password)
+      return
+    }
+
     const encryptedPassword = await window.api.encryptBasedOS(data.confirmPassword)
     dispatch(settingsReducerActions.setEncryptedPassword(encryptedPassword))
     dispatch(settingsReducerActions.setSecurityType('password'))
 
-    navigate('/welcome-security-setup/3', { state })
+    const words = generateMnemonic()
+
+    const wallet = await createWallet({
+      name: commonT('wallet.firstWalletName'),
+      walletType: 'standard',
+      mnemonic: words.join(' '),
+    })
+
+    await createAccount({
+      wallet,
+      blockchain: 'neo3',
+      name: commonT('account.defaultName', { accountNumber: 1 }),
+    })
+
+    dispatch(settingsReducerActions.setIsFirstTime(false))
+    navigate('/welcome-security-setup/3')
   }
 
   return (

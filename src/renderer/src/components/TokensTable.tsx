@@ -13,10 +13,8 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 
-import { Loader } from '../Loader'
-import { Table } from '../Table'
-
-import { TokensTableEmpty } from './TokensTableEmpty'
+import { Loader } from './Loader'
+import { Table } from './Table'
 
 type TProps = {
   balanceExchange: UseMultipleBalanceAndExchangeResult
@@ -121,7 +119,9 @@ export const TokensTable = forwardRef<HTMLDivElement, TProps>(({ balanceExchange
       {balanceExchange.isLoading ? (
         <Loader containerClassName="mt-4 flex-grow items-center" />
       ) : filteredTokenBalance.length <= 0 ? (
-        <TokensTableEmpty />
+        <div className="flex justify-center mt-4">
+          <p className="text-gray-300">{t('components:tokensTable.empty')}</p>
+        </div>
       ) : (
         <Table.Root className="table-fixed">
           <Table.Header className="sticky top-0 bg-gray-800">

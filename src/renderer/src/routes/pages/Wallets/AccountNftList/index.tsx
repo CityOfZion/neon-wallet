@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
-import { NftViewer } from '@renderer/components/BlockchainDataPanel/NftViewer'
+import { NftViewer } from '@renderer/components/NftViewer'
 import { useAccountsSelector } from '@renderer/hooks/useAccountSelector'
 import { AccountDetailsLayout } from '@renderer/layouts/AccountDetailsLayout'
 

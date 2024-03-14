@@ -1,26 +1,28 @@
+import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MdOutlineAutoAwesome } from 'react-icons/md'
 import { TbDiscountCheck } from 'react-icons/tb'
 import { Link } from '@renderer/components/Link'
 
-export const WelcomeSecuritySetupStep3Page = () => {
-  const { t } = useTranslation('pages', { keyPrefix: 'welcomeSecuritySetup.step3' })
+export const WelcomeImportWalletStep5Page = () => {
+  const { t } = useTranslation('pages', { keyPrefix: 'welcomeImportWallet.step5' })
 
   return (
-    <div className="flex-grow w-full flex flex-col justify-between items-center">
-      <div className="flex flex-col items-center mt-15">
-        <h3 className="text-sm text-white text-center">{t('title')}</h3>
+    <Fragment>
+      <div className="flex flex-col items-center flex-grow">
+        <p className="text-sm text-white mt-15">{t('title')}</p>
 
         <TbDiscountCheck className="w-[6.25rem] h-[6.25rem] text-blue stroke-1 mt-3" />
       </div>
 
       <Link
-        label={t('buttonContinueLabel')}
         to="/"
-        className="w-64"
+        label={t('openWalletButtonLabel')}
         rightIcon={<MdOutlineAutoAwesome />}
+        variant="contained"
+        className="w-64"
         iconsOnEdge={false}
       />
-    </div>
+    </Fragment>
   )
 }
