@@ -1,4 +1,4 @@
-import { ComponentProps, ReactNode, useMemo } from 'react'
+import { ComponentProps, useMemo } from 'react'
 import { UseMultipleBalanceAndExchangeResult } from '@renderer/@types/query'
 import { IWalletState } from '@renderer/@types/store'
 import { BalanceHelper } from '@renderer/helpers/BalanceHelper'
@@ -13,7 +13,6 @@ type TProps = {
   balanceExchange: UseMultipleBalanceAndExchangeResult
   wallet: IWalletState
   iconWithAccounts?: boolean
-  rightComponent?: ReactNode
   noHover?: boolean
   active?: boolean
 } & ComponentProps<'div'>
@@ -22,7 +21,6 @@ export const WalletCard = ({
   balanceExchange,
   wallet,
   iconWithAccounts,
-  rightComponent,
   noHover = false,
   active = false,
   className,
@@ -63,14 +61,6 @@ export const WalletCard = ({
             <span className="block w-fit max-w-full text-sm text-white truncate">{formattedTotalTokensBalances}</span>
           </Tooltip>
         </div>
-
-        {rightComponent ?? (
-          <div className="flex flex-col justify-between">
-            {/* TODO: REPLACE THE MOCKED DATA WHEN THERE IS A SOLUTION FOR BALANCE VARIATION. Task link: https://app.clickup.com/t/86a197p77 */}
-            <p className="text-xs text-gray-100">24h</p>
-            <span className="text-sm text-neon">+5%</span>
-          </div>
-        )}
       </div>
     </div>
   )
