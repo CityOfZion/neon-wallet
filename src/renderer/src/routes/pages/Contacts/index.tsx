@@ -59,7 +59,7 @@ export const ContactsPage = () => {
 
         {selectedContact && (
           <div className="w-full px-2">
-            <div className="flex flex-col gap-y-1 mt-2 mb-5">
+            <div className="flex flex-col gap-y-1 mt-2 mb-5 h-[3.25rem]">
               <div className="w-full h-10 flex items-center justify-between px-2">
                 {selectedContact.name}
                 <Button

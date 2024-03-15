@@ -27,45 +27,42 @@ export const SettingsNetwork = () => {
 
   return (
     <div className=" flex flex-col px-5 w-full">
-      <header className="w-full  h-14 border-b border-gray-300/30 items-center flex justify-between">
+      <header className="w-full h-[3.25rem] border-b border-gray-300/30 items-center flex justify-between">
         <h1 className="text-white text-sm">{t('title')}</h1>
 
         <Button
-          leftIcon={<MdRestartAlt className="text-neon" />}
+          leftIcon={<MdRestartAlt className="text-neon w-6 h-6" />}
           label={commonGeneral('reset')}
-          className="w-fit"
+          clickableProps={{ className: 'w-fit' }}
           variant="text"
           colorSchema="gray"
           onClick={handleChangeNetwork.bind(null, 'mainnet')}
         />
       </header>
 
-      <div className="mt-8 mb-5 text-sm">{t('youAreConnectedNeoAndEth')}</div>
+      <div className="my-7 text-xs">{t('youAreConnectedNeoAndEth')}</div>
 
       <div className="flex flex-col gap-y-0.5">
-        <div className="pb-2 text-neon flex gap-x-2 items-center">
-          <MdOutlineLanguage className="w-4 h-4" />
+        <div className="pb-2.5 text-neon flex gap-x-2 items-center">
+          <MdOutlineLanguage className="w-6 h-6" />
           <p className="text-white text-sm">{t('globalConfiguration')}</p>
         </div>
-        <Separator className="mb-2" />
+        <Separator className="mb-2.5" />
 
-        <div className="text-xs flex items-center justify-between px-1">
+        <button
+          className="text-xs flex items-center justify-between px-1 aria-[disabled=false]:text-gray-300 h-fit hover:opacity-75 rounded"
+          onClick={modalNavigateWrapper('network-selection', {
+            state: { networkType, onNetworkChange: handleChangeNetwork },
+          })}
+        >
           <ul className="list-disc list-inside">
             <li className="text-gray-100">{t('currentNetwork')}</li>
           </ul>
-
-          <Button
-            rightIcon={<TbChevronRight />}
-            label={commonT(networkType)}
-            className="w-40"
-            clickableProps={{ className: 'aria-[disabled=false]:text-gray-300 h-fit text-xs' }}
-            variant="text"
-            colorSchema="neon"
-            onClick={modalNavigateWrapper('network-selection', {
-              state: { networkType, onNetworkChange: handleChangeNetwork },
-            })}
-          />
-        </div>
+          <div className="flex items-center">
+            <span className="text-xs text-gray-300 mr-[1.94rem]">{commonT(networkType)}</span>
+            <TbChevronRight className="h-6 w-6 text-neon" />
+          </div>
+        </button>
       </div>
     </div>
   )

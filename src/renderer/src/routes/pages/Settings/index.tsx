@@ -26,17 +26,17 @@ export const SettingsPage = () => {
   return (
     <MainLayout heading={t('title')}>
       <section className="bg-gray-800 w-full h-full flex rounded">
-        <div className="min-w-[17.5rem] max-w-[17.5rem] px-5 border-r flex flex-col items-center">
+        <div className="min-w-[17.5rem] max-w-[17.5rem] px-5 border-r border-gray-300/15 flex flex-col items-center">
           <Tabs.Root defaultValue={ESettingsOptions.PERSONALISATION} className="w-full">
             <Tabs.List className="w-full mt-2.5 mb-7">
               <Tabs.Trigger
                 value={ESettingsOptions.PERSONALISATION}
-                className="px-8"
+                className="px-6"
                 onClick={handlePersonalisationClick}
               >
                 {t('sidebarOption.personalisation')}
               </Tabs.Trigger>
-              <Tabs.Trigger value={ESettingsOptions.SECURITY} className="px-8" onClick={handleSecurityClick}>
+              <Tabs.Trigger value={ESettingsOptions.SECURITY} className="px-6" onClick={handleSecurityClick}>
                 {t('sidebarOption.security')}
               </Tabs.Trigger>
             </Tabs.List>
