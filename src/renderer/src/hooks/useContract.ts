@@ -20,6 +20,8 @@ export const useContract = ({ blockchain, hash }: TProps) => {
       const service = bsAggregator.blockchainServicesByName[blockchain]
       return service.blockchainDataService.getContract(hash)
     },
+    gcTime: Infinity,
+    staleTime: Infinity,
   })
 
   return query

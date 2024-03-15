@@ -71,6 +71,8 @@ export const useTransactions = ({ accounts }: TProps) => {
           }
         }
       },
+      gcTime: 1 * 60 * 1000, // 1 minute
+      staleTime: 1 * 60 * 1000, // 1 minute
     })),
     combine: results => {
       return {

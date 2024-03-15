@@ -8,7 +8,15 @@ import { walletConnectOptions } from './libs/walletConnectSDK'
 import { RootStore } from './store/RootStore'
 import { Router } from './routes'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      gcTime: 1000 * 60 * 5, // 5 minutes
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      retry: 2,
+    },
+  },
+})
 
 const AppReact = (): JSX.Element => {
   return (
