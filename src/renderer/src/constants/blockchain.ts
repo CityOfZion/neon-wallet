@@ -1,28 +1,32 @@
 import { TAccountColorKey, TBlockchainImageColor, TBlockchainServiceKey } from '@renderer/@types/blockchain'
-import ethereumBlue from '@renderer/assets/blockchain/images/ethereum_blue.png'
-import ethereumDefault from '@renderer/assets/blockchain/images/ethereum_default.png'
-import ethereumWhite from '@renderer/assets/blockchain/images/ethereum_white.png'
-import neoLegacyBlue from '@renderer/assets/blockchain/images/neo_legacy_blue.png'
-import neoLegacyDefault from '@renderer/assets/blockchain/images/neo_legacy_default.png'
-import neoLegacyWhite from '@renderer/assets/blockchain/images/neo_legacy_white.png'
-import neo3Default from '@renderer/assets/blockchain/images/neo3_default.png'
-import neo3White from '@renderer/assets/blockchain/images/neo3_white.png'
+import { ReactComponent as EthereumBlue } from '@renderer/assets/blockchain/images/ethereum_blue.svg'
+import { ReactComponent as EthereumGray } from '@renderer/assets/blockchain/images/ethereum_gray.svg'
+import { ReactComponent as EthereumWhite } from '@renderer/assets/blockchain/images/ethereum_white.svg'
+import { ReactComponent as NeoLegacyBlue } from '@renderer/assets/blockchain/images/neo_legacy_blue.svg'
+import { ReactComponent as NeoLegacyGray } from '@renderer/assets/blockchain/images/neo_legacy_gray.svg'
+import { ReactComponent as NeoLegacyWhite } from '@renderer/assets/blockchain/images/neo_legacy_white.svg'
+import { ReactComponent as Neo3Blue } from '@renderer/assets/blockchain/images/neo3_blue.svg'
+import { ReactComponent as Neo3Gray } from '@renderer/assets/blockchain/images/neo3_gray.svg'
+import { ReactComponent as Neo3White } from '@renderer/assets/blockchain/images/neo3_white.svg'
 
-export const blockchainIconsByBlockchain: Record<TBlockchainServiceKey, Record<TBlockchainImageColor, string>> = {
+export const blockchainIconsByBlockchain: Record<
+  TBlockchainServiceKey,
+  Record<TBlockchainImageColor, React.FC<React.SVGProps<SVGSVGElement>>>
+> = {
   neo3: {
-    default: neo3Default,
-    white: neo3White,
-    blue: '',
+    gray: Neo3Gray,
+    white: Neo3White,
+    blue: Neo3Blue,
   },
   neoLegacy: {
-    default: neoLegacyDefault,
-    white: neoLegacyWhite,
-    blue: neoLegacyBlue,
+    gray: NeoLegacyGray,
+    white: NeoLegacyWhite,
+    blue: NeoLegacyBlue,
   },
   ethereum: {
-    default: ethereumDefault,
-    white: ethereumWhite,
-    blue: ethereumBlue,
+    gray: EthereumGray,
+    white: EthereumWhite,
+    blue: EthereumBlue,
   },
 }
 
