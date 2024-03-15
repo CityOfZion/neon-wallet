@@ -55,8 +55,10 @@ export const WalletsPage = () => {
   }, [wallets])
 
   useEffect(() => {
-    setSelectedAccount(accounts.find(account => account.idWallet === selectedWallet?.id))
-  }, [selectedWallet, accounts])
+    const firstAccount = accounts.find(account => account.idWallet === selectedWallet?.id)
+    setSelectedAccount(firstAccount)
+    if (firstAccount) navigate(`/wallets/${firstAccount.address}/overview`)
+  }, [selectedWallet, accounts, navigate])
 
   return (
     <MainLayout
@@ -158,7 +160,9 @@ export const WalletsPage = () => {
               <SidebarMenuButton title={t('tokens')} to={`/wallets/${selectedAccount?.address}/tokens`} />
               <SidebarMenuButton title={t('nfts')} to={`/wallets/${selectedAccount?.address}/nfts`} />
               <SidebarMenuButton title={t('transactions')} to={`/wallets/${selectedAccount?.address}/transactions`} />
-              <SidebarMenuButton title={t('connections')} to={`/wallets/${selectedAccount?.address}/connections`} />
+              {selectedAccount?.accountType !== 'watch' && (
+                <SidebarMenuButton title={t('connections')} to={`/wallets/${selectedAccount?.address}/connections`} />
+              )}
             </ul>
           </section>
           <Outlet />
