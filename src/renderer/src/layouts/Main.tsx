@@ -26,10 +26,10 @@ export const MainLayout = ({
       <div className={StyleHelper.mergeStyles('flex h-screen w-screen', className)} {...props}>
         <Sidebar />
 
-        <div className="h-full w-full flex flex-col bg-asphalt text-white px-7 py-4 min-w-0 min-h-0">
+        <div className="h-full w-full flex flex-col bg-asphalt text-white px-7 pb-4 min-w-0 min-h-0">
           <header
             className={StyleHelper.mergeStyles(
-              'border-b border-b-gray-300/30 min-h-12  flex justify-between items-center pb-4',
+              'border-b border-b-gray-300/30 h-[4.0625rem] flex justify-between items-center py-5',
               headerClassName
             )}
           >
