@@ -52,7 +52,7 @@ export const ConnectionsTable = forwardRef<HTMLDivElement, TConnectionsTableProp
           header: t('chain'),
           cell: info => (
             <div className="flex">
-              <BlockchainIcon blockchain={info.getValue()} type="white" className="opacity-70" />
+              <BlockchainIcon blockchain={info.getValue()} />
               <span className="ml-2">{info.getValue()}</span>
             </div>
           ),
@@ -98,7 +98,7 @@ export const ConnectionsTable = forwardRef<HTMLDivElement, TConnectionsTableProp
           </div>
         ) : (
           <Table.Root className="table-fixed">
-            <Table.Header className={StyleHelper.mergeStyles('sticky top-0 uppercase z-10', tableHeaderClassName)}>
+            <Table.Header className={StyleHelper.mergeStyles('sticky top-0 uppercase', tableHeaderClassName)}>
               {table.getHeaderGroups().map(headerGroup => (
                 <Table.HeaderRow key={headerGroup.id}>
                   {headerGroup.headers.map(header => (
