@@ -24,6 +24,8 @@ import { WelcomeImportWalletPage } from './pages/WelcomeImportWallet'
 import { WelcomeImportWalletStep1Page } from './pages/WelcomeImportWallet/Step1'
 import { WelcomeImportWalletStep2Page } from './pages/WelcomeImportWallet/Step2'
 import { WelcomeImportWalletStep3Page } from './pages/WelcomeImportWallet/Step3'
+import { WelcomeImportWalletStep4Page } from './pages/WelcomeImportWallet/Step4'
+import { WelcomeImportWalletStep5Page } from './pages/WelcomeImportWallet/Step5'
 import { WelcomeSecuritySetupPage } from './pages/WelcomeSecuritySetup'
 import { WelcomeSecuritySetupStep1Page } from './pages/WelcomeSecuritySetup/Step1'
 import { WelcomeSecuritySetupStep2Page } from './pages/WelcomeSecuritySetup/Step2'
@@ -207,6 +209,14 @@ export const pagesRouter = routeHandler([
       {
         path: '3',
         element: <WelcomeImportWalletStep3Page />,
+      },
+      {
+        path: '4',
+        element: <WelcomeImportWalletStep4Page />,
+      },
+      {
+        path: '5',
+        element: <WelcomeImportWalletStep5Page />,
       },
     ],
   },

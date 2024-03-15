@@ -1,10 +1,14 @@
 import { useTranslation } from 'react-i18next'
 import { MdChevronRight } from 'react-icons/md'
 import { TbFileImport } from 'react-icons/tb'
+import { TBlockchainServiceKey } from '@renderer/@types/blockchain'
 import { IWalletState } from '@renderer/@types/store'
 import { Banner } from '@renderer/components/Banner'
 import { Button } from '@renderer/components/Button'
 import { Textarea } from '@renderer/components/Textarea'
+import { ToastHelper } from '@renderer/helpers/ToastHelper'
+import { useAccountsSelector } from '@renderer/hooks/useAccountSelector'
+import { useBlockchainActions } from '@renderer/hooks/useBlockchainActions'
 import { useImportAction } from '@renderer/hooks/useImportAction'
 import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
 import { EndModalLayout } from '@renderer/layouts/EndModal'
@@ -16,7 +20,10 @@ type TImportState = {
 export const ImportModal = () => {
   const { modalNavigate } = useModalNavigate()
   const { t } = useTranslation('modals', { keyPrefix: 'import' })
+  const { t: tCommon } = useTranslation('common', { keyPrefix: 'wallet' })
   const { onImportWallet } = useModalState<TImportState>()
+  const { accountsRef } = useAccountsSelector()
+  const { createWallet, importAccount } = useBlockchainActions()
 
   const submitKey = async (key: string) => {
     modalNavigate('import-key-accounts-selection', { state: { key, onImportWallet } })
@@ -32,8 +39,31 @@ export const ImportModal = () => {
         heading: t('title'),
         headingIcon: <TbFileImport />,
         description: t('importEncryptedDescription'),
-        onSelect: (blockchain: string) => {
-          modalNavigate('import-encrypted-password', { state: { encryptedKey, blockchain, onImportWallet } })
+        onSelect: (blockchain: TBlockchainServiceKey) => {
+          modalNavigate('decrypt-key', {
+            state: {
+              encryptedKey,
+              blockchain,
+              onDecrypt: async (key: string, address: string) => {
+                const addressAlreadyExist = accountsRef.current.some(acc => acc.address === address)
+
+                if (addressAlreadyExist) {
+                  throw new Error(t('addressAlreadyExist'))
+                }
+
+                const wallet = await createWallet({
+                  name: tCommon('encryptedName'),
+                  walletType: 'legacy',
+                })
+                await importAccount({ address, blockchain, wallet, key, type: 'legacy' })
+
+                if (onImportWallet) onImportWallet(wallet)
+
+                ToastHelper.success({ message: t('successEncryptKey') })
+                modalNavigate(-3)
+              },
+            },
+          })
         },
       },
     })

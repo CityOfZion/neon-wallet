@@ -2,35 +2,28 @@ import { ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TbFileImport } from 'react-icons/tb'
 import { TBlockchainServiceKey } from '@renderer/@types/blockchain'
-import { IWalletState } from '@renderer/@types/store'
 import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
 import { ToastHelper } from '@renderer/helpers/ToastHelper'
-import { useAccountsSelector } from '@renderer/hooks/useAccountSelector'
 import { useActions } from '@renderer/hooks/useActions'
-import { useBlockchainActions } from '@renderer/hooks/useBlockchainActions'
 import { useBsAggregator } from '@renderer/hooks/useBsAggregator'
-import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
+import { useModalState } from '@renderer/hooks/useModalRouter'
 import { EndModalLayout } from '@renderer/layouts/EndModal'
 
 type TLocation = {
   encryptedKey: string
   blockchain: TBlockchainServiceKey
-  onImportWallet?: (wallet: IWalletState) => void
+  onDecrypt?: (key: string, address: string) => Promise<void> | void
 }
 
 type TFormData = {
   password: string
 }
 
-export const ImportEncryptedPasswordModal = () => {
-  const { t } = useTranslation('modals', { keyPrefix: 'importEncryptedPasswordModal' })
-  const { t: tCommon } = useTranslation('common', { keyPrefix: 'wallet' })
-  const { blockchain, encryptedKey, onImportWallet } = useModalState<TLocation>()
-  const { modalNavigate } = useModalNavigate()
-  const blockchainActions = useBlockchainActions()
+export const DecryptKeyModal = () => {
+  const { t } = useTranslation('modals', { keyPrefix: 'decryptKeyModal' })
+  const { blockchain, encryptedKey, onDecrypt } = useModalState<TLocation>()
   const { bsAggregator } = useBsAggregator()
-  const { accounts } = useAccountsSelector()
 
   const { actionData, setData, actionState, handleAct, reset } = useActions<TFormData>({
     password: '',
@@ -45,23 +38,7 @@ export const ImportEncryptedPasswordModal = () => {
       const service = bsAggregator.getBlockchainByName(blockchain)
       const { address, key } = await service.decrypt(encryptedKey, actionData.password)
 
-      const addressAlreadyExist = accounts.some(acc => acc.address === address)
-
-      if (addressAlreadyExist) {
-        throw new Error(t('addressAlreadyExist'))
-      }
-
-      const wallet = await blockchainActions.createWallet({
-        name: tCommon('encryptedName'),
-        walletType: 'legacy',
-      })
-      await blockchainActions.importAccount({ address, blockchain, wallet, key, type: 'legacy' })
-
-      if (onImportWallet) onImportWallet(wallet)
-
-      ToastHelper.success({ message: t('success') })
-
-      modalNavigate(-3)
+      await onDecrypt?.(key, address)
     } catch (error: any) {
       ToastHelper.error({ message: error.message })
     } finally {

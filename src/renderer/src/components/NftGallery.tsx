@@ -4,8 +4,8 @@ import { NftResponse } from '@cityofzion/blockchain-service'
 import { IAccountState } from '@renderer/@types/store'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
 
-import { TNftResponseWithAccount } from '../BlockchainDataPanel/NftViewer'
-import { BlockchainIcon } from '../BlockchainIcon'
+import { BlockchainIcon } from './BlockchainIcon'
+import { TNftResponseWithAccount } from './NftViewer'
 
 type TNftListProps = {
   onNftSelected: (nft: NftResponse) => void

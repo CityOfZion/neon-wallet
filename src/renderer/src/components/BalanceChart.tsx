@@ -5,7 +5,7 @@ import { BalanceConvertedToExchange, BalanceHelper } from '@renderer/helpers/Bal
 import { FilterHelper } from '@renderer/helpers/FilterHelper'
 import { UtilsHelper } from '@renderer/helpers/UtilsHelper'
 
-import { Loader } from '../Loader'
+import { Loader } from './Loader'
 
 type TProps = {
   balanceExchange: UseMultipleBalanceAndExchangeResult

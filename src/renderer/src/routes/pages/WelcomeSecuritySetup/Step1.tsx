@@ -1,6 +1,6 @@
 import { ChangeEvent, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
 import { useActions } from '@renderer/hooks/useActions'
@@ -9,13 +9,16 @@ type TFormData = {
   password: string
 }
 
+type TProps = {
+  onSubmit?: (password: string) => void
+}
+
 const MIN_PASSWORD_LENGTH = 4
 
-export const WelcomeSecuritySetupStep1Page = () => {
+export const WelcomeSecuritySetupStep1Page = ({ onSubmit }: TProps) => {
   const { t } = useTranslation('pages', { keyPrefix: 'welcomeSecuritySetup.step1' })
   const { t: commonT } = useTranslation('common')
   const navigate = useNavigate()
-  const { state } = useLocation()
 
   const { actionData, actionState, setData, setError, handleAct } = useActions<TFormData>({ password: '' })
 
@@ -30,7 +33,12 @@ export const WelcomeSecuritySetupStep1Page = () => {
   }
 
   const handleSubmit = (data: TFormData) => {
-    navigate('/welcome-security-setup/2', { state: { password: data.password, ...state } })
+    if (onSubmit) {
+      onSubmit(data.password)
+      return
+    }
+
+    navigate('/welcome-security-setup/2', { state: { password: data.password } })
   }
 
   return (

@@ -18,10 +18,10 @@ import {
 } from '@tanstack/react-table'
 import { format } from 'date-fns'
 
-import { BlockchainIcon } from '../BlockchainIcon'
-import { Button } from '../Button'
-import { Loader } from '../Loader'
-import { Table } from '../Table'
+import { BlockchainIcon } from './BlockchainIcon'
+import { Button } from './Button'
+import { Loader } from './Loader'
+import { Table } from './Table'
 
 type TTransactionListProps = {
   accounts: IAccountState[]

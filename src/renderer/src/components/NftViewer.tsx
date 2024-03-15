@@ -8,8 +8,7 @@ import { StyleHelper } from '@renderer/helpers/StyleHelper'
 import { useBsAggregator } from '@renderer/hooks/useBsAggregator'
 import { useNetworkTypeSelector } from '@renderer/hooks/useSettingsSelector'
 
-import { IconButton } from '../IconButton'
-
+import { IconButton } from './IconButton'
 import { NftGallery } from './NftGallery'
 import { NftList } from './NftList'
 
