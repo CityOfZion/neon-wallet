@@ -47,9 +47,9 @@ export function getInformationFromSession(
     (account): AccountInformation => {
       const [namespace, reference, address] = account.split(':')
 
-      const blockchain = (Object.entries(
-        blockchainsByBlockchainServiceKey,
-      ): Array<[string, Blockchain]>).find(([, value]) => value === namespace)
+      const blockchain = Object.entries(blockchainsByBlockchainServiceKey).find(
+        ([, value]) => value === namespace,
+      )
       if (!blockchain) throw new Error('Blockchain not supported')
 
       return {
@@ -105,7 +105,9 @@ export class WalletConnectNeonAdapter extends AbstractWalletConnectNeonAdapter {
   async getWalletInfo(): Promise<WalletInfo> {
     const {
       spunky: {
-        auth: { isHardwareLogin },
+        auth: {
+          data: { isHardwareLogin },
+        },
       },
     } = store.getState()
 
