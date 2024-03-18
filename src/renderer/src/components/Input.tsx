@@ -75,8 +75,9 @@ export const Input = forwardRef<HTMLInputElement, TInputProps>(
     return (
       <div className={StyleHelper.mergeStyles('w-full relative', containerClassName)}>
         <div
+          aria-disabled={props.disabled}
           className={StyleHelper.mergeStyles(
-            'flex items-center gap-x-1.5 rounded bg-asphalt ring-2 ring-transparent w-full px-5 outline-none font-medium placeholder:text-white/50 text-white',
+            'flex items-center gap-x-1.5 rounded bg-asphalt ring-2 ring-transparent w-full px-5 outline-none font-medium placeholder:text-white/50 text-white aria-disabled:opacity-50 aria-disabled:cursor-not-allowed transition-colors',
             {
               'h-8.5 py-1.5 text-xs': compacted,
               'h-12 py-2 text-sm': !compacted,
@@ -103,7 +104,7 @@ export const Input = forwardRef<HTMLInputElement, TInputProps>(
           <input
             ref={internalRef}
             className={StyleHelper.mergeStyles(
-              'bg-transparent flex-grow outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none',
+              'bg-transparent disabled:cursor-not-allowed flex-grow outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none',
               className
             )}
             type={realType}
@@ -120,6 +121,7 @@ export const Input = forwardRef<HTMLInputElement, TInputProps>(
                 icon={hidden ? <MdVisibility /> : <MdVisibilityOff />}
                 onClick={toggleHidden}
                 type="button"
+                disabled={props.disabled}
                 compacted
               />
             )}
@@ -129,6 +131,7 @@ export const Input = forwardRef<HTMLInputElement, TInputProps>(
                 icon={<MdContentPasteGo className="text-neon" />}
                 onClick={handlePaste}
                 type="button"
+                disabled={props.disabled}
                 compacted
               />
             )}
@@ -139,10 +142,13 @@ export const Input = forwardRef<HTMLInputElement, TInputProps>(
                 onClick={handleCopyInput}
                 type="button"
                 compacted
+                disabled={props.disabled}
               />
             )}
 
-            {clearable && <IconButton icon={<MdCancel />} type="button" onClick={clear} compacted />}
+            {clearable && (
+              <IconButton icon={<MdCancel />} type="button" onClick={clear} compacted disabled={props.disabled} />
+            )}
           </div>
         </div>
 

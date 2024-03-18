@@ -78,7 +78,7 @@ export const EndModalLayout = ({
 
           <Separator />
 
-          <main className={StyleHelper.mergeStyles('flex-grow py-10', contentClassName)}>{children}</main>
+          <main className={StyleHelper.mergeStyles('flex-grow py-8', contentClassName)}>{children}</main>
         </div>
       </motion.div>
     </ModalLayout>

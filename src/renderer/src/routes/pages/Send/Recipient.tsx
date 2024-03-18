@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TbStepInto, TbUsers } from 'react-icons/tb'
 import { TokenBalance } from '@renderer/@types/query'
@@ -40,12 +40,13 @@ export const Recipient = ({
   }
 
   return (
-    <div className="bg-gray-300 bg-opacity-30 flex flex-col w-[30rem] rounded mt-2">
-      <div className="flex justify-between h-11 p-3">
-        <div className="flex items-center">
-          <TbStepInto className="text-blue w-5 h-5 mr-3 ml-1" />
+    <Fragment>
+      <div className="flex justify-between my-1">
+        <div className="flex items-center gap-3">
+          <TbStepInto className="text-blue w-5 h-5 " />
           <span>{t('recipientAddress')}</span>
         </div>
+
         <Button
           className="flex items-center"
           onClick={modalNavigateWrapper('select-contact', {
@@ -54,19 +55,16 @@ export const Recipient = ({
               selectedToken: selectedToken,
             },
           })}
-          clickableProps={{
-            className: selectedToken && active ? 'text-gray-100 hover:bg-gray-300/15 hover:rounded' : 'text-gray-100',
-          }}
-          disabled={selectedToken && active ? false : true}
+          disabled={!selectedToken || !active}
           variant="text"
           label={t('contacts')}
           leftIcon={<TbUsers />}
           flat
         />
       </div>
-      <div className="px-3">
-        <Separator />
-      </div>
+
+      <Separator />
+
       <div
         className={StyleHelper.mergeStyles('py-4 flex flex-col items-center mx-auto', {
           'py-6': isAddressValid === false,
@@ -77,7 +75,7 @@ export const Recipient = ({
           onChange={handleChangeAddres}
           compacted
           disabled={selectedToken && active ? false : true}
-          className="w-[24rem]"
+          className="w-[24rem] "
           placeholder={t('addressInputHint')}
           clearable={true}
           loading={validating}
@@ -86,6 +84,6 @@ export const Recipient = ({
         />
         {nsAddress && <p className="text-neon">{nsAddress}</p>}
       </div>
-    </div>
+    </Fragment>
   )
 }

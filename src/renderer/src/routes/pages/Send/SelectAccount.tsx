@@ -1,4 +1,4 @@
-import { cloneElement, Fragment } from 'react'
+import { cloneElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TbChevronRight } from 'react-icons/tb'
 import { IAccountState } from '@renderer/@types/store'
@@ -30,40 +30,42 @@ export const SelectAccount = ({
   const { modalNavigateWrapper } = useModalNavigate()
 
   return (
-    <Fragment>
-      <div className="flex justify-between h-11 p-3">
-        <div className="flex items-center">
-          {leftIcon &&
-            cloneElement(leftIcon, {
-              ...leftIcon.props,
-              className: StyleHelper.mergeStyles('text-blue w-5 h-5 mr-3 ml-1', leftIcon.props.className),
-            })}
-          <span
-            className={StyleHelper.mergeStyles({
-              'font-bold': active,
-            })}
-          >
-            {title}
-          </span>
-        </div>
-        <Button
-          className="flex items-center"
-          onClick={modalNavigateWrapper('select-account', {
-            state: {
-              onSelectAccount: onSelectAccount,
-              title: modalTitle,
-              buttonLabel: buttonLabel,
-              leftIcon,
-            },
+    <div className="flex justify-between my-1">
+      <div className="flex items-center gap-3">
+        {leftIcon &&
+          cloneElement(leftIcon, {
+            ...leftIcon.props,
+            className: StyleHelper.mergeStyles('text-blue w-5 h-5', leftIcon.props.className),
           })}
-          clickableProps={{ className: 'hover:bg-gray-300/15 hover:rounded pr-1' }}
-          variant="text"
-          colorSchema={active ? 'neon' : 'white'}
-          label={selectedAccount ? StringHelper.truncateString(selectedAccount.name, 40) : t('selectAccount')}
-          rightIcon={<TbChevronRight />}
-          flat
-        />
+
+        <span
+          className={StyleHelper.mergeStyles({
+            'font-bold': active,
+          })}
+        >
+          {title}
+        </span>
       </div>
-    </Fragment>
+
+      <Button
+        className="flex items-center"
+        onClick={modalNavigateWrapper('select-account', {
+          state: {
+            onSelectAccount: onSelectAccount,
+            title: modalTitle,
+            buttonLabel: buttonLabel,
+            leftIcon,
+          },
+        })}
+        variant="text"
+        clickableProps={{
+          className: 'text-sm pl-3 pr-1',
+        }}
+        colorSchema={active ? 'neon' : 'white'}
+        label={selectedAccount ? StringHelper.truncateString(selectedAccount.name, 40) : t('selectAccount')}
+        rightIcon={<TbChevronRight />}
+        flat
+      />
+    </div>
   )
 }

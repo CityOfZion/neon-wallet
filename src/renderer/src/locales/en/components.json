@@ -14,10 +14,9 @@
       "isNew": "New"
     }
   },
-  "walletSelect": {
+  "walletsSelect": {
     "title": "Wallets",
-    "placeholder": "Select a wallet...",
-    "createWalletButtonLabel": "Create New wallet"
+    "placeholder": "Select a wallet..."
   },
   "colorSelector": {
     "customColor": "Custom Color"

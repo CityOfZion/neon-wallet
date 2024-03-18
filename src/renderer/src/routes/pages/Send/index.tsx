@@ -239,38 +239,48 @@ export const SendPage = () => {
 
   return (
     <ContentLayout title={t('title')} titleIcon={<TbStepOut />}>
-      <section className="bg-gray-800 h-full w-full flex flex-col px-4 rounded text-xs">
-        <h1 className="text-white my-4">{t('rightSideTitle')}</h1>
+      <section className="bg-gray-800 h-full w-full flex flex-col px-4 rounded text-sm items-center">
+        <h2 className="text-white text-left w-full  mt-4 mb-3">{t('rightSideTitle')}</h2>
+
         <Separator />
-        <section className="flex flex-col items-center py-10">
+
+        <div className="max-w-[32rem] w-full flex flex-col items-center py-10">
+          <div className="bg-gray-700/60 flex flex-col rounded px-3 w-full">
+            <SelectAccount
+              selectedAccount={selectedAccount}
+              onSelectAccount={handleSelectAccount}
+              active={currentStep === SendPageStep.SelectAccount}
+              title={t('sourceAccount')}
+              modalTitle={t('selectAccountModal.title')}
+              buttonLabel={t('selectAccountModal.selectSourceAccount')}
+              leftIcon={<TbStepOut />}
+            />
+
+            <Separator />
+
+            <SelectToken
+              selectedAccount={selectedAccount}
+              selectedToken={selectedToken}
+              onSelectToken={handleSelectToken}
+              active={currentStep === SendPageStep.SelectToken}
+            />
+
+            <Separator />
+
+            <SendAmount
+              selectedAccount={selectedAccount}
+              selectedToken={selectedToken}
+              selectedAmount={selectedAmount}
+              onSelectAmount={handleSelectAmount}
+              active={currentStep === SendPageStep.SelectAmount}
+            />
+          </div>
+
           <div className="relative">
-            <div className="bg-gray-300 bg-opacity-30 flex flex-col w-[30rem] rounded">
-              <SelectAccount
-                selectedAccount={selectedAccount}
-                onSelectAccount={handleSelectAccount}
-                active={currentStep === SendPageStep.SelectAccount}
-                title={t('sourceAccount')}
-                modalTitle={t('selectAccountModal.title')}
-                buttonLabel={t('selectAccountModal.selectSourceAccount')}
-                leftIcon={<TbStepOut />}
-              />
-              <div className="px-3">
-                <Separator />
-              </div>
-              <SelectToken
-                selectedAccount={selectedAccount}
-                selectedToken={selectedToken}
-                onSelectToken={handleSelectToken}
-                active={currentStep === SendPageStep.SelectToken}
-              />
-              <SendAmount
-                selectedAccount={selectedAccount}
-                selectedToken={selectedToken}
-                selectedAmount={selectedAmount}
-                onSelectAmount={handleSelectAmount}
-                active={currentStep === SendPageStep.SelectAmount}
-              />
-            </div>
+            <TbArrowDown className="w-5 h-5 p-1 bg-gray-600 rounded-full border-8 border-gray-800 box-content absolute top-2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+          </div>
+
+          <div className="bg-gray-700/60 flex flex-col rounded px-3 w-full mt-2">
             <Recipient
               selectedToken={selectedToken}
               selectedAddress={selectedRecipient}
@@ -280,25 +290,21 @@ export const SendPage = () => {
               nsAddress={nsAddress}
               isAddressValid={isAddressValid}
             />
-            <div
-              className="
-                  absolute top-1/2 left-1/2
-                  transform -translate-x-1/2 -translate-y-1/2 mt-6
-                  border-[0.5rem] border-gray-800 rounded-full
-                "
-            >
-              <TbArrowDown className="w-5 h-5 p-[0.1rem] bg-gray-600 rounded-full" />
-            </div>
           </div>
-          <TotalFee totalFee={totalFee} />
+
+          <div className="bg-gray-700/60 flex flex-col rounded px-3 w-full mt-2">
+            <TotalFee totalFee={totalFee} />
+          </div>
+
           <Button
             className="mt-10 w-[16rem]"
+            iconsOnEdge={false}
             onClick={handleSendToken}
             label={t('sendNow')}
             leftIcon={<TbStepOut />}
             disabled={currentStep === SendPageStep.Send && isAddressValid && !validating ? false : true}
           />
-        </section>
+        </div>
       </section>
     </ContentLayout>
   )

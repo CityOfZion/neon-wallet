@@ -109,7 +109,7 @@ const Base = ({
     <div
       aria-disabled={isDisabled}
       className={StyleHelper.mergeStyles(
-        'aria-[disabled=true]:cursor-not-allowed aria-[disabled=true]:opacity-50 aria-[disabled=false]:cursor-pointer',
+        'aria-[disabled=true]:cursor-not-allowed w-full aria-[disabled=true]:opacity-50 aria-[disabled=false]:cursor-pointer',
         {
           'h-10 text-sm px-5': !flat,
           'h-8.5 text-xs px-4': flat,

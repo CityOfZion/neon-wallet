@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TbChevronRight } from 'react-icons/tb'
 import { VscCircleFilled } from 'react-icons/vsc'
@@ -30,24 +30,26 @@ export const SendAmount = ({
   const { modalNavigateWrapper } = useModalNavigate()
   const balanceExchange = useBalancesAndExchange(selectedAccount ? [selectedAccount] : [])
 
-  const calculateEstimatedFiatValue = (amount: number) => {
-    if (selectedToken) {
-      const pricePerToken = BalanceHelper.getExchangeRatio(
-        selectedToken.token.hash,
-        selectedToken.blockchain,
-        balanceExchange.exchange.data
-      )
+  const estimatedFee = useMemo(() => {
+    if (!selectedToken || !selectedAmount) return FilterHelper.currency(0)
 
-      return FilterHelper.currency(amount * pricePerToken)
-    }
-    return FilterHelper.currency(0)
-  }
+    const pricePerToken = BalanceHelper.getExchangeRatio(
+      selectedToken.token.hash,
+      selectedToken.blockchain,
+      balanceExchange.exchange.data
+    )
+
+    return FilterHelper.currency(selectedAmount * pricePerToken)
+  }, [selectedToken, selectedAmount, balanceExchange])
 
   return (
-    <Fragment>
-      <div className="flex justify-between h-6 pt-4 p-3">
-        <div className="flex items-center">
-          <VscCircleFilled className="text-gray-300 w-2 h-2 mr-[1.09rem] ml-[0.65rem]" />
+    <div>
+      <div className="flex justify-between my-1">
+        <div className="flex items-center gap-3">
+          <div className="w-5 h-5 flex items-center justify-center">
+            <VscCircleFilled className="text-gray-300 w-2 h-2" />
+          </div>
+
           <span
             className={StyleHelper.mergeStyles({
               'font-bold': active,
@@ -67,21 +69,20 @@ export const SendAmount = ({
             },
           })}
           clickableProps={{
-            className: selectedToken
-              ? 'hover:bg-gray-300/15 hover:rounded pr-1 pr-1 aria-[disabled=true]:text-gray-100'
-              : 'pr-1 aria-[disabled=true]:text-gray-100',
+            className: 'text-sm pl-3 pr-1',
           }}
           variant="text"
-          colorSchema={selectedAmount > 0 ? 'white' : active ? 'neon' : 'gray'}
+          colorSchema={active ? 'neon' : 'white'}
           label={selectedAmount > 0 ? selectedAmount.toString() : t('inputAmount')}
           rightIcon={<TbChevronRight />}
           flat
         />
       </div>
-      <div className="flex justify-between h-11 p-3">
-        <span className="text-gray-100 pl-9 italic">{t('fiatValue')}</span>
-        <span className="text-gray-100 mr-8">{calculateEstimatedFiatValue(selectedAmount)}</span>
+
+      <div className="flex justify-between p-3 pt-0">
+        <span className="text-gray-100 ml-5 italic">{t('fiatValue')}</span>
+        <span className="text-gray-100 mr-5">{estimatedFee}</span>
       </div>
-    </Fragment>
+    </div>
   )
 }
