@@ -18,9 +18,6 @@
     "title": "Wallets",
     "placeholder": "Select a wallet..."
   },
-  "colorSelector": {
-    "customColor": "Custom Color"
-  },
   "walletAccordionList": {
     "noAccounts": "No accounts"
   },

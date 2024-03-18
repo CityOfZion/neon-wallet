@@ -11,7 +11,7 @@ import { DappPermissionModal } from './modals/DappPermission'
 import { DappPermissionContractDetailsModal } from './modals/DappPermissionContractDetails'
 import { DappPermissionSignatureScopeModal } from './modals/DappPermissionSignatureScope'
 import { DecryptKeyModal } from './modals/DecryptKeyModal'
-import { EditAccountModal } from './modals/EditAccount'
+import { DeleteAccountModal } from './modals/DeleteAccount'
 import { EditWalletModal } from './modals/EditWallet'
 import { ErrorModal } from './modals/Error'
 import { ImportModal } from './modals/Import'
@@ -19,6 +19,7 @@ import { ImportKeyAccountsSelectionModal } from './modals/Import/ImportKeyAccoun
 import { ImportMnemonicAccountsSelectionModal } from './modals/Import/ImportMnemonicAccountsSelectionModal'
 import { InputAmount } from './modals/InputAmount'
 import { NetworkSelection } from './modals/NetworkSelection'
+import { PersistAccountModal } from './modals/PersistAccount'
 import { PersistContactModal } from './modals/PersistContact'
 import { DeleteModal } from './modals/PersistContact/DeleteModal'
 import { SelectAccount } from './modals/SelectAccount'
@@ -32,7 +33,8 @@ export const modalsRouter: TRoute[] = [
   { name: 'import-key-accounts-selection', element: <ImportKeyAccountsSelectionModal /> },
   { name: 'add-watch', element: <AddWatch /> },
   { name: 'edit-wallet', element: <EditWalletModal /> },
-  { name: 'edit-account', element: <EditAccountModal /> },
+  { name: 'persist-account', element: <PersistAccountModal /> },
+  { name: 'delete-account', element: <DeleteAccountModal /> },
   { name: 'persist-contact', element: <PersistContactModal /> },
   { name: 'delete-contact', element: <DeleteModal /> },
   { name: 'add-address', element: <AddAddressModal /> },

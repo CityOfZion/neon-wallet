@@ -1,5 +1,5 @@
-import { TAccountColorKey } from '@renderer/@types/blockchain'
 import { IWalletState } from '@renderer/@types/store'
+import { backgroundColorByAccountColor } from '@renderer/constants/blockchain'
 import { useAccountsByWalletIdSelector } from '@renderer/hooks/useAccountSelector'
 
 import { ReactComponent as FrontImage } from '../assets/images/wallet-icon-front.svg'
@@ -13,13 +13,6 @@ type TProps = {
 export const WalletIcon = ({ wallet, withAccounts }: TProps) => {
   const { accountsByWalletId } = useAccountsByWalletIdSelector(wallet.id)
 
-  const colorsByKeys: Record<TAccountColorKey, string> = {
-    blue: 'bg-blue',
-    green: 'bg-green-100',
-    gray: 'bg-gray-400',
-    magenta: 'bg-magenta',
-  }
-
   return withAccounts ? (
     <div className="relative w-[2.25rem] h-[2.25rem] min-w-[2rem] min-h-[2.25rem] top-3">
       {accountsByWalletId
@@ -28,7 +21,7 @@ export const WalletIcon = ({ wallet, withAccounts }: TProps) => {
           <div
             key={account.address}
             className={`w-[1.525rem] h-[1.125rem] rounded-sm absolute left-[5px] top-0.5 ${
-              colorsByKeys[account.backgroundColor]
+              backgroundColorByAccountColor[account.backgroundColor]
             }`}
             style={{
               opacity: 1 - 0.2 * (array.length - index),
