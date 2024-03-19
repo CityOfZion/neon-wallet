@@ -4,12 +4,10 @@ import { MdAdd, MdOutlineContentCopy } from 'react-icons/md'
 import { TbFileImport, TbPencil } from 'react-icons/tb'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { IAccountState, IWalletState } from '@renderer/@types/store'
-import { AccountList } from '@renderer/components/AccountList'
 import { Button } from '@renderer/components/Button'
 import { IconButton } from '@renderer/components/IconButton'
 import { Separator } from '@renderer/components/Separator'
 import { SidebarMenuButton } from '@renderer/components/SidebarMenuButton'
-import { WalletSelect } from '@renderer/components/WalletSelect'
 import { StringHelper } from '@renderer/helpers/StringHelper'
 import { UtilsHelper } from '@renderer/helpers/UtilsHelper'
 import { useAccountsSelector } from '@renderer/hooks/useAccountSelector'
@@ -17,6 +15,9 @@ import { useBalancesAndExchange } from '@renderer/hooks/useBalancesAndExchange'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
 import { useWalletsSelector } from '@renderer/hooks/useWalletSelector'
 import { MainLayout } from '@renderer/layouts/Main'
+
+import { AccountList } from './AccountList'
+import { WalletsSelect } from './WalletsSelect'
 
 export const WalletsPage = () => {
   const { t } = useTranslation('pages', { keyPrefix: 'wallets' })
@@ -63,14 +64,12 @@ export const WalletsPage = () => {
   return (
     <MainLayout
       heading={
-        <div>
-          <WalletSelect
-            balanceExchange={balanceExchange}
-            wallets={wallets}
-            selected={selectedWallet}
-            onSelect={setSelectedWallet}
-          />
-        </div>
+        <WalletsSelect
+          wallets={wallets}
+          value={selectedWallet}
+          onSelect={setSelectedWallet}
+          balanceExchange={balanceExchange}
+        />
       }
       rightComponent={
         <div className="flex gap-x-2">
@@ -101,16 +100,14 @@ export const WalletsPage = () => {
             <h2 className="text-sm truncate">{t('accounts')}</h2>
           </header>
 
-          <main className="flex flex-col w-full items-center flex-grow min-h-0">
-            <Separator className="w-[80%]" />
+          <main className="flex flex-col w-full items-center flex-grow min-h-0 min-w-0">
+            <Separator className="w-[85%]" />
 
             <AccountList
               selectedWallet={selectedWallet}
               balanceExchange={balanceExchange}
               onSelect={handleSelectAccount}
               selectedAccount={selectedAccount}
-              showFirstSeparator={false}
-              className="flex flex-grow flex-col min-h-0 w-full overflow-y-auto"
             />
           </main>
 

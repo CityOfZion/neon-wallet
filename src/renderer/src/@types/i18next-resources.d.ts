@@ -51,10 +51,9 @@ interface Resources {
         isNew: 'New'
       }
     }
-    walletSelect: {
+    walletsSelect: {
       title: 'Wallets'
       placeholder: 'Select a wallet...'
-      createWalletButtonLabel: 'Create New wallet'
     }
     colorSelector: {
       customColor: 'Custom Color'
@@ -309,6 +308,8 @@ interface Resources {
     }
     selectAccount: {
       yourAccounts: 'Your accounts:'
+      placeholder: 'Select a wallet...'
+      noAccounts: 'No accounts'
     }
     selectToken: {
       title: 'Select token to send'

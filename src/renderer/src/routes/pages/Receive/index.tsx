@@ -15,8 +15,8 @@ export const ReceiveYourAddress = () => {
 
   return (
     <ContentLayout title={t('title')} titleIcon={<TbStepInto />}>
-      <section className="bg-gray-800 h-full w-full flex rounded text-xs">
-        <Tabs.Root defaultValue={ETabbarOption.YOUR_ADDRESS} className="w-full px-4 mt-4">
+      <section className="bg-gray-800 h-full w-full flex flex-col rounded text-xs">
+        <Tabs.Root defaultValue={ETabbarOption.YOUR_ADDRESS} className="flex flex-col w-full flex-grow  px-4 mt-4">
           <Tabs.List className="uppercase">
             <Tabs.Trigger value={ETabbarOption.YOUR_ADDRESS} className="border-transparent">
               {t('yourAddressTabTitle')}
@@ -26,7 +26,7 @@ export const ReceiveYourAddress = () => {
             </Tabs.Trigger>
           </Tabs.List>
 
-          <Tabs.Content value={ETabbarOption.YOUR_ADDRESS}>
+          <Tabs.Content value={ETabbarOption.YOUR_ADDRESS} asChild>
             <YourAddressTabContent />
           </Tabs.Content>
         </Tabs.Root>

@@ -156,7 +156,9 @@
     "buttonContinueLabel": "Import"
   },
   "selectAccount": {
-    "yourAccounts": "Your accounts:"
+    "yourAccounts": "Your accounts:",
+    "placeholder": "Select a wallet...",
+    "noAccounts": "No accounts"
   },
   "selectToken": {
     "title": "Select token to send",

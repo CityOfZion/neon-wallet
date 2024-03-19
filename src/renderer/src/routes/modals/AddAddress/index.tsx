@@ -24,6 +24,7 @@ type TActionData = {
   address: string
   nnsAddress?: string
   isAddressValid?: boolean
+  blockchain?: TBlockchainServiceKey
 }
 
 export const AddAddressModal = () => {
@@ -31,9 +32,6 @@ export const AddAddressModal = () => {
   const { contactName, address, handleAddAddress } = useModalState<TLocationState>()
   const { modalNavigate } = useModalNavigate()
   const { bsAggregator } = useBsAggregator()
-  const [selectedBlockchain, setSelectedBlockchain] = useState<TBlockchainServiceKey | undefined>(
-    address?.blockchain || undefined
-  )
   const [validating, setValidating] = useState(false)
 
   const { actionData, setData, handleAct } = useActions<TActionData>({
@@ -44,7 +42,7 @@ export const AddAddressModal = () => {
     setData({
       address: event.target.value,
     })
-    validateAddressOrNSS(event.target.value, selectedBlockchain)
+    validateAddressOrNSS(event.target.value, actionData.blockchain)
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -67,7 +65,7 @@ export const AddAddressModal = () => {
           isValid = true
         }
       } catch {
-        // empty block
+        /* empty */
       } finally {
         setValidating(false)
         setData({ nnsAddress, isAddressValid: isValid })
@@ -77,16 +75,13 @@ export const AddAddressModal = () => {
   )
 
   const handleSelectBlockchain = (blockchain: TBlockchainServiceKey) => {
-    setSelectedBlockchain(blockchain)
+    setData({ blockchain })
   }
 
   const handleSubmit = (data: TActionData) => {
-    if (!selectedBlockchain) return
-
-    const newAddress = { blockchain: selectedBlockchain, address: data.address }
-
+    if (!data.blockchain || !data.address) return
+    const newAddress = { blockchain: data.blockchain, address: data.address }
     handleAddAddress(newAddress)
-
     modalNavigate(-1)
   }
 
@@ -102,7 +97,7 @@ export const AddAddressModal = () => {
           <Separator />
 
           <div className="text-gray-100 font-bold">{t('blockchain')}</div>
-          <BlockchainSelect selected={selectedBlockchain} onSelect={handleSelectBlockchain} />
+          <BlockchainSelect value={actionData.blockchain} onSelect={handleSelectBlockchain} />
 
           <div className="text-gray-100 font-bold">{t('addressOrDomain')}</div>
           <Input
@@ -111,7 +106,7 @@ export const AddAddressModal = () => {
             clearable
             compacted
             loading={validating}
-            disabled={!selectedBlockchain}
+            disabled={!actionData.blockchain}
             error={actionData.isAddressValid === false}
           />
           {actionData.nnsAddress && <p className="text-gray-300">{actionData.nnsAddress}</p>}
