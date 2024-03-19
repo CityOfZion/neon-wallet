@@ -18,13 +18,16 @@ type TConnectionsTableProps = {
   sessions: TSession[]
   hasAddress?: boolean
   tableHeaderClassName?: string
+  className?: string
 }
 
 const columnHelper = createColumnHelper<TSession>()
 
 export const ConnectionsTable = forwardRef<HTMLDivElement, TConnectionsTableProps>(
-  ({ sessions, tableHeaderClassName, hasAddress = false }, ref) => {
+  ({ sessions, tableHeaderClassName, hasAddress = false, className }, ref) => {
     const { t } = useTranslation('components', { keyPrefix: 'connectionsTable' })
+    const { t: commonT } = useTranslation('common', { keyPrefix: 'blockchain' })
+
     const { accounts } = useAccountsSelector()
     const { modalNavigate } = useModalNavigate()
 
@@ -53,7 +56,7 @@ export const ConnectionsTable = forwardRef<HTMLDivElement, TConnectionsTableProp
           cell: info => (
             <div className="flex">
               <BlockchainIcon blockchain={info.getValue()} />
-              <span className="ml-2">{info.getValue()}</span>
+              <span className="ml-2">{commonT(info.getValue())}</span>
             </div>
           ),
         }),
@@ -81,7 +84,7 @@ export const ConnectionsTable = forwardRef<HTMLDivElement, TConnectionsTableProp
           ),
         }),
       ],
-      [accounts, hasAddress, modalNavigate, t]
+      [accounts, hasAddress, modalNavigate, t, commonT]
     )
 
     const table = useReactTable({
@@ -91,7 +94,13 @@ export const ConnectionsTable = forwardRef<HTMLDivElement, TConnectionsTableProp
     })
 
     return (
-      <section ref={ref} className="overflow-auto min-h-0 w-full flex flex-col flex-grow mt-4 pr-1 text-xs min-w-0">
+      <div
+        ref={ref}
+        className={StyleHelper.mergeStyles(
+          'overflow-auto min-h-0 w-full flex flex-col flex-grow pr-1 text-xs min-w-0',
+          className
+        )}
+      >
         {sessions.length <= 0 ? (
           <div className="flex justify-center mt-4">
             <p className="text-gray-300">{t('emptyList')}</p>
@@ -123,7 +132,7 @@ export const ConnectionsTable = forwardRef<HTMLDivElement, TConnectionsTableProp
             </Table.Body>
           </Table.Root>
         )}
-      </section>
+      </div>
     )
   }
 )

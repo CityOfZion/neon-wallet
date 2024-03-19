@@ -79,9 +79,6 @@
     "requestAssetsLabel": "Request assets",
     "importAccountLabel": "Import account"
   },
-  "nftViewer": {
-    "empty": "No NFTS to display"
-  },
   "contactAddressTable": {
     "blockchain": "BLOCKCHAIN",
     "address": "ADDRESS",

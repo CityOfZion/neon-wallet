@@ -3,6 +3,11 @@ import * as uuid from 'uuid'
 
 import { ToastHelper } from './ToastHelper'
 
+export type TImageSize = {
+  width: number
+  height: number
+}
+
 export class UtilsHelper {
   static getRandomNumber(max: number) {
     return Math.floor(Math.random() * Math.floor(max))
@@ -103,15 +108,6 @@ export class UtilsHelper {
     img.src = `data:image/svg+xml;base64,${btoa(svgData)}`
   }
 
-  static getRandomTokenColor(symbol: string) {
-    const mandatoryColors: Record<string, string> = {
-      NEO: '#56f33f',
-      GAS: '#02c797',
-    }
-
-    return mandatoryColors[symbol] ?? `#${(0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)}`
-  }
-
   static normalizeHash(hash: string) {
     return hash.replace('0x', '').toLowerCase()
   }
@@ -146,5 +142,25 @@ export class UtilsHelper {
 
   static sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms))
+  }
+
+  static getImageSize(url: string) {
+    return new Promise<TImageSize>((resolve, reject) => {
+      if (!url) {
+        throw new Error('Invalid URL')
+      }
+
+      const img = new Image()
+
+      img.addEventListener('load', () => {
+        resolve({ width: img.naturalWidth, height: img.naturalHeight })
+      })
+
+      img.addEventListener('error', event => {
+        reject(`${event.type}: ${event.message}`)
+      })
+
+      img.src = url
+    })
   }
 }

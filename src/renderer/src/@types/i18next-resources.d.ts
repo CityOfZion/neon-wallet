@@ -116,9 +116,6 @@ interface Resources {
       requestAssetsLabel: 'Request assets'
       importAccountLabel: 'Import account'
     }
-    nftViewer: {
-      empty: 'No NFTS to display'
-    }
     contactAddressTable: {
       blockchain: 'BLOCKCHAIN'
       address: 'ADDRESS'
@@ -534,6 +531,22 @@ interface Resources {
       importButtonLabel: 'Import'
       newWalletButtonLabel: 'New Wallet'
       exportButtonLabel: 'Export'
+      portfolioActivity: {
+        allActivity: 'All activity'
+        walletsAndAccounts: '{{wallets}} Wallets / {{accounts}} Accounts'
+        balance: 'Balance'
+      }
+      portfolioOverview: {
+        overview: 'Overview'
+        walletsAndAccounts: '{{wallets}} Wallets / {{accounts}} Accounts'
+        balance: 'Balance'
+      }
+      portfolioConnections: {
+        title: 'All connections'
+        walletsAndAccounts: '{{wallets}} Wallets / {{accounts}} Accounts'
+        disconnectAllButtonLabel: 'Disconnect all'
+        totalConnections: '{{connections}} Connections'
+      }
     }
     login: {
       title: 'Welcome to Neon Wallet'
@@ -582,29 +595,34 @@ interface Resources {
       title: 'Wallets'
       addAccountButtonLabel: 'Add Account'
       editWalletButtonLabel: 'Edit'
-      reorderAccountsButtonLabel: 'Reorder Accounts'
       editAccountButton: 'Edit'
-      buttonRefreshLabel: 'Refresh'
-      addWatchAccountButtonLabel: 'Add Watch'
       importButtonLabel: 'Import'
       newWalletButtonLabel: 'New Wallet'
-      manageButtonLabel: 'Manage'
-      dappConnectionButtonLabel: 'Dapp'
-      balance: 'Balance'
-      changeIn24hrs: 'Change in 24HRS'
-      portfolioBalance: 'Portfolio Balance'
-      publicAddress: 'Public Address'
       address: 'Address'
-      overview: 'Account overview'
-      tokens: 'Tokens'
-      nfts: 'NFTs'
-      transactions: 'Transactions'
-      connections: 'Connections'
-      accountOverview: 'Account overview'
-      holdings: 'Holdings'
-      send: 'Send'
-      receive: 'Receive'
       accounts: 'Accounts'
+      accountNftList: {
+        title: 'NFTs'
+        empty: 'No NFTS to display'
+        total: '{{length}} items'
+      }
+      accountOverview: {
+        title: 'Account Overview'
+        balance: 'Balance'
+        holdings: 'Holdings'
+      }
+      accountTokensList: {
+        title: 'Tokens'
+        balance: 'Balance'
+      }
+      accountTransactionsList: {
+        title: 'Transactions'
+      }
+      accountConnections: {
+        title: 'Connections'
+        totalConnections: '{{connections}} Connections'
+        newConnection: 'New connection'
+        disconnectAll: 'Disconnect all'
+      }
     }
     contacts: {
       title: 'Contacts'
@@ -682,24 +700,6 @@ interface Resources {
         title: 'Select a receiving account'
         selectReceivingAccount: 'Select receiving account'
       }
-    }
-    portfolioActivity: {
-      allActivity: 'All activity'
-      walletsAndAccounts: '{{wallets}} Wallets / {{accounts}} Accounts'
-      balance: 'Balance'
-    }
-    portfolioOverview: {
-      overview: 'Overview'
-      walletsAndAccounts: '{{wallets}} Wallets / {{accounts}} Accounts'
-      balance: 'Balance'
-    }
-    connections: {
-      allConnections: 'All connections'
-      connections: 'Connections'
-      walletsAndAccounts: '{{wallets}} Wallets / {{accounts}} Accounts'
-      newConnection: 'New connection'
-      disconnectAll: 'Disconnect all'
-      totalConnections: '{{connections}} Connections'
     }
   }
 }

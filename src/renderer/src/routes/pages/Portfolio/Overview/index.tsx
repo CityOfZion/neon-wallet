@@ -9,7 +9,7 @@ import { useBalancesAndExchange } from '@renderer/hooks/useBalancesAndExchange'
 import { useWalletsSelector } from '@renderer/hooks/useWalletSelector'
 
 export const PortfolioOverviewPage = () => {
-  const { t } = useTranslation('pages', { keyPrefix: 'portfolioOverview' })
+  const { t } = useTranslation('pages', { keyPrefix: 'portfolio.portfolioOverview' })
   const { accounts } = useAccountsSelector()
   const { wallets } = useWalletsSelector()
   const balanceExchange = useBalancesAndExchange(accounts)

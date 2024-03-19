@@ -8,12 +8,14 @@ import { useAccountsSelector } from '@renderer/hooks/useAccountSelector'
 import { useBalancesAndExchange } from '@renderer/hooks/useBalancesAndExchange'
 import { AccountDetailsLayout } from '@renderer/layouts/AccountDetailsLayout'
 
+import { CommonAccountActions } from '../CommonAccountActions'
+
 export const AccountTokensList = () => {
   const { accounts } = useAccountsSelector()
   const { address } = useParams()
-  const { t } = useTranslation('pages', { keyPrefix: 'wallets' })
+  const { t } = useTranslation('pages', { keyPrefix: 'wallets.accountTokensList' })
 
-  const account = useMemo(() => accounts.find(account => account.address === address), [accounts, address])
+  const account = useMemo(() => accounts.find(account => account.address === address)!, [accounts, address])
 
   const balanceExchange = useBalancesAndExchange(account ? [account] : [])
 
@@ -26,7 +28,7 @@ export const AccountTokensList = () => {
   )
 
   return (
-    <AccountDetailsLayout title={t('tokens')} showButtons account={account}>
+    <AccountDetailsLayout title={t('title')} actions={<CommonAccountActions account={account} />}>
       <div className="text-right pt-4">
         <span className="text-gray-300">{t('balance')}</span> {formattedTotalTokensBalances}
       </div>
