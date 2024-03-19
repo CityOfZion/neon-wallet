@@ -1,9 +1,9 @@
 import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TbFileImport } from 'react-icons/tb'
+import { useNavigate } from 'react-router-dom'
 import { AccountWithDerivationPath } from '@cityofzion/blockchain-service'
 import { TAccountsToImport, TBlockchainServiceKey } from '@renderer/@types/blockchain'
-import { IWalletState } from '@renderer/@types/store'
 import { AccountSelection } from '@renderer/components/AccountSelection'
 import { Button } from '@renderer/components/Button'
 import { Loader } from '@renderer/components/Loader'
@@ -17,7 +17,6 @@ import { EndModalLayout } from '@renderer/layouts/EndModal'
 
 type TLocation = {
   mnemonic: string
-  onImportWallet?: (wallet: IWalletState) => void
 }
 
 type TActionsData = {
@@ -28,10 +27,11 @@ type TActionsData = {
 type TAccountWithBlockchain = AccountWithDerivationPath & { blockchain: TBlockchainServiceKey }
 
 export const ImportMnemonicAccountsSelectionModal = () => {
-  const { mnemonic, onImportWallet } = useModalState<TLocation>()
+  const { mnemonic } = useModalState<TLocation>()
   const blockchainActions = useBlockchainActions()
   const { t: commonT } = useTranslation('common', { keyPrefix: 'wallet' })
   const { modalNavigate } = useModalNavigate()
+  const navigate = useNavigate()
   const { t } = useTranslation('modals', { keyPrefix: 'importMnemonicAccountsSelection' })
   const { bsAggregator } = useBsAggregator()
   const { ref: allAccountsRef } = useAppSelector(state => state.account.data.map(it => it.address))
@@ -68,9 +68,8 @@ export const ImportMnemonicAccountsSelectionModal = () => {
       wallet,
     })
 
-    if (onImportWallet) onImportWallet(wallet)
-
     modalNavigate(-2)
+    navigate('/wallets', { state: { wallet } })
   }
 
   const { isMounting } = useMount(async () => {

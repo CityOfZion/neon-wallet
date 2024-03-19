@@ -5,12 +5,10 @@ import { IWalletState } from '@renderer/@types/store'
 import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
 import { Separator } from '@renderer/components/Separator'
-import { useAccountsSelector } from '@renderer/hooks/useAccountSelector'
 import { useActions } from '@renderer/hooks/useActions'
 import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
 import { useAppDispatch } from '@renderer/hooks/useRedux'
 import { EndModalLayout } from '@renderer/layouts/EndModal'
-import { accountReducerActions } from '@renderer/store/reducers/AccountReducer'
 import { walletReducerActions } from '@renderer/store/reducers/WalletReducer'
 
 type TFormData = {
@@ -27,7 +25,6 @@ export const EditWalletModal = () => {
   const { wallet } = useModalState<TLocationState>()
 
   const dispatch = useAppDispatch()
-  const { accounts } = useAccountsSelector()
 
   const form = useActions<TFormData>({
     name: wallet.name,
@@ -43,13 +40,6 @@ export const EditWalletModal = () => {
       return
     }
     dispatch(walletReducerActions.saveWallet({ ...wallet, name }))
-    modalNavigate(-1)
-  }
-
-  const handleDelete = () => {
-    dispatch(walletReducerActions.deleteWallet(wallet.id))
-    const accountsToRemove = accounts.filter(it => it.idWallet === wallet.id).map(it => it.address)
-    dispatch(accountReducerActions.deleteAccounts(accountsToRemove))
     modalNavigate(-1)
   }
 
@@ -91,7 +81,7 @@ export const EditWalletModal = () => {
           leftIcon={<MdDeleteForever />}
           className="mt-7"
           variant="outlined"
-          onClick={handleDelete}
+          onClick={() => modalNavigate('delete-wallet', { state: { wallet } })}
           colorSchema="error"
           flat
           iconsOnEdge={false}

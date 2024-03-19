@@ -13,7 +13,7 @@ export type TEndModalProps = {
   headingIcon?: JSX.Element
   contentClassName?: string
   withBackButton?: boolean
-  bigger?: boolean
+  size?: 'sm' | 'md' | 'xl'
 } & ComponentProps<'div'> &
   TModalProps
 
@@ -26,7 +26,7 @@ export const EndModalLayout = ({
   closeOnEsc,
   closeOnOutsideClick,
   onClose,
-  bigger,
+  size = 'sm',
 }: TEndModalProps) => {
   const { modalNavigate } = useModalNavigate()
 
@@ -46,13 +46,14 @@ export const EndModalLayout = ({
         className="h-full shadow-xl overflow-hidden"
         initial={{ width: 0 }}
         transition={{ duration: 0.1 }}
-        animate={{ width: bigger ? '25.875rem' : '20.625rem' }}
+        animate={{ width: size === 'sm' ? '20.625rem' : size === 'md' ? '25.875rem' : '62.5rem' }}
         exit={{ width: 0 }}
       >
         <div
           className={StyleHelper.mergeStyles('bg-gray-800 h-full px-4 text-white text-xs flex flex-col', {
-            'w-[25.875rem]': bigger,
-            'w-[20.625rem]': !bigger,
+            'w-[25.875rem]': size === 'md',
+            'w-[20.625rem]': size === 'sm',
+            'w-[62.5rem]': size === 'xl',
           })}
         >
           <header className="flex justify-between items-center py-2.5">
@@ -76,7 +77,7 @@ export const EndModalLayout = ({
             <IconButton icon={<MdClose className="fill-white" />} size="md" compacted onClick={handleClose} />
           </header>
 
-          <Separator />
+          <Separator className="min-h-[0.0625rem]" />
 
           <main className={StyleHelper.mergeStyles('flex-grow py-8', contentClassName)}>{children}</main>
         </div>

@@ -16,7 +16,7 @@ export const SuccessModal = () => {
     <EndModalLayout
       heading={heading}
       headingIcon={headingIcon}
-      bigger
+      size="md"
       contentClassName="flex flex-col flex-grow min-w-0 items-center"
     >
       <div className="w-28 h-28 p-2 bg-asphalt rounded-full flex items-center">

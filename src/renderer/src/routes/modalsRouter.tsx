@@ -3,6 +3,10 @@ import { TRoute } from '@renderer/@types/modal'
 import { AddAddressModal } from './modals/AddAddress'
 import { AddWatch } from './modals/AddWatch'
 import { BlockchainSelectionModal } from './modals/BlockchainSelection'
+import { CreateWalletStep1Modal } from './modals/CreateWallet/CreateWalletStep1Modal'
+import { CreateWalletStep2Modal } from './modals/CreateWallet/CreateWalletStep2Modal'
+import { CreateWalletStep3Modal } from './modals/CreateWallet/CreateWalletStep3Modal'
+import { CreateWalletStep4Modal } from './modals/CreateWallet/CreateWalletStep4Modal'
 import { DappConnectionModal } from './modals/DappConnection'
 import { DappConnectionAccountSelectionModal } from './modals/DappConnectionAccountSelection'
 import { DappConnectionDetailsModal } from './modals/DappConnectionDetails'
@@ -12,6 +16,7 @@ import { DappPermissionContractDetailsModal } from './modals/DappPermissionContr
 import { DappPermissionSignatureScopeModal } from './modals/DappPermissionSignatureScope'
 import { DecryptKeyModal } from './modals/DecryptKeyModal'
 import { DeleteAccountModal } from './modals/DeleteAccount'
+import { DeleteWalletModal } from './modals/DeleteWallet'
 import { EditWalletModal } from './modals/EditWallet'
 import { ErrorModal } from './modals/Error'
 import { ImportModal } from './modals/Import'
@@ -35,6 +40,11 @@ export const modalsRouter: TRoute[] = [
   { name: 'edit-wallet', element: <EditWalletModal /> },
   { name: 'persist-account', element: <PersistAccountModal /> },
   { name: 'delete-account', element: <DeleteAccountModal /> },
+  { name: 'delete-wallet', element: <DeleteWalletModal /> },
+  { name: 'create-wallet-step-1', element: <CreateWalletStep1Modal /> },
+  { name: 'create-wallet-step-2', element: <CreateWalletStep2Modal /> },
+  { name: 'create-wallet-step-3', element: <CreateWalletStep3Modal /> },
+  { name: 'create-wallet-step-4', element: <CreateWalletStep4Modal /> },
   { name: 'persist-contact', element: <PersistContactModal /> },
   { name: 'delete-contact', element: <DeleteModal /> },
   { name: 'add-address', element: <AddAddressModal /> },

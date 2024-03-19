@@ -17,7 +17,7 @@ export const ErrorModal = () => {
     <EndModalLayout
       heading={heading}
       headingIcon={headingIcon}
-      bigger
+      size="md"
       contentClassName="flex flex-col flex-grow items-center justify-center min-w-0"
     >
       <div className="w-28 h-28 p-2 bg-asphalt rounded-full flex items-center">

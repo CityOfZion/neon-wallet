@@ -1,31 +1,34 @@
 import { useTranslation } from 'react-i18next'
 import { TbPencil, TbTrash } from 'react-icons/tb'
-import { IAccountState } from '@renderer/@types/store'
+import { IWalletState } from '@renderer/@types/store'
 import { Banner } from '@renderer/components/Banner'
 import { Button } from '@renderer/components/Button'
 import { Separator } from '@renderer/components/Separator'
 import { StringHelper } from '@renderer/helpers/StringHelper'
+import { useAccountsSelector } from '@renderer/hooks/useAccountSelector'
 import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
 import { useAppDispatch } from '@renderer/hooks/useRedux'
 import { EndModalLayout } from '@renderer/layouts/EndModal'
 import { accountReducerActions } from '@renderer/store/reducers/AccountReducer'
+import { walletReducerActions } from '@renderer/store/reducers/WalletReducer'
 
 type TLocationState = {
-  account: IAccountState
+  wallet: IWalletState
 }
 
-export const DeleteAccountModal = () => {
-  const { account } = useModalState<TLocationState>()
-  const { t } = useTranslation('modals', { keyPrefix: 'deleteAccount' })
+export const DeleteWalletModal = () => {
+  const { wallet } = useModalState<TLocationState>()
+  const { accounts } = useAccountsSelector()
+  const { t } = useTranslation('modals', { keyPrefix: 'deleteWallet' })
   const { modalNavigate } = useModalNavigate()
 
   const dispatch = useAppDispatch()
 
   const handleDelete = () => {
-    if (account) {
-      dispatch(accountReducerActions.deleteAccount(account.address))
-      modalNavigate(-2)
-    }
+    dispatch(walletReducerActions.deleteWallet(wallet.id))
+    const accountsToRemove = accounts.filter(it => it.idWallet === wallet.id).map(it => it.address)
+    dispatch(accountReducerActions.deleteAccounts(accountsToRemove))
+    modalNavigate(-2)
   }
 
   return (
@@ -35,10 +38,10 @@ export const DeleteAccountModal = () => {
           <div className="w-36 h-36 rounded-full bg-asphalt flex items-center justify-center">
             <TbTrash className="text-pink w-[5rem] h-[5rem]" />
           </div>
-          <p className="text-white text-lg pt-7">{t('deleteAccount')}</p>
+          <p className="text-white text-lg pt-7">{t('deleteWallet')}</p>
 
           <div className="flex w-full px-3 bg-gray-300/15 rounded min-h-[2rem] items-center justify-center mt-3">
-            <p className="text-center text-xs p-2">{StringHelper.truncateStringMiddle(account.name, 45)}</p>
+            <p className="text-center text-xs p-2">{StringHelper.truncateStringMiddle(wallet.name, 45)}</p>
           </div>
 
           <span className="text-center px-2 text-xs text-gray-100 pt-4">{t('subtitle')}</span>
