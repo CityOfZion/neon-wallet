@@ -3,11 +3,11 @@ import { redirect } from 'react-router-dom'
 import { PrivateRoute } from '@renderer/components/PrivateRoute'
 import { createRouteHandler } from '@renderer/libs/sentryReact'
 
-import { ConnectionsPage } from './pages/Connections'
 import { ContactsPage } from './pages/Contacts'
 import { LoginPage } from './pages/Login'
 import { PortfolioPage } from './pages/Portfolio'
 import { PortfolioActivityPage } from './pages/Portfolio/Activity'
+import { PortfolioConnectionsPage } from './pages/Portfolio/Connections'
 import { PortfolioOverviewPage } from './pages/Portfolio/Overview'
 import { ReceiveYourAddress } from './pages/Receive'
 import { SendPage } from './pages/Send'
@@ -16,6 +16,7 @@ import { SettingsEncryptKeyPage } from './pages/Settings/SettingsEncryptKey'
 import { SettingsNetwork } from './pages/Settings/SettingsNetwork'
 import { SettingsReleaseNotesPage } from './pages/Settings/SettingsReleaseNotes'
 import { WalletsPage } from './pages/Wallets'
+import { AccountConnections } from './pages/Wallets/AccountConnection'
 import { AccountNftList } from './pages/Wallets/AccountNftList'
 import { AccountOverview } from './pages/Wallets/AccountOverview'
 import { AccountTokensList } from './pages/Wallets/AccountTokensList'
@@ -61,7 +62,7 @@ export const pagesRouter = routeHandler([
       },
       {
         path: 'connections',
-        element: <ConnectionsPage />,
+        element: <PortfolioConnectionsPage />,
       },
     ],
   },
@@ -94,7 +95,7 @@ export const pagesRouter = routeHandler([
           },
           {
             path: 'connections',
-            element: <ConnectionsPage />,
+            element: <AccountConnections />,
           },
         ],
       },

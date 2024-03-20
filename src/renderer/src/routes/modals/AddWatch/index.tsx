@@ -156,6 +156,7 @@ export const AddWatch = () => {
                 label={t('buttonAdd')}
                 leftIcon={<MdAdd />}
                 loading={isLoading}
+                flat
               />
             </div>
           </div>

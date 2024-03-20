@@ -111,8 +111,8 @@ const Base = ({
       className={StyleHelper.mergeStyles(
         'aria-[disabled=true]:cursor-not-allowed w-full aria-[disabled=true]:opacity-50 aria-[disabled=false]:cursor-pointer',
         {
-          'h-10 text-sm px-5': !flat,
-          'h-8.5 text-xs px-4': flat,
+          'h-10 text-sm px-3': !flat,
+          'h-8.5 text-xs px-1.5': flat,
           'text-neon': colorSchema === 'neon',
           'text-gray-200': colorSchema === 'gray',
           'text-white': colorSchema === 'white',
