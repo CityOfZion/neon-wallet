@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { TBlockchainServiceKey } from '@renderer/@types/blockchain'
 import { BlockchainIcon } from '@renderer/components/BlockchainIcon'
 import { Button } from '@renderer/components/Button'
-import { Checkbox } from '@renderer/components/Checkbox'
+import { RadioGroup } from '@renderer/components/RadioGroup'
 import { Separator } from '@renderer/components/Separator'
 import { useBsAggregator } from '@renderer/hooks/useBsAggregator'
 import { useModalState } from '@renderer/hooks/useModalRouter'
@@ -33,7 +33,7 @@ export const BlockchainSelectionModal = () => {
   } = useModalState<TLocation>()
   const { bsAggregator } = useBsAggregator()
 
-  const [selectedBlockchain, setSelectedBlockchain] = useState<TBlockchainServiceKey | null>(null)
+  const [selectedBlockchain, setSelectedBlockchain] = useState<TBlockchainServiceKey>('neo3')
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -42,7 +42,7 @@ export const BlockchainSelectionModal = () => {
     onSelect?.(selectedBlockchain)
   }
 
-  const handleCheckboxChange = (service: TBlockchainServiceKey) => {
+  const handleSelectRadioItem = (service: TBlockchainServiceKey) => {
     setSelectedBlockchain(service)
   }
 
@@ -65,19 +65,17 @@ export const BlockchainSelectionModal = () => {
 
       <form className="flex flex-col  flex-grow mt-6" onSubmit={handleSubmit}>
         <ul className="flex flex-col flex-grow gap-2.5">
-          {(Object.keys(bsAggregator.blockchainServicesByName) as TBlockchainServiceKey[]).map((service, index) => (
-            <li className="flex flex-row items-center justify-between h-12 rounded bg-asphalt p-5" key={index}>
-              <div className="flex flex-row gap-x-2">
-                <BlockchainIcon blockchain={service} type="white" className="opacity-60" />
-                {blockchainT(service)}
-              </div>
-
-              <Checkbox
-                onCheckedChange={() => handleCheckboxChange(service)}
-                checked={selectedBlockchain === service}
+          <RadioGroup.Root value={selectedBlockchain} onValueChange={handleSelectRadioItem}>
+            {(Object.keys(bsAggregator.blockchainServicesByName) as TBlockchainServiceKey[]).map((service, index) => (
+              <RadioGroup.Item
+                containerClassname="h-12 rounded bg-asphalt p-5 border-none mb-2.5"
+                key={index}
+                value={service}
+                label={blockchainT(service)}
+                leftIcon={<BlockchainIcon blockchain={service} type="gray" />}
               />
-            </li>
-          ))}
+            ))}
+          </RadioGroup.Root>
         </ul>
 
         <Button

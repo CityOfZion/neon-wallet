@@ -1,6 +1,6 @@
-import { TAccountColorKey } from '@renderer/@types/blockchain'
 import { IAccountState } from '@renderer/@types/store'
 import placeholderImage from '@renderer/assets/images/account-card-placeholder.png'
+import { backgroundColorByAccountColor } from '@renderer/constants/blockchain'
 
 import { BlockchainIcon } from './BlockchainIcon'
 type TProps = {
@@ -8,20 +8,11 @@ type TProps = {
 }
 
 export const AccountIcon = ({ account }: TProps) => {
-  const gradientByAccountColor: Record<TAccountColorKey, string> = {
-    blue: 'from-[#242171] to-[#919BED]',
-    green: 'from-[#164C55] to-[#63D5D0]',
-    gray: 'from-[#324C5F] to-[#9ABED3]',
-    magenta: 'from-[#4C2F71] to-[#BB9EE4]',
-    yellow: 'from-[#BDA133] to-[#FEDD5B]',
-    purple: 'from-[#2F008E] to-[#7C4BFE]',
-    orange: 'from-[#B44D00] to-[#FE872F]',
-  }
   return (
     <div className="w-[2.25rem] h-[2.25rem] flex justify-center items-center">
       <div
-        className={`w-7 h-5 relative rounded-sm flex items-center shadow-sm justify-center overflow-hidden bg-gradient-to-t ${
-          gradientByAccountColor[account.backgroundColor]
+        className={`w-7 h-5 relative rounded-sm flex items-center shadow-sm justify-center overflow-hidden ${
+          backgroundColorByAccountColor[account.backgroundColor]
         }`}
       >
         <div className="w-full h-full absolute border-l-0 border-b-0 border-r-[1.75rem] border-t-[1.25rem] border-l-transparent border-r-transparent border-b-transparent border-t-white/5" />

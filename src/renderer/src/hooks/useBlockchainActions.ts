@@ -47,7 +47,7 @@ export function useBlockchainActions() {
   )
 
   const createAccount = useCallback(
-    async ({ blockchain, name, wallet }: TAccountToCreate) => {
+    async ({ blockchain, name, wallet, backgroundColor }: TAccountToCreate) => {
       if (wallet.walletType !== 'standard' || !wallet.encryptedMnemonic) throw new Error('Problem to create account')
 
       const mnemonic = await window.api.decryptBasedEncryptedSecret(
@@ -73,7 +73,7 @@ export function useBlockchainActions() {
         idWallet: wallet.id,
         name,
         blockchain,
-        backgroundColor: accountColorsKeys[UtilsHelper.getRandomNumber(7)],
+        backgroundColor: backgroundColor ? backgroundColor : accountColorsKeys[UtilsHelper.getRandomNumber(7)],
         address: generatedAccount.address,
         accountType: wallet.walletType,
         encryptedKey,

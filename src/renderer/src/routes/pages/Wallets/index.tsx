@@ -111,16 +111,18 @@ export const WalletsPage = () => {
             />
           </main>
 
-          <footer className="px-4 pb-6">
-            <Button
-              label={t('addAccountButtonLabel')}
-              variant="outlined"
-              className="w-full"
-              flat
-              disabled
-              leftIcon={<MdAdd />}
-            />
-          </footer>
+          {selectedWallet.walletType === 'standard' && (
+            <footer className="px-4 pb-6">
+              <Button
+                label={t('addAccountButtonLabel')}
+                variant="outlined"
+                className="w-full"
+                flat
+                leftIcon={<MdAdd className="text-neon" />}
+                onClick={modalNavigateWrapper('persist-account', { state: { wallet: selectedWallet } })}
+              />
+            </footer>
+          )}
         </section>
       )}
 
@@ -146,7 +148,7 @@ export const WalletsPage = () => {
               variant="text"
               colorSchema="gray"
               clickableProps={{ className: 'text-xs' }}
-              onClick={modalNavigateWrapper('edit-account', { state: { account: selectedAccount } })}
+              onClick={modalNavigateWrapper('persist-account', { state: { account: selectedAccount } })}
             />
           )}
         </header>

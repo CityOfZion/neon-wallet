@@ -15,8 +15,11 @@ export const useActions = <T extends TUseActionsData>(initialData: T) => {
     return {
       isValid: false,
       isActing: false,
-      errors: initialDataKeys.reduce((acc, key) => ({ ...acc, [key]: undefined }), {} as TUseActionsErrors<T>),
-      changed: initialDataKeys.reduce((acc, key) => ({ ...acc, [key]: false }), {} as TUseActionsChanged<T>),
+      errors: {} as TUseActionsErrors<T>,
+      changed: initialDataKeys.reduce(
+        (acc, key) => ({ ...acc, [key]: !!initialData[key] }),
+        {} as TUseActionsChanged<T>
+      ),
     }
   }, [initialData])
 
@@ -25,6 +28,7 @@ export const useActions = <T extends TUseActionsData>(initialData: T) => {
 
   const actionDataRef = useRef<T>(actionData)
   const actionStateRef = useRef<TUseActionsActionState<T>>(actionState)
+  console.log(actionState)
 
   const setState = useCallback(
     (

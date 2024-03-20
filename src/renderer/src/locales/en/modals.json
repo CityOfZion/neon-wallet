@@ -37,14 +37,20 @@
     "cancelButtonLabel": "Cancel",
     "nameLengthError": "Name must be at least 1 character long"
   },
-  "editAccount": {
-    "title": "Edit Account",
+  "persistAccount": {
+    "titleEdit": "Edit Account",
+    "titleCreate": "Create new account",
+    "subtitleCreate": "Creating an account is easy, just give it a name and select a colour below and you're done!",
+    "inputLabel": "Account name",
     "inputPlaceholder": "Enter your account name...",
-    "colorSelectorLabel": "Select a colour for your account card",
+    "inputSubtitle": "It could be helpful to name your account with a label related to what you want to use the account for (such as ‘Investments’ or ‘Trading’).",
+    "selectBlockchainDescription": "Please select which chain you would like to use for this account.",
+    "colorSelectorLabel": "Select an account colour",
     "saveButtonLabel": "Save",
+    "nextButtonLabel": "Next",
     "cancelButtonLabel": "Cancel",
     "deleteAccountTitle": "Delete Account",
-    "deleteAccountSubtext": "Tum dicere exorsus est et dolore magnam aliquam quaerat voluptatem."
+    "deleteAccountSubtext": "Deleting an account that contains assets will cause these assets to become inaccessible after deletion!"
   },
   "persistContactModal": {
     "addContact": "Add Contact",
@@ -317,5 +323,14 @@
     "hashLabel": "HASH",
     "parametersLabel": "REQUEST PARAMETERS",
     "methodNotFoundError": "Method not found in contract"
+  },
+  "deleteAccount": {
+    "title": "Edit account",
+    "deleteAccount": "Delete account?",
+    "subtitle": "Ensure that you've transferred your assets to a new account before proceeding, so that your assets will be safe",
+    "alert": "Deleting an account that contains assets will cause these assets to become inaccessible after deletion!",
+    "warning": "Are you sure you want to continue?",
+    "delete": "Delete Account",
+    "cancel": "Cancel"
   }
 }

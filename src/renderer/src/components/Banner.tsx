@@ -25,9 +25,9 @@ export const Banner = ({ message, type, className, ...props }: TProps) => {
       className={StyleHelper.mergeStyles('flex bg-gray-300/15 rounded-md overflow-hidden items-center', className)}
       {...props}
     >
-      <div className="py-3 px-4 bg-gray-300/30">{iconByType[type]}</div>
+      <div className="flex py-3 px-4 h-full items-center justify-center bg-gray-300/30">{iconByType[type]}</div>
 
-      <p className="px-5 text-xs text-white">{message}</p>
+      <p className="px-5 text-xs text-white py-2">{message}</p>
     </div>
   )
 }

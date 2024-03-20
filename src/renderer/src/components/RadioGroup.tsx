@@ -1,16 +1,25 @@
 import * as RadixRadioGroup from '@radix-ui/react-radio-group'
 import { StyleHelper } from '@renderer/helpers/StyleHelper'
 
-type ItemProps = RadixRadioGroup.RadioGroupItemProps & { label: string; leftIcon?: JSX.Element }
+type ItemProps = RadixRadioGroup.RadioGroupItemProps & {
+  label: string
+  leftIcon?: JSX.Element
+  containerClassname?: string
+}
 
 const Root = (props: RadixRadioGroup.RadioGroupProps) => {
   return <RadixRadioGroup.Root {...props} />
 }
 
-const Item = ({ label, leftIcon, className, ...props }: ItemProps) => {
+const Item = ({ label, leftIcon, className, containerClassname, ...props }: ItemProps) => {
   return (
-    <div className="flex flex-row gap-y-2 gap-x-4 h-10 items-center justify-between hover:bg-asphalt border-b border-gray-300/30">
-      <div className="flex items-center">
+    <div
+      className={StyleHelper.mergeStyles(
+        'flex flex-row gap-y-2 gap-x-4 h-10 items-center justify-between hover:bg-asphalt border-b border-gray-300/30',
+        containerClassname
+      )}
+    >
+      <div className="flex items-center gap-2.5">
         {leftIcon && leftIcon}
         <label>{label}</label>
       </div>

@@ -152,7 +152,7 @@ export const Input = forwardRef<HTMLInputElement, TInputProps>(
           </div>
         </div>
 
-        {errorMessage && <span className="block mt-1 text-xs text-pink absolute">{errorMessage}</span>}
+        {errorMessage && <span className="block mt-1 text-xs text-pink">{errorMessage}</span>}
       </div>
     )
   }

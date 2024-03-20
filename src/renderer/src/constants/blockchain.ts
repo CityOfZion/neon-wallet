@@ -30,4 +30,22 @@ export const blockchainIconsByBlockchain: Record<
   },
 }
 
-export const accountColorsKeys: TAccountColorKey[] = ['green', 'blue', 'magenta', 'gray', 'yellow']
+export const accountColorsKeys: TAccountColorKey[] = [
+  'green',
+  'blue',
+  'magenta',
+  'lightBlue',
+  'yellow',
+  'orange',
+  'purple',
+]
+
+export const backgroundColorByAccountColor: Record<TAccountColorKey, string> = {
+  blue: 'bg-[#4786FF]',
+  green: 'bg-[#00DDB4]',
+  lightBlue: 'bg-[#47BEFF]',
+  magenta: 'bg-[#D355E7]',
+  yellow: 'bg-[#FEC42F]',
+  purple: 'bg-[#9747FF]',
+  orange: 'bg-[#FE872F]',
+}
