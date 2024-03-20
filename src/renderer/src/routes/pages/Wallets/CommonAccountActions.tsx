@@ -14,13 +14,14 @@ export const CommonAccountActions = ({ account }: TProps) => {
   const { t } = useTranslation('common', { keyPrefix: 'general' })
 
   return account?.accountType !== 'watch' ? (
-    <div>
+    <div className="flex gap-2">
       <Button
         leftIcon={<TbStepInto className="text-neon w-5 h-5" />}
         label={t('receive')}
         className="w-fit h-9"
         variant="text"
         colorSchema="neon"
+        flat
         clickableProps={{ className: 'text-xs' }}
         onClick={() => navigate('/receive', { state: { account: account } })}
       />
@@ -29,6 +30,7 @@ export const CommonAccountActions = ({ account }: TProps) => {
         label={t('send')}
         className="w-fit h-9"
         variant="text"
+        flat
         colorSchema="neon"
         clickableProps={{ className: 'text-xs' }}
         onClick={() => navigate('/send', { state: { account: account } })}
