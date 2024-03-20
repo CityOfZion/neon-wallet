@@ -25,5 +25,12 @@ export const customAPI = {
     return electronAPI.ipcRenderer.invoke('decryptBasedSecret', decryptedByOSValue, secret)
   },
 
+  encryptBasedSecret: (value: string, secret: string): Promise<string> =>
+    electronAPI.ipcRenderer.invoke('encryptBasedSecret', value, secret),
+
   restoreWindow: () => electronAPI.ipcRenderer.invoke('restore'),
+
+  openDialog: (): Promise<string[]> => electronAPI.ipcRenderer.invoke('openDialog'),
+
+  saveFile: (path: string, content: string): Promise<void> => electronAPI.ipcRenderer.invoke('saveFile', path, content),
 }

@@ -179,7 +179,7 @@
     "securityOption": {
       "encryptKey": "Encrypt Key",
       "recoverWallet": "Recover Wallet",
-      "backupWallet": "Backup Wallet"
+      "backupWallet": "Backup NEON"
     },
     "encryptKey": {
       "subtitle": "Choose a passphrase to encrypt an existing key:",
@@ -213,6 +213,14 @@
       "button": {
         "learnMore": "Learn More"
       }
+    },
+    "backupWallet": {
+      "title": "Backup NEON",
+      "description": "Save a backup file to your computer that will allow you to restore your wallet in the event that you lose access or damage your device.",
+      "saveBackupLabel": "Where would you like to save your backup?",
+      "browse": "Browse...",
+      "backup": "Backup",
+      "warning": "Note: This process will back up your entire wallet"
     }
   },
   "receive": {

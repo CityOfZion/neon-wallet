@@ -12,4 +12,8 @@ export class DateHelper {
   static unixToDateHour = (unixTime: number): string => {
     return `${this.timeToDate(unixTime)} ${this.timeToHour(unixTime)}`
   }
+
+  static getNowUnix = (): number => {
+    return Date.now()
+  }
 }

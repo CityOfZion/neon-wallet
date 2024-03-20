@@ -13,6 +13,7 @@ import { ReceiveYourAddress } from './pages/Receive'
 import { RootPage } from './pages/Root'
 import { SendPage } from './pages/Send'
 import { SettingsPage } from './pages/Settings'
+import { SettingsBackupWallet } from './pages/Settings/SettingsBackupWallet'
 import { SettingsEncryptKeyPage } from './pages/Settings/SettingsEncryptKey'
 import { SettingsNetwork } from './pages/Settings/SettingsNetwork'
 import { SettingsReleaseNotesPage } from './pages/Settings/SettingsReleaseNotes'
@@ -172,7 +173,7 @@ export const pagesRouter = routeHandler([
               },
               {
                 path: 'backup-wallet',
-                element: <Fragment />,
+                element: <SettingsBackupWallet />,
               },
             ],
           },

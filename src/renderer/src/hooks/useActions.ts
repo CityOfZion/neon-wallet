@@ -28,7 +28,6 @@ export const useActions = <T extends TUseActionsData>(initialData: T) => {
 
   const actionDataRef = useRef<T>(actionData)
   const actionStateRef = useRef<TUseActionsActionState<T>>(actionState)
-  console.log(actionState)
 
   const setState = useCallback(
     (

@@ -528,6 +528,20 @@ interface Resources {
       delete: 'Delete Wallet'
       cancel: 'Cancel'
     }
+    confirmPasswordBackup: {
+      title: 'Backup NEON'
+      description: 'In order to create your backup file, please provide your NEON password below:'
+      subtitle: 'Current NEON Password'
+      inputPlaceholder: 'Enter your password...'
+      buttonContinueLabel: 'Backup Now'
+      error: 'Password not recognised!'
+      warning: 'You’ll need this password to restore your wallet.'
+      warningHighlighted: 'Please keep it safe!'
+      modalDescription: 'Backup created successfully!'
+      errorBackup: 'There was an error trying to backup. Please, try again.'
+      downloadQRCodePassword: 'Download password QR code'
+      returnSettings: 'Return to Settings'
+    }
   }
   pages: {
     welcome: {
@@ -700,7 +714,7 @@ interface Resources {
       securityOption: {
         encryptKey: 'Encrypt Key'
         recoverWallet: 'Recover Wallet'
-        backupWallet: 'Backup Wallet'
+        backupWallet: 'Backup NEON'
       }
       encryptKey: {
         subtitle: 'Choose a passphrase to encrypt an existing key:'
@@ -734,6 +748,15 @@ interface Resources {
         button: {
           learnMore: 'Learn More'
         }
+      }
+      backupWallet: {
+        title: 'Backup NEON'
+        description: 'Save a backup file to your computer that will allow you to restore your wallet in the event that you lose access or damage your device.'
+        saveBackupLabel: 'Where would you like to save your backup?'
+        browse: 'Browse...'
+        backup: 'Backup'
+        warning: 'Note: This process will back up your entire wallet'
+        modalDescription: 'Backup created successfully!'
       }
     }
     receive: {
