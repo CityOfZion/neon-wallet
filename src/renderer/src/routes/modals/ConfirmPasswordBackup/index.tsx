@@ -6,6 +6,7 @@ import { Banner } from '@renderer/components/Banner'
 import { Button } from '@renderer/components/Button'
 import { Input } from '@renderer/components/Input'
 import { Separator } from '@renderer/components/Separator'
+import { BACKUP_FILE_EXTENTION } from '@renderer/constants/backup'
 import { DateHelper } from '@renderer/helpers/DateHelper'
 import { ToastHelper } from '@renderer/helpers/ToastHelper'
 import { useAccountsSelector } from '@renderer/hooks/useAccountSelector'
@@ -27,19 +28,21 @@ type TLocationState = {
 const SuccessFooter = () => {
   const { t } = useTranslation('modals', { keyPrefix: 'confirmPasswordBackup' })
   const { modalNavigateWrapper } = useModalNavigate()
-  return <div className="flex flex-col items-center flex-grow w-full justify-end gap-7">
-  <Button
-    label={t('downloadQRCodePassword')}
-    leftIcon={<MdDownload />}
-    variant="outlined"
-    className="w-full px-9"
-    flat
-    iconsOnEdge={false}
-    disabled
-  />
-  <Separator />
-  <Button label={t('returnSettings')} onClick={modalNavigateWrapper(-1)} className="w-full px-9" />
-</div>
+  return (
+    <div className="flex flex-col items-center flex-grow w-full justify-end gap-7">
+      <Button
+        label={t('downloadQRCodePassword')}
+        leftIcon={<MdDownload />}
+        variant="outlined"
+        className="w-full px-9"
+        flat
+        iconsOnEdge={false}
+        disabled
+      />
+      <Separator />
+      <Button label={t('returnSettings')} onClick={modalNavigateWrapper(-1)} className="w-full px-9" />
+    </div>
+  )
 }
 
 export const ConfirmPasswordBackupModal = () => {
@@ -103,7 +106,10 @@ export const ConfirmPasswordBackupModal = () => {
 
       const content = await window.api.encryptBasedSecret(JSON.stringify(backupFile), decryptedPassword)
 
-      window.api.saveFile(`${selectedFilePath}/NEON3-Backup-${DateHelper.getNowUnix()}`, content)
+      window.api.saveFile(
+        `${selectedFilePath}/NEON3-Backup-${DateHelper.getNowUnix()}.${BACKUP_FILE_EXTENTION}`,
+        content
+      )
       modalNavigate('success', {
         replace: true,
         state: {

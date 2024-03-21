@@ -178,7 +178,7 @@
     },
     "securityOption": {
       "encryptKey": "Encrypt Key",
-      "recoverWallet": "Recover Wallet",
+      "recoverWallet": "Import NEON Backup",
       "backupWallet": "Backup NEON"
     },
     "encryptKey": {
@@ -221,6 +221,14 @@
       "browse": "Browse...",
       "backup": "Backup",
       "warning": "Note: This process will back up your entire wallet"
+    },
+    "recoverWallet": {
+      "title": "Import NEON Backup",
+      "description": "In the event that you lose access to you wallet, you can import it from a local backup file. Simply locate your local backup file and enter the password you used when you created the backup file and your access will be restored.",
+      "saveBackupLabel": "Locate your backup file",
+      "browse": "Browse...",
+      "backup": "Import backup",
+      "nameExtention": "NEON Backup Files"
     }
   },
   "receive": {
