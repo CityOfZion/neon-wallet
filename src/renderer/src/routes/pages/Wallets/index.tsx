@@ -148,7 +148,7 @@ export const WalletsPage = () => {
                 variant="text"
                 colorSchema="gray"
                 clickableProps={{ className: 'text-xs' }}
-                onClick={modalNavigateWrapper('edit-account', { state: { account: selectedAccount } })}
+                onClick={modalNavigateWrapper('persist-account', { state: { account: selectedAccount } })}
               />
             </header>
 
