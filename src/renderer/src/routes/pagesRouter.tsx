@@ -12,6 +12,7 @@ import { PortfolioOverviewPage } from './pages/Portfolio/Overview'
 import { ReceiveYourAddress } from './pages/Receive'
 import { SendPage } from './pages/Send'
 import { SettingsPage } from './pages/Settings'
+import { SettingsChangePasswordPage } from './pages/Settings/SettingsChangePassword'
 import { SettingsEncryptKeyPage } from './pages/Settings/SettingsEncryptKey'
 import { SettingsNetwork } from './pages/Settings/SettingsNetwork'
 import { SettingsReleaseNotesPage } from './pages/Settings/SettingsReleaseNotes'
@@ -162,7 +163,11 @@ export const pagesRouter = routeHandler([
         path: 'security',
         children: [
           {
-            path: 'encrypt-key?',
+            path: 'change-password?',
+            element: <SettingsChangePasswordPage />,
+          },
+          {
+            path: 'encrypt-key',
             element: <SettingsEncryptKeyPage />,
           },
           {

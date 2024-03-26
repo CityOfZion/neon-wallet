@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { MdOutlineLock, MdOutlineSave } from 'react-icons/md'
+import { MdOutlineKey, MdOutlineLock, MdOutlineSave } from 'react-icons/md'
 import { TbReload } from 'react-icons/tb'
 import { useMatch } from 'react-router-dom'
 
@@ -13,10 +13,15 @@ export const SettingsSecurityTabContent = () => {
     <nav className="flex flex-row justify-between h-15 w-full mb-5 text-[14px]">
       <ul className="max-w-full w-full">
         <SettingsSidebarLink
-          title={t('securityOption.encryptKey')}
+          title={t('securityOption.changePassword')}
           icon={<MdOutlineLock />}
-          to="/settings/security/encrypt-key"
+          to="/settings/security/change-password"
           match={!!matchRootEncryptKey}
+        />
+        <SettingsSidebarLink
+          title={t('securityOption.encryptKey')}
+          icon={<MdOutlineKey />}
+          to="/settings/security/encrypt-key"
         />
         <SettingsSidebarLink
           title={t('securityOption.recoverWallet')}

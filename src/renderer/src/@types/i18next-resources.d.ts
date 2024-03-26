@@ -648,6 +648,7 @@ interface Resources {
         releaseNotes: 'Release Notes'
       }
       securityOption: {
+        changePassword: 'Change password'
         encryptKey: 'Encrypt Key'
         recoverWallet: 'Recover Wallet'
         backupWallet: 'Backup Wallet'
