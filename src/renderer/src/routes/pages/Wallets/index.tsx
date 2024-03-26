@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MdAdd, MdOutlineContentCopy } from 'react-icons/md'
 import { TbFileImport, TbPencil } from 'react-icons/tb'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { IAccountState, IWalletState } from '@renderer/@types/store'
 import { Button } from '@renderer/components/Button'
 import { IconButton } from '@renderer/components/IconButton'
@@ -25,6 +25,7 @@ export const WalletsPage = () => {
   const { accounts } = useAccountsSelector()
   const { modalNavigateWrapper } = useModalNavigate()
   const navigate = useNavigate()
+  const { state } = useLocation()
 
   const [selectedWallet, setSelectedWallet] = useState<IWalletState | undefined>(wallets[0])
   const [selectedAccount, setSelectedAccount] = useState<IAccountState | undefined>(
@@ -33,27 +34,26 @@ export const WalletsPage = () => {
 
   const balanceExchange = useBalancesAndExchange(accounts)
 
-  const handleSelectWallet = (selected: IWalletState) => {
-    setSelectedWallet(selected)
-  }
-
   const handleSelectAccount = (selected: IAccountState) => {
     setSelectedAccount(selected)
     navigate(`/wallets/${selected.address}/overview`)
   }
 
   useEffect(() => {
-    setSelectedWallet(prev => {
-      if (prev) {
-        const updatedWallet = wallets.find(wallet => wallet.id === prev.id)
-        if (updatedWallet) {
-          return updatedWallet
+    if (state?.wallet) {
+      setSelectedWallet(state?.wallet)
+    } else {
+      setSelectedWallet(prev => {
+        if (prev) {
+          const updatedWallet = wallets.find(wallet => wallet.id === prev.id)
+          if (updatedWallet) {
+            return updatedWallet
+          }
         }
-      }
-
-      return wallets[0]
-    })
-  }, [wallets])
+        return wallets[0]
+      })
+    }
+  }, [state?.wallet, wallets])
 
   useEffect(() => {
     const firstAccount = accounts.find(account => account.idWallet === selectedWallet?.id)
@@ -79,16 +79,17 @@ export const WalletsPage = () => {
             text={t('editWalletButtonLabel')}
             onClick={modalNavigateWrapper('edit-wallet', { state: { wallet: selectedWallet } })}
           />
-          <IconButton icon={<MdAdd />} size="md" text={t('newWalletButtonLabel')} disabled />
+          <IconButton
+            icon={<MdAdd />}
+            size="md"
+            text={t('newWalletButtonLabel')}
+            onClick={modalNavigateWrapper('create-wallet-step-1')}
+          />
           <IconButton
             icon={<TbFileImport />}
             size="md"
             text={t('importButtonLabel')}
-            onClick={modalNavigateWrapper('import', {
-              state: {
-                onImportWallet: handleSelectWallet,
-              },
-            })}
+            onClick={modalNavigateWrapper('import')}
           />
         </div>
       }

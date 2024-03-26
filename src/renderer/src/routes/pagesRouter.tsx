@@ -10,6 +10,7 @@ import { PortfolioActivityPage } from './pages/Portfolio/Activity'
 import { PortfolioConnectionsPage } from './pages/Portfolio/Connections'
 import { PortfolioOverviewPage } from './pages/Portfolio/Overview'
 import { ReceiveYourAddress } from './pages/Receive'
+import { RootPage } from './pages/Root'
 import { SendPage } from './pages/Send'
 import { SettingsPage } from './pages/Settings'
 import { SettingsEncryptKeyPage } from './pages/Settings/SettingsEncryptKey'
@@ -38,192 +39,194 @@ const routeHandler = createRouteHandler()
 export const pagesRouter = routeHandler([
   {
     path: '/',
-    loader: async () => redirect('/portfolio'),
-  },
-  {
-    path: '/portfolio',
-    element: (
-      <PrivateRoute>
-        <PortfolioPage />
-      </PrivateRoute>
-    ),
+    element: <RootPage />,
     children: [
       {
-        path: '',
-        loader: async () => redirect('/portfolio/overview'),
-      },
-      {
-        path: 'overview',
-        element: <PortfolioOverviewPage />,
-      },
-      {
-        path: 'activity',
-        element: <PortfolioActivityPage />,
-      },
-      {
-        path: 'connections',
-        element: <PortfolioConnectionsPage />,
-      },
-    ],
-  },
-  {
-    path: '/wallets',
-    element: (
-      <PrivateRoute>
-        <WalletsPage />
-      </PrivateRoute>
-    ),
-    children: [
-      {
-        path: ':address',
+        path: 'portfolio',
+        element: (
+          <PrivateRoute>
+            <PortfolioPage />
+          </PrivateRoute>
+        ),
         children: [
           {
-            path: 'overview?',
-            element: <AccountOverview />,
+            path: '',
+            loader: async () => redirect('/portfolio/overview'),
           },
           {
-            path: 'tokens',
-            element: <AccountTokensList />,
+            path: 'overview',
+            element: <PortfolioOverviewPage />,
           },
           {
-            path: 'nfts',
-            element: <AccountNftList />,
-          },
-          {
-            path: 'transactions',
-            element: <AccountTransactionsList />,
+            path: 'activity',
+            element: <PortfolioActivityPage />,
           },
           {
             path: 'connections',
-            element: <AccountConnections />,
+            element: <PortfolioConnectionsPage />,
           },
         ],
       },
-    ],
-  },
-  {
-    path: '/send',
-    element: (
-      <PrivateRoute>
-        <SendPage />
-      </PrivateRoute>
-    ),
-  },
-  {
-    path: '/receive',
-    element: (
-      <PrivateRoute>
-        <ReceiveYourAddress />
-      </PrivateRoute>
-    ),
-  },
-  {
-    path: '/contacts',
-    element: (
-      <PrivateRoute>
-        <ContactsPage />
-      </PrivateRoute>
-    ),
-  },
-  {
-    path: '/settings',
-    element: (
-      <PrivateRoute>
-        <SettingsPage />
-      </PrivateRoute>
-    ),
-    children: [
       {
-        path: 'personalisation?',
+        path: 'wallets',
+        element: (
+          <PrivateRoute>
+            <WalletsPage />
+          </PrivateRoute>
+        ),
         children: [
           {
-            path: 'network-configuration?',
-            element: <SettingsNetwork />,
-          },
-          {
-            path: 'currency',
-            element: <Fragment />,
-          },
-          {
-            path: 'language',
-            element: <Fragment />,
-          },
-          {
-            path: 'theme',
-            element: <Fragment />,
-          },
-          {
-            path: 'release-notes',
-            element: <SettingsReleaseNotesPage />,
+            path: ':address',
+            children: [
+              {
+                path: 'overview?',
+                element: <AccountOverview />,
+              },
+              {
+                path: 'tokens',
+                element: <AccountTokensList />,
+              },
+              {
+                path: 'nfts',
+                element: <AccountNftList />,
+              },
+              {
+                path: 'transactions',
+                element: <AccountTransactionsList />,
+              },
+              {
+                path: 'connections',
+                element: <AccountConnections />,
+              },
+            ],
           },
         ],
       },
       {
-        path: 'security',
+        path: 'send',
+        element: (
+          <PrivateRoute>
+            <SendPage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'receive',
+        element: (
+          <PrivateRoute>
+            <ReceiveYourAddress />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'contacts',
+        element: (
+          <PrivateRoute>
+            <ContactsPage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'settings',
+        element: (
+          <PrivateRoute>
+            <SettingsPage />
+          </PrivateRoute>
+        ),
         children: [
           {
-            path: 'encrypt-key?',
-            element: <SettingsEncryptKeyPage />,
+            path: 'personalisation?',
+            children: [
+              {
+                path: 'network-configuration?',
+                element: <SettingsNetwork />,
+              },
+              {
+                path: 'currency',
+                element: <Fragment />,
+              },
+              {
+                path: 'language',
+                element: <Fragment />,
+              },
+              {
+                path: 'theme',
+                element: <Fragment />,
+              },
+              {
+                path: 'release-notes',
+                element: <SettingsReleaseNotesPage />,
+              },
+            ],
           },
           {
-            path: 'recover-wallet',
-            element: <Fragment />,
-          },
-          {
-            path: 'backup-wallet',
-            element: <Fragment />,
+            path: 'security',
+            children: [
+              {
+                path: 'encrypt-key?',
+                element: <SettingsEncryptKeyPage />,
+              },
+              {
+                path: 'recover-wallet',
+                element: <Fragment />,
+              },
+              {
+                path: 'backup-wallet',
+                element: <Fragment />,
+              },
+            ],
           },
         ],
       },
+      { path: 'welcome', element: <WelcomePage /> },
+      {
+        path: 'welcome-security-setup',
+        element: <WelcomeSecuritySetupPage />,
+        children: [
+          {
+            path: '1?',
+            element: <WelcomeSecuritySetupStep1Page />,
+          },
+          {
+            path: '2',
+            element: <WelcomeSecuritySetupStep2Page />,
+          },
+          {
+            path: '3',
+            element: <WelcomeSecuritySetupStep3Page />,
+          },
+        ],
+      },
+      {
+        path: 'welcome-import-wallet',
+        element: <WelcomeImportWalletPage />,
+        children: [
+          {
+            path: '1?',
+            element: <WelcomeImportWalletStep1Page />,
+          },
+          {
+            path: '2',
+            element: <WelcomeImportWalletStep2Page />,
+          },
+          {
+            path: '3',
+            element: <WelcomeImportWalletStep3Page />,
+          },
+          {
+            path: '4',
+            element: <WelcomeImportWalletStep4Page />,
+          },
+          {
+            path: '5',
+            element: <WelcomeImportWalletStep5Page />,
+          },
+        ],
+      },
+      {
+        path: 'login',
+        element: <LoginPage />,
+      },
     ],
-  },
-  { path: '/welcome', element: <WelcomePage /> },
-  {
-    path: '/welcome-security-setup',
-    element: <WelcomeSecuritySetupPage />,
-    children: [
-      {
-        path: '1?',
-        element: <WelcomeSecuritySetupStep1Page />,
-      },
-      {
-        path: '2',
-        element: <WelcomeSecuritySetupStep2Page />,
-      },
-      {
-        path: '3',
-        element: <WelcomeSecuritySetupStep3Page />,
-      },
-    ],
-  },
-  {
-    path: '/welcome-import-wallet',
-    element: <WelcomeImportWalletPage />,
-    children: [
-      {
-        path: '1?',
-        element: <WelcomeImportWalletStep1Page />,
-      },
-      {
-        path: '2',
-        element: <WelcomeImportWalletStep2Page />,
-      },
-      {
-        path: '3',
-        element: <WelcomeImportWalletStep3Page />,
-      },
-      {
-        path: '4',
-        element: <WelcomeImportWalletStep4Page />,
-      },
-      {
-        path: '5',
-        element: <WelcomeImportWalletStep5Page />,
-      },
-    ],
-  },
-  {
-    path: '/login',
-    element: <LoginPage />,
   },
 ])

@@ -52,6 +52,47 @@
     "deleteAccountTitle": "Delete Account",
     "deleteAccountSubtext": "Deleting an account that contains assets will cause these assets to become inaccessible after deletion!"
   },
+  "createWallet": {
+    "title": "Create Wallet",
+    "heading": "Creating your new BIP39 wallet",
+    "step1Header": "Generate security phrase",
+    "step1Description": "This set of secret words make it easy to back up and restore your account. This makes your wallet really secure",
+    "step2Header": "Confirm security phrase",
+    "step2Description": "It’s really important you remember your phrase correctly so we will help you with that. If you’re in a rush you can do it another time.",
+    "step3Header": "Give your new wallet a name and passphrase",
+    "step3Description": "Give your wallet a memorable name and passphrase and your ready to go!",
+    "step1": {
+      "title": "Generate security phrase",
+      "step1of3": "1 of 3",
+      "description": "Write this phrase down on a piece of paper or record it in a secure digital note. You can also download it below but be sure to keep it safe.",
+      "copyButtonLabel": "Copy",
+      "printButtonLabel": "Print",
+      "nextButtonLabel": "Next",
+      "warning": "Anyone with this phrase will be able to access your hard-earned assets and you won’t be able to get them back!"
+    },
+    "step2": {
+      "title": "Confirm security phrase",
+      "step2of3": "2 of 3",
+      "description": "Please select each phrase in the correct order to make sure you’ve got it right:",
+      "nextButtonLabel": "Next",
+      "warning": "If you can’t remember your security phrase, don’t worry, you can find it in the ‘Settings’ section of the wallet",
+      "tryAgain": "Please try again to confirm your back up"
+    },
+    "step3": {
+      "title": "Give your new wallet a name and passphrase",
+      "step3of3": "3 of 3",
+      "description": "Give your wallet a memorable name, it could be helpful to name it with a label related to what you want to use the wallet for (such as ‘Investments’ or ‘Trading Wallet’).",
+      "inputLabel": "Wallet name",
+      "inputPlaceholder": "Enter your wallet name...",
+      "createWalletButtonLabel": "Create wallet",
+      "nameLengthError": "Name must be at least 1 character long"
+    },
+    "step4": {
+      "title": "Congratulations, you’re now the proud owner of a shiny new wallet!",
+      "description": "Remember to keep your secret phrase safe, having several backups is always a good idea. If you need to find out a wallets secret phrase you can find it in the settings page for that wallet.",
+      "viewWalletButtonLabel": "View wallet"
+    }
+  },
   "persistContactModal": {
     "addContact": "Add Contact",
     "editContact": "Edit Contact",
@@ -331,6 +372,15 @@
     "alert": "Deleting an account that contains assets will cause these assets to become inaccessible after deletion!",
     "warning": "Are you sure you want to continue?",
     "delete": "Delete Account",
+    "cancel": "Cancel"
+  },
+  "deleteWallet": {
+    "title": "Edit wallet",
+    "deleteWallet": "Delete wallet?",
+    "subtitle": "Ensure that you've transferred your assets to a new wallet before proceeding, so that your assets will be safe",
+    "alert": "Deleting an wallet that contains assets will cause these assets to become inaccessible after deletion!",
+    "warning": "Are you sure you want to continue?",
+    "delete": "Delete Wallet",
     "cancel": "Cancel"
   }
 }

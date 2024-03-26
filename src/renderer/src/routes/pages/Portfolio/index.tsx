@@ -17,7 +17,12 @@ export const PortfolioPage = () => {
       heading={t('title')}
       rightComponent={
         <div className="flex gap-x-2">
-          <IconButton icon={<MdAdd />} size="md" text={t('newWalletButtonLabel')} disabled />
+          <IconButton
+            icon={<MdAdd />}
+            size="md"
+            text={t('newWalletButtonLabel')}
+            onClick={modalNavigateWrapper('create-wallet-step-1')}
+          />
           <IconButton
             icon={<TbFileImport />}
             size="md"

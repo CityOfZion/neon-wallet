@@ -1,9 +1,9 @@
 import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TbFileImport } from 'react-icons/tb'
+import { useNavigate } from 'react-router-dom'
 import { Account } from '@cityofzion/blockchain-service'
 import { TBlockchainServiceKey, TImportAccountsParam } from '@renderer/@types/blockchain'
-import { IWalletState } from '@renderer/@types/store'
 import { AccountSelection } from '@renderer/components/AccountSelection'
 import { Button } from '@renderer/components/Button'
 import { Loader } from '@renderer/components/Loader'
@@ -18,7 +18,6 @@ import { EndModalLayout } from '@renderer/layouts/EndModal'
 
 type TLocation = {
   key: string
-  onImportWallet?: (wallet: IWalletState) => void
 }
 
 type TAccountWithBlockchain = Account & { blockchain: TBlockchainServiceKey }
@@ -29,10 +28,11 @@ type TActionsData = {
 }
 
 export const ImportKeyAccountsSelectionModal = () => {
-  const { key, onImportWallet } = useModalState<TLocation>()
+  const { key } = useModalState<TLocation>()
   const blockchainActions = useBlockchainActions()
   const { t: commomT } = useTranslation('common', { keyPrefix: 'wallet' })
   const { modalNavigate } = useModalNavigate()
+  const navigate = useNavigate()
   const { t } = useTranslation('modals', { keyPrefix: 'importKeyAccountsSelection' })
   const { bsAggregator } = useBsAggregator()
   const { ref: allAccountsRef } = useAppSelector(state => state.account.data.map(it => it.address))
@@ -66,9 +66,8 @@ export const ImportKeyAccountsSelectionModal = () => {
 
     await blockchainActions.importAccounts({ wallet, accounts: accountsToImport })
 
-    if (onImportWallet) onImportWallet(wallet)
-
     modalNavigate(-2)
+    navigate('/wallets', { state: { wallet } })
   }
 
   const { isMounting } = useMount(async () => {
