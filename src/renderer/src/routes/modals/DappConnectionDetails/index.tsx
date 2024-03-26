@@ -25,10 +25,11 @@ import { DappConnectionSuccessContent } from './DappConnectionSuccessContent'
 
 type TModalState = {
   proposal: TSessionProposal
+  account: IAccountState
 }
 
 export const DappConnectionDetailsModal = () => {
-  const { proposal } = useModalState<TModalState>()
+  const { proposal, account } = useModalState<TModalState>()
   const { rejectProposal, approveProposal } = useWalletConnectWallet()
   const { modalNavigate } = useModalNavigate()
   const { networkTypeRef } = useNetworkTypeSelector()
@@ -47,7 +48,7 @@ export const DappConnectionDetailsModal = () => {
   }
 
   const handleAccountSelection = async (account: IAccountState) => {
-    if (!proposalInformation) return
+    if (!proposalInformation || !account) return
 
     try {
       await approveProposal(proposal, {
@@ -84,12 +85,7 @@ export const DappConnectionDetailsModal = () => {
       dispatch(settingsReducerActions.setNetworkType(proposalInformation.network))
     }
 
-    modalNavigate('dapp-connection-account-selection', {
-      state: {
-        onSelectionFinish: handleAccountSelection,
-        proposalInformation: proposalInformation,
-      },
-    })
+    handleAccountSelection(account)
   }
 
   useEffect(() => {
