@@ -3,6 +3,7 @@ import { TRoute } from '@renderer/@types/modal'
 import { AddAddressModal } from './modals/AddAddress'
 import { AddWatch } from './modals/AddWatch'
 import { BlockchainSelectionModal } from './modals/BlockchainSelection'
+import { ConfirmPasswordBackupModal } from './modals/ConfirmPasswordBackup'
 import { CreateWalletStep1Modal } from './modals/CreateWallet/CreateWalletStep1Modal'
 import { CreateWalletStep2Modal } from './modals/CreateWallet/CreateWalletStep2Modal'
 import { CreateWalletStep3Modal } from './modals/CreateWallet/CreateWalletStep3Modal'
@@ -36,6 +37,7 @@ export const modalsRouter: TRoute[] = [
   { name: 'import', element: <ImportModal /> },
   { name: 'import-mnemonic-accounts-selection', element: <ImportMnemonicAccountsSelectionModal /> },
   { name: 'import-key-accounts-selection', element: <ImportKeyAccountsSelectionModal /> },
+  { name: 'confirm-password-backup', element: <ConfirmPasswordBackupModal /> },
   { name: 'add-watch', element: <AddWatch /> },
   { name: 'edit-wallet', element: <EditWalletModal /> },
   { name: 'persist-account', element: <PersistAccountModal /> },
