@@ -22,7 +22,7 @@ export const AccountConnections = () => {
   return (
     <AccountDetailsLayout
       actions={
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <span className="text-gray-300 mr-2">{t('totalConnections', { connections: filteredSessions.length })}</span>
 
           <Button
