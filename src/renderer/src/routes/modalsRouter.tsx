@@ -9,7 +9,6 @@ import { CreateWalletStep2Modal } from './modals/CreateWallet/CreateWalletStep2M
 import { CreateWalletStep3Modal } from './modals/CreateWallet/CreateWalletStep3Modal'
 import { CreateWalletStep4Modal } from './modals/CreateWallet/CreateWalletStep4Modal'
 import { DappConnectionModal } from './modals/DappConnection'
-import { DappConnectionAccountSelectionModal } from './modals/DappConnectionAccountSelection'
 import { DappConnectionDetailsModal } from './modals/DappConnectionDetails'
 import { DappDisconnectionModal } from './modals/DappDisconnection'
 import { DappPermissionModal } from './modals/DappPermission'
@@ -55,7 +54,6 @@ export const modalsRouter: TRoute[] = [
   { name: 'dapp-disconnection', element: <DappDisconnectionModal /> },
   { name: 'dapp-connection', element: <DappConnectionModal /> },
   { name: 'dapp-connection-details', element: <DappConnectionDetailsModal /> },
-  { name: 'dapp-connection-account-selection', element: <DappConnectionAccountSelectionModal /> },
   { name: 'dapp-permission', element: <DappPermissionModal /> },
   { name: 'dapp-permission-contract-details', element: <DappPermissionContractDetailsModal /> },
   { name: 'dapp-permission-signature-scope', element: <DappPermissionSignatureScopeModal /> },

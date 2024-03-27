@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TbPlugX, TbPlus } from 'react-icons/tb'
 import { useParams } from 'react-router-dom'
@@ -5,6 +6,7 @@ import { useWalletConnectWallet } from '@cityofzion/wallet-connect-sdk-wallet-re
 import { Button } from '@renderer/components/Button'
 import { ConnectionsTable } from '@renderer/components/ConnectionsTable'
 import { WalletConnectHelper } from '@renderer/helpers/WalletConnectHelper'
+import { useAccountsSelector } from '@renderer/hooks/useAccountSelector'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
 import { AccountDetailsLayout } from '@renderer/layouts/AccountDetailsLayout'
 
@@ -14,6 +16,10 @@ export const AccountConnections = () => {
 
   const { t } = useTranslation('pages', { keyPrefix: 'wallets.accountConnections' })
   const { address } = useParams()
+
+  const { accounts } = useAccountsSelector()
+
+  const account = useMemo(() => accounts.find(account => account.address === address)!, [accounts, address])
 
   const filteredSessions = sessions.filter(session =>
     WalletConnectHelper.getAccountInformationFromSession(session).address.includes(address ?? '')
@@ -30,7 +36,7 @@ export const AccountConnections = () => {
             label={t('newConnection')}
             leftIcon={<TbPlus />}
             flat
-            onClick={modalNavigateWrapper('dapp-connection')}
+            onClick={modalNavigateWrapper('dapp-connection', { state: { account } })}
           />
 
           <Button

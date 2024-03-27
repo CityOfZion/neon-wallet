@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { TbLink } from 'react-icons/tb'
 import { useWalletConnectWallet } from '@cityofzion/wallet-connect-sdk-wallet-react'
+import { IAccountState } from '@renderer/@types/store'
 import { ReactComponent as NeonWalletLogo } from '@renderer/assets/images/neon-wallet-full.svg'
 import { ReactComponent as WalletConnectLogo } from '@renderer/assets/images/wallet-connect.svg'
 import { Button } from '@renderer/components/Button'
@@ -9,7 +10,7 @@ import { Input } from '@renderer/components/Input'
 import { ToastHelper } from '@renderer/helpers/ToastHelper'
 import { WalletConnectHelper } from '@renderer/helpers/WalletConnectHelper'
 import { useActions } from '@renderer/hooks/useActions'
-import { useModalNavigate } from '@renderer/hooks/useModalRouter'
+import { useModalNavigate, useModalState } from '@renderer/hooks/useModalRouter'
 import { CenterModalLayout } from '@renderer/layouts/CenterModal'
 
 type TFormData = {
@@ -17,10 +18,15 @@ type TFormData = {
   isConnecting: boolean
 }
 
+type TLocationState = {
+  account: IAccountState
+}
+
 export const DappConnectionModal = () => {
   const { connect, proposals } = useWalletConnectWallet()
   const { modalNavigate } = useModalNavigate()
   const { t } = useTranslation('modals', { keyPrefix: 'dappConnection' })
+  const { account } = useModalState<TLocationState>()
   const { actionData, setData, actionState, setError, handleAct } = useActions<TFormData>({
     url: '',
     isConnecting: false,
@@ -48,10 +54,10 @@ export const DappConnectionModal = () => {
 
   useEffect(() => {
     const proposal = proposals[0]
-    if (!proposal) return
+    if (!proposal || !account) return
 
-    modalNavigate('dapp-connection-details', { state: { proposal }, replace: true })
-  }, [proposals, modalNavigate])
+    modalNavigate('dapp-connection-details', { state: { proposal, account }, replace: true })
+  }, [proposals, modalNavigate, account])
 
   return (
     <CenterModalLayout contentClassName="flex flex-col">
