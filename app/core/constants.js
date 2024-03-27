@@ -132,6 +132,8 @@ export const ROUTES = {
   CREATE_WALLET_AUTHENTICATED: '/create-authenticated',
   IMPORT_WALLET: '/import',
   IMPORT_WALLET_AUTHENTICATED: '/import-authenticated',
+  MIGRATE_WALLETS_NEON3: '/migrate-wallets-neon3',
+  MIGRATE_WALLETS_NEON3_STEPS: '/migrate-wallets-neon3-steps',
   TOKEN_SALE: '/token-sale',
   TOKEN_SALE_CONFIRMATION: '/token-sale-confirm',
   TOKEN_SALE_FAILURE: '/token-sale-failure',

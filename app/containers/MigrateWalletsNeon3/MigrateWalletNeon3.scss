@@ -1,0 +1,34 @@
+.scrollableContent {
+  flex-grow: 1;
+}
+
+.childrenContainer {
+  justify-content: start !important;
+}
+
+.container {
+  padding: 0px 74px 54px 74px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.title {
+  font-size: 24px;
+  color: var(--base-text);
+  text-align: center;
+}
+
+.description {
+  font-size: 12px;
+  color: var(--base-text-light);
+  text-align: center;
+  margin-top: 16px;
+}

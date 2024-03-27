@@ -1,0 +1,23 @@
+.scrollableContent {
+  flex-grow: 1;
+  margin-top: 40px;
+  margin-bottom: 54px;
+  max-width: 450px;
+  width: 100%;
+  overflow-y: visible !important;
+}
+
+.childrenContainer {
+  justify-content: start !important;
+  width: 100%;
+}
+
+.stepper {
+  margin: 48px 0 84px 0;
+}
+
+.title {
+  font-size: 20px;
+  text-align: center;
+  color: var(--base-text);
+}

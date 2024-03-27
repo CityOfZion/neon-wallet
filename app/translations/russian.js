@@ -161,6 +161,7 @@ const AUTH = {
   authLedger: 'LEDGER',
   authCreateWallet: 'Создать Кошелек',
   authImportWallet: 'Импортировать Кошелек',
+  authMigrateWallets: "Миграция кошельков",
   authScanQRButton: 'Сканировать QR-код',
   authLoginButton: 'Войти',
   authLedgerFirstStep: 'Подключите и разблокируйте своё Ledger устройство',
@@ -381,6 +382,38 @@ const TOKEN_SALE = {
   tokenSaleDisclaimer5: `Я понимаю, что City of Zion (CoZ) не несет ответственности за использование мной этой возможности и я ознакомился с условиями лицензионного соглашения.`,
 }
 
+const MIGRATE_WALLETS_NEON3 = {
+  migrateWalletsNeon3AltImage: "Фоновое изображение для миграции кошельков",
+  migrateWalletNeon3Title: "Хотите мигрировать ваш кошелек NEON 2 на NEON 3?",
+  migrateWalletNeon3Description: "Миграция вашего кошелька даст вам доступ к более широкому спектру поддерживаемых активов и более удобному и улучшенному пользовательскому опыту, который сделает управление вашими активами легким!",
+  migrateWalletNeon3Button: "Мигрировать сейчас!",
+};
+
+const MIGRATE_WALLETS_NEON3_STEPS = {
+  migrateWalletsNeon3Steps1: "Получить NEON 3",
+  migrateWalletsNeon3Steps2: "Экспортировать ваши счета NEON 2",
+  migrateWalletsNeon3Steps3: "Открыть NEON 3",
+
+  migrateWalletsNeon3Step1Title: "Получить NEON 3",
+  migrateWalletsNeon3Step1Description: "Начните с загрузки последней версии NEON и создания вашего первого кошелька:",
+  migrateWalletsNeon3Step1DownloadButton: "Скачать NEON 3",
+  migrateWalletsNeon3Step1NextStep: "Как только NEON 3 будет установлен на вашем устройстве, перейдите к следующему шагу.",
+  migrateWalletsNeon3Step1ButtonLabel: "Далее",
+
+  migrateWalletsNeon3Step2Title: "Экспортировать ваши счета NEON 2",
+  migrateWalletsNeon3Step2Description: "Экспортируйте файл миграции NEON 2 на ваш компьютер. Вы будете использовать этот файл для миграции вашего кошелька на NEON 3.",
+  migrateWalletsNeon3InputLabel: "Куда вы хотите сохранить свой файл миграции?",
+  migrateWalletsNeon3Step2BrowseButton: "Обзор...",
+  migrateWalletsNeon3Step2NextStep: "Когда вы определите местоположение для сохранения вашего файла миграции, переходите к следующему шагу.",
+  migrateWalletsNeon3Step2ButtonLabel: "Далее",
+
+  migrateWalletsNeon3Step3Title: "Открыть NEON 3",
+  migrateWalletsNeon3Step3Description: "Вы почти у цели!",
+  migrateWalletsNeon3Step3Description2: "Чтобы завершить процесс миграции, откройте NEON 3 и следуйте инструкциям.",
+  migrateWalletsNeon3Step3AltImage: "Фоновое изображение для миграции кошельков",
+};
+
+
 export default {
   ...AUTH,
   ...INPUTS,
@@ -401,4 +434,6 @@ export default {
   ...MISCELLANEOUS,
   ...ERRORS,
   ...NOTIFICATIONS,
+  ...MIGRATE_WALLETS_NEON3,
+  ...MIGRATE_WALLETS_NEON3_STEPS
 }

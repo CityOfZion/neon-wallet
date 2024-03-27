@@ -21,6 +21,7 @@ type Props = {
   headerContainerClassName: string,
   instructionsClassName: string,
   childrenContainerClassName: string,
+  scrollableContentClassName: string,
 }
 
 export default class ViewLayout extends Component<Props> {
@@ -41,6 +42,7 @@ export default class ViewLayout extends Component<Props> {
       className,
       containerClassName,
       childrenContainerClassName,
+      scrollableContentClassName,
       shouldRenderNavigation,
     } = this.props
 
@@ -58,7 +60,12 @@ export default class ViewLayout extends Component<Props> {
               <span>{this.renderCloseButton()}</span>
             </div>
           )}
-          <div className={styles.scrollableContent}>
+          <div
+            className={classNames(
+              scrollableContentClassName,
+              styles.scrollableContent,
+            )}
+          >
             {this.renderHeader()}
             {this.renderInstructions()}
 

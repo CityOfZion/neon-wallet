@@ -152,6 +152,7 @@ const AUTH = {
   authLedger: 'LEDGER',
   authCreateWallet: 'Tạo Ví',
   authImportWallet: 'Nhập Ví',
+  authMigrateWallets: "Di chuyển ví",
   authScanQRButton: 'Quét mã QR',
   authLoginButton: 'Đăng nhập',
   authLedgerFirstStep: 'Kết nối và mở khóa một thiết bị Ledger',
@@ -371,6 +372,38 @@ const TOKEN_SALE = {
   tokenSaleDisclaimer5: `Tôi hiểu rằng COZ không chịu trách nhiệm cho việc sử dụng tính năng này của tôi và tôi đã tham khảo giấy phép của phần mềm này.`,
 }
 
+const MIGRATE_WALLETS_NEON3 = {
+  migrateWalletsNeon3AltImage: "Hình nền Di dời Ví",
+  migrateWalletNeon3Title: "Bạn có muốn di dời ví NEON 2 của mình sang NEON 3 không?",
+  migrateWalletNeon3Description: "Việc di dời ví của bạn sẽ mang lại cho bạn quyền truy cập vào một loạt các tài sản được hỗ trợ rộng hơn và một trải nghiệm người dùng mượt mà, cải tiến giúp quản lý tài sản của bạn trở nên dễ dàng hơn!",
+  migrateWalletNeon3Button: "Di dời Ngay!",
+};
+
+const MIGRATE_WALLETS_NEON3_STEPS = {
+  migrateWalletsNeon3Steps1: "Nhận NEON 3",
+  migrateWalletsNeon3Steps2: "Xuất các tài khoản NEON 2 của bạn",
+  migrateWalletsNeon3Steps3: "Mở NEON 3",
+
+  migrateWalletsNeon3Step1Title: "Nhận NEON 3",
+  migrateWalletsNeon3Step1Description: "Bắt đầu bằng cách tải xuống phiên bản NEON mới nhất và tạo ví đầu tiên của bạn:",
+  migrateWalletsNeon3Step1DownloadButton: "Tải Xuống NEON 3",
+  migrateWalletsNeon3Step1NextStep: "Sau khi NEON 3 được cài đặt trên thiết bị của bạn, tiến hành bước tiếp theo.",
+  migrateWalletsNeon3Step1ButtonLabel: "Tiếp theo",
+
+  migrateWalletsNeon3Step2Title: "Xuất các tài khoản NEON 2 của bạn",
+  migrateWalletsNeon3Step2Description: "Xuất tệp di dời NEON 2 của bạn ra máy tính. Bạn sẽ sử dụng tệp này để di dời ví của bạn vào NEON 3.",
+  migrateWalletsNeon3InputLabel: "Bạn muốn lưu tệp di dời của mình ở đâu?",
+  migrateWalletsNeon3Step2BrowseButton: "Duyệt...",
+  migrateWalletsNeon3Step2NextStep: "Khi bạn đã xác định một vị trí để lưu trữ tệp di dời của mình, tiến hành bước tiếp theo.",
+  migrateWalletsNeon3Step2ButtonLabel: "Tiếp theo",
+
+  migrateWalletsNeon3Step3Title: "Mở NEON 3",
+  migrateWalletsNeon3Step3Description: "Bạn gần kết thúc!",
+  migrateWalletsNeon3Step3Description2: "Để hoàn tất quá trình di dời, hãy mở NEON 3 và tuân theo hướng dẫn.",
+  migrateWalletsNeon3Step3AltImage: "Hình nền Di dời Ví",
+};
+
+
 export default {
   ...AUTH,
   ...INPUTS,
@@ -391,4 +424,6 @@ export default {
   ...MISCELLANEOUS,
   ...ERRORS,
   ...NOTIFICATIONS,
+  ...MIGRATE_WALLETS_NEON3,
+  ...MIGRATE_WALLETS_NEON3_STEPS
 }

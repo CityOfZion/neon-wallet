@@ -145,6 +145,7 @@ const AUTH = {
   authLedger: '分类帐',
   authCreateWallet: '生成钱包',
   authImportWallet: '导入钱包文',
+  authMigrateWallets: "遷移錢包",
   authScanQRButton: '扫描二维码',
   authLoginButton: '登录',
   authLedgerFirstStep: '连接并解锁您的 Ledger',
@@ -356,6 +357,38 @@ const TOKEN_SALE = {
     '我了解COZ对使用此功能不承担任何责任，并且我已经查阅了此软件的许可证.',
 }
 
+const MIGRATE_WALLETS_NEON3 = {
+  migrateWalletsNeon3AltImage: "迁移钱包背景图片",
+  migrateWalletNeon3Title: "您想将您的 NEON 2 钱包迁移到 NEON 3 吗？",
+  migrateWalletNeon3Description: "迁移您的钱包将使您可以访问更广泛的支持资产，并且拥有更流畅、改进的用户体验，使您资产管理变得轻而易举！",
+  migrateWalletNeon3Button: "立即迁移！",
+}
+
+const MIGRATE_WALLETS_NEON3_STEPS = {
+  migrateWalletsNeon3Steps1: '获取 NEON 3',
+  migrateWalletsNeon3Steps2: '导出您的 NEON 2 帐户',
+  migrateWalletsNeon3Steps3: '打开 NEON 3',
+
+  migrateWalletsNeon3Step1Title: "获取 NEON 3",
+  migrateWalletsNeon3Step1Description: "从下载最新版本的 NEON 并创建您的第一个钱包开始：",
+  migrateWalletsNeon3Step1DownloadButton: "下载 NEON 3",
+  migrateWalletsNeon3Step1NextStep: "一旦 NEON 3 安装在您的设备上，请继续下一步。",
+  migrateWalletsNeon3Step1ButtonLabel: "下一步",
+
+  migrateWalletsNeon3Step2Title: "导出您的 NEON 2 帐户",
+  migrateWalletsNeon3Step2Description: "将 NEON 2 迁移文件导出到您的计算机。您将使用此文件将您的钱包迁移到 NEON 3。",
+  migrateWalletsNeon3InputLabel: "您希望将迁移文件保存到何处？",
+  migrateWalletsNeon3Step2BrowseButton: "浏览...",
+  migrateWalletsNeon3Step2NextStep: "当您确定了保存迁移文件的位置后，请继续下一步。",
+  migrateWalletsNeon3Step2ButtonLabel: "下一步",
+
+  migrateWalletsNeon3Step3Title: "打开 NEON 3",
+  migrateWalletsNeon3Step3Description: "您就快完成了！",
+  migrateWalletsNeon3Step3Description2: "为了完成迁移过程，请打开 NEON 3 并按照说明操作。",
+  migrateWalletsNeon3Step3AltImage: "迁移钱包背景图片",
+}
+
+
 export default {
   ...AUTH,
   ...INPUTS,
@@ -376,4 +409,6 @@ export default {
   ...MISCELLANEOUS,
   ...ERRORS,
   ...NOTIFICATIONS,
+  ...MIGRATE_WALLETS_NEON3,
+  ...MIGRATE_WALLETS_NEON3_STEPS
 }

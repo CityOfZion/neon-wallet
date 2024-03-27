@@ -159,6 +159,7 @@ const AUTH = {
   authLedger: 'LEDGER',
   authCreateWallet: 'إنشاء محفظة',
   authImportWallet: 'استرداد محفظة',
+  authMigrateWallets: "ترحيل المحافظ",
   authScanQRButton: 'امسح الرمز الضوئي',
   authLoginButton: 'تسجيل الدخول',
   authLedgerFirstStep: 'قم بتوصيل وإلغاء قفل محفظة ليدجر',
@@ -374,6 +375,38 @@ const TOKEN_SALE = {
   tokenSaleDisclaimer5: `أنا أفهم أن COZ ليست مسؤولة عن استخدامي لهذه الميزة ، وقمت بقراءة اتفاقية البرنامج`,
 }
 
+const MIGRATE_WALLETS_NEON3 = {
+  migrateWalletsNeon3AltImage: "صورة خلفية ترحيل المحافظ",
+  migrateWalletNeon3Title: "هل ترغب في ترحيل محفظتك NEON 2 إلى NEON 3؟",
+  migrateWalletNeon3Description: "سيمنحك ترحيل محفظتك الوصول إلى مجموعة أوسع من الأصول المدعومة، وتجربة مستخدم محسنة وأكثر أناقة ستجعل إدارة أصولك سهلة!",
+  migrateWalletNeon3Button: "ترحيل الآن!",
+}
+
+const MIGRATE_WALLETS_NEON3_STEPS = {
+  migrateWalletsNeon3Steps1: 'احصل على NEON 3',
+  migrateWalletsNeon3Steps2: 'قم بتصدير حساباتك في NEON 2',
+  migrateWalletsNeon3Steps3: 'افتح NEON 3',
+
+  migrateWalletsNeon3Step1Title: "احصل على NEON 3",
+  migrateWalletsNeon3Step1Description: "ابدأ بتنزيل آخر إصدار من NEON وأنشئ أول محفظة لك:",
+  migrateWalletsNeon3Step1DownloadButton: "تحميل NEON 3",
+  migrateWalletsNeon3Step1NextStep: "بمجرد تثبيت NEON 3 على جهازك، انتقل إلى الخطوة التالية.",
+  migrateWalletsNeon3Step1ButtonLabel: "التالي",
+
+  migrateWalletsNeon3Step2Title: "قم بتصدير حساباتك في NEON 2",
+  migrateWalletsNeon3Step2Description: "قم بتصدير ملف ترحيل NEON 2 إلى جهاز الكمبيوتر الخاص بك. ستستخدم هذا الملف لترحيل محفظتك إلى NEON 3.",
+  migrateWalletsNeon3InputLabel: "إلى أي مكان ترغب في حفظ ملف الترحيل؟",
+  migrateWalletsNeon3Step2BrowseButton: "تصفح...",
+  migrateWalletsNeon3Step2NextStep: "عندما تحدد موقعًا لحفظ ملف الترحيل الخاص بك، انتقل إلى الخطوة التالية.",
+  migrateWalletsNeon3Step2ButtonLabel: "التالي",
+
+  migrateWalletsNeon3Step3Title: "افتح NEON 3",
+  migrateWalletsNeon3Step3Description: "أنت على وشك الانتهاء!",
+  migrateWalletsNeon3Step3Description2: "لإكمال عملية الترحيل، افتح NEON 3 واتبع التعليمات.",
+  migrateWalletsNeon3Step3AltImage: "صورة خلفية ترحيل المحافظ",
+}
+
+
 export default {
   ...AUTH,
   ...INPUTS,
@@ -394,4 +427,6 @@ export default {
   ...MISCELLANEOUS,
   ...ERRORS,
   ...NOTIFICATIONS,
+  ...MIGRATE_WALLETS_NEON3,
+  ...MIGRATE_WALLETS_NEON3_STEPS
 }

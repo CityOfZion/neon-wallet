@@ -153,6 +153,7 @@ const AUTH = {
   authLedger: 'LEDGER',
   authCreateWallet: 'Créer portefeuille',
   authImportWallet: 'Importer portefeuille',
+  authMigrateWallets: "Migrer les portefeuilles",
   authScanQRButton: 'Scanner code QR',
   authLoginButton: 'Connexion',
   authLedgerFirstStep: 'Connecter et déverouiller votre Ledger',
@@ -374,6 +375,38 @@ const TOKEN_SALE = {
   tokenSaleDisclaimer5: `Je comprends que COZ n'est pas responsable de mon utilisation de cette fonctionalité et jai verifié les licenses de ce logiciel.`,
 }
 
+const MIGRATE_WALLETS_NEON3 = {
+  migrateWalletsNeon3AltImage: "Image de fond de migration des portefeuilles",
+  migrateWalletNeon3Title: "Voulez-vous migrer votre portefeuille NEON 2 vers NEON 3 ?",
+  migrateWalletNeon3Description: "La migration de votre portefeuille vous donnera accès à un éventail plus large d'actifs pris en charge, ainsi qu'à une expérience utilisateur plus fluide et améliorée qui facilitera la gestion de vos actifs !",
+  migrateWalletNeon3Button: "Migrer maintenant !",
+};
+
+const MIGRATE_WALLETS_NEON3_STEPS = {
+  migrateWalletsNeon3Steps1: "Obtenez NEON 3",
+  migrateWalletsNeon3Steps2: "Exportez vos comptes NEON 2",
+  migrateWalletsNeon3Steps3: "Ouvrez NEON 3",
+
+  migrateWalletsNeon3Step1Title: "Obtenez NEON 3",
+  migrateWalletsNeon3Step1Description: "Commencez par télécharger la dernière version de NEON et créez votre premier portefeuille :",
+  migrateWalletsNeon3Step1DownloadButton: "Télécharger NEON 3",
+  migrateWalletsNeon3Step1NextStep: "Une fois NEON 3 installé sur votre appareil, passez à l'étape suivante.",
+  migrateWalletsNeon3Step1ButtonLabel: "Suivant",
+
+  migrateWalletsNeon3Step2Title: "Exportez vos comptes NEON 2",
+  migrateWalletsNeon3Step2Description: "Exportez le fichier de migration NEON 2 sur votre ordinateur. Vous utiliserez ce fichier pour migrer votre portefeuille vers NEON 3.",
+  migrateWalletsNeon3InputLabel: "Où souhaitez-vous enregistrer votre fichier de migration ?",
+  migrateWalletsNeon3Step2BrowseButton: "Parcourir...",
+  migrateWalletsNeon3Step2NextStep: "Lorsque vous avez défini un emplacement pour enregistrer votre fichier de migration, passez à l'étape suivante.",
+  migrateWalletsNeon3Step2ButtonLabel: "Suivant",
+
+  migrateWalletsNeon3Step3Title: "Ouvrez NEON 3",
+  migrateWalletsNeon3Step3Description: "Vous y êtes presque !",
+  migrateWalletsNeon3Step3Description2: "Pour finaliser le processus de migration, ouvrez NEON 3 et suivez les instructions.",
+  migrateWalletsNeon3Step3AltImage: "Image de fond de migration des portefeuilles",
+};
+
+
 export default {
   ...AUTH,
   ...INPUTS,
@@ -394,4 +427,6 @@ export default {
   ...MISCELLANEOUS,
   ...ERRORS,
   ...NOTIFICATIONS,
+  ...MIGRATE_WALLETS_NEON3,
+  ...MIGRATE_WALLETS_NEON3_STEPS
 }

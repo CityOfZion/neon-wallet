@@ -17,6 +17,7 @@ type Props = {
   elevated?: boolean,
   outline?: boolean,
   iconClassName?: string,
+  contentClassName?: string,
 }
 
 class Button extends React.Component<Props> {
@@ -27,7 +28,7 @@ class Button extends React.Component<Props> {
   }
 
   render = () => {
-    const { className, children } = this.props
+    const { className, contentClassName, children } = this.props
     const passDownProps = omit(
       this.props,
       'primary',
@@ -37,6 +38,7 @@ class Button extends React.Component<Props> {
       'elevated',
       'outline',
       'iconClassName',
+      'contentClassName',
     )
 
     return (
@@ -52,7 +54,7 @@ class Button extends React.Component<Props> {
         )}
       >
         {this.renderIcon()}
-        <span>{children}</span>
+        <span className={contentClassName}>{children}</span>
       </button>
     )
   }
