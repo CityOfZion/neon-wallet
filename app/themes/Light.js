@@ -3,7 +3,24 @@ const BASE = {
   '--base-scrollbar-thumb': '#5c677f',
   '--base-main-background': '#ECF3F8',
   '--base-text': '#282828',
+  '--base-primary': '#4CFFB3',
+  '--base-primary-10': '#4CFFB31A',
+  '--base-text-light': '#B0C0C8',
   '--base-link-color': '#3063c9',
+}
+
+const STEPPER = {
+  '--stepper-complete-background': '#47BEFF',
+  '--stepper-complete-step': '#1A2026',
+  '--stepper-complete-text': '#47BEFF',
+  '--stepper-current-background': '#5c677f',
+  '--stepper-current-step': '#FFFFFF',
+  '--stepper-current-text': '#5c677f',
+  '--stepper-incomplete-background': '#282828',
+  '--stepper-incomplete-step': '#FFFFFF',
+  '--stepper-incomplete-text': '#282828',
+  '--stepper-incomplete-line': '#282828',
+  '--stepper-complete-line': '#47BEFF',
 }
 
 const BUTTON = {
@@ -239,4 +256,5 @@ export default {
   ...MOBILE,
   ...CHAIN_SWITCH,
   ...WALLET_CONNECT,
+  ...STEPPER,
 }

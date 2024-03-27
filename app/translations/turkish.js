@@ -158,6 +158,7 @@ const AUTH = {
   authLedger: 'LEDGER',
   authCreateWallet: 'Cüzdan Oluştur',
   authImportWallet: 'Cüzdanı İçe Aktar',
+  authMigrateWallets: "Cüzdanları taşı",
   authScanQRButton: 'QR Tarama',
   authLoginButton: 'Giriş',
   authLedgerFirstStep: 'Ledger cihazınızı bağlayın ve kilidini açın',
@@ -372,6 +373,38 @@ const TOKEN_SALE = {
   tokenSaleDisclaimer5: `Bu özelliğin kullanımından COZ'un sorumlu olmadığını anlıyorum ve bu yazılımın lisanslarına danıştım.`,
 }
 
+const MIGRATE_WALLETS_NEON3 = {
+  migrateWalletsNeon3AltImage: "Cüzdan Göç Arka Planı",
+  migrateWalletNeon3Title: "NEON 2 cüzdanınızı NEON 3'e taşımak istiyor musunuz?",
+  migrateWalletNeon3Description: "Cüzdanınızı taşıyarak, desteklenen varlıkların daha geniş bir yelpazesine erişeceksiniz ve varlıklarınızın yönetimini kolaylaştıracak daha akıcı ve geliştirilmiş bir kullanıcı deneyimine sahip olacaksınız!",
+  migrateWalletNeon3Button: "Şimdi Taşı!",
+};
+
+const MIGRATE_WALLETS_NEON3_STEPS = {
+  migrateWalletsNeon3Steps1: "NEON 3'ü Edinin",
+  migrateWalletsNeon3Steps2: "NEON 2 hesaplarınızı dışa aktarın",
+  migrateWalletsNeon3Steps3: "NEON 3'ü Açın",
+
+  migrateWalletsNeon3Step1Title: "NEON 3'ü Edinin",
+  migrateWalletsNeon3Step1Description: "En son NEON sürümünü indirin ve ilk cüzdanınızı oluşturarak başlayın:",
+  migrateWalletsNeon3Step1DownloadButton: "NEON 3'ü İndir",
+  migrateWalletsNeon3Step1NextStep: "NEON 3 cihazınıza kurulduğunda, bir sonraki adıma geçin.",
+  migrateWalletsNeon3Step1ButtonLabel: "İleri",
+
+  migrateWalletsNeon3Step2Title: "NEON 2 hesaplarınızı dışa aktarın",
+  migrateWalletsNeon3Step2Description: "NEON 2 göç dosyanızı bilgisayarınıza dışa aktarın. Bu dosyayı cüzdanınızı NEON 3'e taşımak için kullanacaksınız.",
+  migrateWalletsNeon3InputLabel: "Göç dosyanızı nereye kaydetmek istersiniz?",
+  migrateWalletsNeon3Step2BrowseButton: "Gözat...",
+  migrateWalletsNeon3Step2NextStep: "Göç dosyanızı kaydetmek için bir konum belirlediğinizde, bir sonraki adıma geçin.",
+  migrateWalletsNeon3Step2ButtonLabel: "İleri",
+
+  migrateWalletsNeon3Step3Title: "NEON 3'ü Açın",
+  migrateWalletsNeon3Step3Description: "Neredeyse tamam!",
+  migrateWalletsNeon3Step3Description2: "Göç işlemini tamamlamak için NEON 3'ü açın ve talimatları izleyin.",
+  migrateWalletsNeon3Step3AltImage: "Cüzdan Göç Arka Planı",
+};
+
+
 export default {
   ...AUTH,
   ...INPUTS,
@@ -392,4 +425,6 @@ export default {
   ...MISCELLANEOUS,
   ...ERRORS,
   ...NOTIFICATIONS,
+  ...MIGRATE_WALLETS_NEON3,
+  ...MIGRATE_WALLETS_NEON3_STEPS
 }

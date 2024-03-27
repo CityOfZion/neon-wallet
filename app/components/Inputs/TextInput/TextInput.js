@@ -11,6 +11,7 @@ type Props = {
   className?: string,
   type: string,
   textInputClassName?: string,
+  containerClassName?: string,
   activeStyles?: string,
   placeholder: string,
   error?: string,
@@ -47,9 +48,16 @@ export default class TextInput extends React.Component<Props, State> {
       'renderBefore',
       'renderAfter',
       'shouldRenderErrorIcon',
+      'containerClassName',
     )
 
-    const { error, label, textInputClassName, activeStyles } = this.props
+    const {
+      error,
+      label,
+      textInputClassName,
+      activeStyles,
+      containerClassName,
+    } = this.props
 
     const className = classNames(styles.textInput, this.props.className, {
       [activeStyles || styles.active]: this.state.active,
@@ -57,7 +65,9 @@ export default class TextInput extends React.Component<Props, State> {
     })
 
     return (
-      <div className={styles.textInputContainer}>
+      <div
+        className={classNames(styles.textInputContainer, containerClassName)}
+      >
         {label && <label className={styles.label}> {label} </label>}
         <div className={className}>
           {this.renderBefore()}

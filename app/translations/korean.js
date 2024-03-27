@@ -145,6 +145,7 @@ const AUTH = {
   authLedger: '원장',
   authCreateWallet: '월렛 만들기',
   authImportWallet: '월렛 불러오기',
+  authMigrateWallets: "지갑 마이그레이션",
   authScanQRButton: 'QR코드 스캔',
   authLoginButton: '로그인',
   authLedgerFirstStep: '연결 후 원장 기기를 잠금 해제 해주세요',
@@ -368,6 +369,38 @@ const TOKEN_SALE = {
     'COZ는 이 기능의 사용에 대한 책임이 없으며 이 소프트웨어의 라이센스에 문의했습니다.',
 }
 
+const MIGRATE_WALLETS_NEON3 = {
+  migrateWalletsNeon3AltImage: "지갑 이전 배경 이미지",
+  migrateWalletNeon3Title: "NEON 2 지갑을 NEON 3으로 이전하시겠습니까?",
+  migrateWalletNeon3Description: "지갑을 이전하면 더 많은 지원 자산 범위와 더욱 sleek하고 개선된 사용자 경험이 제공되어 자산 관리가 쉬워집니다!",
+  migrateWalletNeon3Button: "지금 이전하기!",
+};
+
+const MIGRATE_WALLETS_NEON3_STEPS = {
+  migrateWalletsNeon3Steps1: "NEON 3 가져오기",
+  migrateWalletsNeon3Steps2: "NEON 2 계정 내보내기",
+  migrateWalletsNeon3Steps3: "NEON 3 열기",
+
+  migrateWalletsNeon3Step1Title: "NEON 3 가져오기",
+  migrateWalletsNeon3Step1Description: "최신 NEON 빌드를 다운로드하고 첫 번째 지갑을 만들기 시작합니다:",
+  migrateWalletsNeon3Step1DownloadButton: "NEON 3 다운로드",
+  migrateWalletsNeon3Step1NextStep: "NEON 3이 기기에 설치되면 다음 단계로 이동하십시오.",
+  migrateWalletsNeon3Step1ButtonLabel: "다음",
+
+  migrateWalletsNeon3Step2Title: "NEON 2 계정 내보내기",
+  migrateWalletsNeon3Step2Description: "NEON 2 이전 파일을 컴퓨터로 내보냅니다. 이 파일을 사용하여 NEON 3으로 지갑을 이전합니다.",
+  migrateWalletsNeon3InputLabel: "이전 파일을 저장할 위치를 선택하세요.",
+  migrateWalletsNeon3Step2BrowseButton: "찾아보기...",
+  migrateWalletsNeon3Step2NextStep: "이전 파일을 저장할 위치를 정의하면 다음 단계로 이동하십시오.",
+  migrateWalletsNeon3Step2ButtonLabel: "다음",
+
+  migrateWalletsNeon3Step3Title: "NEON 3 열기",
+  migrateWalletsNeon3Step3Description: "거의 다 왔습니다!",
+  migrateWalletsNeon3Step3Description2: "이전 프로세스를 완료하려면 NEON 3을 열고 지시 사항을 따르십시오.",
+  migrateWalletsNeon3Step3AltImage: "지갑 이전 배경 이미지",
+};
+
+
 export default {
   ...AUTH,
   ...INPUTS,
@@ -388,4 +421,6 @@ export default {
   ...MISCELLANEOUS,
   ...ERRORS,
   ...NOTIFICATIONS,
+  ...MIGRATE_WALLETS_NEON3,
+  ...MIGRATE_WALLETS_NEON3_STEPS
 }

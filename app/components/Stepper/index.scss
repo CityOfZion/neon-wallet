@@ -1,0 +1,75 @@
+.container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stepContainer {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.step {
+  width: 24px;
+  height: 24px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 14px;
+}
+
+.stepComplete {
+  background-color: var(--stepper-complete-background);
+  color: var(--stepper-complete-step);
+}
+
+.stepCurrent {
+  background-color: var(--stepper-current-background);
+  color: var(--stepper-current-step);
+}
+
+.stepIncomplete {
+  background-color: var(--stepper-incomplete-background);
+  color: var(--stepper-incomplete-step);
+}
+
+.stepText {
+  text-align: center;
+  width: 80px;
+  top: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  position: absolute;
+}
+
+.stepTextComplete {
+  color: var(--stepper-complete-text);
+}
+
+.stepTextCurrent {
+  color: var(--stepper-current-text);
+}
+
+.stepTextIncomplete {
+  color: var(--stepper-incomplete-text);
+}
+
+.stepLine {
+  width: 100%;
+  height: 0px;
+  border-top: 2px dashed;
+}
+
+.stepLineComplete {
+  border-color: var(--stepper-complete-line);
+}
+
+.stepLineIncomplete {
+  border-color: var(--stepper-incomplete-line);
+}

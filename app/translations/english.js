@@ -160,6 +160,7 @@ const AUTH = {
   authLedger: 'LEDGER',
   authCreateWallet: 'Create Wallet',
   authImportWallet: 'Import Wallet',
+  authMigrateWallets: "Migrate Wallets",
   authScanQRButton: 'Scan QR',
   authLoginButton: 'Login',
   authLedgerFirstStep: 'Connect and unlock your Ledger device',
@@ -379,6 +380,38 @@ const TOKEN_SALE = {
   tokenSaleDisclaimer5: `I understand that City of Zion (CoZ) is not responsible for my usage of this feature, and I have consulted this software's licenses.`,
 }
 
+const MIGRATE_WALLETS_NEON3 = {
+  migrateWalletsNeon3AltImage: "Migrate Wallets Background Image",
+  migrateWalletNeon3Title: "Do you want to migrate your NEON 2 wallet to NEON 3?",
+  migrateWalletNeon3Description: "Migrating your wallet will give you access to a broader range of supported assets, and a sleeker, improved user experience that will make the management of your assets a breeze!",
+  migrateWalletNeon3Button: "Migrate Now!",
+}
+
+const MIGRATE_WALLETS_NEON3_STEPS = {
+  migrateWalletsNeon3Steps1: 'Get NEON 3',
+  migrateWalletsNeon3Steps2: 'Export your NEON 2 accounts',
+  migrateWalletsNeon3Steps3: 'Open NEON 3',
+
+  migrateWalletsNeon3Step1Title: "Get NEON 3",
+  migrateWalletsNeon3Step1Description: "Start by downloading the latest NEON build and create your first wallet:",
+  migrateWalletsNeon3Step1DownloadButton: "Download NEON 3",
+  migrateWalletsNeon3Step1NextStep: "Once NEON 3 is installed on your device, move to the next step.",
+  migrateWalletsNeon3Step1ButtonLabel: "Next",
+
+  migrateWalletsNeon3Step2Title: "Export your NEON 2 accounts",
+  migrateWalletsNeon3Step2Description: "Export the NEON 2 migration file to your computer. You’ll use this file to migrate your wallet into NEON 3.",
+  migrateWalletsNeon3InputLabel: "Where would you like to save your migration file?",
+  migrateWalletsNeon3Step2BrowseButton: "Browse...",
+  migrateWalletsNeon3Step2NextStep: "When you’ve defined a location to save your migration file, move to the next step.",
+  migrateWalletsNeon3Step2ButtonLabel: "Next",
+
+  migrateWalletsNeon3Step3Title: "Open NEON 3",
+  migrateWalletsNeon3Step3Description: "You’re almost there!",
+  migrateWalletsNeon3Step3Description2: "In order to complete the migration process, open NEON 3 and follow the instructions.",
+  migrateWalletsNeon3Step3AltImage: "Migrate Wallets Background Image",
+
+}
+
 export default {
   ...AUTH,
   ...INPUTS,
@@ -399,4 +432,6 @@ export default {
   ...MISCELLANEOUS,
   ...ERRORS,
   ...NOTIFICATIONS,
+  ...MIGRATE_WALLETS_NEON3,
+  ...MIGRATE_WALLETS_NEON3_STEPS
 }
