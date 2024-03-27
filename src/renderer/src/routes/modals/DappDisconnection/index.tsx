@@ -54,9 +54,9 @@ export const DappDisconnectionModal = () => {
         <div className="flex flex-col w-full items-center">
           <Separator />
           <span className="text-xs py-6">{t('warning')}</span>
-          <div className="flex">
+          <div className="flex w-full gap-x-4">
             <Button
-              className="w-fit"
+              className="w-full"
               variant="contained"
               label={t('cancel')}
               onClick={() => modalNavigate(-1)}
@@ -65,7 +65,7 @@ export const DappDisconnectionModal = () => {
             />
             {sessions.length === 1 ? (
               <Button
-                className="w-full px-6"
+                className="w-full"
                 variant="outlined"
                 label={t('disconnect')}
                 leftIcon={<TbPlugX />}
@@ -75,7 +75,7 @@ export const DappDisconnectionModal = () => {
               />
             ) : (
               <Button
-                className="w-full px-6"
+                className="w-full"
                 variant="outlined"
                 label={t('disconnect')}
                 leftIcon={<TbPlugX />}
