@@ -182,6 +182,21 @@ interface Resources {
       cancelButtonLabel: 'Cancel'
       nameLengthError: 'Name must be at least 1 character long'
     }
+    persistAccount: {
+      titleEdit: 'Edit Account'
+      titleCreate: 'Create new account'
+      subtitleCreate: "Creating an account is easy, just give it a name and select a colour below and you're done!"
+      inputLabel: 'Account name'
+      inputPlaceholder: 'Enter your account name...'
+      inputSubtitle: 'It could be helpful to name your account with a label related to what you want to use the account for (such as ‘Investments’ or ‘Trading’).'
+      selectBlockchainDescription: 'Please select which chain you would like to use for this account.'
+      colorSelectorLabel: 'Select an account colour'
+      saveButtonLabel: 'Save'
+      nextButtonLabel: 'Next'
+      cancelButtonLabel: 'Cancel'
+      deleteAccountTitle: 'Delete Account'
+      deleteAccountSubtext: 'Deleting an account that contains assets will cause these assets to become inaccessible after deletion!'
+    }
     createWallet: {
       title: 'Create Wallet'
       heading: 'Creating your new BIP39 wallet'
@@ -222,21 +237,6 @@ interface Resources {
         description: 'Remember to keep your secret phrase safe, having several backups is always a good idea. If you need to find out a wallets secret phrase you can find it in the settings page for that wallet.'
         viewWalletButtonLabel: 'View wallet'
       }
-    }
-    persistAccount: {
-      titleEdit: 'Edit Account'
-      titleCreate: 'Create new account'
-      subtitleCreate: "Creating an account is easy, just give it a name and select a colour below and you're done!"
-      inputLabel: 'Account name'
-      inputPlaceholder: 'Enter your account name...'
-      inputSubtitle: 'It could be helpful to name your account with a label related to what you want to use the account for (such as ‘Investments’ or ‘Trading’).'
-      selectBlockchainDescription: 'Please select which chain you would like to use for this account.'
-      colorSelectorLabel: 'Select an account colour'
-      saveButtonLabel: 'Save'
-      nextButtonLabel: 'Next'
-      cancelButtonLabel: 'Cancel'
-      deleteAccountTitle: 'Delete Account'
-      deleteAccountSubtext: 'Deleting an account that contains assets will cause these assets to become inaccessible after deletion!'
     }
     persistContactModal: {
       addContact: 'Add Contact'
@@ -542,6 +542,17 @@ interface Resources {
       downloadQRCodePassword: 'Download password QR code'
       returnSettings: 'Return to Settings'
     }
+    confirmPasswordRecover: {
+      title: 'Import NEON Backup'
+      description: 'In order to create your backup file, please provide your NEON password below:'
+      subtitle: 'Backup Password'
+      inputPlaceholder: 'Enter your password...'
+      buttonContinueLabel: 'Import this NEON backup'
+      error: 'Password not recognised!'
+      modalDescription: 'Backup imported successfully!'
+      downloadQRCodePassword: 'Download password QR code'
+      returnSettings: 'Return to Settings'
+    }
   }
   pages: {
     welcome: {
@@ -713,7 +724,7 @@ interface Resources {
       }
       securityOption: {
         encryptKey: 'Encrypt Key'
-        recoverWallet: 'Recover Wallet'
+        recoverWallet: 'Import NEON Backup'
         backupWallet: 'Backup NEON'
       }
       encryptKey: {
@@ -756,7 +767,14 @@ interface Resources {
         browse: 'Browse...'
         backup: 'Backup'
         warning: 'Note: This process will back up your entire wallet'
-        modalDescription: 'Backup created successfully!'
+      }
+      recoverWallet: {
+        title: 'Import NEON Backup'
+        description: 'In the event that you lose access to you wallet, you can import it from a local backup file. Simply locate your local backup file and enter the password you used when you created the backup file and your access will be restored.'
+        saveBackupLabel: 'Locate your backup file'
+        browse: 'Browse...'
+        backup: 'Import backup'
+        nameExtention: 'NEON Backup Files'
       }
     }
     receive: {

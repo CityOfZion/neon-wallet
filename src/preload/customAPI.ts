@@ -1,4 +1,5 @@
 import { electronAPI } from '@electron-toolkit/preload'
+import { OpenDialogOptions } from 'electron'
 
 export const customAPI = {
   encryptBasedOS: (value: string): Promise<string> => electronAPI.ipcRenderer.invoke('encryptBasedOS', value),
@@ -28,9 +29,14 @@ export const customAPI = {
   encryptBasedSecret: (value: string, secret: string): Promise<string> =>
     electronAPI.ipcRenderer.invoke('encryptBasedSecret', value, secret),
 
+  decryptBasedSecret: (value: string, secret: string): Promise<string> =>
+    electronAPI.ipcRenderer.invoke('decryptBasedSecret', value, secret),
+
   restoreWindow: () => electronAPI.ipcRenderer.invoke('restore'),
 
-  openDialog: (): Promise<string[]> => electronAPI.ipcRenderer.invoke('openDialog'),
+  openDialog: (options: OpenDialogOptions): Promise<string[]> => electronAPI.ipcRenderer.invoke('openDialog', options),
+
+  readFile: (path: string): Promise<string> => electronAPI.ipcRenderer.invoke('readFile', path),
 
   saveFile: (path: string, content: string): Promise<void> => electronAPI.ipcRenderer.invoke('saveFile', path, content),
 }

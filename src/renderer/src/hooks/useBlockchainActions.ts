@@ -88,7 +88,7 @@ export function useBlockchainActions() {
   )
 
   const importAccount = useCallback(
-    async ({ address, blockchain, type, wallet, key, name, order }: TAccountToImport) => {
+    async ({ address, blockchain, type, wallet, key, name, order, backgroundColor }: TAccountToImport) => {
       let encryptedKey: string | undefined
 
       if (type === 'standard' || type === 'legacy') {
@@ -102,7 +102,7 @@ export function useBlockchainActions() {
         idWallet: wallet.id,
         name: name ?? t('defaultName', { accountNumber: accountOrder + 1 }),
         blockchain,
-        backgroundColor: accountColorsKeys[UtilsHelper.getRandomNumber(7)],
+        backgroundColor: backgroundColor ?? accountColorsKeys[UtilsHelper.getRandomNumber(7)],
         address,
         accountType: type,
         encryptedKey,
@@ -120,7 +120,7 @@ export function useBlockchainActions() {
       const lastOrder = accountsRef.current.filter(account => account.idWallet === wallet.id).length
 
       const promises = accountsToImport.map((account, index) =>
-        importAccount({ ...account, wallet, order: lastOrder + index })
+        importAccount({ ...account, wallet, order: account.order ?? lastOrder + index })
       )
 
       return await Promise.all(promises)

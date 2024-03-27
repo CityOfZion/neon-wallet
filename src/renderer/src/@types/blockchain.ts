@@ -14,9 +14,10 @@ export type TAccountToImport = {
   key?: string
   name?: string
   order?: number
+  backgroundColor?: string
 }
 
-export type TAccountsToImport = Omit<TAccountToImport, 'wallet' | 'order'>[]
+export type TAccountsToImport = Omit<TAccountToImport, 'wallet'>[]
 
 export type TImportAccountsParam = {
   wallet: IWalletState

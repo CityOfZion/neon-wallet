@@ -16,6 +16,7 @@ import { SettingsPage } from './pages/Settings'
 import { SettingsBackupWallet } from './pages/Settings/SettingsBackupWallet'
 import { SettingsEncryptKeyPage } from './pages/Settings/SettingsEncryptKey'
 import { SettingsNetwork } from './pages/Settings/SettingsNetwork'
+import { SettingsRecoverWallet } from './pages/Settings/SettingsRecoverWallet'
 import { SettingsReleaseNotesPage } from './pages/Settings/SettingsReleaseNotes'
 import { WalletsPage } from './pages/Wallets'
 import { AccountConnections } from './pages/Wallets/AccountConnection'
@@ -169,7 +170,7 @@ export const pagesRouter = routeHandler([
               },
               {
                 path: 'recover-wallet',
-                element: <Fragment />,
+                element: <SettingsRecoverWallet />,
               },
               {
                 path: 'backup-wallet',
