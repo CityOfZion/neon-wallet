@@ -8,6 +8,7 @@ import {
 } from '@renderer/@types/modal'
 import { UtilsHelper } from '@renderer/helpers/UtilsHelper'
 import { AnimatePresence } from 'framer-motion'
+import cloneDeep from 'lodash.clonedeep'
 
 type TModalPortalProps = {
   children: React.ReactNode
@@ -37,7 +38,9 @@ export const ModalRouterProvider = ({ routes, children }: TModalRouterProviderPr
         }
 
         setHistory(prevState => {
-          const lastMountedItem = prevState.reverse().find(item => item.status === 'mounted')
+          const lastMountedItem = cloneDeep(prevState)
+            .reverse()
+            .find(item => item.status === 'mounted')
           if (lastMountedItem && lastMountedItem.name === name) {
             return prevState.map(item => (item.id === lastMountedItem.id ? { ...item, state: options?.state } : item))
           }

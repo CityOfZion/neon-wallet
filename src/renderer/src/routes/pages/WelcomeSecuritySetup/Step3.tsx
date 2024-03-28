@@ -16,7 +16,7 @@ export const WelcomeSecuritySetupStep3Page = () => {
 
       <Link
         label={t('buttonContinueLabel')}
-        to="/"
+        to="/portfolio"
         className="w-64"
         rightIcon={<MdOutlineAutoAwesome />}
         iconsOnEdge={false}

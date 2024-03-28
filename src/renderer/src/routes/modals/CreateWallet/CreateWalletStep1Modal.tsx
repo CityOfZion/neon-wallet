@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MdContentCopy, MdLooksOne } from 'react-icons/md'
 import { PiPrinter } from 'react-icons/pi'
@@ -15,8 +15,11 @@ export const CreateWalletStep1Modal = () => {
   const { t } = useTranslation('modals', { keyPrefix: 'createWallet.step1' })
   const { modalNavigate } = useModalNavigate()
 
-  const words = generateMnemonic()
   const ref = useRef<HTMLDivElement>(null)
+
+  const words = useMemo(() => {
+    return generateMnemonic()
+  }, [])
 
   return (
     <CreateWalletModalLayout>
