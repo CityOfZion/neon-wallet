@@ -46,7 +46,7 @@ const ApproveConnection = ({
     const chain = convertChain(network)
 
     try {
-      await approveProposal(proposal, { account: { address, chain } })
+      await approveProposal(proposal, { address, chain, blockchain: 'neo3' })
 
       showSuccessNotification({
         message: `You have accepted connection from ${
