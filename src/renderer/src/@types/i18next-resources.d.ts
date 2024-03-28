@@ -662,6 +662,8 @@ interface Resources {
       error: {
         decryptKey: 'Error to decrypt key'
       }
+      transactionCompleted: 'Transaction completed'
+      transactionFailed: 'Transaction failed'
     }
     selectAccount: {
       selectAccount: 'Select account...'

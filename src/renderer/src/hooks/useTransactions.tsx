@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { TransactionTransferAsset } from '@cityofzion/blockchain-service'
+import { TFetchTransactionsResponse, TUseTransactionsTransfer } from '@renderer/@types/hooks'
 import { IAccountState } from '@renderer/@types/store'
 import { useQueries } from '@tanstack/react-query'
 
@@ -8,20 +8,6 @@ import { useBsAggregator } from './useBsAggregator'
 
 type TProps = {
   accounts: IAccountState[]
-}
-
-export type TUseTransactionsTransfer = {
-  time: number
-  hash: string
-  account: IAccountState
-  toAccount?: IAccountState
-  fromAccount?: IAccountState
-} & TransactionTransferAsset
-
-type TFetchTransactionsResponse = {
-  transfers: TUseTransactionsTransfer[]
-  hasMore: boolean
-  page: number
 }
 
 export const useTransactions = ({ accounts }: TProps) => {

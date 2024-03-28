@@ -1,12 +1,15 @@
-import { forwardRef, useImperativeHandle, useState } from 'react'
+import { forwardRef, useImperativeHandle, useMemo, useState } from 'react'
 import { TbChevronRight } from 'react-icons/tb'
+import { TUseTransactionsTransfer } from '@renderer/@types/hooks'
 import { IAccountState } from '@renderer/@types/store'
 import { DoraHelper } from '@renderer/helpers/DoraHelper'
 import { StringHelper } from '@renderer/helpers/StringHelper'
+import { StyleHelper } from '@renderer/helpers/StyleHelper'
 import { ToastHelper } from '@renderer/helpers/ToastHelper'
 import { useInfiniteScroll } from '@renderer/hooks/useInfiniteScroll'
+import { useAppSelector } from '@renderer/hooks/useRedux'
 import { useNetworkTypeSelector } from '@renderer/hooks/useSettingsSelector'
-import { TUseTransactionsTransfer, useTransactions } from '@renderer/hooks/useTransactions'
+import { useTransactions } from '@renderer/hooks/useTransactions'
 import { getI18next } from '@renderer/libs/i18next'
 import {
   createColumnHelper,
@@ -83,13 +86,21 @@ const columns = [
 
 export const TransactionsTable = forwardRef<HTMLDivElement, TTransactionListProps>(({ accounts }, ref) => {
   const { transfers, fetchNextPage, isLoading } = useTransactions({ accounts })
+  const { value: pendingTransactions } = useAppSelector(state =>
+    state.account.pendingTransactions.filter(transaction =>
+      accounts.some(account => account.address === transaction.account.address)
+    )
+  )
+
   const { networkType } = useNetworkTypeSelector()
   const { handleScroll, ref: scrollRef } = useInfiniteScroll<HTMLDivElement>(fetchNextPage)
 
   const [sorting, setSorting] = useState<SortingState>([])
 
+  const allTransfers = useMemo(() => pendingTransactions.concat(transfers), [pendingTransactions, transfers])
+
   const table = useReactTable({
-    data: transfers,
+    data: allTransfers,
     columns,
     state: {
       sorting,
@@ -103,6 +114,8 @@ export const TransactionsTable = forwardRef<HTMLDivElement, TTransactionListProp
   })
 
   const handleClick = (row: TUseTransactionsTransfer) => {
+    if (row.isPending) return
+
     try {
       const url = DoraHelper.buildTransactionUrl(row.hash, networkType, row.account.blockchain)
       window.open(url)
@@ -121,13 +134,13 @@ export const TransactionsTable = forwardRef<HTMLDivElement, TTransactionListProp
     >
       {isLoading ? (
         <Loader containerClassName="mt-4 flex-grow items-center" />
-      ) : transfers.length <= 0 ? (
+      ) : allTransfers.length <= 0 ? (
         <div className="flex justify-center mt-4">
           <p className="text-gray-300">{t('components:transactionsTable.empty')}</p>
         </div>
       ) : (
         <Table.Root className="table-fixed">
-          <Table.Header className="sticky top-0 bg-gray-800">
+          <Table.Header className="bg-gray-800">
             {table.getHeaderGroups().map(headerGroup => (
               <Table.HeaderRow key={headerGroup.id}>
                 {headerGroup.headers.map(header => (
@@ -146,7 +159,14 @@ export const TransactionsTable = forwardRef<HTMLDivElement, TTransactionListProp
 
           <Table.Body>
             {table.getRowModel().rows.map(row => (
-              <Table.BodyRow key={row.id} className="cursor-pointer" onClick={handleClick.bind(null, row.original)}>
+              <Table.BodyRow
+                key={row.id}
+                className={StyleHelper.mergeStyles('cursor-pointer', {
+                  'cursor-not-allowed animate-pulse': row.original.isPending,
+                })}
+                hoverable={!row.original.isPending}
+                onClick={handleClick.bind(null, row.original)}
+              >
                 {row.getVisibleCells().map(cell => (
                   <Table.Cell className="truncate" key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
