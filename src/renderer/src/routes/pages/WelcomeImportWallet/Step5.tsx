@@ -16,7 +16,7 @@ export const WelcomeImportWalletStep5Page = () => {
       </div>
 
       <Link
-        to="/"
+        to="/portfolio"
         label={t('openWalletButtonLabel')}
         rightIcon={<MdOutlineAutoAwesome />}
         variant="contained"
