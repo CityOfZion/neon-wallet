@@ -1,9 +1,10 @@
 import { useTranslation } from 'react-i18next'
-import { MdDownload, MdOutlineSave } from 'react-icons/md'
+import { MdOutlineSave } from 'react-icons/md'
 import { TAccountBackupFormat, TBackupFormat, TWalletBackupFormat } from '@renderer/@types/blockchain'
 import { AlertErrorBanner } from '@renderer/components/AlertErrorBanner'
 import { Banner } from '@renderer/components/Banner'
 import { Button } from '@renderer/components/Button'
+import { ButtonDownloadPasswordQRCode } from '@renderer/components/ButtonDownloadPasswordQRCode'
 import { Input } from '@renderer/components/Input'
 import { Separator } from '@renderer/components/Separator'
 import { BACKUP_FILE_EXTENTION } from '@renderer/constants/backup'
@@ -28,17 +29,10 @@ type TLocationState = {
 const SuccessFooter = () => {
   const { t } = useTranslation('modals', { keyPrefix: 'confirmPasswordBackup' })
   const { modalNavigateWrapper } = useModalNavigate()
+
   return (
     <div className="flex flex-col items-center flex-grow w-full justify-end gap-7">
-      <Button
-        label={t('downloadQRCodePassword')}
-        leftIcon={<MdDownload />}
-        variant="outlined"
-        className="w-full px-9"
-        flat
-        iconsOnEdge={false}
-        disabled
-      />
+      <ButtonDownloadPasswordQRCode />
       <Separator />
       <Button label={t('returnSettings')} onClick={modalNavigateWrapper(-1)} className="w-full px-9" />
     </div>

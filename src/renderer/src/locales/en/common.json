@@ -8,7 +8,9 @@
     "reset": "Reset",
     "successfullyCopied": "Successfully copied to clipboard",
     "receive": "Receive",
-    "send": "Send"
+    "send": "Send",
+    "passwordNEONQRCode": "QRCode",
+    "downloadQRCodePassword": "Download password QR code"
   },
   "walletConnect": {
     "name": "Neon Wallet",

@@ -10,6 +10,8 @@ interface Resources {
       successfullyCopied: 'Successfully copied to clipboard'
       receive: 'Receive'
       send: 'Send'
+      passwordNEONQRCode: 'QRCode'
+      downloadQRCodePassword: 'Download password QR code'
     }
     walletConnect: {
       name: 'Neon Wallet'
@@ -539,7 +541,6 @@ interface Resources {
       warningHighlighted: 'Please keep it safe!'
       modalDescription: 'Backup created successfully!'
       errorBackup: 'There was an error trying to backup. Please, try again.'
-      downloadQRCodePassword: 'Download password QR code'
       returnSettings: 'Return to Settings'
     }
     confirmPasswordRecover: {
@@ -550,7 +551,6 @@ interface Resources {
       buttonContinueLabel: 'Import this NEON backup'
       error: 'Password not recognised!'
       modalDescription: 'Backup imported successfully!'
-      downloadQRCodePassword: 'Download password QR code'
       returnSettings: 'Return to Settings'
     }
   }

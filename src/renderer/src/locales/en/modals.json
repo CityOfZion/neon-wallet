@@ -394,7 +394,6 @@
     "warningHighlighted": "Please keep it safe!",
     "modalDescription": "Backup created successfully!",
     "errorBackup": "There was an error trying to backup. Please, try again.",
-    "downloadQRCodePassword": "Download password QR code",
     "returnSettings": "Return to Settings"
   },
   "confirmPasswordRecover": {
@@ -405,7 +404,6 @@
     "buttonContinueLabel": "Import this NEON backup",
     "error": "Password not recognised!",
     "modalDescription": "Backup imported successfully!",
-    "downloadQRCodePassword": "Download password QR code",
     "returnSettings": "Return to Settings"
   }
 }
