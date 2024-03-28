@@ -11,8 +11,10 @@ import { Separator } from '@renderer/components/Separator'
 import { DoraHelper } from '@renderer/helpers/DoraHelper'
 import { useBsAggregator } from '@renderer/hooks/useBsAggregator'
 import { useModalNavigate } from '@renderer/hooks/useModalRouter'
+import { useAppDispatch } from '@renderer/hooks/useRedux'
 import { useEncryptedPasswordSelector, useNetworkTypeSelector } from '@renderer/hooks/useSettingsSelector'
 import { ContentLayout } from '@renderer/layouts/ContentLayout'
+import { accountReducerActions } from '@renderer/store/reducers/AccountReducer'
 import debounce from 'lodash/debounce'
 
 import { Recipient } from './Recipient'
@@ -31,7 +33,7 @@ enum SendPageStep {
 
 type TSendServiceResult = {
   serviceAccount: Account
-  service: BlockchainService
+  service: BlockchainService<TBlockchainServiceKey>
   token: TokenBalance
 }
 
@@ -42,6 +44,7 @@ export const SendPage = () => {
   const { modalNavigate } = useModalNavigate()
   const { networkType } = useNetworkTypeSelector()
   const { state } = useLocation()
+  const dispatch = useAppDispatch()
 
   const [selectedAccount, setSelectedAccount] = useState<IAccountState>(state?.account)
   const [selectedToken, setSelectedToken] = useState<TokenBalance | null>()
@@ -189,9 +192,27 @@ export const SendPage = () => {
       })
       if (!transactionHash) {
         showErrorModal()
-      } else {
-        showSuccessModal(transactionHash)
+        return
       }
+      dispatch(
+        accountReducerActions.addPendingTransaction({
+          account: selectedAccount,
+          amount: selectedAmount.toString(),
+          token: sendService.token.token,
+          to: nsAddress || selectedRecipient,
+          from: selectedAccount.address,
+          hash: transactionHash,
+          time: Date.now(),
+          contractHash: sendService.token.token.hash,
+          type: 'token',
+          fromAccount: selectedAccount,
+          isPending: true,
+        })
+      )
+      dispatch(
+        accountReducerActions.watchPendingTransaction({ transactionHash, blockchainService: sendService.service })
+      )
+      showSuccessModal(transactionHash)
     } catch {
       showErrorModal()
     }
