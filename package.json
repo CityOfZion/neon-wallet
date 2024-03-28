@@ -122,7 +122,7 @@
     "@cityofzion/neon-js-legacy": "npm:@cityofzion/neon-js@3.11.9",
     "@cityofzion/neon-js-legacy-latest": "npm:@cityofzion/neon-js@4.9.0",
     "@cityofzion/neon-ledger-next": "npm:@cityofzion/neon-ledger@5.0.0-next.14",
-    "@cityofzion/wallet-connect-sdk-wallet-react": "^3.0.3",
+    "@cityofzion/wallet-connect-sdk-wallet-react": "4.0.1",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@formatjs/intl-pluralrules": "^1.5.2",
