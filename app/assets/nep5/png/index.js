@@ -53,7 +53,7 @@ import GM from './GM.png'
 import NEP from './NEP.png'
 import GFUND from './GFUND.png'
 import FRANK from './FRANK.png'
-import HD from './HD.png'
+import HD from './HD.jpeg'
 import APE from './APE.png'
 import SCHRUTE from './SCHRUTE.png'
 
