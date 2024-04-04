@@ -32,6 +32,7 @@ jobs:
       - run: yarn lint
       - run: yarn flow
       - run: yarn assets
+        timeout: 20m
       - run: yarn test-ci
       - save_cache:
           key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
