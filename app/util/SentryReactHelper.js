@@ -19,8 +19,7 @@ export function setupSentryReact() {
       version: process.env.npm_package_version,
       sendDefaultPii: false,
       beforeSend(event) {
-        if (event.request.url) delete event.request.url
-        if (event.user.ip_address) delete event.user.ip_address
+        if (typeof event.request.url !== 'undefined') delete event.request.url
         return event
       },
     })
