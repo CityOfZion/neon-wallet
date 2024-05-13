@@ -1,6 +1,6 @@
 {
   "name": "Neon",
-  "version": "2.23.10",
+  "version": "2.23.11",
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",
   "homepage": "https://github.com/CityOfZion/neon-wallet",
