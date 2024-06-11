@@ -25,9 +25,13 @@ if (process.defaultApp) {
     app.setAsDefaultProtocolClient('neon', process.execPath, [
       path.resolve(process.argv[1]),
     ])
+    app.setAsDefaultProtocolClient('neon2', process.execPath, [
+      path.resolve(process.argv[1]),
+    ])
   }
 } else {
   app.setAsDefaultProtocolClient('neon')
+  app.setAsDefaultProtocolClient('neon2')
 }
 
 const gotTheLock = app.requestSingleInstanceLock()
