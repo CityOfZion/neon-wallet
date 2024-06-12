@@ -402,6 +402,7 @@ const MIGRATE_WALLETS_NEON3_STEPS = {
   migrateWalletsNeon3Step3Description: "Neredeyse tamam!",
   migrateWalletsNeon3Step3Description2: "Göç işlemini tamamlamak için NEON 3'ü açın ve talimatları izleyin.",
   migrateWalletsNeon3Step3AltImage: "Cüzdan Göç Arka Planı",
+  migrateWalletsNeon3Step3Button: "Yeni NEON'da süreci tamamlayın",
 };
 
 

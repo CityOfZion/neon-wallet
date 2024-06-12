@@ -401,6 +401,7 @@ const MIGRATE_WALLETS_NEON3_STEPS = {
   migrateWalletsNeon3Step3Description: "Bạn gần kết thúc!",
   migrateWalletsNeon3Step3Description2: "Để hoàn tất quá trình di dời, hãy mở NEON 3 và tuân theo hướng dẫn.",
   migrateWalletsNeon3Step3AltImage: "Hình nền Di dời Ví",
+  migrateWalletsNeon3Step3Button: "Hoàn thành quy trình trong NEON mới",
 };
 
 

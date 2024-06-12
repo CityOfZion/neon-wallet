@@ -404,6 +404,7 @@ const MIGRATE_WALLETS_NEON3_STEPS = {
   migrateWalletsNeon3Step3Description: "Vous y êtes presque !",
   migrateWalletsNeon3Step3Description2: "Pour finaliser le processus de migration, ouvrez NEON 3 et suivez les instructions.",
   migrateWalletsNeon3Step3AltImage: "Image de fond de migration des portefeuilles",
+  migrateWalletsNeon3Step3Button: "Complétez le processus dans le nouveau NEON",
 };
 
 
