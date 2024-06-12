@@ -398,6 +398,7 @@ const MIGRATE_WALLETS_NEON3_STEPS = {
   migrateWalletsNeon3Step3Description: "거의 다 왔습니다!",
   migrateWalletsNeon3Step3Description2: "이전 프로세스를 완료하려면 NEON 3을 열고 지시 사항을 따르십시오.",
   migrateWalletsNeon3Step3AltImage: "지갑 이전 배경 이미지",
+  migrateWalletsNeon3Step3Button: "새로운 NEON에서 과정을 완료하십시오",
 };
 
 

@@ -4,9 +4,15 @@ import { FormattedMessage } from 'react-intl'
 import styles from './Step3.scss'
 import migrateWalletsIconDark from '../../assets/images/migrate-wallets-icon-dark.png'
 import migrateWalletsIconWhite from '../../assets/images/migrate-wallets-icon-white.png'
+import ExternalIcon from '../../assets/icons/external.svg'
+import Button from '../../components/Button'
 
 type Props = {
   theme: string,
+}
+
+const openNeon3Click = () => {
+  window.open('neon3://migration')
 }
 
 const MigrateWalletsNeon3Step3 = ({ theme }: Props) => (
@@ -37,6 +43,16 @@ const MigrateWalletsNeon3Step3 = ({ theme }: Props) => (
           />
         )}
       </FormattedMessage>
+
+      <Button
+        primary
+        className={styles.nextButton}
+        contentClassName={styles.nextButtonContent}
+        onClick={openNeon3Click}
+      >
+        <FormattedMessage id="migrateWalletsNeon3Step3Button" />
+        <ExternalIcon />
+      </Button>
     </div>
   </div>
 )

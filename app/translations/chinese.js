@@ -386,6 +386,7 @@ const MIGRATE_WALLETS_NEON3_STEPS = {
   migrateWalletsNeon3Step3Description: "您就快完成了！",
   migrateWalletsNeon3Step3Description2: "为了完成迁移过程，请打开 NEON 3 并按照说明操作。",
   migrateWalletsNeon3Step3AltImage: "迁移钱包背景图片",
+  migrateWalletsNeon3Step3Button: "在新的NEON中完成过程",
 }
 
 
