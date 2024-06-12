@@ -153,6 +153,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
       "migrateWalletsNeon3Step2NextStep": "When you’ve defined a location to save your migration file, move to the next step.",
       "migrateWalletsNeon3Step2Title": "Export your NEON 2 accounts",
       "migrateWalletsNeon3Step3AltImage": "Migrate Wallets Background Image",
+      "migrateWalletsNeon3Step3Button": "Complete the process in new NEON",
       "migrateWalletsNeon3Step3Description": "You’re almost there!",
       "migrateWalletsNeon3Step3Description2": "In order to complete the migration process, open NEON 3 and follow the instructions.",
       "migrateWalletsNeon3Step3Title": "Open NEON 3",
