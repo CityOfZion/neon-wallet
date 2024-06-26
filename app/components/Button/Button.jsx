@@ -18,6 +18,7 @@ type Props = {
   outline?: boolean,
   iconClassName?: string,
   contentClassName?: string,
+  disabled?: boolean,
 }
 
 class Button extends React.Component<Props> {
@@ -28,7 +29,7 @@ class Button extends React.Component<Props> {
   }
 
   render = () => {
-    const { className, contentClassName, children } = this.props
+    const { className, contentClassName, children, disabled } = this.props
     const passDownProps = omit(
       this.props,
       'primary',
@@ -52,6 +53,7 @@ class Button extends React.Component<Props> {
           this.getElevatedSecondaryStyle(),
           this.getOutlineStyle(),
         )}
+        disabled={disabled}
       >
         {this.renderIcon()}
         <span className={contentClassName}>{children}</span>

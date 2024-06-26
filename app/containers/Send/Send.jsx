@@ -22,7 +22,6 @@ import styles from './Send.scss'
 import DialogueBox from '../../components/DialogueBox'
 
 const MAX_NUMBER_OF_RECIPIENTS = 25
-const MIN_EXPECTED_N3_GAS_FEE = 0.072
 
 type Props = {
   sendableAssets: Object,
@@ -76,7 +75,7 @@ type State = {
     networkFee: string,
   },
   loading: boolean,
-  expectedGasFee: string | number,
+  expectedGasFee?: string | number,
   isSendingTotalAmountOfGas: boolean,
 }
 
@@ -98,7 +97,7 @@ export default class Send extends React.Component<Props, State> {
       },
       hasEnoughGas: true,
       loading: false,
-      expectedGasFee: MIN_EXPECTED_N3_GAS_FEE,
+      expectedGasFee: undefined,
       isSendingTotalAmountOfGas: false,
     }
   }
