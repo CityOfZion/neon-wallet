@@ -372,37 +372,41 @@ const TOKEN_SALE = {
   tokenSaleDisclaimer5: `Tôi hiểu rằng COZ không chịu trách nhiệm cho việc sử dụng tính năng này của tôi và tôi đã tham khảo giấy phép của phần mềm này.`,
 }
 
-const MIGRATE_WALLETS_NEON3 = {
-  migrateWalletsNeon3AltImage: "Hình nền Di dời Ví",
-  migrateWalletNeon3Title: "Bạn có muốn di dời ví NEON 2 của mình sang NEON 3 không?",
-  migrateWalletNeon3Description: "Việc di dời ví của bạn sẽ mang lại cho bạn quyền truy cập vào một loạt các tài sản được hỗ trợ rộng hơn và một trải nghiệm người dùng mượt mà, cải tiến giúp quản lý tài sản của bạn trở nên dễ dàng hơn!",
-  migrateWalletNeon3Button: "Di dời Ngay!",
-};
-
 const MIGRATE_WALLETS_NEON3_STEPS = {
-  migrateWalletsNeon3Steps1: "Nhận NEON 3",
-  migrateWalletsNeon3Steps2: "Xuất các tài khoản NEON 2 của bạn",
-  migrateWalletsNeon3Steps3: "Mở NEON 3",
+  migrateWalletsNeon3StepsTitle: "Di chuyển ví NEON 2 của bạn",
 
-  migrateWalletsNeon3Step1Title: "Nhận NEON 3",
-  migrateWalletsNeon3Step1Description: "Bắt đầu bằng cách tải xuống phiên bản NEON mới nhất và tạo ví đầu tiên của bạn:",
-  migrateWalletsNeon3Step1DownloadButton: "Tải Xuống NEON 3",
-  migrateWalletsNeon3Step1NextStep: "Sau khi NEON 3 được cài đặt trên thiết bị của bạn, tiến hành bước tiếp theo.",
+  migrateWalletsNeon3Steps1: 'Nhận NEON mới',
+  migrateWalletsNeon3Steps2: 'Xuất các tài khoản NEON cũ của bạn',
+  migrateWalletsNeon3Steps3: 'Mở NEON mới',
+
+  migrateWalletsNeon3Step1Title: "Nhận ví NEON mới",
+  migrateWalletsNeon3Step1Description: "Bắt đầu bằng cách tải xuống bản dựng NEON mới nhất và tạo ví đầu tiên của bạn:",
+  migrateWalletsNeon3Step1DownloadButton: "Tải xuống ví NEON mới",
+  migrateWalletsNeon3Step1NextStep: "Sau khi phiên bản mới của NEON được cài đặt trên thiết bị của bạn, hãy chuyển sang bước tiếp theo.",
   migrateWalletsNeon3Step1ButtonLabel: "Tiếp theo",
 
-  migrateWalletsNeon3Step2Title: "Xuất các tài khoản NEON 2 của bạn",
-  migrateWalletsNeon3Step2Description: "Xuất tệp di dời NEON 2 của bạn ra máy tính. Bạn sẽ sử dụng tệp này để di dời ví của bạn vào NEON 3.",
-  migrateWalletsNeon3InputLabel: "Bạn muốn lưu tệp di dời của mình ở đâu?",
+  migrateWalletsNeon3Step2Title: "Di chuyển các tài khoản NEON cũ của bạn",
+  migrateWalletsNeon3Step2Description: "Lưu tệp di chuyển NEON cũ vào máy tính của bạn. Bạn sẽ sử dụng tệp này để di chuyển ví của mình vào phiên bản mới của NEON.",
+  migrateWalletsNeon3InputLabel: "Bạn muốn lưu tệp di chuyển của mình ở đâu?",
   migrateWalletsNeon3Step2BrowseButton: "Duyệt...",
-  migrateWalletsNeon3Step2NextStep: "Khi bạn đã xác định một vị trí để lưu trữ tệp di dời của mình, tiến hành bước tiếp theo.",
+  migrateWalletsNeon3Step2NextStep: "Khi bạn đã xác định vị trí để lưu tệp di chuyển, hãy chuyển sang bước tiếp theo.",
   migrateWalletsNeon3Step2ButtonLabel: "Tiếp theo",
 
-  migrateWalletsNeon3Step3Title: "Mở NEON 3",
-  migrateWalletsNeon3Step3Description: "Bạn gần kết thúc!",
-  migrateWalletsNeon3Step3Description2: "Để hoàn tất quá trình di dời, hãy mở NEON 3 và tuân theo hướng dẫn.",
-  migrateWalletsNeon3Step3AltImage: "Hình nền Di dời Ví",
+  migrateWalletsNeon3Step3Title: "Mở ví NEON mới của bạn",
+  migrateWalletsNeon3Step3Description: "Bạn sắp hoàn thành rồi!",
+  migrateWalletsNeon3Step3Description2: "Để hoàn tất quá trình di chuyển, hãy mở ví NEON mới và làm theo hướng dẫn.",
+  migrateWalletsNeon3Step3AltImage: "Hình nền di chuyển ví",
   migrateWalletsNeon3Step3Button: "Hoàn thành quy trình trong NEON mới",
-};
+}
+
+const MIGRATE_WALLETS_NEON3_NOTICE = {
+  migrateWalletsNeon3NoticeTitle: "Bạn có muốn di chuyển ví hiện tại của mình sang phiên bản mới nhất của NEON không?",
+  migrateWalletsNeon3NoticeSubtitle: "Di chuyển ví của bạn thật dễ dàng!",
+  migrateWalletsNeon3NoticeDescription: "Nó sẽ cung cấp cho bạn quyền truy cập vào nhiều loại tài sản, tính năng và mạng được hỗ trợ hơn, đồng thời cung cấp trải nghiệm người dùng gọn gàng hơn, được cải thiện để quản lý tài sản của bạn trở nên dễ dàng hơn!",
+  migrateWalletsNeon3NoticeButtonLabel: "Di chuyển ngay bây giờ!",
+  migrateWalletsNeon3NoticeNote: "Lưu ý: Bạn vẫn sẽ giữ quyền truy cập vào phiên bản Neon này!"
+}
+
 
 
 export default {
@@ -425,6 +429,6 @@ export default {
   ...MISCELLANEOUS,
   ...ERRORS,
   ...NOTIFICATIONS,
-  ...MIGRATE_WALLETS_NEON3,
+  ...MIGRATE_WALLETS_NEON3_NOTICE,
   ...MIGRATE_WALLETS_NEON3_STEPS
 }

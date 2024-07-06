@@ -357,37 +357,41 @@ const TOKEN_SALE = {
     '我了解COZ对使用此功能不承担任何责任，并且我已经查阅了此软件的许可证.',
 }
 
-const MIGRATE_WALLETS_NEON3 = {
-  migrateWalletsNeon3AltImage: "迁移钱包背景图片",
-  migrateWalletNeon3Title: "您想将您的 NEON 2 钱包迁移到 NEON 3 吗？",
-  migrateWalletNeon3Description: "迁移您的钱包将使您可以访问更广泛的支持资产，并且拥有更流畅、改进的用户体验，使您资产管理变得轻而易举！",
-  migrateWalletNeon3Button: "立即迁移！",
-}
-
 const MIGRATE_WALLETS_NEON3_STEPS = {
-  migrateWalletsNeon3Steps1: '获取 NEON 3',
-  migrateWalletsNeon3Steps2: '导出您的 NEON 2 帐户',
-  migrateWalletsNeon3Steps3: '打开 NEON 3',
+  migrateWalletsNeon3StepsTitle: "迁移您的 NEON 2 钱包",
 
-  migrateWalletsNeon3Step1Title: "获取 NEON 3",
-  migrateWalletsNeon3Step1Description: "从下载最新版本的 NEON 并创建您的第一个钱包开始：",
-  migrateWalletsNeon3Step1DownloadButton: "下载 NEON 3",
-  migrateWalletsNeon3Step1NextStep: "一旦 NEON 3 安装在您的设备上，请继续下一步。",
+  migrateWalletsNeon3Steps1: '获取新 NEON',
+  migrateWalletsNeon3Steps2: '导出您的旧 NEON 账户',
+  migrateWalletsNeon3Steps3: '打开新 NEON',
+
+  migrateWalletsNeon3Step1Title: "获取新的 NEON 钱包",
+  migrateWalletsNeon3Step1Description: "首先下载最新的 NEON 版本并创建您的第一个钱包：",
+  migrateWalletsNeon3Step1DownloadButton: "下载新的 NEON 钱包",
+  migrateWalletsNeon3Step1NextStep: "在您的设备上安装新的 NEON 版本后，请继续下一步。",
   migrateWalletsNeon3Step1ButtonLabel: "下一步",
 
-  migrateWalletsNeon3Step2Title: "导出您的 NEON 2 帐户",
-  migrateWalletsNeon3Step2Description: "将 NEON 2 迁移文件导出到您的计算机。您将使用此文件将您的钱包迁移到 NEON 3。",
-  migrateWalletsNeon3InputLabel: "您希望将迁移文件保存到何处？",
+  migrateWalletsNeon3Step2Title: "迁移您的旧 NEON 账户",
+  migrateWalletsNeon3Step2Description: "将旧 NEON 迁移文件保存到您的电脑。您将使用此文件将您的钱包迁移到新版本的 NEON。",
+  migrateWalletsNeon3InputLabel: "您希望将迁移文件保存在哪里？",
   migrateWalletsNeon3Step2BrowseButton: "浏览...",
-  migrateWalletsNeon3Step2NextStep: "当您确定了保存迁移文件的位置后，请继续下一步。",
+  migrateWalletsNeon3Step2NextStep: "确定保存迁移文件的位置后，请继续下一步。",
   migrateWalletsNeon3Step2ButtonLabel: "下一步",
 
-  migrateWalletsNeon3Step3Title: "打开 NEON 3",
-  migrateWalletsNeon3Step3Description: "您就快完成了！",
-  migrateWalletsNeon3Step3Description2: "为了完成迁移过程，请打开 NEON 3 并按照说明操作。",
-  migrateWalletsNeon3Step3AltImage: "迁移钱包背景图片",
-  migrateWalletsNeon3Step3Button: "在新的NEON中完成过程",
+  migrateWalletsNeon3Step3Title: "打开您的新 NEON 钱包",
+  migrateWalletsNeon3Step3Description: "您快完成了！",
+  migrateWalletsNeon3Step3Description2: "为了完成迁移过程，请打开新的 NEON 钱包并按照说明进行操作。",
+  migrateWalletsNeon3Step3AltImage: "迁移钱包背景图像",
+  migrateWalletsNeon3Step3Button: "在新的 NEON 中完成该过程",
 }
+
+const MIGRATE_WALLETS_NEON3_NOTICE = {
+  migrateWalletsNeon3NoticeTitle: "您是否希望将当前钱包迁移到最新版本的 NEON？",
+  migrateWalletsNeon3NoticeSubtitle: "迁移您的钱包非常简单！",
+  migrateWalletsNeon3NoticeDescription: "它将使您可以访问更多支持的资产、功能和网络，同时提供更流畅、改进的用户体验，使您的资产管理变得轻而易举！",
+  migrateWalletsNeon3NoticeButtonLabel: "立即迁移！",
+  migrateWalletsNeon3NoticeNote: "注意：您仍然可以访问此版本的 Neon！"
+}
+
 
 
 export default {
@@ -410,6 +414,6 @@ export default {
   ...MISCELLANEOUS,
   ...ERRORS,
   ...NOTIFICATIONS,
-  ...MIGRATE_WALLETS_NEON3,
+  ...MIGRATE_WALLETS_NEON3_NOTICE,
   ...MIGRATE_WALLETS_NEON3_STEPS
 }

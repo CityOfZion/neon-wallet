@@ -6,7 +6,9 @@ const BASE = {
   '--base-primary': '#4CFFB3',
   '--base-primary-20': '#4CFFB31A',
   '--base-text-light': '#B0C0C8',
+  '--base-text-middle': '#818D95',
   '--base-link-color': '#6bdaf6',
+  '--base-secondary': '#47BEFF',
 }
 
 const STEPPER = {

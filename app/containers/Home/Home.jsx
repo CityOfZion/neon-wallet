@@ -22,6 +22,7 @@ type State = {
   tabIndex: number,
 }
 type Props = {
+  history: any,
   loading: boolean,
   theme: ThemeType,
   showModal: (modalType: string, modalProps: Object) => any,
@@ -105,6 +106,29 @@ export default class Home extends React.Component<Props, State> {
     })
   }
 
+  componentDidMount() {
+    const hasSeenMigrationNoticeLocal = localStorage.getItem(
+      'hasSeenMigrationNotice',
+    )
+
+    if (
+      !hasSeenMigrationNoticeLocal ||
+      Boolean(hasSeenMigrationNoticeLocal) === false
+    ) {
+      const hasSeenMigrationNoticeSession = sessionStorage.getItem(
+        'hasSeenMigrationNotice',
+      )
+
+      if (
+        !hasSeenMigrationNoticeSession ||
+        Boolean(hasSeenMigrationNoticeSession) === false
+      ) {
+        sessionStorage.setItem('hasSeenMigrationNotice', 'true')
+        this.props.history.push(ROUTES.MIGRATION_NOTICE)
+      }
+    }
+  }
+
   render() {
     const { loading, theme, chain } = this.props
 
@@ -167,7 +191,7 @@ export default class Home extends React.Component<Props, State> {
               </Link>
             </div>
             <div className={styles.buttonContainer}>
-              <Link to={ROUTES.MIGRATE_WALLETS_NEON3}>
+              <Link to={ROUTES.MIGRATE_WALLETS_NEON3_STEPS}>
                 <Button disabled={loading} renderIcon={MigrateIcon}>
                   <FormattedMessage id="authMigrateWallets" />
                 </Button>

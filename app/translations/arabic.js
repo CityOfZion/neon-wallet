@@ -375,36 +375,39 @@ const TOKEN_SALE = {
   tokenSaleDisclaimer5: `أنا أفهم أن COZ ليست مسؤولة عن استخدامي لهذه الميزة ، وقمت بقراءة اتفاقية البرنامج`,
 }
 
-const MIGRATE_WALLETS_NEON3 = {
-  migrateWalletsNeon3AltImage: "صورة خلفية ترحيل المحافظ",
-  migrateWalletNeon3Title: "هل ترغب في ترحيل محفظتك NEON 2 إلى NEON 3؟",
-  migrateWalletNeon3Description: "سيمنحك ترحيل محفظتك الوصول إلى مجموعة أوسع من الأصول المدعومة، وتجربة مستخدم محسنة وأكثر أناقة ستجعل إدارة أصولك سهلة!",
-  migrateWalletNeon3Button: "ترحيل الآن!",
-}
-
 const MIGRATE_WALLETS_NEON3_STEPS = {
-  migrateWalletsNeon3Steps1: 'احصل على NEON 3',
-  migrateWalletsNeon3Steps2: 'قم بتصدير حساباتك في NEON 2',
-  migrateWalletsNeon3Steps3: 'افتح NEON 3',
+  migrateWalletsNeon3StepsTitle: "ترحيل محفظتك NEON 2",
 
-  migrateWalletsNeon3Step1Title: "احصل على NEON 3",
-  migrateWalletsNeon3Step1Description: "ابدأ بتنزيل آخر إصدار من NEON وأنشئ أول محفظة لك:",
-  migrateWalletsNeon3Step1DownloadButton: "تحميل NEON 3",
-  migrateWalletsNeon3Step1NextStep: "بمجرد تثبيت NEON 3 على جهازك، انتقل إلى الخطوة التالية.",
+  migrateWalletsNeon3Steps1: 'احصل على NEON الجديد',
+  migrateWalletsNeon3Steps2: 'تصدير حسابات NEON القديمة الخاصة بك',
+  migrateWalletsNeon3Steps3: 'افتح NEON الجديد',
+
+  migrateWalletsNeon3Step1Title: "احصل على محفظة NEON الجديدة",
+  migrateWalletsNeon3Step1Description: "ابدأ بتنزيل أحدث إصدار من NEON وقم بإنشاء محفظتك الأولى:",
+  migrateWalletsNeon3Step1DownloadButton: "تنزيل محفظة NEON الجديدة",
+  migrateWalletsNeon3Step1NextStep: "بمجرد تثبيت الإصدار الجديد من NEON على جهازك، انتقل إلى الخطوة التالية.",
   migrateWalletsNeon3Step1ButtonLabel: "التالي",
 
-  migrateWalletsNeon3Step2Title: "قم بتصدير حساباتك في NEON 2",
-  migrateWalletsNeon3Step2Description: "قم بتصدير ملف ترحيل NEON 2 إلى جهاز الكمبيوتر الخاص بك. ستستخدم هذا الملف لترحيل محفظتك إلى NEON 3.",
-  migrateWalletsNeon3InputLabel: "إلى أي مكان ترغب في حفظ ملف الترحيل؟",
+  migrateWalletsNeon3Step2Title: "ترحيل حسابات NEON القديمة الخاصة بك",
+  migrateWalletsNeon3Step2Description: "احفظ ملف ترحيل NEON القديم على جهاز الكمبيوتر الخاص بك. ستستخدم هذا الملف لترحيل محفظتك إلى الإصدار الجديد من NEON.",
+  migrateWalletsNeon3InputLabel: "أين تريد حفظ ملف الترحيل الخاص بك؟",
   migrateWalletsNeon3Step2BrowseButton: "تصفح...",
   migrateWalletsNeon3Step2NextStep: "عندما تحدد موقعًا لحفظ ملف الترحيل الخاص بك، انتقل إلى الخطوة التالية.",
   migrateWalletsNeon3Step2ButtonLabel: "التالي",
 
-  migrateWalletsNeon3Step3Title: "افتح NEON 3",
+  migrateWalletsNeon3Step3Title: "افتح محفظتك NEON الجديدة",
   migrateWalletsNeon3Step3Description: "أنت على وشك الانتهاء!",
-  migrateWalletsNeon3Step3Description2: "لإكمال عملية الترحيل، افتح NEON 3 واتبع التعليمات.",
+  migrateWalletsNeon3Step3Description2: "لإكمال عملية الترحيل، افتح محفظة NEON الجديدة واتبع التعليمات.",
   migrateWalletsNeon3Step3AltImage: "صورة خلفية ترحيل المحافظ",
-  migrateWalletsNeon3Step3Button: "أكمل العملية في نيو NEON",
+  migrateWalletsNeon3Step3Button: "أكمل العملية في NEON الجديد",
+}
+
+const MIGRATE_WALLETS_NEON3_NOTICE = {
+  migrateWalletsNeon3NoticeTitle: "هل تريد ترحيل محفظتك الحالية إلى أحدث إصدار من NEON؟",
+  migrateWalletsNeon3NoticeSubtitle: "ترحيل محفظتك سهل للغاية!",
+  migrateWalletsNeon3NoticeDescription: "سيوفر لك الوصول إلى مجموعة واسعة من الأصول المدعومة، والميزات، والشبكات، مع توفير تجربة مستخدم أكثر سلاسة وتحسينًا لجعل إدارة أصولك سهلة للغاية!",
+  migrateWalletsNeon3NoticeButtonLabel: "ترحيل الآن!",
+  migrateWalletsNeon3NoticeNote: "ملاحظة: ستظل تحتفظ بإمكانية الوصول إلى هذا الإصدار من Neon!"
 }
 
 
@@ -428,6 +431,6 @@ export default {
   ...MISCELLANEOUS,
   ...ERRORS,
   ...NOTIFICATIONS,
-  ...MIGRATE_WALLETS_NEON3,
+  ...MIGRATE_WALLETS_NEON3_NOTICE,
   ...MIGRATE_WALLETS_NEON3_STEPS
 }

@@ -382,37 +382,41 @@ const TOKEN_SALE = {
   tokenSaleDisclaimer5: `Ik begrijp dat City of Zion (CoZ) niet verantwoordelijk is voor het gebruik van deze functie, en ik de licenties van deze software heb geraadpleegd.`,
 }
 
-const MIGRATE_WALLETS_NEON3 = {
-  migrateWalletsNeon3AltImage: "Achtergrondafbeelding portefeuilles migreren",
-  migrateWalletNeon3Title: "Wilt u uw NEON 2-portefeuille migreren naar NEON 3?",
-  migrateWalletNeon3Description: "Door uw portefeuille te migreren, krijgt u toegang tot een breder scala aan ondersteunde activa en een gestroomlijnde, verbeterde gebruikerservaring die het beheer van uw activa een fluitje van een cent zal maken!",
-  migrateWalletNeon3Button: "Nu migreren!",
-}
-
 const MIGRATE_WALLETS_NEON3_STEPS = {
-  migrateWalletsNeon3Steps1: 'Ontvang NEON 3',
-  migrateWalletsNeon3Steps2: 'Exporteer uw NEON 2-accounts',
-  migrateWalletsNeon3Steps3: 'Open NEON 3',
+  migrateWalletsNeon3StepsTitle: "Uw NEON 2-portemonnee migreren",
 
-  migrateWalletsNeon3Step1Title: "Ontvang NEON 3",
-  migrateWalletsNeon3Step1Description: "Begin met het downloaden van de nieuwste NEON-build en maak uw eerste portefeuille:",
-  migrateWalletsNeon3Step1DownloadButton: "Download NEON 3",
-  migrateWalletsNeon3Step1NextStep: "Zodra NEON 3 is geïnstalleerd op uw apparaat, ga naar de volgende stap.",
+  migrateWalletsNeon3Steps1: 'Haal de nieuwe NEON',
+  migrateWalletsNeon3Steps2: 'Exporteer uw oude NEON-accounts',
+  migrateWalletsNeon3Steps3: 'Open de nieuwe NEON',
+
+  migrateWalletsNeon3Step1Title: "Haal de nieuwe NEON-portemonnee",
+  migrateWalletsNeon3Step1Description: "Begin met het downloaden van de nieuwste NEON-versie en maak uw eerste portemonnee aan:",
+  migrateWalletsNeon3Step1DownloadButton: "Download de nieuwe NEON-portemonnee",
+  migrateWalletsNeon3Step1NextStep: "Zodra de nieuwe versie van NEON op uw apparaat is geïnstalleerd, gaat u naar de volgende stap.",
   migrateWalletsNeon3Step1ButtonLabel: "Volgende",
 
-  migrateWalletsNeon3Step2Title: "Exporteer uw NEON 2-accounts",
-  migrateWalletsNeon3Step2Description: "Exporteer het NEON 2-migratiebestand naar uw computer. U zult dit bestand gebruiken om uw portefeuille naar NEON 3 te migreren.",
+  migrateWalletsNeon3Step2Title: "Migreer uw oude NEON-accounts",
+  migrateWalletsNeon3Step2Description: "Sla het oude NEON-migratiebestand op uw computer op. U gebruikt dit bestand om uw portemonnee te migreren naar de nieuwe versie van NEON.",
   migrateWalletsNeon3InputLabel: "Waar wilt u uw migratiebestand opslaan?",
   migrateWalletsNeon3Step2BrowseButton: "Bladeren...",
-  migrateWalletsNeon3Step2NextStep: "Wanneer u een locatie heeft gedefinieerd om uw migratiebestand op te slaan, ga naar de volgende stap.",
+  migrateWalletsNeon3Step2NextStep: "Wanneer u een locatie heeft gekozen om uw migratiebestand op te slaan, gaat u naar de volgende stap.",
   migrateWalletsNeon3Step2ButtonLabel: "Volgende",
 
-  migrateWalletsNeon3Step3Title: "Open NEON 3",
+  migrateWalletsNeon3Step3Title: "Open uw nieuwe NEON-portemonnee",
   migrateWalletsNeon3Step3Description: "U bent er bijna!",
-  migrateWalletsNeon3Step3Description2: "Om het migratieproces te voltooien, opent u NEON 3 en volgt u de instructies.",
-  migrateWalletsNeon3Step3AltImage: "Achtergrondafbeelding portefeuilles migreren",
-  migrateWalletsNeon3Step3Button: "Voltooi het proces in nieuwe NEON",
+  migrateWalletsNeon3Step3Description2: "Om het migratieproces te voltooien, opent u de nieuwe NEON-portemonnee en volgt u de instructies.",
+  migrateWalletsNeon3Step3AltImage: "Achtergrondafbeelding voor het migreren van portemonnees",
+  migrateWalletsNeon3Step3Button: "Voltooi het proces in de nieuwe NEON",
 }
+
+const MIGRATE_WALLETS_NEON3_NOTICE = {
+  migrateWalletsNeon3NoticeTitle: "Wilt u uw huidige portemonnee migreren naar de nieuwste versie van NEON?",
+  migrateWalletsNeon3NoticeSubtitle: "Het migreren van uw portemonnee is echt eenvoudig!",
+  migrateWalletsNeon3NoticeDescription: "Het geeft u toegang tot een breder scala aan ondersteunde activa, functies en netwerken, terwijl het een strakkere, verbeterde gebruikerservaring biedt om het beheer van uw activa een fluitje van een cent te maken!",
+  migrateWalletsNeon3NoticeButtonLabel: "Migreer nu!",
+  migrateWalletsNeon3NoticeNote: "Opmerking: U behoudt nog steeds toegang tot deze versie van Neon!"
+}
+
 
 
 export default {
@@ -435,6 +439,6 @@ export default {
   ...MISCELLANEOUS,
   ...ERRORS,
   ...NOTIFICATIONS,
-  ...MIGRATE_WALLETS_NEON3,
+  ...MIGRATE_WALLETS_NEON3_NOTICE,
   ...MIGRATE_WALLETS_NEON3_STEPS
 }
