@@ -29,9 +29,9 @@ import Mobile from '../../containers/Mobile'
 import Migration from '../../containers/Migration'
 import ConnectDapp from '../../containers/ConnectDapp'
 import DappRequest from '../../containers/DappRequest'
-import MigrateWalletsNeon3 from '../../containers/MigrateWalletsNeon3'
 import MigrateWalletsNeon3Steps from '../../containers/MigrateWalletsNeon3Steps'
 import DappRequestResult from '../../containers/DappRequestResult'
+import MigrationNotice from '../../containers/MigrationNotice'
 
 export default ({ store }: { store: any }) => (
   <App store={store}>
@@ -54,13 +54,13 @@ export default ({ store }: { store: any }) => (
       />
       <Route
         exact
-        path={ROUTES.MIGRATE_WALLETS_NEON3}
-        render={props => <MigrateWalletsNeon3 {...props} />}
+        path={ROUTES.MIGRATE_WALLETS_NEON3_STEPS}
+        render={props => <MigrateWalletsNeon3Steps {...props} />}
       />
       <Route
         exact
-        path={ROUTES.MIGRATE_WALLETS_NEON3_STEPS}
-        render={props => <MigrateWalletsNeon3Steps {...props} />}
+        path={ROUTES.MIGRATION_NOTICE}
+        render={props => <MigrationNotice {...props} />}
       />
       <Route
         exact

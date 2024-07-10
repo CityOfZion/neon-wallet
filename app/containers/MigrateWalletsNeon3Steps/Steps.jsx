@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import { promises as fs } from 'fs'
 import { ipcRenderer } from 'electron'
+import { FormattedMessage } from 'react-intl'
 import FullHeightPanel from '../../components/Panel/FullHeightPanel'
 import { ROUTES } from '../../core/constants'
 import styles from './Steps.scss'
@@ -52,6 +53,7 @@ const MigrateWalletsNeon3Steps = ({
       }),
     )
 
+    localStorage.setItem('hasSeenMigrationNotice', 'true')
     setCurrentStep(3)
   }
 
@@ -84,7 +86,9 @@ const MigrateWalletsNeon3Steps = ({
       childrenContainerClassName={styles.childrenContainer}
       shouldRenderHeader={false}
     >
-      <h1 className={styles.title}>Migrating your NEON 2 wallet</h1>
+      <h1 className={styles.title}>
+        <FormattedMessage id="migrateWalletsNeon3StepsTitle" />
+      </h1>
 
       <Stepper
         steps={[
