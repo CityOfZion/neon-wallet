@@ -161,7 +161,7 @@ const AUTH = {
   authLedger: 'LEDGER',
   authCreateWallet: 'Создать Кошелек',
   authImportWallet: 'Импортировать Кошелек',
-  authMigrateWallets: "Миграция кошельков",
+  authMigrateWallets: 'Миграция кошельков',
   authScanQRButton: 'Сканировать QR-код',
   authLoginButton: 'Войти',
   authLedgerFirstStep: 'Подключите и разблокируйте своё Ledger устройство',
@@ -383,41 +383,48 @@ const TOKEN_SALE = {
 }
 
 const MIGRATE_WALLETS_NEON3_STEPS = {
-  migrateWalletsNeon3StepsTitle: "Миграция вашего кошелька NEON 2",
+  migrateWalletsNeon3StepsTitle: 'Миграция вашего кошелька NEON 2',
 
   migrateWalletsNeon3Steps1: 'Получите новый NEON',
   migrateWalletsNeon3Steps2: 'Экспортируйте свои старые учетные записи NEON',
   migrateWalletsNeon3Steps3: 'Откройте новый NEON',
 
-  migrateWalletsNeon3Step1Title: "Получите новый кошелек NEON",
-  migrateWalletsNeon3Step1Description: "Начните с загрузки последней сборки NEON и создайте свой первый кошелек:",
-  migrateWalletsNeon3Step1DownloadButton: "Скачать новый кошелек NEON",
-  migrateWalletsNeon3Step1NextStep: "После установки новой версии NEON на ваше устройство перейдите к следующему шагу.",
-  migrateWalletsNeon3Step1ButtonLabel: "Далее",
+  migrateWalletsNeon3Step1Title: 'Получите новый кошелек NEON',
+  migrateWalletsNeon3Step1Description:
+    'Начните с загрузки последней сборки NEON и создайте свой первый кошелек:',
+  migrateWalletsNeon3Step1DownloadButton: 'Скачать новый кошелек NEON',
+  migrateWalletsNeon3Step1NextStep:
+    'После установки новой версии NEON на ваше устройство перейдите к следующему шагу.',
+  migrateWalletsNeon3Step1ButtonLabel: 'Далее',
 
-  migrateWalletsNeon3Step2Title: "Миграция старых учетных записей NEON",
-  migrateWalletsNeon3Step2Description: "Сохраните старый файл миграции NEON на свой компьютер. Вы будете использовать этот файл для миграции своего кошелька в новую версию NEON.",
-  migrateWalletsNeon3InputLabel: "Где вы хотите сохранить файл миграции?",
-  migrateWalletsNeon3Step2BrowseButton: "Просмотр...",
-  migrateWalletsNeon3Step2NextStep: "Когда вы выберете место для сохранения файла миграции, перейдите к следующему шагу.",
-  migrateWalletsNeon3Step2ButtonLabel: "Далее",
+  migrateWalletsNeon3Step2Title: 'Миграция старых учетных записей NEON',
+  migrateWalletsNeon3Step2Description:
+    'Сохраните старый файл миграции NEON на свой компьютер. Вы будете использовать этот файл для миграции своего кошелька в новую версию NEON.',
+  migrateWalletsNeon3InputLabel: 'Где вы хотите сохранить файл миграции?',
+  migrateWalletsNeon3Step2BrowseButton: 'Просмотр...',
+  migrateWalletsNeon3Step2NextStep:
+    'Когда вы выберете место для сохранения файла миграции, перейдите к следующему шагу.',
+  migrateWalletsNeon3Step2ButtonLabel: 'Далее',
 
-  migrateWalletsNeon3Step3Title: "Откройте новый кошелек NEON",
-  migrateWalletsNeon3Step3Description: "Вы почти у цели!",
-  migrateWalletsNeon3Step3Description2: "Чтобы завершить процесс миграции, откройте новый кошелек NEON и следуйте инструкциям.",
-  migrateWalletsNeon3Step3AltImage: "Фоновое изображение миграции кошельков",
-  migrateWalletsNeon3Step3Button: "Завершите процесс в новом NEON",
+  migrateWalletsNeon3Step3Title: 'Откройте новый кошелек NEON',
+  migrateWalletsNeon3Step3Description: 'Вы почти у цели!',
+  migrateWalletsNeon3Step3Description2:
+    'Чтобы завершить процесс миграции, откройте новый кошелек NEON и следуйте инструкциям.',
+  migrateWalletsNeon3Step3AltImage: 'Фоновое изображение миграции кошельков',
+  migrateWalletsNeon3Step3Button: 'Завершите процесс в новом NEON',
 }
 
 const MIGRATE_WALLETS_NEON3_NOTICE = {
-  migrateWalletsNeon3NoticeTitle: "Хотите мигрировать свой текущий кошелек на последнюю версию NEON?",
-  migrateWalletsNeon3NoticeSubtitle: "Миграция вашего кошелька действительно проста!",
-  migrateWalletsNeon3NoticeDescription: "Это предоставит вам доступ к более широкому диапазону поддерживаемых активов, функций и сетей, а также обеспечит более элегантный и улучшенный пользовательский интерфейс, чтобы сделать управление вашими активами проще!",
-  migrateWalletsNeon3NoticeButtonLabel: "Мигрировать сейчас!",
-  migrateWalletsNeon3NoticeNote: "Примечание: Вы все равно сохраните доступ к этой версии Neon!"
+  migrateWalletsNeon3NoticeTitle:
+    'Хотите мигрировать свой текущий кошелек на последнюю версию NEON?',
+  migrateWalletsNeon3NoticeSubtitle:
+    'Миграция вашего кошелька действительно проста!',
+  migrateWalletsNeon3NoticeDescription:
+    'Это предоставит вам доступ к более широкому диапазону поддерживаемых активов, функций и сетей, а также обеспечит более элегантный и улучшенный пользовательский интерфейс, чтобы сделать управление вашими активами проще!',
+  migrateWalletsNeon3NoticeButtonLabel: 'Мигрировать сейчас!',
+  migrateWalletsNeon3NoticeNote:
+    'Примечание: Вы все равно сохраните доступ к этой версии Neon!',
 }
-
-
 
 export default {
   ...AUTH,
@@ -440,5 +447,5 @@ export default {
   ...ERRORS,
   ...NOTIFICATIONS,
   ...MIGRATE_WALLETS_NEON3_NOTICE,
-  ...MIGRATE_WALLETS_NEON3_STEPS
+  ...MIGRATE_WALLETS_NEON3_STEPS,
 }

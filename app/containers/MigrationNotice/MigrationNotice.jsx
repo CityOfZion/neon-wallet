@@ -39,7 +39,12 @@ export default function MigrationNotice({ history }: Props) {
         <FormattedMessage id="migrateWalletsNeon3NoticeDescription" />
       </p>
 
-      <Button primary className={styles.button} onClick={handleMigrate}>
+      <Button
+        primary
+        className={styles.button}
+        contentClassName={styles.contentButton}
+        onClick={handleMigrate}
+      >
         <FormattedMessage id="migrateWalletsNeon3NoticeButtonLabel" />
       </Button>
 

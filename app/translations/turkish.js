@@ -158,7 +158,7 @@ const AUTH = {
   authLedger: 'LEDGER',
   authCreateWallet: 'Cüzdan Oluştur',
   authImportWallet: 'Cüzdanı İçe Aktar',
-  authMigrateWallets: "Cüzdanları taşı",
+  authMigrateWallets: 'Cüzdanları taşı',
   authScanQRButton: 'QR Tarama',
   authLoginButton: 'Giriş',
   authLedgerFirstStep: 'Ledger cihazınızı bağlayın ve kilidini açın',
@@ -374,41 +374,48 @@ const TOKEN_SALE = {
 }
 
 const MIGRATE_WALLETS_NEON3_STEPS = {
-  migrateWalletsNeon3StepsTitle: "NEON 2 cüzdanınızı taşıma",
+  migrateWalletsNeon3StepsTitle: 'NEON 2 cüzdanınızı taşıma',
 
   migrateWalletsNeon3Steps1: 'Yeni NEON’u alın',
   migrateWalletsNeon3Steps2: 'Eski NEON hesaplarınızı dışa aktarın',
   migrateWalletsNeon3Steps3: 'Yeni NEON’u açın',
 
-  migrateWalletsNeon3Step1Title: "Yeni NEON cüzdanını alın",
-  migrateWalletsNeon3Step1Description: "En son NEON sürümünü indirerek başlayın ve ilk cüzdanınızı oluşturun:",
-  migrateWalletsNeon3Step1DownloadButton: "Yeni NEON cüzdanını indir",
-  migrateWalletsNeon3Step1NextStep: "Yeni NEON sürümü cihazınıza yüklendikten sonra bir sonraki adıma geçin.",
-  migrateWalletsNeon3Step1ButtonLabel: "Sonraki",
+  migrateWalletsNeon3Step1Title: 'Yeni NEON cüzdanını alın',
+  migrateWalletsNeon3Step1Description:
+    'En son NEON sürümünü indirerek başlayın ve ilk cüzdanınızı oluşturun:',
+  migrateWalletsNeon3Step1DownloadButton: 'Yeni NEON cüzdanını indir',
+  migrateWalletsNeon3Step1NextStep:
+    'Yeni NEON sürümü cihazınıza yüklendikten sonra bir sonraki adıma geçin.',
+  migrateWalletsNeon3Step1ButtonLabel: 'Sonraki',
 
-  migrateWalletsNeon3Step2Title: "Eski NEON hesaplarınızı taşıyın",
-  migrateWalletsNeon3Step2Description: "Eski NEON taşıma dosyasını bilgisayarınıza kaydedin. Bu dosyayı cüzdanınızı yeni NEON sürümüne taşımak için kullanacaksınız.",
-  migrateWalletsNeon3InputLabel: "Taşıma dosyanızı nereye kaydetmek istersiniz?",
-  migrateWalletsNeon3Step2BrowseButton: "Gözat...",
-  migrateWalletsNeon3Step2NextStep: "Taşıma dosyanızı kaydedecek bir yer tanımladıktan sonra bir sonraki adıma geçin.",
-  migrateWalletsNeon3Step2ButtonLabel: "Sonraki",
+  migrateWalletsNeon3Step2Title: 'Eski NEON hesaplarınızı taşıyın',
+  migrateWalletsNeon3Step2Description:
+    'Eski NEON taşıma dosyasını bilgisayarınıza kaydedin. Bu dosyayı cüzdanınızı yeni NEON sürümüne taşımak için kullanacaksınız.',
+  migrateWalletsNeon3InputLabel:
+    'Taşıma dosyanızı nereye kaydetmek istersiniz?',
+  migrateWalletsNeon3Step2BrowseButton: 'Gözat...',
+  migrateWalletsNeon3Step2NextStep:
+    'Taşıma dosyanızı kaydedecek bir yer tanımladıktan sonra bir sonraki adıma geçin.',
+  migrateWalletsNeon3Step2ButtonLabel: 'Sonraki',
 
-  migrateWalletsNeon3Step3Title: "Yeni NEON cüzdanınızı açın",
-  migrateWalletsNeon3Step3Description: "Neredeyse geldiniz!",
-  migrateWalletsNeon3Step3Description2: "Taşıma işlemini tamamlamak için yeni NEON cüzdanınızı açın ve talimatları izleyin.",
-  migrateWalletsNeon3Step3AltImage: "Cüzdanları Taşıma Arka Plan Resmi",
+  migrateWalletsNeon3Step3Title: 'Yeni NEON cüzdanınızı açın',
+  migrateWalletsNeon3Step3Description: 'Neredeyse geldiniz!',
+  migrateWalletsNeon3Step3Description2:
+    'Taşıma işlemini tamamlamak için yeni NEON cüzdanınızı açın ve talimatları izleyin.',
+  migrateWalletsNeon3Step3AltImage: 'Cüzdanları Taşıma Arka Plan Resmi',
   migrateWalletsNeon3Step3Button: "İşlemi yeni NEON'da tamamlayın",
 }
 
 const MIGRATE_WALLETS_NEON3_NOTICE = {
-  migrateWalletsNeon3NoticeTitle: "Mevcut cüzdanınızı NEON'un en son sürümüne taşımak ister misiniz?",
-  migrateWalletsNeon3NoticeSubtitle: "Cüzdanınızı taşımak gerçekten kolay!",
-  migrateWalletsNeon3NoticeDescription: "Bu, desteklenen varlıklar, özellikler ve ağların daha geniş bir yelpazesine erişim sağlar ve varlıklarınızı yönetmeyi çocuk oyuncağı haline getirmek için daha şık, geliştirilmiş bir kullanıcı deneyimi sunar!",
-  migrateWalletsNeon3NoticeButtonLabel: "Şimdi Taşı!",
-  migrateWalletsNeon3NoticeNote: "Not: Bu Neon sürümüne erişiminiz devam edecek!"
+  migrateWalletsNeon3NoticeTitle:
+    "Mevcut cüzdanınızı NEON'un en son sürümüne taşımak ister misiniz?",
+  migrateWalletsNeon3NoticeSubtitle: 'Cüzdanınızı taşımak gerçekten kolay!',
+  migrateWalletsNeon3NoticeDescription:
+    'Bu, desteklenen varlıklar, özellikler ve ağların daha geniş bir yelpazesine erişim sağlar ve varlıklarınızı yönetmeyi çocuk oyuncağı haline getirmek için daha şık, geliştirilmiş bir kullanıcı deneyimi sunar!',
+  migrateWalletsNeon3NoticeButtonLabel: 'Şimdi Taşı!',
+  migrateWalletsNeon3NoticeNote:
+    'Not: Bu Neon sürümüne erişiminiz devam edecek!',
 }
-
-
 
 export default {
   ...AUTH,
@@ -431,5 +438,5 @@ export default {
   ...ERRORS,
   ...NOTIFICATIONS,
   ...MIGRATE_WALLETS_NEON3_NOTICE,
-  ...MIGRATE_WALLETS_NEON3_STEPS
+  ...MIGRATE_WALLETS_NEON3_STEPS,
 }

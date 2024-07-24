@@ -145,7 +145,7 @@ const AUTH = {
   authLedger: '원장',
   authCreateWallet: '월렛 만들기',
   authImportWallet: '월렛 불러오기',
-  authMigrateWallets: "지갑 마이그레이션",
+  authMigrateWallets: '지갑 마이그레이션',
   authScanQRButton: 'QR코드 스캔',
   authLoginButton: '로그인',
   authLedgerFirstStep: '연결 후 원장 기기를 잠금 해제 해주세요',
@@ -370,41 +370,47 @@ const TOKEN_SALE = {
 }
 
 const MIGRATE_WALLETS_NEON3_STEPS = {
-  migrateWalletsNeon3StepsTitle: "NEON 2 지갑 마이그레이션",
+  migrateWalletsNeon3StepsTitle: 'NEON 2 지갑 마이그레이션',
 
   migrateWalletsNeon3Steps1: '새로운 NEON 받기',
   migrateWalletsNeon3Steps2: '기존 NEON 계정 내보내기',
   migrateWalletsNeon3Steps3: '새로운 NEON 열기',
 
-  migrateWalletsNeon3Step1Title: "새로운 NEON 지갑 받기",
-  migrateWalletsNeon3Step1Description: "최신 NEON 빌드를 다운로드하고 첫 번째 지갑을 만드세요:",
-  migrateWalletsNeon3Step1DownloadButton: "새로운 NEON 지갑 다운로드",
-  migrateWalletsNeon3Step1NextStep: "새 버전의 NEON이 장치에 설치되면 다음 단계로 이동하세요.",
-  migrateWalletsNeon3Step1ButtonLabel: "다음",
+  migrateWalletsNeon3Step1Title: '새로운 NEON 지갑 받기',
+  migrateWalletsNeon3Step1Description:
+    '최신 NEON 빌드를 다운로드하고 첫 번째 지갑을 만드세요:',
+  migrateWalletsNeon3Step1DownloadButton: '새로운 NEON 지갑 다운로드',
+  migrateWalletsNeon3Step1NextStep:
+    '새 버전의 NEON이 장치에 설치되면 다음 단계로 이동하세요.',
+  migrateWalletsNeon3Step1ButtonLabel: '다음',
 
-  migrateWalletsNeon3Step2Title: "기존 NEON 계정 마이그레이션",
-  migrateWalletsNeon3Step2Description: "기존 NEON 마이그레이션 파일을 컴퓨터에 저장하세요. 이 파일을 사용하여 지갑을 새로운 NEON 버전으로 마이그레이션합니다.",
-  migrateWalletsNeon3InputLabel: "마이그레이션 파일을 어디에 저장하시겠습니까?",
-  migrateWalletsNeon3Step2BrowseButton: "찾아보기...",
-  migrateWalletsNeon3Step2NextStep: "마이그레이션 파일을 저장할 위치를 정의한 후 다음 단계로 이동하세요.",
-  migrateWalletsNeon3Step2ButtonLabel: "다음",
+  migrateWalletsNeon3Step2Title: '기존 NEON 계정 마이그레이션',
+  migrateWalletsNeon3Step2Description:
+    '기존 NEON 마이그레이션 파일을 컴퓨터에 저장하세요. 이 파일을 사용하여 지갑을 새로운 NEON 버전으로 마이그레이션합니다.',
+  migrateWalletsNeon3InputLabel: '마이그레이션 파일을 어디에 저장하시겠습니까?',
+  migrateWalletsNeon3Step2BrowseButton: '찾아보기...',
+  migrateWalletsNeon3Step2NextStep:
+    '마이그레이션 파일을 저장할 위치를 정의한 후 다음 단계로 이동하세요.',
+  migrateWalletsNeon3Step2ButtonLabel: '다음',
 
-  migrateWalletsNeon3Step3Title: "새로운 NEON 지갑 열기",
-  migrateWalletsNeon3Step3Description: "거의 다 왔습니다!",
-  migrateWalletsNeon3Step3Description2: "마이그레이션 과정을 완료하려면 새로운 NEON 지갑을 열고 지침을 따르세요.",
-  migrateWalletsNeon3Step3AltImage: "지갑 마이그레이션 배경 이미지",
-  migrateWalletsNeon3Step3Button: "새로운 NEON에서 과정 완료",
+  migrateWalletsNeon3Step3Title: '새로운 NEON 지갑 열기',
+  migrateWalletsNeon3Step3Description: '거의 다 왔습니다!',
+  migrateWalletsNeon3Step3Description2:
+    '마이그레이션 과정을 완료하려면 새로운 NEON 지갑을 열고 지침을 따르세요.',
+  migrateWalletsNeon3Step3AltImage: '지갑 마이그레이션 배경 이미지',
+  migrateWalletsNeon3Step3Button: '새로운 NEON에서 과정 완료',
 }
 
 const MIGRATE_WALLETS_NEON3_NOTICE = {
-  migrateWalletsNeon3NoticeTitle: "현재 지갑을 최신 버전의 NEON으로 마이그레이션하시겠습니까?",
-  migrateWalletsNeon3NoticeSubtitle: "지갑 마이그레이션은 정말 쉽습니다!",
-  migrateWalletsNeon3NoticeDescription: "이 기능을 통해 더 넓은 범위의 지원 자산, 기능 및 네트워크에 액세스할 수 있으며, 자산 관리를 더욱 편리하게 만들어주는 세련되고 개선된 사용자 경험을 제공합니다!",
-  migrateWalletsNeon3NoticeButtonLabel: "지금 마이그레이션!",
-  migrateWalletsNeon3NoticeNote: "참고: 이 버전의 Neon에 계속 액세스할 수 있습니다!"
+  migrateWalletsNeon3NoticeTitle:
+    '현재 지갑을 최신 버전의 NEON으로 마이그레이션하시겠습니까?',
+  migrateWalletsNeon3NoticeSubtitle: '지갑 마이그레이션은 정말 쉽습니다!',
+  migrateWalletsNeon3NoticeDescription:
+    '이 기능을 통해 더 넓은 범위의 지원 자산, 기능 및 네트워크에 액세스할 수 있으며, 자산 관리를 더욱 편리하게 만들어주는 세련되고 개선된 사용자 경험을 제공합니다!',
+  migrateWalletsNeon3NoticeButtonLabel: '지금 마이그레이션!',
+  migrateWalletsNeon3NoticeNote:
+    '참고: 이 버전의 Neon에 계속 액세스할 수 있습니다!',
 }
-
-
 
 export default {
   ...AUTH,
@@ -427,5 +433,5 @@ export default {
   ...ERRORS,
   ...NOTIFICATIONS,
   ...MIGRATE_WALLETS_NEON3_NOTICE,
-  ...MIGRATE_WALLETS_NEON3_STEPS
+  ...MIGRATE_WALLETS_NEON3_STEPS,
 }
