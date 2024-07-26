@@ -162,7 +162,7 @@ const AUTH = {
   authLedger: 'LEDGER',
   authCreateWallet: ' Wallet erstellen',
   authImportWallet: 'Wallet importieren',
-  authMigrateWallets: "Wallets migrieren",
+  authMigrateWallets: 'Wallets migrieren',
   authScanQRButton: 'QR scannen',
   authLoginButton: 'Log-in',
   authLedgerFirstStep: 'Ledger verbinden und freischalten',
@@ -385,41 +385,50 @@ const TOKEN_SALE = {
 }
 
 const MIGRATE_WALLETS_NEON3_STEPS = {
-  migrateWalletsNeon3StepsTitle: "Ihre NEON 2-Brieftasche migrieren",
+  migrateWalletsNeon3StepsTitle: 'Ihre NEON 2-Brieftasche migrieren',
 
   migrateWalletsNeon3Steps1: 'Holen Sie sich das neue NEON',
   migrateWalletsNeon3Steps2: 'Exportieren Sie Ihre alten NEON-Konten',
   migrateWalletsNeon3Steps3: 'Öffnen Sie das neue NEON',
 
-  migrateWalletsNeon3Step1Title: "Holen Sie sich die neue NEON-Brieftasche",
-  migrateWalletsNeon3Step1Description: "Beginnen Sie mit dem Herunterladen des neuesten NEON-Builds und erstellen Sie Ihre erste Brieftasche:",
-  migrateWalletsNeon3Step1DownloadButton: "Laden Sie die neue NEON-Brieftasche herunter",
-  migrateWalletsNeon3Step1NextStep: "Sobald die neue Version von NEON auf Ihrem Gerät installiert ist, fahren Sie mit dem nächsten Schritt fort.",
-  migrateWalletsNeon3Step1ButtonLabel: "Weiter",
+  migrateWalletsNeon3Step1Title: 'Holen Sie sich die neue NEON-Brieftasche',
+  migrateWalletsNeon3Step1Description:
+    'Beginnen Sie mit dem Herunterladen des neuesten NEON-Builds und erstellen Sie Ihre erste Brieftasche:',
+  migrateWalletsNeon3Step1DownloadButton:
+    'Laden Sie die neue NEON-Brieftasche herunter',
+  migrateWalletsNeon3Step1NextStep:
+    'Sobald die neue Version von NEON auf Ihrem Gerät installiert ist, fahren Sie mit dem nächsten Schritt fort.',
+  migrateWalletsNeon3Step1ButtonLabel: 'Weiter',
 
-  migrateWalletsNeon3Step2Title: "Migrieren Sie Ihre alten NEON-Konten",
-  migrateWalletsNeon3Step2Description: "Speichern Sie die alte NEON-Migrationsdatei auf Ihrem Computer. Sie verwenden diese Datei, um Ihre Brieftasche in die neue Version von NEON zu migrieren.",
-  migrateWalletsNeon3InputLabel: "Wo möchten Sie Ihre Migrationsdatei speichern?",
-  migrateWalletsNeon3Step2BrowseButton: "Durchsuche...",
-  migrateWalletsNeon3Step2NextStep: "Wenn Sie einen Speicherort für Ihre Migrationsdatei festgelegt haben, fahren Sie mit dem nächsten Schritt fort.",
-  migrateWalletsNeon3Step2ButtonLabel: "Weiter",
+  migrateWalletsNeon3Step2Title: 'Migrieren Sie Ihre alten NEON-Konten',
+  migrateWalletsNeon3Step2Description:
+    'Speichern Sie die alte NEON-Migrationsdatei auf Ihrem Computer. Sie verwenden diese Datei, um Ihre Brieftasche in die neue Version von NEON zu migrieren.',
+  migrateWalletsNeon3InputLabel:
+    'Wo möchten Sie Ihre Migrationsdatei speichern?',
+  migrateWalletsNeon3Step2BrowseButton: 'Durchsuche...',
+  migrateWalletsNeon3Step2NextStep:
+    'Wenn Sie einen Speicherort für Ihre Migrationsdatei festgelegt haben, fahren Sie mit dem nächsten Schritt fort.',
+  migrateWalletsNeon3Step2ButtonLabel: 'Weiter',
 
-  migrateWalletsNeon3Step3Title: "Öffnen Sie Ihre neue NEON-Brieftasche",
-  migrateWalletsNeon3Step3Description: "Sie sind fast da!",
-  migrateWalletsNeon3Step3Description2: "Um den Migrationsprozess abzuschließen, öffnen Sie die neue NEON-Brieftasche und befolgen Sie die Anweisungen.",
-  migrateWalletsNeon3Step3AltImage: "Migrate Wallets Hintergrundbild",
-  migrateWalletsNeon3Step3Button: "Schließen Sie den Vorgang in NEON ab",
+  migrateWalletsNeon3Step3Title: 'Öffnen Sie Ihre neue NEON-Brieftasche',
+  migrateWalletsNeon3Step3Description: 'Sie sind fast da!',
+  migrateWalletsNeon3Step3Description2:
+    'Um den Migrationsprozess abzuschließen, öffnen Sie die neue NEON-Brieftasche und befolgen Sie die Anweisungen.',
+  migrateWalletsNeon3Step3AltImage: 'Migrate Wallets Hintergrundbild',
+  migrateWalletsNeon3Step3Button: 'Schließen Sie den Vorgang in NEON ab',
 }
 
 const MIGRATE_WALLETS_NEON3_NOTICE = {
-  migrateWalletsNeon3NoticeTitle: "Möchten Sie Ihre aktuelle Brieftasche auf die neueste Version von NEON migrieren?",
-  migrateWalletsNeon3NoticeSubtitle: "Die Migration Ihrer Brieftasche ist wirklich einfach!",
-  migrateWalletsNeon3NoticeDescription: "Es wird Ihnen Zugriff auf eine breitere Palette unterstützter Assets, Funktionen und Netzwerke bieten und gleichzeitig eine elegantere, verbesserte Benutzererfahrung bieten, um die Verwaltung Ihrer Assets zum Kinderspiel zu machen!",
-  migrateWalletsNeon3NoticeButtonLabel: "Jetzt migrieren!",
-  migrateWalletsNeon3NoticeNote: "Hinweis: Sie behalten weiterhin Zugriff auf diese Version von Neon!"
+  migrateWalletsNeon3NoticeTitle:
+    'Möchten Sie Ihre aktuelle Brieftasche auf die neueste Version von NEON migrieren?',
+  migrateWalletsNeon3NoticeSubtitle:
+    'Die Migration Ihrer Brieftasche ist wirklich einfach!',
+  migrateWalletsNeon3NoticeDescription:
+    'Es wird Ihnen Zugriff auf eine breitere Palette unterstützter Assets, Funktionen und Netzwerke bieten und gleichzeitig eine elegantere, verbesserte Benutzererfahrung bieten, um die Verwaltung Ihrer Assets zum Kinderspiel zu machen!',
+  migrateWalletsNeon3NoticeButtonLabel: 'Jetzt migrieren!',
+  migrateWalletsNeon3NoticeNote:
+    'Hinweis: Sie behalten weiterhin Zugriff auf diese Version von Neon!',
 }
-
-
 
 export default {
   ...AUTH,
@@ -442,5 +451,5 @@ export default {
   ...ERRORS,
   ...NOTIFICATIONS,
   ...MIGRATE_WALLETS_NEON3_NOTICE,
-  ...MIGRATE_WALLETS_NEON3_STEPS
+  ...MIGRATE_WALLETS_NEON3_STEPS,
 }

@@ -163,7 +163,7 @@ const AUTH = {
   authLedger: 'HARDWARE',
   authCreateWallet: 'Criar Wallet',
   authImportWallet: 'Importar Wallet',
-  authMigrateWallets: "Migrar wallets",
+  authMigrateWallets: 'Migrar wallets',
   authScanQRButton: 'Escanear QR Code',
   authLoginButton: 'Login',
   authLedgerFirstStep: 'Conectar e desbloquear seu Registro',
@@ -386,41 +386,48 @@ const TOKEN_SALE = {
 }
 
 const MIGRATE_WALLETS_NEON3_STEPS = {
-  migrateWalletsNeon3StepsTitle: "Migrando sua carteira NEON 2",
+  migrateWalletsNeon3StepsTitle: 'Migrando sua carteira NEON 2',
 
   migrateWalletsNeon3Steps1: 'Obtenha o novo NEON',
   migrateWalletsNeon3Steps2: 'Exporte suas contas NEON antigas',
   migrateWalletsNeon3Steps3: 'Abra o novo NEON',
 
-  migrateWalletsNeon3Step1Title: "Obtenha a nova carteira NEON",
-  migrateWalletsNeon3Step1Description: "Comece baixando a versão mais recente do NEON e crie sua primeira carteira:",
-  migrateWalletsNeon3Step1DownloadButton: "Baixar a nova carteira NEON",
-  migrateWalletsNeon3Step1NextStep: "Depois que a nova versão do NEON estiver instalada no seu dispositivo, passe para a próxima etapa.",
-  migrateWalletsNeon3Step1ButtonLabel: "Próximo",
+  migrateWalletsNeon3Step1Title: 'Obtenha a nova carteira NEON',
+  migrateWalletsNeon3Step1Description:
+    'Comece baixando a versão mais recente do NEON e crie sua primeira carteira:',
+  migrateWalletsNeon3Step1DownloadButton: 'Baixar a nova carteira NEON',
+  migrateWalletsNeon3Step1NextStep:
+    'Depois que a nova versão do NEON estiver instalada no seu dispositivo, passe para a próxima etapa.',
+  migrateWalletsNeon3Step1ButtonLabel: 'Próximo',
 
-  migrateWalletsNeon3Step2Title: "Migre suas contas NEON antigas",
-  migrateWalletsNeon3Step2Description: "Salve o arquivo de migração do NEON antigo no seu computador. Você usará este arquivo para migrar sua carteira para a nova versão do NEON.",
-  migrateWalletsNeon3InputLabel: "Onde você gostaria de salvar seu arquivo de migração?",
-  migrateWalletsNeon3Step2BrowseButton: "Procurar...",
-  migrateWalletsNeon3Step2NextStep: "Quando você definir um local para salvar seu arquivo de migração, passe para a próxima etapa.",
-  migrateWalletsNeon3Step2ButtonLabel: "Próximo",
+  migrateWalletsNeon3Step2Title: 'Migre suas contas NEON antigas',
+  migrateWalletsNeon3Step2Description:
+    'Salve o arquivo de migração do NEON antigo no seu computador. Você usará este arquivo para migrar sua carteira para a nova versão do NEON.',
+  migrateWalletsNeon3InputLabel:
+    'Onde você gostaria de salvar seu arquivo de migração?',
+  migrateWalletsNeon3Step2BrowseButton: 'Procurar...',
+  migrateWalletsNeon3Step2NextStep:
+    'Quando você definir um local para salvar seu arquivo de migração, passe para a próxima etapa.',
+  migrateWalletsNeon3Step2ButtonLabel: 'Próximo',
 
-  migrateWalletsNeon3Step3Title: "Abra sua nova carteira NEON",
-  migrateWalletsNeon3Step3Description: "Você está quase lá!",
-  migrateWalletsNeon3Step3Description2: "Para completar o processo de migração, abra a nova carteira NEON e siga as instruções.",
-  migrateWalletsNeon3Step3AltImage: "Imagem de fundo da migração de carteiras",
-  migrateWalletsNeon3Step3Button: "Complete o processo no novo NEON",
+  migrateWalletsNeon3Step3Title: 'Abra sua nova carteira NEON',
+  migrateWalletsNeon3Step3Description: 'Você está quase lá!',
+  migrateWalletsNeon3Step3Description2:
+    'Para completar o processo de migração, abra a nova carteira NEON e siga as instruções.',
+  migrateWalletsNeon3Step3AltImage: 'Imagem de fundo da migração de carteiras',
+  migrateWalletsNeon3Step3Button: 'Complete o processo no novo NEON',
 }
 
 const MIGRATE_WALLETS_NEON3_NOTICE = {
-  migrateWalletsNeon3NoticeTitle: "Deseja migrar sua carteira atual para a versão mais recente do NEON?",
-  migrateWalletsNeon3NoticeSubtitle: "Migrar sua carteira é muito fácil!",
-  migrateWalletsNeon3NoticeDescription: "Isso lhe dará acesso a uma gama mais ampla de ativos, recursos e redes suportados, proporcionando uma experiência de usuário mais elegante e aprimorada para facilitar a gestão de seus ativos!",
-  migrateWalletsNeon3NoticeButtonLabel: "Migrar agora!",
-  migrateWalletsNeon3NoticeNote: "Nota: Você ainda terá acesso a esta versão do Neon!"
+  migrateWalletsNeon3NoticeTitle:
+    'Deseja migrar sua carteira atual para a versão mais recente do NEON?',
+  migrateWalletsNeon3NoticeSubtitle: 'Migrar sua carteira é muito fácil!',
+  migrateWalletsNeon3NoticeDescription:
+    'Isso lhe dará acesso a uma gama mais ampla de ativos, recursos e redes suportados, proporcionando uma experiência de usuário mais elegante e aprimorada para facilitar a gestão de seus ativos!',
+  migrateWalletsNeon3NoticeButtonLabel: 'Migrar agora!',
+  migrateWalletsNeon3NoticeNote:
+    'Nota: Você ainda terá acesso a esta versão do Neon!',
 }
-
-
 
 export default {
   ...AUTH,
@@ -443,5 +450,5 @@ export default {
   ...ERRORS,
   ...NOTIFICATIONS,
   ...MIGRATE_WALLETS_NEON3_NOTICE,
-  ...MIGRATE_WALLETS_NEON3_STEPS
+  ...MIGRATE_WALLETS_NEON3_STEPS,
 }

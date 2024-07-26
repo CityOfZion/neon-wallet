@@ -22,7 +22,7 @@
   text-align: center;
   margin-top: 18px;
   margin-bottom: 0px;
-  color: va(--base-secondary);
+  color: var(--base-secondary);
 }
 
 .description {
@@ -39,10 +39,17 @@
   margin-top: 18px;
   margin-bottom: 0px;
   color: var(--base-text-middle);
+  font-style: italic;
 }
 
 .button {
   max-width: 250px;
   width: 100%;
   margin-top: 28px;
+}
+
+.contentButton {
+  font-size: 12px;
+  font-weight: 500;
+  font-family: SofiaPro;
 }
