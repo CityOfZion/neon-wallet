@@ -33,6 +33,7 @@ type Props = {
     numeralPositiveOnly?: boolean,
     stripLeadingZeroes?: boolean,
   },
+  disableMaxButton?: boolean,
 }
 
 type State = {
@@ -93,6 +94,10 @@ export default class NumberInput extends React.Component<Props, State> {
             this.props.handleMaxClick
               ? this.props.handleMaxClick
               : this.handleMaxValue
+          }
+          disabled={
+            /* eslint-disable-next-line no-restricted-globals */
+            isNaN(this.props.max)
           }
         >
           <FormattedMessage id="sendMaxAmount" />
