@@ -42,21 +42,27 @@
   gap: 10px;
 }
 
-.downloadButton {
+.downloadButtonContent {
+  color: var(--base-primary);
+  background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  color: var(--base-primary);
+}
+
+.downloadIcon path {
+  fill: var(--base-primary) !important;
+}
+
+.downloadButton {
   margin: 40px 0;
   width: 100%;
   max-width: 250px;
-  border: 1px solid var(--base-primary);
-  padding: 9px 20px;
+  border: 1px solid var(--base-primary) !important;
   font-size: 12px;
-  border-radius: 4px;
 
   &:hover {
-    background-color: var(--base-primary-10);
+    background-color: var(--base-primary-10) !important;
   }
 }
