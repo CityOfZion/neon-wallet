@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
+import electron from 'electron'
 import styles from './Step3.scss'
 import migrateWalletsIconDark from '../../assets/images/migrate-wallets-icon-dark.png'
 import migrateWalletsIconWhite from '../../assets/images/migrate-wallets-icon-white.png'
@@ -12,7 +13,7 @@ type Props = {
 }
 
 const openNeon3Click = () => {
-  window.open('neon3://migration')
+  electron.shell.openExternal('neon3://migration')
 }
 
 const MigrateWalletsNeon3Step3 = ({ theme }: Props) => (
