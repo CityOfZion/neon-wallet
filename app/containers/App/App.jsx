@@ -64,6 +64,11 @@ const App = ({
   const handleDeeplink = useCallback(async (uri: string) => {
     await ipc.invoke('restore')
 
+    if (uri === 'neon2://open') {
+      history.push(ROUTES.MIGRATION_NOTICE)
+      return
+    }
+
     const realUri = uri.split('uri=').pop()
     if (!realUri) return
 
