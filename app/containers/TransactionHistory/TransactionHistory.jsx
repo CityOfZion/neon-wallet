@@ -92,7 +92,7 @@ export default class TransactionHistory extends Component<Props, State> {
           delete entry.metadata
           abstracts.push(entry)
         })
-        if (abstracts.length >= data.totalCount) {
+        if (data.items.length === 0) {
           shouldFetchAdditionalPages = false
         }
       } else {
