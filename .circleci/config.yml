@@ -110,12 +110,6 @@ workflows:
   deploy:
     jobs:
       # build artifacts only on tags with name v.*
-      - build_macos:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /v.*/
       - build_win:
           filters:
             branches:
