@@ -127,7 +127,7 @@ async function getPrices(useFallbackApi = false) {
 async function getPricesFromFlamingo() {
   const settings = await getSettings()
   const { currency } = settings
-  const EXCHANGE_RATE_URL = `https://api.flamingo.finance/fiat/exchange-rate?pair=USD_${currency.toUpperCase()}`
+  const EXCHANGE_RATE_URL = `https://neo-api.b-cdn.net/flamingo/live-data/fiat-exchange-rate/USD_${currency.toUpperCase()}`
   let exchangeRate = 1
 
   if (currency !== 'usd') {
@@ -143,13 +143,17 @@ async function getPricesFromFlamingo() {
 
   // Because all pairs are returned in their USD value
   // we first check the exchange rate for all currency other than USD
-  const url = 'https://api.flamingo.finance/token-info/prices'
+  const url = 'https://neo-api.b-cdn.net/flamingo/live-data/prices/latest'
   const results = await axios.get(url).catch(error => {
     console.error(`Unable to retrieve prices from the api ${url}`, error)
     return undefined
   })
   if (!results) return {}
   return results.data.reduce((accum, curr) => {
+    if (curr.symbol === 'bNEO') {
+      accum.NEO = curr.usd_price * exchangeRate
+    }
+
     accum[curr.symbol] = curr.usd_price * exchangeRate
     return accum
   }, {})
