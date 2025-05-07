@@ -279,28 +279,34 @@ async function getBalances({ net, address, isRetry = false, chain }: Props) {
     }
   })
 
-  const assetBalances = {}
-  const mainnetBalances = await axios.get(
-    `https://dora.coz.io/api/v1/neo2/mainnet/get_balance/${address}`,
-  )
+  let assets
+  if (net === 'MainNet') {
+    const assetBalances = {}
+    const mainnetBalances = await axios.get(
+      `https://dora.coz.io/api/v1/neo2/mainnet/get_balance/${address}`,
+    )
 
-  mainnetBalances.data.balance.forEach(token => {
-    assetBalances[token.asset_symbol || token.symbol] = {
-      balance: token.amount,
-      hash: token.asset_hash,
-    }
-  })
-  const testnetBalances = await axios.get(
-    `https://dora.coz.io/api/v1/neo2/testnet/get_balance/${address}`,
-  )
-  const parsedTestNetBalances = {}
-  testnetBalances.data.balance.forEach(token => {
-    parsedTestNetBalances[token.asset] = {
-      balance: token.amount,
-      hash: token.asset_hash,
-    }
-  })
-  const assets = net === 'MainNet' ? assetBalances : parsedTestNetBalances
+    mainnetBalances.data.balance.forEach(token => {
+      assetBalances[token.asset_symbol || token.symbol] = {
+        balance: token.amount,
+        hash: token.asset_hash,
+      }
+    })
+    assets = assetBalances
+  } else {
+    const testnetBalances = await axios.get(
+      `https://dora.coz.io/api/v1/neo2/testnet/get_balance/${address}`,
+    )
+    const parsedTestNetBalances = {}
+    testnetBalances.data.balance.forEach(token => {
+      parsedTestNetBalances[token.asset] = {
+        balance: token.amount,
+        hash: token.asset_hash,
+      }
+    })
+    assets = parsedTestNetBalances
+  }
+
   const neoBalance = assets?.NEO?.balance ?? '0'
   const gasBalance = assets.GAS?.balance ?? '0'
   const parsedAssets = [
@@ -309,13 +315,13 @@ async function getBalances({ net, address, isRetry = false, chain }: Props) {
   ]
 
   if (net === 'TestNet') {
-    Object.keys(parsedTestNetBalances).map(sym => {
+    Object.keys(assets).map(sym => {
       const balance = {
-        [parsedTestNetBalances[sym].hash]: {
-          balance: toBigNumber(parsedTestNetBalances[sym].balance),
+        [assets[sym].hash]: {
+          balance: toBigNumber(assets[sym].balance),
           symbol: sym,
           networkId: '2',
-          scriptHash: parsedTestNetBalances[sym].hash,
+          scriptHash: assets[sym].hash,
         },
       }
       if (sym !== 'GAS' && sym !== 'NEO') {
