@@ -279,32 +279,30 @@ async function getBalances({ net, address, isRetry = false, chain }: Props) {
     }
   })
 
-  let assets
+  const assets = {}
+
   if (net === 'MainNet') {
-    const assetBalances = {}
     const mainnetBalances = await axios.get(
       `https://dora.coz.io/api/v1/neo2/mainnet/get_balance/${address}`,
     )
 
     mainnetBalances.data.balance.forEach(token => {
-      assetBalances[token.asset_symbol || token.symbol] = {
+      assets[token.asset_symbol || token.symbol] = {
         balance: token.amount,
         hash: token.asset_hash,
       }
     })
-    assets = assetBalances
   } else {
     const testnetBalances = await axios.get(
       `https://dora.coz.io/api/v1/neo2/testnet/get_balance/${address}`,
     )
-    const parsedTestNetBalances = {}
+
     testnetBalances.data.balance.forEach(token => {
-      parsedTestNetBalances[token.asset] = {
+      assets[token.asset] = {
         balance: token.amount,
         hash: token.asset_hash,
       }
     })
-    assets = parsedTestNetBalances
   }
 
   const neoBalance = assets?.NEO?.balance ?? '0'
