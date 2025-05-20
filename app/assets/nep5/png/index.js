@@ -56,6 +56,7 @@ import FRANK from './FRANK.png'
 import HD from './HD.png'
 import APE from './APE.png'
 import SCHRUTE from './SCHRUTE.png'
+import B$ from './BH.png'
 
 export const imageMap = {
   NEO,
@@ -116,4 +117,5 @@ export const imageMap = {
   HD,
   APE,
   SCHRUTE,
+  B$,
 }

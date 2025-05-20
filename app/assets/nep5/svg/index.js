@@ -51,6 +51,7 @@ import GHOST from './GHOST.svg'
 import FLM from './FLM.svg'
 import NEP from './NEP.svg'
 import GFUND from './GFUND.svg'
+import B$ from './BH.svg'
 
 export const imageMap = {
   NEO,
