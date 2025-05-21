@@ -12,8 +12,8 @@ import Github from '../../../assets/images/release-assets/github.svg'
 import PatchLight from '../../../assets/images/release-assets/patch-light.svg'
 import PatchDark from '../../../assets/images/release-assets/patch-dark.svg'
 
-import N3SupportLight from '../../../assets/images/release-assets/n3_support_light.svg'
-import N3SupportDark from '../../../assets/images/release-assets/n3_support_dark.svg'
+import N3SupportLight from '../../../assets/images/release-assets/n3_support_light.png'
+import N3SupportDark from '../../../assets/images/release-assets/n3_support_dark.png'
 
 import MigrationLight from '../../../assets/images/release-assets/migration-light.svg'
 import MigrationDark from '../../../assets/images/release-assets/migration-dark.svg'
@@ -73,7 +73,6 @@ export const ReleaseNotes = ({ theme }: { theme: string }) => (
           In this release you will find the following updates:
           <br />
           <br />
-          {/* eslint-disable-next-line */}
           <li>Implements wallet connect support</li>
           <li>Major dependency updates</li>
           <br />
@@ -107,7 +106,6 @@ export const ReleaseNotes = ({ theme }: { theme: string }) => (
           In this release you will find the following updates:
           <br />
           <br />
-          {/* eslint-disable-next-line */}
           <li>Implements ledger support for Neo N3</li>
           <li>Allows ledger users to migrate from Neo Legacy to Neo N3</li>
           <br />
@@ -136,7 +134,6 @@ export const ReleaseNotes = ({ theme }: { theme: string }) => (
           In this release you will find the following updates:
           <br />
           <br />
-          {/* eslint-disable-next-line */}
           <li>Support for asset migration to N3</li>
           <li>Support for Neo Legacy TestNet</li>
           <br />
@@ -165,8 +162,12 @@ export const ReleaseNotes = ({ theme }: { theme: string }) => (
           In this release you will find the following updates:
           <br />
           <br />
-          {/* eslint-disable-next-line */}
-          <li>Support for Neo (N3) MainNet and TestNet 🎉</li>
+          <li>
+            Support for Neo (N3) MainNet and TestNet{' '}
+            <span aria-label="party" role="img">
+              🎉
+            </span>{' '}
+          </li>
           <li>Under the hood dependency updates</li>
           <li>Performance enhancements</li>
           <br />
@@ -183,7 +184,11 @@ export const ReleaseNotes = ({ theme }: { theme: string }) => (
         />
       </div>
       <div className={styles.marketingImage}>
-        {theme === 'Light' ? <N3SupportLight /> : <N3SupportDark />}
+        {theme === 'Light' ? (
+          <img src={N3SupportLight} />
+        ) : (
+          <img src={N3SupportDark} />
+        )}
       </div>
     </div>
 
