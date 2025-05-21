@@ -34,5 +34,8 @@
   },
   {
     "url": "https://mainnet3.neo2.coz.io:443"
+  },
+  {
+    "url": "https://rpc1.neolegacy.nspcc.ru:10331"
   }
 ]

@@ -8,5 +8,6 @@
   { "url": "http://seed2.neo.org:10332" },
   { "url": "http://seed3.neo.org:10332" },
   { "url": "http://seed4.neo.org:10332" },
-  { "url": "http://seed5.neo.org:10332" }
+  { "url": "http://seed5.neo.org:10332" },
+  { "url": "https://rpc10.n3.nspcc.ru:10331" }
 ]
