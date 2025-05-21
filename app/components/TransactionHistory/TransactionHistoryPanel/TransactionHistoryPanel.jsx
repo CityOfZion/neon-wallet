@@ -60,15 +60,11 @@ export default class TransactionHistory extends React.Component<Props> {
           <Center
             width="300px"
             margin="auto"
-            paddingTop="12px"
+            paddingTop="36px"
             paddingBottom="12px"
             display="flex"
             flexDirection="column"
           >
-            <Box fontSize="14px" opacity={0.5} marginBottom="12px">
-              Displaying {transactions.length} of {count} transactions
-            </Box>
-
             <Button
               onClick={handleFetchAdditionalTxData}
               primary
